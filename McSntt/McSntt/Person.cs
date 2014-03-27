@@ -11,7 +11,8 @@ namespace McSntt
     public enum Gender
     {
         Male,
-        Female
+        Female,
+        NotDefined
     };
 
     public enum Positions
@@ -19,7 +20,8 @@ namespace McSntt
         Member,
         Student,
         SupportMember,
-        Admin
+        Admin,
+        Teacher
     };
 
     public abstract class Person
