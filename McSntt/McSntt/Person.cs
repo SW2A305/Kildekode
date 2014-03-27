@@ -31,6 +31,8 @@ namespace McSntt
         public string Adress        { get; set; }
         public string Postcode      { get; set; }
         public string Cityname      { get; set; }
+        public string Email         { get; set; }
+        public string TelefonNummer { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Gender Gender        { get; set; }
 

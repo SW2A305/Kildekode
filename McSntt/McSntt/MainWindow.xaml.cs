@@ -30,16 +30,33 @@ namespace McSntt
                 Adress = "Scoresbysundvej 8",
                 Postcode = "9210",
                 Cityname = "Aalborg SØ",
+                Email = "HalloHallo@gmail.com",
+                TelefonNummer = "12345678",
                 Gender = Gender.Male,
                 MemberID = 1337,
                 Position = Positions.Admin,
                 DateOfBirth = new DateTime(1994,06,13)
+            }; 
+            var testMember2 = new SailClubMember
+            {
+                FirstName = "Søren",
+                LastName = "Kroegh",
+                Adress = "Scoresbysundvej 8",
+                Postcode = "9000",
+                Cityname = "Aalborg SØ",
+                Email = "HalloHallo@gmail.com",
+                TelefonNummer = "12345678",
+                Gender = Gender.Male,
+                MemberID = 1337,
+                Position = Positions.Admin,
+                DateOfBirth = new DateTime(1994, 06, 13)
             };
 
             // Put members into a list
             var listOfMembers = new List<SailClubMember>();
-            listOfMembers.Add(testMember);
-            listOfMembers.Add(testMember);
+                listOfMembers.Add(testMember);
+                listOfMembers.Add(testMember2);
+
 
             // Set the list as the current DataContext
             this.DataContext = listOfMembers;
