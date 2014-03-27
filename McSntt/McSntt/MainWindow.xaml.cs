@@ -36,10 +36,12 @@ namespace McSntt
                 DateOfBirth = new DateTime(1994,06,13)
             };
 
+            // Put members into a list
             var listOfMembers = new List<SailClubMember>();
             listOfMembers.Add(testMember);
             listOfMembers.Add(testMember);
 
+            // Set the list as the current DataContext
             this.DataContext = listOfMembers;
 
             InitializeComponent();

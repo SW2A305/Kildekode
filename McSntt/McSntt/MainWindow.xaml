@@ -14,16 +14,17 @@
         <Button Name="ExitButton" Content="Afslut" HorizontalAlignment="Left" Margin="707,539,0,0" VerticalAlignment="Top" Width="75" Click="ExitButton_OnClick"/>
 
         <!-- Grid with members taken from the list given as DataContext in the .cs file -->
-        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,32,115,10" >
+        <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,32,115,10" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn"    />
-                <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn"  />
-                <DataGridTextColumn Binding="{Binding Position}"        Header="Position"  />
-                <DataGridTextColumn Binding="{Binding DateOfBirth, StringFormat={}\{0:dd/MM/yyyy\}}"      Header="Fødselsdato"  />
-                <DataGridTextColumn Binding="{Binding Gender}"          Header="Køn"  />
-                <DataGridTextColumn Binding="{Binding Cityname}"        Header="By"  />
-                <DataGridTextColumn Binding="{Binding Postcode}"        Header="Post nr."  />
-                <DataGridTextColumn Binding="{Binding Adress}"          Header="Addresse"  />
+                <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
+                <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
+                <DataGridTextColumn Binding="{Binding Position}"        Header="Position" />
+                <DataGridTextColumn Binding="{Binding DateOfBirth, StringFormat={}\{0:dd/MM/yyyy\}}" Header="Fødselsdato" />
+                <DataGridTextColumn Binding="{Binding Gender}"          Header="Køn" />
+                <DataGridTextColumn Binding="{Binding Cityname}"        Header="By" />
+                <DataGridTextColumn Binding="{Binding Postcode}"        Header="Post nr." />
+                <DataGridTextColumn Binding="{Binding Adress}"          Header="Addresse" />
+                <DataGridTextColumn Binding="{Binding MemberID}"        Header="Memberid" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
