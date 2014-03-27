@@ -22,7 +22,34 @@ namespace McSntt
     {
         public MainWindow()
         {
+            // Create testmember in order to display data. 
+            var testMember = new SailClubMember
+            {
+                FirstName = "Troels",
+                LastName = "Kroegh",
+                Adress = "Scoresbysundvej 8",
+                Postcode = "9210",
+                Cityname = "Aalborg SØ",
+                Gender = Gender.Male,
+                MemberID = 1337,
+                Position = Positions.Admin,
+                DateOfBirth = new DateTime(1994,06,13)
+            };
+
+            var listOfMembers = new List<SailClubMember>();
+            listOfMembers.Add(testMember);
+            listOfMembers.Add(testMember);
+
+            this.DataContext = listOfMembers;
+
             InitializeComponent();
         }
+
+        // Exit application if the shutdown button is pressed.
+        private void ExitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
     }
 }
