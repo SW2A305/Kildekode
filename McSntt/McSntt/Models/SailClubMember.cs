@@ -3,14 +3,13 @@
     /// <summary>
     ///     Represents the various positions that a member can have.
     /// </summary>
-    /// TODO We should really make sure that this goes from lowest to highest, to make it easier on ourselves.
     public enum Positions
     {
+        Admin,
+        Teacher,
         Member,
         Student,
-        SupportMember,
-        Admin,
-        Teacher
+        SupportMember
     };
 
     /// <summary>
