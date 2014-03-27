@@ -23,7 +23,7 @@ namespace McSntt
     {
         public MainWindow()
         {
-            // Create testmember in order to display data. 
+            // Create testmembers in order to display data. 
             var testMember = new SailClubMember
             {
                 FirstName = "Troels",
@@ -32,7 +32,7 @@ namespace McSntt
                 Postcode = "9210",
                 Cityname = "Aalborg SØ",
                 Email = "HalloHallo@gmail.com",
-                TelefonNummer = "12345678",
+                PhoneNumber = "12345678",
                 Gender = Gender.Male,
                 MemberId = 1337,
                 Position = Positions.Admin,
@@ -42,13 +42,13 @@ namespace McSntt
             {
                 FirstName = "Søren",
                 LastName = "Kroegh",
-                Adress = "Scoresbysundvej 8",
+                Address = "Scoresbysundvej 8",
                 Postcode = "9000",
                 Cityname = "Aalborg SØ",
                 Email = "HalloHallo@gmail.com",
-                TelefonNummer = "12345678",
+                PhoneNumber = "12345678",
                 Gender = Gender.Male,
-                MemberID = 1337,
+                MemberId = 1337,
                 Position = Positions.Admin,
                 DateOfBirth = new DateTime(1994, 06, 13)
             };

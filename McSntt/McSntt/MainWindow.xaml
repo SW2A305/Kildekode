@@ -20,13 +20,13 @@
                 <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
                 <DataGridTextColumn Binding="{Binding Position}"        Header="Position" />
                 <DataGridTextColumn Binding="{Binding DateOfBirth, StringFormat={}\{0:dd/MM/yyyy\}}" Header="Fødselsdato" />
-                <DataGridTextColumn Binding="{Binding TelefonNummer}"   Header="Telefon Nr."/>
+                <DataGridTextColumn Binding="{Binding PhoneNumber}"     Header="Telefon Nr."/>
                 <DataGridTextColumn Binding="{Binding Email}"           Header="Email"/>
                 <DataGridTextColumn Binding="{Binding Gender}"          Header="Køn" />
                 <DataGridTextColumn Binding="{Binding Cityname}"        Header="By" />
                 <DataGridTextColumn Binding="{Binding Postcode}"        Header="Post nr." />
-                <DataGridTextColumn Binding="{Binding Adress}"          Header="Addresse" />
-                <DataGridTextColumn Binding="{Binding MemberID}"        Header="Memberid" />
+                <DataGridTextColumn Binding="{Binding Address}"         Header="Addresse" />
+                <DataGridTextColumn Binding="{Binding MemberId}"        Header="Memberid" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
