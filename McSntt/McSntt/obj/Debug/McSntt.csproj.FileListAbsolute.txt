@@ -1,0 +1,15 @@
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\bin\Debug\McSntt.exe.config
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\bin\Debug\McSntt.exe
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\bin\Debug\McSntt.pdb
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.csprojResolveAssemblyReference.cache
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\MainWindow.baml
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\MainWindow.g.cs
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\App.g.cs
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt_MarkupCompile.cache
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.g.resources
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.Properties.Resources.resources
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.csproj.GenerateResource.Cache
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.exe
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.pdb
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\bin\Debug\FinalImages\SundetLogo.PNG
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt_Content.g.cs
