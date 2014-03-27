@@ -11,5 +11,5 @@ C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.Proper
 C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.csproj.GenerateResource.Cache
 C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.exe
 C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt.pdb
-C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\bin\Debug\FinalImages\SundetLogo.PNG
 C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\obj\Debug\McSntt_Content.g.cs
+C:\Users\Søren\Documents\GitHub\Kildekode\McSntt\McSntt\bin\Debug\Images\SundetLogo.PNG
