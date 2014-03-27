@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.Models;
 
 namespace McSntt
 {
@@ -27,13 +28,13 @@ namespace McSntt
             {
                 FirstName = "Troels",
                 LastName = "Kroegh",
-                Adress = "Scoresbysundvej 8",
+                Address = "Scoresbysundvej 8",
                 Postcode = "9210",
                 Cityname = "Aalborg SØ",
                 Email = "HalloHallo@gmail.com",
                 TelefonNummer = "12345678",
                 Gender = Gender.Male,
-                MemberID = 1337,
+                MemberId = 1337,
                 Position = Positions.Admin,
                 DateOfBirth = new DateTime(1994,06,13)
             }; 
