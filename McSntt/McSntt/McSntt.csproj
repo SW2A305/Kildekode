@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201403271831356_InitialCreate.Designer.cs">
       <DependentUpon>201403271831356_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201403281225289_PersonUpdates.cs" />
+    <Compile Include="Migrations\201403281225289_PersonUpdates.Designer.cs">
+      <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Page Include="MainWindow.xaml">
@@ -116,6 +120,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201403271831356_InitialCreate.resx">
       <DependentUpon>201403271831356_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403281225289_PersonUpdates.resx">
+      <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
