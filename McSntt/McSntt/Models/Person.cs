@@ -24,6 +24,7 @@ namespace McSntt.Models
         public string Postcode { get; set; }
         public string Cityname { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public bool BoatDriver { get; set; }
         public Gender Gender { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
