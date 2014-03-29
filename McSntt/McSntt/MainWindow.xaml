@@ -6,7 +6,11 @@
         <TabControl Margin="10,124,10,10" HorizontalContentAlignment="Center">
             <TabItem Header="Forside">
                 <Grid Background="#FFE5E5E5">
-                    <Button x:Name="MemberButton" Content="Medlemsliste" HorizontalAlignment="Left" VerticalAlignment="Top" Width="274" Margin="10,10,0,0" Height="74" Click="MemberButton_Click"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="77*"/>
+                        <ColumnDefinition Width="909*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="MemberButton" Content="Medlemsliste" HorizontalAlignment="Left" VerticalAlignment="Top" Width="274" Margin="10,10,0,0" Height="74" Click="MemberButton_Click" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Kalender">
