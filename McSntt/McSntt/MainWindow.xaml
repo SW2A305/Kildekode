@@ -27,6 +27,7 @@
                 <DataGridTextColumn Binding="{Binding Postcode}"        Header="Post nr." />
                 <DataGridTextColumn Binding="{Binding Address}"         Header="Addresse" />
                 <DataGridTextColumn Binding="{Binding MemberId}"        Header="Memberid" />
+                <DataGridTextColumn Binding="{Binding BoatDriver}"        Header="BoatDriver" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
