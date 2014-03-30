@@ -11,6 +11,8 @@ namespace McSntt.Models
         public int MemberId { get; set; }
         public Positions Position { get; set; }
         public DateTime MemberSince { get; set; }
+        public string Username { get; set; }
+        public string PasswordHash { get; set; }
         #endregion
 
         #region Enumerations
