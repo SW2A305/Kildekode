@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Data.Odbc;
 using System.Xml;
 using McSntt.Models;
 
@@ -22,6 +23,7 @@ namespace McSntt
         public void ImportMembersFromXmlFile(String xmlFilePath)
         {
             SailClubMember member = null;
+            String tagName;
 
             // Just for good measure
             this.SailClubMembers.Load();
@@ -33,41 +35,52 @@ namespace McSntt
                 {
                     if (reader.IsStartElement())
                     {
-                        switch (reader.Name)
+                        tagName = reader.Name;
+
+                        if (tagName == "tblMembers")
                         {
-                            case "tblMembers": // Start of an entry
-                                member = new SailClubMember();
-                                break;
+                            member = new SailClubMember();
+                        }
+                        else if (member != null && reader.Read())
+                        {
+                            switch (tagName)
+                            {
+                                case "Id":
+                                    member.SetMemberId(reader.Value.Trim());
+                                    break;
 
-                            case "Id":
-                                if (member != null && reader.Read())
-                                {
-                                }
-                                break;
+                                case "FirstName":
+                                    member.FirstName = reader.Value.Trim();
+                                    break;
 
-                            case "FirstName":
-                                break;
+                                case "LastName":
+                                    member.LastName = reader.Value.Trim();
+                                    break;
 
-                            case "LastName":
-                                break;
+                                case "Address":
+                                    member.Address = reader.Value.Trim();
+                                    break;
 
-                            case "Address":
-                                break;
+                                case "PostCode":
+                                    member.Postcode = reader.Value.Trim();
+                                    break;
 
-                            case "PostCode":
-                                break;
+                                case "CityName":
+                                    member.Cityname = reader.Value.Trim();
+                                    break;
 
-                            case "CityName":
-                                break;
+                                case "MemberSince":
+                                    member.SetMemberSince(reader.Value.Trim());
+                                    break;
 
-                            case "MemberSince":
-                                break;
+                                case "Birthdate":
+                                    member.SetDateOfBirth(reader.Value.Trim());
+                                    break;
 
-                            case "Birthdate":
-                                break;
-
-                            case "IsMale":
-                                break;
+                                case "IsMale":
+                                    member.Gender = reader.Value.Trim().Equals("0") ? Gender.Female : Gender.Male;
+                                    break;
+                            }
                         }
                     }
                     else if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "tblMembers")

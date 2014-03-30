@@ -72,6 +72,14 @@
     <Compile Include="Migrations\201403281225289_PersonUpdates.Designer.cs">
       <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201403302325320_ChangesToPersonClass.cs" />
+    <Compile Include="Migrations\201403302325320_ChangesToPersonClass.Designer.cs">
+      <DependentUpon>201403302325320_ChangesToPersonClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403302331000_AddedMemberSince.cs" />
+    <Compile Include="Migrations\201403302331000_AddedMemberSince.Designer.cs">
+      <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Page Include="MainWindow.xaml">
@@ -111,6 +119,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403281225289_PersonUpdates.resx">
       <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403302325320_ChangesToPersonClass.resx">
+      <DependentUpon>201403302325320_ChangesToPersonClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403302331000_AddedMemberSince.resx">
+      <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
