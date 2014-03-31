@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201403302331000_AddedMemberSince.Designer.cs">
       <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201403310827295_UserLogin.cs" />
+    <Compile Include="Migrations\201403310827295_UserLogin.Designer.cs">
+      <DependentUpon>201403310827295_UserLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Page Include="MainWindow.xaml">
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403302331000_AddedMemberSince.resx">
       <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310827295_UserLogin.resx">
+      <DependentUpon>201403310827295_UserLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
