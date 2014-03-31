@@ -59,8 +59,9 @@ namespace McSntt
             }
 
             // Clear all error messages.
-            StatusTextBlock.Text = "";
-
+            StatusTextBlock.Text = "Forsøger at logge dig ind.";
+            StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+            
             using (var db = new McSntttContext())
             {
                 db.SailClubMembers.Load();
