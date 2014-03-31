@@ -70,35 +70,33 @@ namespace McSntt
                 PasswordHash = Sha256("hej")
             };
 
-            // Check if user exists
-            if (testMember.Username == UsernameBox.Text)
+            // Check if user exists (Case insensitive)
+            if (testMember.Username.ToLower() == UsernameBox.Text.ToLower())
             {
-                // Check if the password is correct
+                // Check if the password is correct (Case sensitive)
                 if (testMember.PasswordHash == Sha256(PasswordBox.Password))
                 {
                     StatusTextBlock.Text = "Velkommen, " + testMember.FirstName + "!";
                     StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+
+                    LoginCompleted();
                 }
                 else
                 {
                     StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
                     StatusTextBlock.Text = "Forkert kodeord";
-
-                    return;
                 }               
             }
             else
             {
                 StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
                 StatusTextBlock.Text = "Forkert Brugernavn";
-
-                return;
             }
+        }
 
+        public void LoginCompleted()
+        {
             
-
-            // Give appropriate privledges
-
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -119,12 +117,6 @@ namespace McSntt
             byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(password), 0, Encoding.UTF8.GetByteCount(password));
             return crypto.Aggregate(hash, (current, bit) => current + bit.ToString("x2"));
         }
-
-        private void PasswordBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
 
     }
 }
