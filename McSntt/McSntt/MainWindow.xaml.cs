@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
@@ -21,18 +22,14 @@ namespace McSntt
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void MemberButton_Click(object sender, RoutedEventArgs e)
-        {
-            var MemberListWindow = new MemberList();
-            MemberListWindow.Show();
-        }
+        #region Login
 
         private void DoLogin(object sender, RoutedEventArgs e)
         {
@@ -112,6 +109,69 @@ namespace McSntt
                 DoLogin(sender, e);
             }
         }
+
+        #endregion
+
+        #region Search
+        // In order to seach these must exist.
+        private ICollectionView _dataGridCollection;
+        private string _filterString;
+
+        public ICollectionView DataGridCollection
+        {
+            get { return _dataGridCollection; }
+            set { _dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        public string FilterString
+        {
+            get { return _filterString; }
+            set
+            {
+                _filterString = value;
+                NotifyPropertyChanged("FilterString");
+                FilterCollection();
+            }
+        }
+
+        private void FilterCollection()
+        {
+            if (_dataGridCollection != null)
+            {
+                _dataGridCollection.Refresh();
+            }
+        }
+
+        public bool Filter(object obj)
+        {
+            var data = obj as SailClubMember;
+            if (data != null)
+            {
+                if (!string.IsNullOrEmpty(_filterString))
+                {
+                    return data.FirstName.Contains(_filterString) ||
+                            data.LastName.Contains(_filterString) ||
+                            data.Email.Contains(_filterString);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        #endregion
 
 
         // This method will return a Sha256 hash as a string given a string as input. 
