@@ -5,12 +5,19 @@
     <Grid>
         <TabControl Margin="10,124,10,10" HorizontalContentAlignment="Center">
             <TabItem Header="Forside">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="77*"/>
-                        <ColumnDefinition Width="909*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="MemberButton" Content="Medlemsliste" HorizontalAlignment="Left" VerticalAlignment="Top" Width="274" Margin="10,10,0,0" Height="74" Click="MemberButton_Click" Grid.ColumnSpan="2"/>
+                <Grid Background="#FFE5E5E5" Margin="-2,37,2,-37">
+                    <StackPanel HorizontalAlignment="Left" Height="305" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" Name="LoginBox">
+                        <TextBlock TextWrapping="Wrap"><Run Language="da-dk" Text="Brugernavn:"/></TextBlock>
+                        <TextBox Name="UsernameBox"  Height="23" TextWrapping="Wrap" Text="" KeyDown="OnKeyDownHandler"/>
+                        <TextBlock TextWrapping="Wrap"><Run Language="da-dk" Text="Kodeord:"/></TextBlock>
+                        <PasswordBox x:Name="PasswordBox" Height="23" KeyDown="OnKeyDownHandler" />
+                        <StackPanel Height="28" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,5" >
+                            <Button Content="Glemt adgangskode" Margin="0,4,0,0" />
+                            <Button Content="Login" Click="DoLogin" Margin="0,4,0,0" />
+                        </StackPanel>
+                        <TextBlock Name="StatusTextBlock" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <Button x:Name="MemberButton" Content="Medlemsliste" HorizontalAlignment="Left" VerticalAlignment="Top" Width="274" Margin="702,10,0,0" Height="74" Click="MemberButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Kalender">

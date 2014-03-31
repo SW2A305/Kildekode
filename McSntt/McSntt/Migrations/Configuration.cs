@@ -1,3 +1,5 @@
+using McSntt.Models;
+
 namespace McSntt.Migrations
 {
     using System;
@@ -27,6 +29,20 @@ namespace McSntt.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            
+            context.SailClubMembers.AddOrUpdate(
+                p => p.Username,
+                new SailClubMember
+                {
+                    FirstName = "Andreas M.",
+                    LastName = "Karlsen",
+                    Email = "AndreasMKarlsen@rhyta.com",
+                    Username = "Aa",
+                    DateOfBirth = "1994-06-13",
+                    PasswordHash = "9c478bf63e9500cb5db1e85ece82f18c8eb9e52e2f9135acd7f10972c8d563ba"
+
+                }
+            ); 
         }
     }
 }

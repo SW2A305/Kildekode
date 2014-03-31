@@ -40,25 +40,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\nunit.core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.core.interfaces">
-      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\nunit.core.interfaces.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.util">
-      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\nunit.util.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NUnit.VisualStudio.TestAdapter">
-      <HintPath>..\packages\NUnitTestAdapter.1.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -90,6 +71,38 @@
     <Compile Include="Migrations\201403281225289_PersonUpdates.cs" />
     <Compile Include="Migrations\201403281225289_PersonUpdates.Designer.cs">
       <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403302325320_ChangesToPersonClass.cs" />
+    <Compile Include="Migrations\201403302325320_ChangesToPersonClass.Designer.cs">
+      <DependentUpon>201403302325320_ChangesToPersonClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403302331000_AddedMemberSince.cs" />
+    <Compile Include="Migrations\201403302331000_AddedMemberSince.Designer.cs">
+      <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403310827295_UserLogin.cs" />
+    <Compile Include="Migrations\201403310827295_UserLogin.Designer.cs">
+      <DependentUpon>201403310827295_UserLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403310912205_birthdateNullable.cs" />
+    <Compile Include="Migrations\201403310912205_birthdateNullable.Designer.cs">
+      <DependentUpon>201403310912205_birthdateNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403310914071_birthdateUpdated.cs" />
+    <Compile Include="Migrations\201403310914071_birthdateUpdated.Designer.cs">
+      <DependentUpon>201403310914071_birthdateUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403310921001_birthdateUpdatedAgain.cs" />
+    <Compile Include="Migrations\201403310921001_birthdateUpdatedAgain.Designer.cs">
+      <DependentUpon>201403310921001_birthdateUpdatedAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403310924407_birthdateToString.cs" />
+    <Compile Include="Migrations\201403310924407_birthdateToString.Designer.cs">
+      <DependentUpon>201403310924407_birthdateToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201403310928587_RemovedMemberSince.cs" />
+    <Compile Include="Migrations\201403310928587_RemovedMemberSince.Designer.cs">
+      <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SailClubMember.cs" />
@@ -130,6 +143,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403281225289_PersonUpdates.resx">
       <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403302325320_ChangesToPersonClass.resx">
+      <DependentUpon>201403302325320_ChangesToPersonClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403302331000_AddedMemberSince.resx">
+      <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310827295_UserLogin.resx">
+      <DependentUpon>201403310827295_UserLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310912205_birthdateNullable.resx">
+      <DependentUpon>201403310912205_birthdateNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310914071_birthdateUpdated.resx">
+      <DependentUpon>201403310914071_birthdateUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310921001_birthdateUpdatedAgain.resx">
+      <DependentUpon>201403310921001_birthdateUpdatedAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310924407_birthdateToString.resx">
+      <DependentUpon>201403310924407_birthdateToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201403310928587_RemovedMemberSince.resx">
+      <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

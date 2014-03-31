@@ -35,8 +35,8 @@ namespace McSntt
                 PhoneNumber = "12345678",
                 Gender = Gender.Male,
                 MemberId = 1337,
-                Position = Positions.Admin,
-                DateOfBirth = new DateTime(1994, 06, 13),
+                Position = SailClubMember.Positions.Admin,
+                DateOfBirth = "1994-06-13",
                 BoatDriver = false
             };
             var testMember2 = new SailClubMember
@@ -50,8 +50,8 @@ namespace McSntt
                 PhoneNumber = "12345678",
                 Gender = Gender.Male,
                 MemberId = 1337,
-                Position = Positions.Admin,
-                DateOfBirth = new DateTime(1994, 06, 13),
+                Position = SailClubMember.Positions.Admin,
+                DateOfBirth = "1994-06-13",
                 BoatDriver = false
             };
 
