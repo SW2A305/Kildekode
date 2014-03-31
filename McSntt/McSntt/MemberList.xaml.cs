@@ -36,7 +36,7 @@ namespace McSntt
                 Gender = Gender.Male,
                 MemberId = 1337,
                 Position = SailClubMember.Positions.Admin,
-                DateOfBirth = new DateTime(1994, 06, 13),
+                DateOfBirth = "1994-06-13",
                 BoatDriver = false
             };
             var testMember2 = new SailClubMember
@@ -51,7 +51,7 @@ namespace McSntt
                 Gender = Gender.Male,
                 MemberId = 1337,
                 Position = SailClubMember.Positions.Admin,
-                DateOfBirth = new DateTime(1994, 06, 13),
+                DateOfBirth = "1994-06-13",
                 BoatDriver = false
             };
 

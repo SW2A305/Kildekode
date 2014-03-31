@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -60,36 +61,41 @@ namespace McSntt
             // Clear all error messages.
             StatusTextBlock.Text = "";
 
-            // Make mock member to test
-            var testMember = new SailClubMember()
+            using (var db = new McSntttContext())
             {
-                FirstName = "Troels",
-                LastName = "Krøgh",
-                Username = "Satai",
-                PasswordHash = Sha256("hej")
-            };
+                db.SailClubMembers.Load();
 
-            // Check if user exists (Case insensitive)
-            if (testMember.Username.ToLower() == UsernameBox.Text.ToLower())
-            {
-                // Check if the password is correct (Case sensitive)
-                if (testMember.PasswordHash == Sha256(PasswordBox.Password))
+                try
                 {
-                    StatusTextBlock.Text = "Velkommen, " + testMember.FirstName + "!";
-                    StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+                    SailClubMember usr = db.SailClubMembers.Local.FirstOrDefault(x => x.Username.ToLower() == UsernameBox.Text.ToLower());
 
-                    LoginCompleted();
+                    // Check if user exists (Case insensitive)
+                    if (usr != null && usr.Username == UsernameBox.Text)
+                    {
+                        // Check if the password is correct (Case sensitive)
+                        if (usr.PasswordHash == Sha256(PasswordBox.Password))
+                        {
+                            StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
+                            StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+
+                            LoginCompleted();
+                        }
+                        else
+                        {
+                            StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                            StatusTextBlock.Text = "Forkert kodeord";
+                        }
+                    }
+                    else
+                    {
+                        StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                        StatusTextBlock.Text = "Forkert Brugernavn";
+                    }
                 }
-                else
+                catch (NullReferenceException exception)
                 {
-                    StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                    StatusTextBlock.Text = "Forkert kodeord";
-                }               
-            }
-            else
-            {
-                StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                StatusTextBlock.Text = "Forkert Brugernavn";
+                    StatusTextBlock.Text = "Bruger ikke fundet" + exception.ToString();
+                }
             }
         }
 

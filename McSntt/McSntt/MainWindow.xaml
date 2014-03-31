@@ -5,8 +5,8 @@
     <Grid>
         <TabControl Margin="10,124,10,10" HorizontalContentAlignment="Center">
             <TabItem Header="Forside">
-                <Grid Background="#FFE5E5E5" Margin="7,1,-7,-1">
-                    <StackPanel HorizontalAlignment="Left" Height="150" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" Name="LoginBox">
+                <Grid Background="#FFE5E5E5" Margin="-2,37,2,-37">
+                    <StackPanel HorizontalAlignment="Left" Height="305" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" Name="LoginBox">
                         <TextBlock TextWrapping="Wrap"><Run Language="da-dk" Text="Brugernavn:"/></TextBlock>
                         <TextBox Name="UsernameBox"  Height="23" TextWrapping="Wrap" Text="" KeyDown="OnKeyDownHandler"/>
                         <TextBlock TextWrapping="Wrap"><Run Language="da-dk" Text="Kodeord:"/></TextBlock>
