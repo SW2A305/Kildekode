@@ -23,7 +23,6 @@ namespace McSntt
         public void ImportMembersFromXmlFile(String xmlFilePath)
         {
             SailClubMember member = null;
-            String tagName;
 
             // Just for good measure
             this.SailClubMembers.Load();
@@ -35,7 +34,7 @@ namespace McSntt
                 {
                     if (reader.IsStartElement())
                     {
-                        tagName = reader.Name;
+                        String tagName = reader.Name;
 
                         if (tagName == "tblMembers")
                         {
@@ -69,12 +68,8 @@ namespace McSntt
                                     member.Cityname = reader.Value.Trim();
                                     break;
 
-                                case "MemberSince":
-                                    member.SetMemberSince(reader.Value.Trim());
-                                    break;
-
                                 case "Birthdate":
-                                    member.SetDateOfBirth(reader.Value.Trim());
+                                    member.DateOfBirth = reader.Value.Trim();
                                     break;
 
                                 case "IsMale":

@@ -46,49 +46,5 @@ namespace McSntt.Test.Models
 
             Assert.AreEqual(3, this.MemberId);
         }
-
-        [Test]
-        public void SetMemberSince_InputEmptyString_ExpectedResult()
-        {
-            Assert.IsTrue(false, "What are we actually expecting here??");
-        }
-
-        [Test]
-        public void SetMemberSince_InputXmlDateString_SetsTheDateCorrectly()
-        {
-            var expectedDate = new DateTime(2002, 3, 4, 0, 0, 0, 0);
-
-            SetMemberSince("2002-03-04T00:00:00");
-
-            // Assert.AreEqual(expectedDate, this.MemberSince);
-        }
-
-        [Test]
-        public void SetMemberSince_InputInvalidDateTimeString_ExpectedResult()
-        {
-            Assert.IsTrue(false, "What are we actually expecting here??");
-        }
-
-        [Test]
-        public void SetDateOfBirth_InputEmptyString_ExpectedResult()
-        {
-            Assert.IsTrue(false, "What are we actually expecting here??");
-        }
-
-        [Test]
-        public void SetDateOfBirth_InputXmlDateString_SetsTheDateCorrectly()
-        {
-            var expectedDate = new DateTime(2002, 3, 4, 0, 0, 0, 0);
-
-            SetDateOfBirth("2002-03-04T00:00:00");
-
-            Assert.AreEqual(expectedDate, this.DateOfBirth);
-        }
-
-        [Test]
-        public void SetDateOfBirth_InputInvalidDateTimeString_ExpectedResult()
-        {
-            Assert.IsTrue(false, "What are we actually expecting here??");
-        }
     }
 }
