@@ -10,7 +10,6 @@ namespace McSntt.Models
         #region Properties
         public int MemberId { get; set; }
         public Positions Position { get; set; }
-        // public DateTime MemberSince { get; set; }
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         #endregion
@@ -48,28 +47,6 @@ namespace McSntt.Models
             int parsedNumber;
 
             this.MemberId = int.TryParse(memberId, out parsedNumber) ? parsedNumber : default(int);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="memberSince"></param>
-        public void SetMemberSince(String memberSince)
-        {
-            // DateTime parsedDate;
-
-            // this.MemberSince = DateTime.Parse(memberSince);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dateOfBirth"></param>
-        public void SetDateOfBirth(String dateOfBirth)
-        {
-            DateTime parsedDate;
-
-            this.DateOfBirth = dateOfBirth;
         }
     }
 }
