@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Xml;
 using McSntt.DataAbstractionLayer;
 using McSntt.Models;
@@ -24,17 +25,17 @@ namespace McSntt.Helpers
         /// <summary>
         ///     Imports members from an XML file that has been exported from an Access DB.
         /// </summary>
-        /// <param name="xmlFilePath">The path of the XML file to import from.</param>
+        /// <param name="xmlStream">The stream containing the XML data.</param>
         /// <remarks>
         ///     It might be a good idea to execute this on a separate thread, just to make it scale better. It won't be important
         ///     with only a few members, of course, but still.
         /// </remarks>
-        public void ImportMembersFromXmlFile(String xmlFilePath)
+        public void ImportMembersFromXml(Stream xmlStream)
         {
             SailClubMember member = null;
 
             // Parse file
-            using (XmlReader reader = XmlReader.Create(xmlFilePath))
+            using (XmlReader reader = XmlReader.Create(xmlStream))
             {
                 while (reader.Read())
                 {
@@ -93,6 +94,11 @@ namespace McSntt.Helpers
                     }
                 }
             }
+        }
+
+        public void ImportMembersFromXml(String xmlFilePath)
+        {
+            ImportMembersFromXml(new FileStream(xmlFilePath, FileMode.Open, FileAccess.Read));
         }
     }
 }
