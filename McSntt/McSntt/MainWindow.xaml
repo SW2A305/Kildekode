@@ -34,7 +34,7 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
             </TabItem>
-            <TabItem Header="Medlemsliste" Name="MemberTabItem">
+            <TabItem Header="Medlemsliste" Name="MemberTabItem" Height="23" VerticalAlignment="Top">
 
                 <!-- Member info with searchbox -->
                 <StackPanel DataContext="{Binding ElementName=UI}" Margin="10,33,201,66">

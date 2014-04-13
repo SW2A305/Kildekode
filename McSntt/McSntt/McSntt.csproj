@@ -111,6 +111,7 @@
       <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
