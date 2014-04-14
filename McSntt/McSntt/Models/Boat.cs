@@ -6,15 +6,28 @@ using System.Threading.Tasks;
 
 namespace McSntt.Models
 {
-    class Boat
+    public class Boat
     {
         public Boat()
         {
-            // Asign the next id to the new instance of the boat
-            id = _nextId++;
+            // Assign the id and increment the next
+            Id = _nextId++;
         }
         // Boats have an unique ID number
         private static int _nextId;
-        public int id { get; private set; }
+        public int Id { get; private set; }
+
+        public BoatType Type { get; set; }
+        public string NickName { get; set; }
+        public Person Owner { get; set; }
+    }
+
+    public enum BoatType
+    {
+        Gaffelrigger = 0,
+        Drabant = 1,
+        Spækhugger = 2,
+        J80 = 3,
+        Mini12 = 4
     }
 }

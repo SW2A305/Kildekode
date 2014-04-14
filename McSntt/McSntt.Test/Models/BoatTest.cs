@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace McSntt.Test.Models
 {
     [TestFixture]
-    class BoatTest : McSntt.Models.
+    class BoatTest : Boat
     {
         [Test]
         public void ID_TwoInstances_diffirentIds()
@@ -17,7 +17,14 @@ namespace McSntt.Test.Models
             var instanceOne = new Boat();
             var instanceTwo = new Boat();
 
-            Assert.AreNotEqual(instanceOne.id, instanceTwo.id);
+            Assert.AreNotEqual(instanceOne.Id, instanceTwo.Id);
+        }
+
+        [Test]
+        public void ID_OneInstance_FirstIdIsZero()
+        {
+            var instanceOne = new Boat();
+            Assert.AreNotEqual(instanceOne.Id, 0);
         }
     }
 }
