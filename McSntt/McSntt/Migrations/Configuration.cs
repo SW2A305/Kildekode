@@ -29,7 +29,7 @@ namespace McSntt.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            
+
             context.SailClubMembers.AddOrUpdate(
                 p => p.Username,
                 new SailClubMember
@@ -42,7 +42,42 @@ namespace McSntt.Migrations
                     PasswordHash = "9c478bf63e9500cb5db1e85ece82f18c8eb9e52e2f9135acd7f10972c8d563ba"
 
                 }
-            ); 
+                );
+
+
+            context.SailClubMembers.AddOrUpdate(
+                p => p.Username,
+                new SailClubMember
+                {
+                    FirstName = "Troels",
+                    LastName = "Kroegh",
+                    Address = "Scoresbysundvej 8",
+                    Postcode = "9210",
+                    Cityname = "Aalborg SØ",
+                    Email = "HalloHallo@gmail.com",
+                    PhoneNumber = "12345678",
+                    Gender = Gender.Male,
+                    MemberId = 1337,
+                    Position = SailClubMember.Positions.Admin
+                }
+                );
+
+            context.SailClubMembers.AddOrUpdate(
+                p => p.Username,
+                new SailClubMember
+                {
+                    FirstName = "Søren",
+                    LastName = "Kroegh",
+                    Address = "Scoresbysundvej 8",
+                    Postcode = "9000",
+                    Cityname = "Aalborg SØ",
+                    Email = "HalloHallo@gmail.com",
+                    PhoneNumber = "12345678",
+                    Gender = Gender.Male,
+                    MemberId = 1337,
+                    Position = SailClubMember.Positions.Admin
+                }
+                );
         }
     }
 }

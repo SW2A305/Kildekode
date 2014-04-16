@@ -26,7 +26,19 @@ namespace McSntt
     {
         public MainWindow()
         {
+            // Set the list as the current DataContext
             InitializeComponent();
+
+            using (var db = new McSntttContext())
+            {
+                #region SearchInMain
+
+                var voresfuckingliste = db.SailClubMembers.ToList();
+                StatusTextBlock.Text = voresfuckingliste.First().FirstName;
+                DataGridCollection = CollectionViewSource.GetDefaultView(voresfuckingliste);
+                DataGridCollection.Filter = new Predicate<object>(Filter);
+                #endregion
+            }
         }
 
         #region Login
