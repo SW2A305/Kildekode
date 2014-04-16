@@ -32,10 +32,8 @@ namespace McSntt
             using (var db = new McSntttContext())
             {
                 #region SearchInMain
-
-                var voresfuckingliste = db.SailClubMembers.ToList();
-                StatusTextBlock.Text = voresfuckingliste.First().FirstName;
-                DataGridCollection = CollectionViewSource.GetDefaultView(voresfuckingliste);
+                db.SailClubMembers.Load();
+                DataGridCollection = CollectionViewSource.GetDefaultView( db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
                 #endregion
             }
