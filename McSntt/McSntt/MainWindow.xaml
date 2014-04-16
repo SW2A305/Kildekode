@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Sundet Administration " Height="883" Width="1024" UseLayoutRounding="False" Name="UI">
     <Grid>
-        <TabControl HorizontalContentAlignment="Center" Margin="0,121,0,5">
+        <TabControl HorizontalContentAlignment="Center" Margin="10,126,10,-12" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Forside">
                 <Grid Background="#FFE5E5E5" 
                       >
@@ -35,9 +35,10 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Medlemsliste" Name="MemberTabItem" Height="23" VerticalAlignment="Top">
-
+                    
                 <!-- Member info with searchbox -->
-                <StackPanel DataContext="{Binding ElementName=UI}" Margin="10,33,10,10">
+                <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
+                    <Label Height="37" FontSize="20" >Herunder kan der søges:</Label>
                     <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged" />
                     <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
@@ -55,6 +56,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
+            </TabItem>
+            <TabItem Header="Både" Name="BoatsTabItem">
+                
             </TabItem>
         </TabControl>
         <Image HorizontalAlignment="Right" Height="Auto" Margin="0,10,10,0" VerticalAlignment="Top" Width="100">

@@ -18,6 +18,7 @@ namespace McSntt.Models
     /// </summary>
     public class Person
     {
+        // TODO: THIS SHOULD BE UNIQUE
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
