@@ -30,6 +30,8 @@ namespace McSntt.Migrations
             //    );
             //
 
+            
+
             context.SailClubMembers.AddOrUpdate(
                 p => p.Username,
                 new SailClubMember
@@ -44,20 +46,20 @@ namespace McSntt.Migrations
                 }
                 );
 
-
             context.SailClubMembers.AddOrUpdate(
                 p => p.Username,
                 new SailClubMember
                 {
                     FirstName = "Troels",
                     LastName = "Kroegh",
+                    Username = "Røde",
                     Address = "Scoresbysundvej 8",
                     Postcode = "9210",
                     Cityname = "Aalborg SØ",
                     Email = "HalloHallo@gmail.com",
                     PhoneNumber = "12345678",
                     Gender = Gender.Male,
-                    MemberId = 1337,
+                    MemberId = 1339,
                     Position = SailClubMember.Positions.Admin
                 }
                 );
@@ -68,14 +70,26 @@ namespace McSntt.Migrations
                 {
                     FirstName = "Søren",
                     LastName = "Kroegh",
+                    Username = "Trampe",
                     Address = "Scoresbysundvej 8",
                     Postcode = "9000",
                     Cityname = "Aalborg SØ",
                     Email = "HalloHallo@gmail.com",
                     PhoneNumber = "12345678",
-                    Gender = Gender.Male,
-                    MemberId = 1337,
+                    Gender = Gender.Female,
+                    MemberId = 1338,
                     Position = SailClubMember.Positions.Admin
+                }
+                );
+
+            context.Boats.AddOrUpdate(
+                b => b.Id,
+                new Boat
+                {
+                    NickName = "Bodil",
+                    Type = BoatType.Drabant,
+                    Operational = true,
+                    ImagePath = "Images/SundetLogo.png"
                 }
                 );
         }

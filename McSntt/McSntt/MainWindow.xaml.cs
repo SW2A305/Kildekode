@@ -32,6 +32,7 @@ namespace McSntt
             using (var db = new McSntttContext())
             {
                 #region SearchInMain
+
                 db.SailClubMembers.Load();
                 DataGridCollection = CollectionViewSource.GetDefaultView( db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
@@ -75,29 +76,32 @@ namespace McSntt
 
                 try
                 {
-                    SailClubMember usr = db.SailClubMembers.Local.FirstOrDefault(x => x.Username.ToLower() == UsernameBox.Text.ToLower());
-
-                    // Check if user exists (Case insensitive)
-                    if (usr != null && usr.Username == UsernameBox.Text)
+                    if (db.SailClubMembers != null)
                     {
-                        // Check if the password is correct (Case sensitive)
-                        if (usr.PasswordHash == Sha256(PasswordBox.Password))
-                        {
-                            StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
-                            StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+                        SailClubMember usr = db.SailClubMembers.Local.FirstOrDefault(x => x.Username.ToLower() == UsernameBox.Text.ToLower());
 
-                            LoginCompleted();
+                        // Check if user exists (Case insensitive)
+                        if (usr != null && usr.Username == UsernameBox.Text)
+                        {
+                            // Check if the password is correct (Case sensitive)
+                            if (usr.PasswordHash == Sha256(PasswordBox.Password))
+                            {
+                                StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
+                                StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+
+                                LoginCompleted();
+                            }
+                            else
+                            {
+                                StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                                StatusTextBlock.Text = "Forkert kodeord";
+                            }
                         }
                         else
                         {
                             StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                            StatusTextBlock.Text = "Forkert kodeord";
+                            StatusTextBlock.Text = "Forkert Brugernavn";
                         }
-                    }
-                    else
-                    {
-                        StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                        StatusTextBlock.Text = "Forkert Brugernavn";
                     }
                 }
                 catch (NullReferenceException exception)
@@ -178,9 +182,49 @@ namespace McSntt
             {
                 if (!string.IsNullOrEmpty(_filterString))
                 {
-                    return data.FirstName.Contains(_filterString) ||
-                            data.LastName.Contains(_filterString) ||
-                            data.Email.Contains(_filterString);
+                    // Sanitise input to lower
+                    var lower = _filterString.ToLower();
+
+                    // Check if either of the data points for the members match the filterstring
+                    if (data.FirstName != null)
+                        if (data.FirstName.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.LastName != null)
+                        if (data.LastName.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.Postcode != null)
+                        if (data.Postcode.Contains(lower))
+                            return true;
+
+                    if (data.Username != null)
+                        if (data.Username.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.Cityname != null)
+                        if (data.Cityname.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.Email != null)
+                        if (data.Email.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.PhoneNumber != null)
+                        if (data.PhoneNumber.Contains(lower))
+                            return true;
+
+                    if ((data.Gender.Equals(Gender.Male) ? "male" : string.Empty).Contains(lower))
+                        return true;
+
+                    if ((data.Gender.Equals(Gender.Female) ? "female" : string.Empty).Contains(lower))
+                        return true;
+
+                    if (data.MemberId.ToString().Contains(lower))
+                        return true;
+
+                    // If none succeeds return false
+                    return false;
                 }
                 return true;
             }

@@ -19,7 +19,8 @@ namespace McSntt.Models
 
         public BoatType Type { get; set; }
         public string NickName { get; set; }
-        public Person Owner { get; set; }
+        public string ImagePath { get; set; }
+        public bool Operational { get; set; }
     }
 
     public enum BoatType
