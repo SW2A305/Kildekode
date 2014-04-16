@@ -62,8 +62,10 @@
     </ApplicationDefinition>
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
+    <Compile Include="DataAbstractionLayer\IBoatDal.cs" />
     <Compile Include="DataAbstractionLayer\ISailClubMemberDal.cs" />
     <Compile Include="DataAbstractionLayer\PersonEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="McSntttContext.cs" />
@@ -110,7 +112,20 @@
     <Compile Include="Migrations\201403310928587_RemovedMemberSince.Designer.cs">
       <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404161150398_Added-Boats.cs" />
+    <Compile Include="Migrations\201404161150398_Added-Boats.Designer.cs">
+      <DependentUpon>201404161150398_Added-Boats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404161205467_Added-Boats-2p0.cs" />
+    <Compile Include="Migrations\201404161205467_Added-Boats-2p0.Designer.cs">
+      <DependentUpon>201404161205467_Added-Boats-2p0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404161225166_Added-Boats-image.cs" />
+    <Compile Include="Migrations\201404161225166_Added-Boats-image.Designer.cs">
+      <DependentUpon>201404161225166_Added-Boats-image.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +188,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403310928587_RemovedMemberSince.resx">
       <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404161150398_Added-Boats.resx">
+      <DependentUpon>201404161150398_Added-Boats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404161205467_Added-Boats-2p0.resx">
+      <DependentUpon>201404161205467_Added-Boats-2p0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404161225166_Added-Boats-image.resx">
+      <DependentUpon>201404161225166_Added-Boats-image.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

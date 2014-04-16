@@ -1,9 +1,9 @@
 ﻿<Window x:Class="McSntt.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Sundet Administration " Height="883" Width="1024" UseLayoutRounding="False" >
+        Title="Sundet Administration " Height="883" Width="1024" UseLayoutRounding="False" Name="UI">
     <Grid>
-        <TabControl HorizontalContentAlignment="Center" Margin="0,126,0,0">
+        <TabControl HorizontalContentAlignment="Center" Margin="10,126,10,-12" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Forside">
                 <Grid Background="#FFE5E5E5" 
                       >
@@ -34,10 +34,11 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
             </TabItem>
-            <TabItem Header="Medlemsliste" Name="MemberTabItem">
-
+            <TabItem Header="Medlemsliste" Name="MemberTabItem" Height="23" VerticalAlignment="Top">
+                    
                 <!-- Member info with searchbox -->
-                <StackPanel DataContext="{Binding ElementName=UI}" Margin="10,33,201,66">
+                <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
+                    <Label Height="37" FontSize="20" >Herunder kan der søges:</Label>
                     <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged" />
                     <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
@@ -55,6 +56,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
+            </TabItem>
+            <TabItem Header="Både" Name="BoatsTabItem">
+                
             </TabItem>
         </TabControl>
         <Image HorizontalAlignment="Right" Height="Auto" Margin="0,10,10,0" VerticalAlignment="Top" Width="100">
