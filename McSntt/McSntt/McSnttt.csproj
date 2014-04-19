@@ -131,6 +131,10 @@
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
+    <Compile Include="Views\Helpers\CalenderBackground.cs" />
+    <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
+      <DependentUpon>BoatReservation.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +148,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\UserControls\BoatReservation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\SailTrip.cs" />
@@ -217,9 +225,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\cross.png" />
+    <Resource Include="Images\gray.png" />
     <Content Include="Images\SundetLogo.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\check.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
