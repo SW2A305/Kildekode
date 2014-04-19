@@ -3,11 +3,83 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UserControls="clr-namespace:McSntt.Views.UserControls" x:Class="McSntt.MainWindow"
         Title="Sundet Administration " Height="883" Width="1024" UseLayoutRounding="False" x:Name="UI">
+    
+    <Window.Resources>
+        <Style  TargetType="{x:Type TabControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabControl}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TabPanel 
+                              Grid.Row="0"
+                              Panel.ZIndex="1" 
+                              Margin="0,0,4,-1" 
+                              IsItemsHost="True"
+                              Background="Transparent" />
+                             <Border 
+                              Grid.Row="1"
+                              BorderBrush="Black" 
+                              BorderThickness="1" 
+                              CornerRadius="0, 12, 12, 12" >    
+                                <Border.Background>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="LightBlue" Offset="0" />
+                                        <GradientStop Color="White" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter ContentSource="SelectedContent" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                           <Border
+                              Name="Border"
+                              Background="LightBlue"
+                              BorderBrush="Black" 
+                              BorderThickness="1,1,1,1" 
+                              CornerRadius="6,6,0,0" >
+                                <ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    Margin="12,2,12,2"/>    
+                              </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="DeepSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="LightBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>     
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TabControl HorizontalContentAlignment="Center" Margin="10,104,10,10" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="Forside">
-                <Grid Background="#FFE5E5E5" 
-                      >
+        <TabControl HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Margin="0,0,-35,0">
+                <TabItem.Header>
+                    <TextBlock Text="Forside" FontSize="23" />
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="295*"/>
+                        <ColumnDefinition Width="198*"/>
+                    </Grid.ColumnDefinitions>
                     <StackPanel HorizontalAlignment="Left" Height="305" Margin="10,10,0,0" VerticalAlignment="Top" Width="283" x:Name="LoginBox">
                         <TextBlock TextWrapping="Wrap"><Run Language="da-dk" Text="Brugernavn:"/></TextBlock>
                         <TextBox x:Name="UsernameBox"  Height="23" TextWrapping="Wrap" Text="" KeyDown="OnKeyDownHandler"/>
@@ -21,14 +93,28 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Kalender" x:Name="CalenderTabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="CalenderTabItem" Margin="35,0,-60,0">
+                <TabItem.Header>
+                    <TextBlock Text="Kalender" FontSize="23" />
+                </TabItem.Header>
+
             </TabItem>
-            <TabItem Header="Begivenheder" x:Name="EvenetsTabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem  x:Name="EvenetsTabItem" Margin="60,0,-70,0">
+                <TabItem.Header>
+                    <TextBlock Text="Begivenheder" FontSize="23" />
+                </TabItem.Header>
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="304*"/>
+                        <ColumnDefinition Width="189*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </TabItem>
-            <TabItem Header="Booking" Margin="0" x:Name="BookiTabItem">
-                <Grid Background="#FFE5E5E5">
+            <TabItem  Margin="70,0,-110,0" x:Name="BookiTabItem">
+                <TabItem.Header>
+                    <TextBlock Text="Booking" FontSize="23" />
+                </TabItem.Header>
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="184*"/>
                         <ColumnDefinition Width="801*"/>
@@ -36,8 +122,10 @@
                     <UserControls:BoatReservation Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Medlemsliste" x:Name="MemberTabItem" Height="23" VerticalAlignment="Top">
-
+            <TabItem  x:Name="MemberTabItem" Height="110" VerticalAlignment="Top" Margin="110,0,-130,-0">
+                <TabItem.Header>
+                    <TextBlock Text="Medlemmer" FontSize="23" />
+                </TabItem.Header>
                 <!-- Member info with searchbox -->
                 <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
                     <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
@@ -59,7 +147,10 @@
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Både" x:Name="BoatsTabItem" >
+            <TabItem x:Name="BoatsTabItem" Margin="130,0,-180,0" >
+                <TabItem.Header>
+                    <TextBlock Text="Både" FontSize="23" />
+                </TabItem.Header>
                 <StackPanel HorizontalAlignment="Left" Width="500">
 
                     <ComboBox x:Name="BoatComboBox" HorizontalAlignment="Left" ItemsSource="{Binding BoatsCollection}" Width="250" DropDownClosed="BoatComboBox_OnDropDownClosed"/>
@@ -72,7 +163,7 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-        <Image HorizontalAlignment="Right" Height="Auto" Margin="0,10,10,0" VerticalAlignment="Top" Width="100">
+        <Image HorizontalAlignment="Right" Height="108" Margin="0,10,0,0" VerticalAlignment="Top" Width="100">
             <Image.Source>
                 <BitmapImage UriSource="Images/SundetLogo.png"/>
             </Image.Source>
@@ -80,4 +171,4 @@
 
 
     </Grid>
-</Window>
+  </Window>
