@@ -223,10 +223,10 @@ namespace McSntt
                         if (data.PhoneNumber.Contains(lower))
                             return true;
 
-                    if ((data.Gender.Equals(Gender.Male) ? "male" : string.Empty).Contains(lower))
+                    if ((data.Gender.Equals(Gender.Male) ? "mand" : string.Empty).Contains(lower))
                         return true;
 
-                    if ((data.Gender.Equals(Gender.Female) ? "female" : string.Empty).Contains(lower))
+                    if ((data.Gender.Equals(Gender.Female) ? "kvinde" : string.Empty).Contains(lower))
                         return true;
 
                     if (data.MemberId.ToString().Contains(lower))
