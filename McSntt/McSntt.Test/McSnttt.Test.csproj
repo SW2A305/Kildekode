@@ -70,9 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\McSntt\McSntt.csproj">
+    <ProjectReference Include="..\McSntt\McSnttt.csproj">
       <Project>{d0db6505-73e7-4186-b25a-c19f1f14b13e}</Project>
-      <Name>McSntt</Name>
+      <Name>McSnttt</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

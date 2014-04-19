@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.Migrations;
 using McSntt.Models;
 
 namespace McSntt
@@ -31,11 +33,18 @@ namespace McSntt
 
             using (var db = new McSntttContext())
             {
-                #region SearchInMain
-
+                #region SearchUI
                 db.SailClubMembers.Load();
                 DataGridCollection = CollectionViewSource.GetDefaultView( db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
+                #endregion
+
+                #region BoatUI
+                db.Boats.Load();
+                BoatComboBox.ItemsSource = db.Boats.Local;
+                BoatComboBox.DisplayMemberPath = "NickName";
+                BoatComboBox.SelectedValuePath = "Id";
+                
                 #endregion
             }
         }
@@ -106,7 +115,7 @@ namespace McSntt
                 }
                 catch (NullReferenceException exception)
                 {
-                    StatusTextBlock.Text = "Bruger ikke fundet" + exception.ToString();
+                    StatusTextBlock.Text = "Bruger ikke fundet" + exception;
                 }
             }
         }
@@ -231,20 +240,25 @@ namespace McSntt
             return false;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
+        #endregion
 
+        #region Boats
+        private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)
+        {
+            //TODO: Change all UI data to the current boats' info
+
+            // Write the name to the NameBlock text
+            var text = (sender as ComboBox).Text;
+            if (text != null) NameBlock.Text = text;
+        }
+        
         #endregion
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        
     }
 }

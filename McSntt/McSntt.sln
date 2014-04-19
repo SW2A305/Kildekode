@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McSntt", "McSntt\McSntt.csproj", "{D0DB6505-73E7-4186-B25A-C19F1F14B13E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McSnttt", "McSntt\McSnttt.csproj", "{D0DB6505-73E7-4186-B25A-C19F1F14B13E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D282D02E-0B9C-448A-BC89-844FF147DFF2}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McSntt.Test", "McSntt.Test\McSntt.Test.csproj", "{F6F39ABE-03FC-46A1-A605-3ED98A238F18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McSnttt.Test", "McSntt.Test\McSnttt.Test.csproj", "{F6F39ABE-03FC-46A1-A605-3ED98A238F18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
