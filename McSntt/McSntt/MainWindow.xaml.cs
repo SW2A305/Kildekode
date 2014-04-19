@@ -251,7 +251,7 @@ namespace McSntt
             var text = (sender as ComboBox).Text;
             if (text != null) NameBlock.Text = text;
         }
-
+        
         #endregion
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

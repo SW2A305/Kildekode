@@ -7,13 +7,13 @@ namespace McSntt.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class AddedBoatsimage : IMigrationMetadata
+    public sealed partial class RegularTrips : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedBoatsimage));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RegularTrips));
         
         string IMigrationMetadata.Id
         {
-            get { return "201404161225166_Added-Boats-image"; }
+            get { return "201404182358002_RegularTrips"; }
         }
         
         string IMigrationMetadata.Source

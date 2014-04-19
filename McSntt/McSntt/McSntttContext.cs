@@ -12,5 +12,6 @@ namespace McSntt
         public DbSet<Person> Persons { get; set; }
         public DbSet<SailClubMember> SailClubMembers { get; set; }
         public DbSet<Boat> Boats { get; set; }
+        public DbSet<RegularTrip> RegularTrips { get; set; }
     }
 }

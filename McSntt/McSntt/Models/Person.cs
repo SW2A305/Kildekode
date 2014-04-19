@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
@@ -18,7 +19,7 @@ namespace McSntt.Models
     /// </summary>
     public class Person
     {
-        // TODO: THIS SHOULD BE UNIQUE
+        // TODO: THIS SHOULD BE UNIQUE -- (Tristan) It should be unique already, as it's the primary key in the DB.
         public int PersonId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -30,5 +31,8 @@ namespace McSntt.Models
         public Gender Gender { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+
+        [InverseProperty("Crew")]
+        public IList<RegularTrip> PartOfCrewOn { get; set; }
     }
 }

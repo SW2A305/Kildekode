@@ -63,9 +63,11 @@
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
     <Compile Include="DataAbstractionLayer\IBoatDal.cs" />
+    <Compile Include="DataAbstractionLayer\IRegularTripDal.cs" />
     <Compile Include="DataAbstractionLayer\ISailClubMemberDal.cs" />
     <Compile Include="DataAbstractionLayer\PersonEfDal.cs" />
     <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="McSntttContext.cs" />
@@ -117,12 +119,17 @@
     <Compile Include="Migrations\201404161205467_Added-Boats-2p0.Designer.cs">
       <DependentUpon>201404161205467_Added-Boats-2p0.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201404161225166_Added-Boats-image.cs" />
-    <Compile Include="Migrations\201404161225166_Added-Boats-image.Designer.cs">
-      <DependentUpon>201404161225166_Added-Boats-image.cs</DependentUpon>
+    <Compile Include="Migrations\201404182121579_Boats-MissingImagePath.cs" />
+    <Compile Include="Migrations\201404182121579_Boats-MissingImagePath.Designer.cs">
+      <DependentUpon>201404182121579_Boats-MissingImagePath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404182358002_RegularTrips.cs" />
+    <Compile Include="Migrations\201404182358002_RegularTrips.Designer.cs">
+      <DependentUpon>201404182358002_RegularTrips.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
+    <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -139,6 +146,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\SailTrip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -188,8 +196,11 @@
     <EmbeddedResource Include="Migrations\201404161205467_Added-Boats-2p0.resx">
       <DependentUpon>201404161205467_Added-Boats-2p0.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404161225166_Added-Boats-image.resx">
-      <DependentUpon>201404161225166_Added-Boats-image.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404182121579_Boats-MissingImagePath.resx">
+      <DependentUpon>201404182121579_Boats-MissingImagePath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404182358002_RegularTrips.resx">
+      <DependentUpon>201404182358002_RegularTrips.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
