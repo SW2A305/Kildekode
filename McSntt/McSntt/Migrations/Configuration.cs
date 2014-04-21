@@ -60,7 +60,8 @@ namespace McSntt.Migrations
                     PhoneNumber = "12345678",
                     Gender = Gender.Male,
                     MemberId = 1339,
-                    Position = SailClubMember.Positions.Admin
+                    Position = SailClubMember.Positions.Admin,
+                    PasswordHash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" // sha256(mcsntt)
                 }
                 );
 
@@ -78,7 +79,9 @@ namespace McSntt.Migrations
                     PhoneNumber = "12345678",
                     Gender = Gender.Female,
                     MemberId = 1338,
-                    Position = SailClubMember.Positions.Admin
+                    Position = SailClubMember.Positions.Admin,
+                    PasswordHash = "aaa9402664f1a41f40ebbc52c9993eb66aeb366602958fdfaa283b71e64db123" // sha256(h)
+
                 }
                 );
 
