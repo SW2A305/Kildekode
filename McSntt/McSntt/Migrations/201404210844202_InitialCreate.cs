@@ -3,10 +3,45 @@ namespace McSntt.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class RegularTrips : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Boats",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Type = c.Int(nullable: false),
+                        NickName = c.String(),
+                        ImagePath = c.String(),
+                        Operational = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.People",
+                c => new
+                    {
+                        PersonId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        Address = c.String(),
+                        Postcode = c.String(),
+                        Cityname = c.String(),
+                        DateOfBirth = c.String(),
+                        BoatDriver = c.Boolean(nullable: false),
+                        Gender = c.Int(nullable: false),
+                        PhoneNumber = c.String(),
+                        Email = c.String(),
+                        MemberId = c.Int(),
+                        Position = c.Int(),
+                        Username = c.String(),
+                        PasswordHash = c.String(),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => t.PersonId);
+            
             CreateTable(
                 "dbo.RegularTrips",
                 c => new
@@ -55,6 +90,8 @@ namespace McSntt.Migrations
             DropIndex("dbo.RegularTrips", new[] { "CaptainId" });
             DropTable("dbo.PersonRegularTrips");
             DropTable("dbo.RegularTrips");
+            DropTable("dbo.People");
+            DropTable("dbo.Boats");
         }
     }
 }

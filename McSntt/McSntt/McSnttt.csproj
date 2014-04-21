@@ -71,61 +71,9 @@
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="McSntttContext.cs" />
-    <Compile Include="Migrations\201403271831356_InitialCreate.cs" />
-    <Compile Include="Migrations\201403271831356_InitialCreate.Designer.cs">
-      <DependentUpon>201403271831356_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403281225289_PersonUpdates.cs" />
-    <Compile Include="Migrations\201403281225289_PersonUpdates.Designer.cs">
-      <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403302325320_ChangesToPersonClass.cs" />
-    <Compile Include="Migrations\201403302325320_ChangesToPersonClass.Designer.cs">
-      <DependentUpon>201403302325320_ChangesToPersonClass.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403302331000_AddedMemberSince.cs" />
-    <Compile Include="Migrations\201403302331000_AddedMemberSince.Designer.cs">
-      <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403310827295_UserLogin.cs" />
-    <Compile Include="Migrations\201403310827295_UserLogin.Designer.cs">
-      <DependentUpon>201403310827295_UserLogin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403310912205_birthdateNullable.cs" />
-    <Compile Include="Migrations\201403310912205_birthdateNullable.Designer.cs">
-      <DependentUpon>201403310912205_birthdateNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403310914071_birthdateUpdated.cs" />
-    <Compile Include="Migrations\201403310914071_birthdateUpdated.Designer.cs">
-      <DependentUpon>201403310914071_birthdateUpdated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403310921001_birthdateUpdatedAgain.cs" />
-    <Compile Include="Migrations\201403310921001_birthdateUpdatedAgain.Designer.cs">
-      <DependentUpon>201403310921001_birthdateUpdatedAgain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403310924407_birthdateToString.cs" />
-    <Compile Include="Migrations\201403310924407_birthdateToString.Designer.cs">
-      <DependentUpon>201403310924407_birthdateToString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201403310928587_RemovedMemberSince.cs" />
-    <Compile Include="Migrations\201403310928587_RemovedMemberSince.Designer.cs">
-      <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404161150398_Added-Boats.cs" />
-    <Compile Include="Migrations\201404161150398_Added-Boats.Designer.cs">
-      <DependentUpon>201404161150398_Added-Boats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404161205467_Added-Boats-2p0.cs" />
-    <Compile Include="Migrations\201404161205467_Added-Boats-2p0.Designer.cs">
-      <DependentUpon>201404161205467_Added-Boats-2p0.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404182121579_Boats-MissingImagePath.cs" />
-    <Compile Include="Migrations\201404182121579_Boats-MissingImagePath.Designer.cs">
-      <DependentUpon>201404182121579_Boats-MissingImagePath.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404182358002_RegularTrips.cs" />
-    <Compile Include="Migrations\201404182358002_RegularTrips.Designer.cs">
-      <DependentUpon>201404182358002_RegularTrips.cs</DependentUpon>
+    <Compile Include="Migrations\201404210844202_InitialCreate.cs" />
+    <Compile Include="Migrations\201404210844202_InitialCreate.Designer.cs">
+      <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
@@ -168,47 +116,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201403271831356_InitialCreate.resx">
-      <DependentUpon>201403271831356_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403281225289_PersonUpdates.resx">
-      <DependentUpon>201403281225289_PersonUpdates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403302325320_ChangesToPersonClass.resx">
-      <DependentUpon>201403302325320_ChangesToPersonClass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403302331000_AddedMemberSince.resx">
-      <DependentUpon>201403302331000_AddedMemberSince.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403310827295_UserLogin.resx">
-      <DependentUpon>201403310827295_UserLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403310912205_birthdateNullable.resx">
-      <DependentUpon>201403310912205_birthdateNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403310914071_birthdateUpdated.resx">
-      <DependentUpon>201403310914071_birthdateUpdated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403310921001_birthdateUpdatedAgain.resx">
-      <DependentUpon>201403310921001_birthdateUpdatedAgain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403310924407_birthdateToString.resx">
-      <DependentUpon>201403310924407_birthdateToString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201403310928587_RemovedMemberSince.resx">
-      <DependentUpon>201403310928587_RemovedMemberSince.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404161150398_Added-Boats.resx">
-      <DependentUpon>201404161150398_Added-Boats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404161205467_Added-Boats-2p0.resx">
-      <DependentUpon>201404161205467_Added-Boats-2p0.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404182121579_Boats-MissingImagePath.resx">
-      <DependentUpon>201404182121579_Boats-MissingImagePath.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404182358002_RegularTrips.resx">
-      <DependentUpon>201404182358002_RegularTrips.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404210844202_InitialCreate.resx">
+      <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
