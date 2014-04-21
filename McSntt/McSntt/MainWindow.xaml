@@ -130,7 +130,7 @@
                 <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
                     <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
                     <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"  />
-                    <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False">
+                    <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
                             <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
