@@ -13,7 +13,7 @@ namespace McSntt.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201403271831356_InitialCreate"; }
+            get { return "201404210844202_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
