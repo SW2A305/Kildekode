@@ -38,14 +38,14 @@ namespace McSntt
                 DataGridCollection = CollectionViewSource.GetDefaultView( db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
                 #endregion
-
+/*
                 #region BoatUI
                 db.Boats.Load();
                 BoatComboBox.ItemsSource = db.Boats.Local;
                 BoatComboBox.DisplayMemberPath = "NickName";
                 BoatComboBox.SelectedValuePath = "Id";
                 
-                #endregion
+                #endregion*/
             }
         }
 
@@ -243,14 +243,14 @@ namespace McSntt
         #endregion
 
         #region Boats
-        private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)
+       /* private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)
         {
             //TODO: Change all UI data to the current boats' info
 
             // Write the name to the NameBlock text
             var text = (sender as ComboBox).Text;
             if (text != null) NameBlock.Text = text;
-        }
+        }*/
         
         #endregion
 

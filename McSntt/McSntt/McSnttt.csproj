@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -80,8 +82,26 @@
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
+    <Compile Include="Views\UserControls\Begivenheder.xaml.cs">
+      <DependentUpon>Begivenheder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
       <DependentUpon>BoatReservation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Boats.xaml.cs">
+      <DependentUpon>Boats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Kalender.xaml.cs">
+      <DependentUpon>Kalender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Logbog.xaml.cs">
+      <DependentUpon>Logbog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Members.xaml.cs">
+      <DependentUpon>Members.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SejlerSkolen.xaml.cs">
+      <DependentUpon>SejlerSkolen.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -96,7 +116,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Begivenheder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\BoatReservation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Boats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Kalender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Logbog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Members.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\SejlerSkolen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,6 +188,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Styles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

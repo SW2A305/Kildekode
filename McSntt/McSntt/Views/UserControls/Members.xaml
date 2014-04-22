@@ -1,0 +1,31 @@
+﻿<UserControl 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.Members" 
+             mc:Ignorable="d" 
+             d:DesignHeight="760" d:DesignWidth="996">
+    
+    <Grid Margin="0,0,0,-552">
+        <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
+            <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
+            <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"  />
+            <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
+                    <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
+                    <DataGridTextColumn Binding="{Binding Position}"        Header="Position" />
+                    <DataGridTextColumn Binding="{Binding DateOfBirth, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fødselsdato" />
+                    <DataGridTextColumn Binding="{Binding PhoneNumber}"     Header="Telefon Nr."/>
+                    <DataGridTextColumn Binding="{Binding Email}"           Header="Email"/>
+                    <DataGridTextColumn Binding="{Binding Gender}"          Header="Køn" />
+                    <DataGridTextColumn Binding="{Binding Cityname}"        Header="By" />
+                    <DataGridTextColumn Binding="{Binding Postcode}"        Header="Post nr." />
+                    <DataGridTextColumn Binding="{Binding Address}"         Header="Addresse" />
+                    <DataGridTextColumn Binding="{Binding MemberId}"        Header="Memberid" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</UserControl>
