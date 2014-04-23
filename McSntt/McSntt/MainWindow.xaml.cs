@@ -30,7 +30,7 @@ namespace McSntt
         {
             // Set the list as the current DataContext
             InitializeComponent();
-
+/*
             using (var db = new McSntttContext())
             {
                 #region SearchUI
@@ -38,7 +38,7 @@ namespace McSntt
                 DataGridCollection = CollectionViewSource.GetDefaultView( db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
                 #endregion
-/*
+
                 #region BoatUI
                 db.Boats.Load();
                 BoatComboBox.ItemsSource = db.Boats.Local;
@@ -46,7 +46,7 @@ namespace McSntt
                 BoatComboBox.SelectedValuePath = "Id";
                 
                 #endregion*/
-            }
+            
         }
 
         #region Login
