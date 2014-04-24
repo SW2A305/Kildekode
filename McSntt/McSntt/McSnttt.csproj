@@ -100,8 +100,8 @@
     <Compile Include="Views\UserControls\Members.xaml.cs">
       <DependentUpon>Members.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\SejlerSkolen.xaml.cs">
-      <DependentUpon>SejlerSkolen.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\SailerSchool.xaml.cs">
+      <DependentUpon>SailerSchool.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -144,7 +144,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\SejlerSkolen.xaml">
+    <Page Include="Views\UserControls\SailerSchool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

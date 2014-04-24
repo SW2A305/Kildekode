@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for SejlerSkolen.xaml
+    /// Interaction logic for SailerSchool.xaml
     /// </summary>
-    public partial class SejlerSkolen : UserControl
+    public partial class SailerSchool : UserControl
     {
-        public SejlerSkolen()
+        public SailerSchool()
         {
             InitializeComponent();
         }
