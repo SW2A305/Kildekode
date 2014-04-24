@@ -34,7 +34,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Kalender" FontSize="23" />
                 </TabItem.Header>
-                <UserControls:Kalender HorizontalAlignment="Left" Margin="67,54,0,0" VerticalAlignment="Top" Height="339" Width="430"/>
+                <UserControls:Calendar HorizontalAlignment="Left" Margin="67,54,0,0" VerticalAlignment="Top" Height="339" Width="430"/>
             </TabItem>
             
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="EvenetsTabItem" Margin="60,0,-70,0">

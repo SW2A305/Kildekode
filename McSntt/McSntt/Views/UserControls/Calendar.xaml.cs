@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for Kalender.xaml
+    /// Interaction logic for Calendar.xaml
     /// </summary>
-    public partial class Kalender : UserControl
+    public partial class Calendar : UserControl
     {
-        public Kalender()
+        public Calendar()
         {
             InitializeComponent();
         }

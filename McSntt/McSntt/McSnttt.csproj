@@ -91,8 +91,8 @@
     <Compile Include="Views\UserControls\Boats.xaml.cs">
       <DependentUpon>Boats.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\Kalender.xaml.cs">
-      <DependentUpon>Kalender.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\Calendar.xaml.cs">
+      <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\Logbog.xaml.cs">
       <DependentUpon>Logbog.xaml</DependentUpon>
@@ -132,7 +132,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\Kalender.xaml">
+    <Page Include="Views\UserControls\Calendar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
