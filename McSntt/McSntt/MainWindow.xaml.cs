@@ -87,10 +87,10 @@ namespace McSntt
                 {
                     if (db.SailClubMembers != null)
                     {
-                        SailClubMember usr = db.SailClubMembers.Local.FirstOrDefault(x => x.Username.ToLower() == UsernameBox.Text.ToLower());
+                        SailClubMember usr = db.SailClubMembers.Local.FirstOrDefault(x => String.Equals(x.Username, UsernameBox.Text, StringComparison.CurrentCultureIgnoreCase));
 
                         // Check if user exists (Case insensitive)
-                        if (usr != null && usr.Username == UsernameBox.Text)
+                        if (usr != null && String.Equals(usr.Username, UsernameBox.Text, StringComparison.CurrentCultureIgnoreCase))
                         {
                             // Check if the password is correct (Case sensitive)
                             if (usr.PasswordHash == Sha256(PasswordBox.Password))
