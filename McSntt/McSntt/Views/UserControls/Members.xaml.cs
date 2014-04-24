@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Globalization;
@@ -24,7 +25,7 @@ namespace McSntt.Views.UserControls
     /// <summary>
     ///     Interaction logic for Members.xaml
     /// </summary>ry>
-    public partial class Members : UserControl
+    public partial class Members : UserControl, INotifyPropertyChanged
     {
         public Members()
         {
@@ -40,15 +41,23 @@ namespace McSntt.Views.UserControls
                 #endregion
             }
         }
+
         #region Search
         // In order to seach these must exist.
         private ICollectionView _dataGridCollection;
         private string _filterString;
+        private ObservableCollection<SailClubMember> _dataGridCollection2;
 
         public ICollectionView DataGridCollection
         {
             get { return _dataGridCollection; }
             set { _dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
+        }
+
+        public ObservableCollection<SailClubMember> DataGridCollection2
+        {
+            get { return _dataGridCollection2; }
+            set { _dataGridCollection2 = value; NotifyPropertyChanged("DataGridCollection2"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -136,6 +145,15 @@ namespace McSntt.Views.UserControls
         }
 
         #endregion
+
+        private void MembersUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (var db = new McSntttContext())
+            {
+                db.SailClubMembers.Load();
+                DataGridCollection2 = db.SailClubMembers.Local;
+            }
+        }
     }
 
 }

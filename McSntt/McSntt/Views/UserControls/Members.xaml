@@ -5,15 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.Members" 
              mc:Ignorable="d" 
-             d:DesignHeight="760" d:DesignWidth="996">
-    
+             d:DesignHeight="760" d:DesignWidth="996" x:Name="MembersUserControl" Loaded="MembersUserControl_Loaded">
     <Grid Margin="0,0,0,-552">
-        <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
+        <StackPanel Margin="10" DataContext="MembersUserControl">
             <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
             <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"  />
-            <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False" Name="DataGrid">
+            <DataGrid ItemsSource="{Binding DataGridCollection2}" AutoGenerateColumns="False" CanUserAddRows="False" Name="DataGrid">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
+                    <DataGridTextColumn Header="Fornavn" />
                     <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
                     <DataGridTextColumn Binding="{Binding Position}"        Header="Position" />
                     <DataGridTextColumn Binding="{Binding DateOfBirth, StringFormat=\{0:dd/MM/yyyy\}}" Header="Fødselsdato" />
