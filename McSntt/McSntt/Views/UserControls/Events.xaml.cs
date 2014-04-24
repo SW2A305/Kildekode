@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for Begivenheder.xaml
+    /// Interaction logic for Events.xaml
     /// </summary>
-    public partial class Begivenheder : UserControl
+    public partial class Events : UserControl
     {
-        public Begivenheder()
+        public Events()
         {
             InitializeComponent();
         }

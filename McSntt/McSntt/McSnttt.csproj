@@ -82,8 +82,8 @@
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
-    <Compile Include="Views\UserControls\Begivenheder.xaml.cs">
-      <DependentUpon>Begivenheder.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\Events.xaml.cs">
+      <DependentUpon>Events.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
       <DependentUpon>BoatReservation.xaml</DependentUpon>
@@ -120,7 +120,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\Begivenheder.xaml">
+    <Page Include="Views\UserControls\Events.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
