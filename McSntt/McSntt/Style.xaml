@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
          <Style TargetType="{x:Type TabControl}" x:Key="TabCtrlStyle">
-            <Setter Property="Template">
-                <Setter.Value>
+        <Setter Property="Template">
+            <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabControl}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -23,9 +23,14 @@
                               BorderThickness="1" 
                               CornerRadius="0, 12, 12, 12" 
                               Background="#87D4EE">
-                                <ContentPresenter ContentSource="SelectedContent" />
+                                <ContentPresenter ContentSource="SelectedContent" x:Name="Header" />
                             </Border>
                         </Grid>
+                        <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="Header" Value="0.3"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -56,6 +61,10 @@
                             <Trigger Property="IsSelected" Value="False">
                                 <Setter TargetName="Border" Property="Background" Value="LightBlue" />
                             </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Opacity" Value="0.4" ></Setter>
+                            <Setter TargetName="Border" Property="Background" Value="DimGray"></Setter>
+                        </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
