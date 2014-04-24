@@ -30,6 +30,8 @@ namespace McSntt.Views.UserControls
         public Members()
         {
             InitializeComponent();
+            //DataContext = this;
+
             using (var db = new McSntttContext())
             {
                 #region SearchUI
