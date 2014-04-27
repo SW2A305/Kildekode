@@ -24,5 +24,11 @@ namespace McSntt.Views.UserControls
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window createPopup = new EventsPopup();
+            createPopup.Show();
+        }
     }
 }

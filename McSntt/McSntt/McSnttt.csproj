@@ -79,11 +79,12 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
+    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
-    <Compile Include="Views\UserControls\Events.xaml.cs">
-      <DependentUpon>Events.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\EventsAdmin.xaml.cs">
+      <DependentUpon>EventsAdmin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
       <DependentUpon>BoatReservation.xaml</DependentUpon>
@@ -103,6 +104,9 @@
     <Compile Include="Views\UserControls\SailerSchool.xaml.cs">
       <DependentUpon>SailerSchool.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\EventsPopup.xaml.cs">
+      <DependentUpon>EventsPopup.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,7 +124,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\Events.xaml">
+    <Page Include="Views\UserControls\EventsAdmin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\SailerSchool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\EventsPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

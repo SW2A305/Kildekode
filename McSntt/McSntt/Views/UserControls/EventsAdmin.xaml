@@ -1,0 +1,15 @@
+﻿<UserControl 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.Events"
+             d:DesignHeight="760" d:DesignWidth="996">
+    <Grid Margin="0,0,0,-552">
+        <Label Content="Her kan der ses kommende events" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Opret" HorizontalAlignment="Left" Height="22" Margin="599,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Rediger" HorizontalAlignment="Left" Margin="665,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Slet" HorizontalAlignment="Left" Height="22" Margin="761,10,0,0" VerticalAlignment="Top" Width="39"/>
+    </Grid>
+</UserControl>
