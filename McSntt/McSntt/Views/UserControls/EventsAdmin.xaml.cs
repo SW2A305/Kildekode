@@ -18,17 +18,27 @@ namespace McSntt.Views.UserControls
     /// <summary>
     /// Interaction logic for Events.xaml
     /// </summary>
-    public partial class Events : UserControl
+    public partial class EventsAdmin : UserControl
     {
-        public Events()
+        public EventsAdmin()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Create_Event(object sender, RoutedEventArgs e)
         {
-            Window createPopup = new EventsPopup();
-            createPopup.Show();
+            Window createEventPopup = new EventsPopup();
+            createEventPopup.Show();
+        }
+
+        private void Edit_Event(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Rediger Begivenhed");
+        }
+
+        private void Delete_Event(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Begivenhed er slettet");
         }
     }
 }

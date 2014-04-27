@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.Events"
-             d:DesignHeight="760" d:DesignWidth="996">
+             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.EventsAdmin"
+             d:DesignHeight="256" d:DesignWidth="996">
     <Grid Margin="0,0,0,-552">
         <Label Content="Her kan der ses kommende events" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Opret" HorizontalAlignment="Left" Height="22" Margin="599,10,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="Rediger" HorizontalAlignment="Left" Margin="665,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Slet" HorizontalAlignment="Left" Height="22" Margin="761,10,0,0" VerticalAlignment="Top" Width="39"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="37" Margin="0,10,10,0" VerticalAlignment="Top" Width="200" x:Name="EventsBox">
+            <Button Content="Opret" Margin="10,10,0,0" Click="Create_Event"/>
+            <Button Content="Rediger" Margin="10,10,0,0" Click="Edit_Event"/>
+            <Button Content="Slet" Height="22" Margin="10,10,0,0" Click="Delete_Event"/>
+        </StackPanel>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

@@ -41,7 +41,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Begivenheder" FontSize="23" />
                 </TabItem.Header>
-                <UserControls:Events HorizontalAlignment="Left" Height="256" Margin="96,57,0,0" VerticalAlignment="Top"/>
+                <UserControls:EventsAdmin HorizontalAlignment="Left" Height="256" Margin="0,0,0,0" VerticalAlignment="Top"/>
             </TabItem>
             
             <TabItem Style="{StaticResource TabItemStyle}" Margin="70,0,-110,0" x:Name="BookiTabItem">
