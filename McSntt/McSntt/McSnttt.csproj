@@ -36,9 +36,11 @@
   <ItemGroup>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -79,9 +81,17 @@
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
+    <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\TeamList.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
     <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
       <DependentUpon>BoatReservation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\studyStudent.xaml.cs">
+      <DependentUpon>studyStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\studyTeacher.xaml.cs">
+      <DependentUpon>studyTeacher.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -97,6 +107,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\UserControls\BoatReservation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\studyStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\studyTeacher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

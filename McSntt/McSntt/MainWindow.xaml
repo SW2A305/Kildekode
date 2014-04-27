@@ -97,6 +97,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Kalender" FontSize="23" />
                 </TabItem.Header>
+                <UserControls:UserControl1 HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             </TabItem>
             <TabItem  x:Name="EvenetsTabItem" Margin="60,0,-70,0">
@@ -129,7 +130,7 @@
                 <!-- Member info with searchbox -->
                 <StackPanel DataContext="{Binding ElementName=UI}" Margin="10">
                     <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
-                    <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"  />
+                    <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" />
                     <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
@@ -168,6 +169,7 @@
                 <BitmapImage UriSource="Images/SundetLogo.png"/>
             </Image.Source>
         </Image>
+
 
 
     </Grid>
