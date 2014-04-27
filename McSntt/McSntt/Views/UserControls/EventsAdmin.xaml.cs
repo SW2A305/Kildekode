@@ -24,7 +24,6 @@ namespace McSntt.Views.UserControls
         {
             InitializeComponent();
         }
-
         private void Create_Event(object sender, RoutedEventArgs e)
         {
             Window createEventPopup = new EventsPopup();
