@@ -1,0 +1,11 @@
+﻿<Window x:Class="McSntt.Views.Windows.CreateLogbookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CreateLogbookWindow" Height="600" Width="800"
+        Style="{StaticResource WindowStyle}">
+    <Grid>
+        <Label Content="Udfyld Logbog" FontSize="40" HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="270" Margin="10,0,0,0"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" x:Name="TripDescription" Height="87" Width="270"/>
+
+    </Grid>
+</Window>

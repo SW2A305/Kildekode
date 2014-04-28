@@ -71,13 +71,6 @@
             </Setter>
         </Style>
         <Style TargetType="{x:Type Window}" x:Key="WindowStyle">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid Background="#87D4EE" >
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <Setter Property="Background" Value="#87D4EE"/>
+    </Style>
 </ResourceDictionary>
