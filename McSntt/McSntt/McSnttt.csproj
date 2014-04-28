@@ -84,9 +84,9 @@
     <Compile Include="Migrations\201404210844202_InitialCreate.Designer.cs">
       <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201404241106468_Logbook-v2.cs" />
-    <Compile Include="Migrations\201404241106468_Logbook-v2.Designer.cs">
-      <DependentUpon>201404241106468_Logbook-v2.cs</DependentUpon>
+    <Compile Include="Migrations\201404280938088_Logbook.cs" />
+    <Compile Include="Migrations\201404280938088_Logbook.Designer.cs">
+      <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
@@ -214,8 +214,8 @@
     <EmbeddedResource Include="Migrations\201404210844202_InitialCreate.resx">
       <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404241106468_Logbook-v2.resx">
-      <DependentUpon>201404241106468_Logbook-v2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404280938088_Logbook.resx">
+      <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

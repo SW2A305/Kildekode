@@ -7,13 +7,13 @@ namespace McSntt.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class Logbookv2 : IMigrationMetadata
+    public sealed partial class Logbook : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Logbookv2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Logbook));
         
         string IMigrationMetadata.Id
         {
-            get { return "201404241106468_Logbook-v2"; }
+            get { return "201404280938088_Logbook"; }
         }
         
         string IMigrationMetadata.Source

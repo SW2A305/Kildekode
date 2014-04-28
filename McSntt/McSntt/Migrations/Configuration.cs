@@ -95,17 +95,6 @@ namespace McSntt.Migrations
                     ImagePath = "Images/SundetLogo.png"
                 }
                 );
-
-            context.Logbooks.AddOrUpdate(
-                b => b.Id,
-                new Logbook
-                {
-                    ActualDepartureTime = new DateTime(2014,04,08,17,35,00),
-                    ActualArrivalTime = new DateTime(2014,04,08,20,30,00),
-                    FiledBy = context.SailClubMembers.First(x => x.Username == "Trampe"),
-                    DamageInflicted = false
-                }
-                );
         }
     }
 }
