@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for Events.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Events : UserControl
+    public partial class EventsPopup : Window
     {
-        public Events()
+        public EventsPopup()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Test");
         }
     }
 }
