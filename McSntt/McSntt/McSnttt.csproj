@@ -148,9 +148,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Style.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\Styles\Style.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\UserControls\EventsAdmin.xaml">
       <SubType>Designer</SubType>
@@ -240,9 +240,7 @@
     </Content>
     <Resource Include="Images\check.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Styles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
