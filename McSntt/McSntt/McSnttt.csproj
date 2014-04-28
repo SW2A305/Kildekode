@@ -130,6 +130,9 @@
     <Compile Include="Views\UserControls\studyTeacher.xaml.cs">
       <DependentUpon>studyTeacher.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
+      <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\studyTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\CreateLogbookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
