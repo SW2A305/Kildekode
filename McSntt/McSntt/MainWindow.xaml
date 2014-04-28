@@ -160,6 +160,8 @@
 
 
 
+
+                    <TextBlock FontSize="16" Text="Den kan sejle." x:Name="Operational" Margin="10,0,0,0" />
                 </StackPanel>
             </TabItem>
         </TabControl>
