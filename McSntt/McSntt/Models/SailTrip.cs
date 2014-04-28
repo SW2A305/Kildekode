@@ -14,5 +14,7 @@ namespace McSntt.Models
         public DateTime ArrivalTime { get; set; }
         public string WeatherConditions { get; set; }
         public string Comments { get; set; }
+
+        public Logbook Logbook { get; set; }
     }
 }

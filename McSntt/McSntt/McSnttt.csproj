@@ -65,10 +65,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
+    <Compile Include="DataAbstractionLayer\ILogbookDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
     <Compile Include="DataAbstractionLayer\IBoatDal.cs" />
     <Compile Include="DataAbstractionLayer\IRegularTripDal.cs" />
     <Compile Include="DataAbstractionLayer\ISailClubMemberDal.cs" />
+    <Compile Include="DataAbstractionLayer\LogbookEfDal.cs" />
     <Compile Include="DataAbstractionLayer\PersonEfDal.cs" />
     <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
@@ -79,9 +81,14 @@
     <Compile Include="Migrations\201404210844202_InitialCreate.Designer.cs">
       <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404241106468_Logbook-v2.cs" />
+    <Compile Include="Migrations\201404241106468_Logbook-v2.Designer.cs">
+      <DependentUpon>201404241106468_Logbook-v2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Logbook.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
     <Compile Include="Models\Team.cs" />
@@ -192,6 +199,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201404210844202_InitialCreate.resx">
       <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404241106468_Logbook-v2.resx">
+      <DependentUpon>201404241106468_Logbook-v2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
