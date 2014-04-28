@@ -64,6 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAbstractionLayer\TeamEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\ITeamDal.cs" />
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\ILogbookDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
@@ -87,6 +89,10 @@
     <Compile Include="Migrations\201404280938088_Logbook.cs" />
     <Compile Include="Migrations\201404280938088_Logbook.Designer.cs">
       <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404281243051_study.cs" />
+    <Compile Include="Migrations\201404281243051_study.Designer.cs">
+      <DependentUpon>201404281243051_study.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404280938088_Logbook.resx">
       <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404281243051_study.resx">
+      <DependentUpon>201404281243051_study.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

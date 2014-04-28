@@ -95,6 +95,21 @@ namespace McSntt.Migrations
                     ImagePath = "Images/SundetLogo.png"
                 }
                 );
+
+            context.Teams.AddOrUpdate(
+                t => t.TeamId,
+                new Team
+                {
+                    Name = "Hold1",
+                    Drabant = true,
+                    Gaffelrigger = true,
+                    Level = Team.ClassLevel.First,
+                    Motor = false,
+                    Navigation = false,
+                    Night = true,
+                    RobeWorks = true,
+                }
+                );
         }
     }
 }

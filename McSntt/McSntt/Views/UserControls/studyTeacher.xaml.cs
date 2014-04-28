@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,24 +25,33 @@ namespace McSntt.Views.UserControls
         public studyTeacher()
         {
             InitializeComponent();
+            
+            LoadDb();
+            
             editTeamGrid.IsEnabled = false;
-            teamDropdown.ItemsSource = ab;
-            teamDropdown.DisplayMemberPath = "Name";
-            teamDropdown.SelectedValuePath = "Name";
         }
-
-        // Test list undtil datebase implementation
-        List<Team> ab = new List<Team>();
-        
-        
-        
-
 
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
             var team = new Team { Name = teamName.Text };
-            ab.Add(team);
-            
+            using (var db = new McSntttContext())
+            {
+                db.Teams.Load();
+                db.Teams.Local.Add(team);
+                LoadDb();
+                
+            }
+        }
+
+        public void LoadDb()
+        {
+            using (var db = new McSntttContext())
+            {
+                db.Teams.Load();
+                teamDropdown.ItemsSource = db.Teams.Local;
+                teamDropdown.DisplayMemberPath = "Name";
+                teamDropdown.SelectedValuePath = "TeamId";
+            }
         }
 
         private void editTeam_Checked(object sender, RoutedEventArgs e)

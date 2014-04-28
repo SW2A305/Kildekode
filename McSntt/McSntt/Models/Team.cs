@@ -8,12 +8,22 @@ namespace McSntt.Models
 {
     public class Team
     {
+        public Team()
+        {
+            // Assign the id and increment the next
+            TeamId = _nextId++;
+        }
+        // Teams have an unique ID number
+        private static int _nextId;
+        public int TeamId { get; private set; }
+
         private string _name;
         private List<SailClubMember> _teamMembers;
 
         public enum ClassLevel { First = 1, Second = 2}
-
         private ClassLevel _level;
+
+       
 
         #region Undervisnings kriterier
         private bool _robeWorks;
