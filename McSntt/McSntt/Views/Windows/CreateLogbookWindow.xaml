@@ -4,8 +4,43 @@
         Title="CreateLogbookWindow" Height="600" Width="800"
         Style="{StaticResource WindowStyle}">
     <Grid>
-        <Label Content="Udfyld Logbog" FontSize="40" HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="270" Margin="10,0,0,0"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" x:Name="TripDescription" Height="87" Width="270"/>
+        <Label Content="Udfyld Logbog" FontSize="23" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Margin="10,0,0,0"/>
+        <Label HorizontalAlignment="Left" Margin="10,46,0,0"  Content="Du har været ude og sejle. Udfyld venligst logbogen" VerticalAlignment="Top"/>
+        <Label Content="Båd:" HorizontalAlignment="Left" Width="99"  Margin="0,90,0,438"/>
+        <TextBox x:Name="BådTextBox" Height="30" Width="50" Margin="133,90,609,449" />
+        <Label Content="Crew:" HorizontalAlignment="Left" Width="100"  Margin="0,131,0,387"/>
 
+        <DataGrid HorizontalAlignment="Left" Margin="133,136,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Fornavn"/>
+                <DataGridTextColumn Header="Efternavn"/>
+                <DataGridTextColumn Header="Rank"/>
+                <DataGridTextColumn Header="ID"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label Content="Formål:" HorizontalAlignment="Left" Height="auto" Width="100" Margin="0,291,0,234"/>
+        <TextBox x:Name="FormålTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
+                 Margin="133,291,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="232"/>
+        <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="0,377,0,129"/>
+        <TextBox x:Name="SkadesrapportTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
+                 Margin="133,381,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="232"/>
+        <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="0,474,0,54"/>
+        <RadioButton x:Name="JaRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,484,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="NejRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,504,0,0" VerticalAlignment="Top"/>
+        <Label Content="Planlagte afgang/ankomst:&#xD;&#xA;&#xD;&#xA;&#x9;&#x9;Klokken:" HorizontalAlignment="Right" Width="160"  Margin="0,128,235,367"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="557,164,0,0" TextWrapping="Wrap" Text="hh/mm" VerticalAlignment="Top" Width="102"/>
+        <Label Content="/" HorizontalAlignment="Left" Margin="659,126,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="676,164,0,0" TextWrapping="Wrap" Text="hh/mm" VerticalAlignment="Top" Width="102" RenderTransformOrigin="0.855,0.462"/>
+        <DatePicker HorizontalAlignment="Left" Margin="676,133,0,0" VerticalAlignment="Top"/>
+        <DatePicker HorizontalAlignment="Left" Margin="557,132,0,0" VerticalAlignment="Top"/>
+        <Label Content="Faktiske afgang/ankomst:&#xA;&#xA;&#x9;&#x9;Klokken:" HorizontalAlignment="Right" Width="160"  Margin="0,207,235,288"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="557,243,0,0" TextWrapping="Wrap" Text="hh/mm" VerticalAlignment="Top" Width="102"/>
+        <Label Content="/" HorizontalAlignment="Left" Margin="659,205,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox HorizontalAlignment="Left" Height="26" Margin="676,243,0,0" TextWrapping="Wrap" Text="hh/mm" VerticalAlignment="Top" Width="102" RenderTransformOrigin="0.855,0.462"/>
+        <DatePicker HorizontalAlignment="Left" Margin="676,212,0,0" VerticalAlignment="Top"/>
+        <DatePicker HorizontalAlignment="Left" Margin="557,211,0,0" VerticalAlignment="Top"/>
+        <Button Content="Ændre Besætning" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click" Height="27"/>
+        <Button Content="Udfør" HorizontalAlignment="Left" Margin="557,467,0,0" VerticalAlignment="Top" Width="93" Height="24"/>
     </Grid>
 </Window>
