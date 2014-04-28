@@ -19,12 +19,12 @@ namespace McSntt.Views.UserControls
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class studyTeacher : UserControl
     {
-        public UserControl1()
+        public studyTeacher()
         {
             InitializeComponent();
-
+            editTeamGrid.IsEnabled = false;
             teamDropdown.ItemsSource = ab;
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "Name";
@@ -43,7 +43,25 @@ namespace McSntt.Views.UserControls
             ab.Add(team);
             
         }
-        
+
+        private void editTeam_Checked(object sender, RoutedEventArgs e)
+        {
+            editTeamGrid.IsEnabled = true;
+        }
+
+        private void editTeam_Unchecked(object sender, RoutedEventArgs e)
+        {
+            editTeamGrid.IsEnabled = false;
+        }
+
+        private void newTeam_Click(object sender, RoutedEventArgs e)
+        {
+            teamName.Text = string.Empty;
+            memberSearch.Text = string.Empty;
+            level1.IsChecked = false;
+            level2.IsChecked = false;
+        }
+
 
         
 
