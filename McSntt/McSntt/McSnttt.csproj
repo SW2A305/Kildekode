@@ -76,6 +76,9 @@
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="McSntttContext.cs" />
     <Compile Include="Migrations\201404210844202_InitialCreate.cs" />
     <Compile Include="Migrations\201404210844202_InitialCreate.Designer.cs">
@@ -109,6 +112,9 @@
     <Compile Include="Views\UserControls\Logbog.xaml.cs">
       <DependentUpon>Logbog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\Members.xaml.cs">
       <DependentUpon>Members.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,10 @@
     <Compile Include="Views\UserControls\studyTeacher.xaml.cs">
       <DependentUpon>studyTeacher.xaml</DependentUpon>
     </Compile>
+    <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -158,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\Logbog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
