@@ -8,7 +8,7 @@
         Height="600" 
         Width="800"
         Style="{StaticResource WindowStyle}">
-    
+
     <Grid>
         <TextBlock Margin="10,10,0,0" Text="Opret ny bådbooking" VerticalAlignment="Top" FontSize="20"/>
         <StackPanel HorizontalAlignment="Left" Height="517" Margin="10,42,0,0" VerticalAlignment="Top" Width="300">
@@ -27,7 +27,17 @@
                 </StackPanel>
             </StackPanel>
             <TextBlock Text="Vælg din besætning:"/>
+            <DataGrid CanUserAddRows="False" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="180" Width="290" MaxHeight="180">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
+                    <DataGridTextColumn Binding="{Binding Position}" Header="Rank"/>
+                    <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Height="25" Margin="0,0,10,0" Name="ChangeCrew" Content="Ændre besætning" Click="ChangeCrew_Click"/>
         </StackPanel>
+
 
     </Grid>
 </Window>

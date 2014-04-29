@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using McSntt.Models;
 
 namespace McSntt.Views.Windows
 {
@@ -35,6 +36,18 @@ namespace McSntt.Views.Windows
         private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)
         {
             
+        }
+        public List<Person> CrewList = new List<Person>();
+
+        private void ChangeCrew_Click(object sender, RoutedEventArgs e)
+        {
+            var createCrewWindow = new CreateCrewWindow(CrewList);
+            createCrewWindow.ShowDialog();
+            
+            CrewList = createCrewWindow._crewList;
+
+            CrewDataGrid.ItemsSource = null;
+            CrewDataGrid.ItemsSource = CrewList;
         }
     }
 }
