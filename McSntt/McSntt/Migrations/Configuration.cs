@@ -100,7 +100,8 @@ namespace McSntt.Migrations
                 t => t.TeamId,
                 new Team
                 {
-                    Name = "Hold1",
+                    TeamId = 1,
+                    Name = "Hold 1",
                     Drabant = true,
                     Gaffelrigger = true,
                     Level = Team.ClassLevel.First,
@@ -108,7 +109,7 @@ namespace McSntt.Migrations
                     Navigation = false,
                     Night = true,
                     RobeWorks = true,
-                }
+                 }
                 );
         }
     }

@@ -44,7 +44,7 @@
 
         </Grid>
 
-        <ComboBox x:Name="teamDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,10,0,0"/>
+        <ComboBox x:Name="teamDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,10,0,0" SelectionChanged="teamDropdown_SelectionChanged"/>
         <ComboBox x:Name="studentDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="151,10,0,0"/>
         <Button x:Name="extraBook" Content="Ekstra lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="288,10,0,0"/>
         <CheckBox x:Name="theoryCheck1" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top"/>

@@ -13,9 +13,9 @@ namespace McSntt.Models
             // Assign the id and increment the next
             TeamId = _nextId++;
         }
-        // Teams have an unique ID number
+        // Teams have an unique ID number½
         private static int _nextId;
-        public int TeamId { get; private set; }
+        public int TeamId { get; set; }
 
         private string _name;
         private List<SailClubMember> _teamMembers;

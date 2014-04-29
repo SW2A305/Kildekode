@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -28,22 +29,29 @@ namespace McSntt.Views.UserControls
             InitializeComponent();
             ITeamDal teamDal = new TeamEfDal();
 
+            #region Data til test (skal slettes)
+            var student1 = new SailClubMember();
+            student1.FirstName = "Knold";
+            var student2 = new SailClubMember();
+            student2.FirstName = "Tot";
+            var team2 = new Team { Name = "Hold 8" };
+            teamDal.Create(team2);
+            #endregion
+
+
             teamDropdown.ItemsSource = teamDal.GetAll();
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
+
             
             editTeamGrid.IsEnabled = false;
+
+            
+
         }
 
-        private void saveChanges_Click(object sender, RoutedEventArgs e)
-        {
-            var team = new Team { Name = teamName.Text };
-            ITeamDal teamDal = new TeamEfDal();
-            teamDal.Create(team);
-            teamDropdown.ItemsSource = teamDal.GetAll();
-        }
 
-       
+
         private void editTeam_Checked(object sender, RoutedEventArgs e)
         {
             editTeamGrid.IsEnabled = true;
@@ -54,6 +62,14 @@ namespace McSntt.Views.UserControls
             editTeamGrid.IsEnabled = false;
         }
 
+        private void saveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            var team = new Team { Name = teamName.Text };
+            ITeamDal teamDal = new TeamEfDal();
+            teamDal.Create(team);
+            teamDropdown.ItemsSource = teamDal.GetAll();
+        }
+        
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             teamName.Text = string.Empty;
@@ -68,6 +84,15 @@ namespace McSntt.Views.UserControls
             ITeamDal teamDal = new TeamEfDal();
             teamDal.Delete(team);
             teamDropdown.ItemsSource = teamDal.GetAll();
+        }
+
+        private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            studentDropdown.ItemsSource = ((Team) teamDropdown.SelectionBoxItem).TeamMembers;
+            studentDropdown.DisplayMemberPath = "FirstName";
+            studentDropdown.SelectedValuePath = "FirstName";
+
         }
     }
 }
