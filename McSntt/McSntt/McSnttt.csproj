@@ -114,6 +114,7 @@
     <Compile Include="Models\SailClubMember.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamList.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
     <Compile Include="Views\UserControls\EventsAdmin.xaml.cs">
       <DependentUpon>EventsAdmin.xaml</DependentUpon>
