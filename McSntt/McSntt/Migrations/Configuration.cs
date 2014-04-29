@@ -85,6 +85,24 @@ namespace McSntt.Migrations
                 }
                 );
 
+            context.RegularTrips.AddOrUpdate(
+                t => t.RegularTripId,
+                new RegularTrip
+                {
+                     Boat = context.Boats.First(x => x.NickName == "Bodil"),
+                     ArrivalTime = new DateTime(2014,09,9,12,0,0),
+                     BoatId = 1,
+                     Captain = context.SailClubMembers.First(x => x.FirstName == "Søren"),
+                     Comments = "Det blir sjaw!",
+                     Crew = context.SailClubMembers.Where(x=> x.Position == SailClubMember.Positions.Admin).Cast<Person>().ToList(),
+                     DepartureTime = new DateTime(2014,09,9,09,0,0),
+                     Logbook = null,
+                     PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
+                     WeatherConditions = "Det 'en bæt' wind...",
+                     RegularTripId = 9
+                }
+                );
+
             context.Boats.AddOrUpdate(
                 b => b.Id,
                 new Boat
