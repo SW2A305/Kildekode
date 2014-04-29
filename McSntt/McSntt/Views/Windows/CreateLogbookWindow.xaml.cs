@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using McSntt.Models;
 using McSntt.Views.Windows;
 
 namespace McSntt.Views.Windows
@@ -21,6 +22,9 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateLogbookWindow : Window
     {
+        public List<Person> CrewList = new List<Person>();
+ 
+
         public CreateLogbookWindow()
         {
             InitializeComponent();
@@ -29,9 +33,14 @@ namespace McSntt.Views.Windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var createCrewWindow = new CreateCrewWindow();
+            var createCrewWindow = new CreateCrewWindow(CrewList);
             createCrewWindow.ShowDialog();
 
+
+            CrewList = createCrewWindow._crewList;
+
+            CrewDataGrid.ItemsSource = null;
+            CrewDataGrid.ItemsSource = CrewList;
         }
     }
 }

@@ -63,6 +63,7 @@ namespace McSntt.Views.UserControls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void NotifyPropertyChanged(string property)
         {
             if (PropertyChanged != null)

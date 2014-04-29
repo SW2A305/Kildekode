@@ -7,15 +7,15 @@
         <Label Content="Udfyld Logbog" FontSize="23" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Margin="10,0,0,0"/>
         <Label HorizontalAlignment="Left" Margin="10,46,0,0"  Content="Du har været ude og sejle. Udfyld venligst logbogen" VerticalAlignment="Top"/>
         <Label Content="Båd:" HorizontalAlignment="Left" Width="99"  Margin="0,90,0,438"/>
-        <TextBox x:Name="BådTextBox" Height="30" Width="50" Margin="133,90,609,449" />
+        <TextBox IsReadOnly="True" x:Name="BådTextBox" Height="30" Margin="133,90,564,449" />
         <Label Content="Crew:" HorizontalAlignment="Left" Width="100"  Margin="0,131,0,387"/>
 
-        <DataGrid HorizontalAlignment="Left" Margin="133,136,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
+        <DataGrid CanUserAddRows="False" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="133,136,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Fornavn"/>
-                <DataGridTextColumn Header="Efternavn"/>
-                <DataGridTextColumn Header="Rank"/>
-                <DataGridTextColumn Header="ID"/>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
+                <DataGridTextColumn Binding="{Binding Position}" Header="Rank"/>
+                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
