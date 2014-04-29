@@ -1,0 +1,33 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        x:Class="McSntt.Views.Windows.CreateBoatBookingWindow"
+        Title="CreateBoatBookingWindow" 
+        Height="600" 
+        Width="800"
+        Style="{StaticResource WindowStyle}">
+    
+    <Grid>
+        <TextBlock Margin="10,10,0,0" Text="Opret ny bådbooking" VerticalAlignment="Top" FontSize="20"/>
+        <StackPanel HorizontalAlignment="Left" Height="517" Margin="10,42,0,0" VerticalAlignment="Top" Width="300">
+            <TextBlock Text="Vælg en båd:"/>
+            <ComboBox Name="BoatComboBox" HorizontalAlignment="Left" ItemsSource="{Binding BoatsCollection}" DropDownClosed="BoatComboBox_OnDropDownClosed" Width="290"/>
+            <StackPanel Name="DateTimePickers" Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock Text="Vælg et starttidspunkt:"/>
+                    <DatePicker Name="DatePickerStart" SelectedDate="{x:Static sys:DateTime.Now}"/>
+                    <xctk:DateTimeUpDown Name="TimeStart" Format="Custom" FormatString="HH:mm tt" Value="12:00" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Vælg et sluttidspunkt:"/>
+                    <DatePicker Name="DatePickerEnd" SelectedDate="{x:Static sys:DateTime.Now}"/>
+                    <xctk:DateTimeUpDown Name="TimeEnd" Format="Custom" FormatString="HH:mm tt" Value="13:30" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Text="Vælg din besætning:"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
