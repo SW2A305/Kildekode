@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Windows;
 using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
@@ -40,14 +42,16 @@ namespace McSntt.DataAbstractionLayer
                     {
                         foreach (Team item in items)
                         {
-                            db.Teams.Remove(item);
+                            var t = (from x in db.Teams where x.TeamId == item.TeamId select x).First();
+                            db.Teams.Remove(t);
                         }
 
                         db.SaveChanges();
                         transaction.Commit();
                     }
-                    catch (Exception)
+                    catch (Exception exception)
                     {
+                        MessageBox.Show("" + exception);
                         transaction.Rollback();
                         return false;
                     }
@@ -64,6 +68,7 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
+                db.Teams.Load();
                 return db.Teams.Local;
             }
         }

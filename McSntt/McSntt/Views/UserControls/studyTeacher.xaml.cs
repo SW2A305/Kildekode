@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.DataAbstractionLayer;
 using McSntt.Models;
 
 namespace McSntt.Views.UserControls
@@ -25,8 +26,11 @@ namespace McSntt.Views.UserControls
         public studyTeacher()
         {
             InitializeComponent();
-            
-            LoadDb();
+            ITeamDal teamDal = new TeamEfDal();
+
+            teamDropdown.ItemsSource = teamDal.GetAll();
+            teamDropdown.DisplayMemberPath = "Name";
+            teamDropdown.SelectedValuePath = "TeamId";
             
             editTeamGrid.IsEnabled = false;
         }
@@ -34,26 +38,12 @@ namespace McSntt.Views.UserControls
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
             var team = new Team { Name = teamName.Text };
-            using (var db = new McSntttContext())
-            {
-                db.Teams.Load();
-                db.Teams.Local.Add(team);
-                LoadDb();
-                
-            }
+            ITeamDal teamDal = new TeamEfDal();
+            teamDal.Create(team);
+            teamDropdown.ItemsSource = teamDal.GetAll();
         }
 
-        public void LoadDb()
-        {
-            using (var db = new McSntttContext())
-            {
-                db.Teams.Load();
-                teamDropdown.ItemsSource = db.Teams.Local;
-                teamDropdown.DisplayMemberPath = "Name";
-                teamDropdown.SelectedValuePath = "TeamId";
-            }
-        }
-
+       
         private void editTeam_Checked(object sender, RoutedEventArgs e)
         {
             editTeamGrid.IsEnabled = true;
@@ -72,8 +62,12 @@ namespace McSntt.Views.UserControls
             level2.IsChecked = false;
         }
 
-
-        
-
+        private void deleteTeam_Click(object sender, RoutedEventArgs e)
+        {
+            var team = (Team) teamDropdown.SelectionBoxItem;
+            ITeamDal teamDal = new TeamEfDal();
+            teamDal.Delete(team);
+            teamDropdown.ItemsSource = teamDal.GetAll();
+        }
     }
 }

@@ -12,7 +12,7 @@
 
         <Grid x:Name="editTeamGrid" HorizontalAlignment="Left" Height="504" Margin="483,136,0,0" VerticalAlignment="Top" Width="502">
             <Button x:Name="newTeam" Content="Nyt hold" HorizontalAlignment="Left" Margin="-59,29,0,0" VerticalAlignment="Top" Width="75" Click="newTeam_Click"/>
-            <Button x:Name="deleteTeam" Content="Slet hold" HorizontalAlignment="Left" Margin="33,29,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="deleteTeam" Content="Slet hold" HorizontalAlignment="Left" Margin="33,29,0,0" VerticalAlignment="Top" Width="75" Click="deleteTeam_Click"/>
             <RadioButton x:Name="level1" Content="1. års sejlere" HorizontalAlignment="Left" Margin="139,29,0,0" VerticalAlignment="Top"/>
             <RadioButton x:Name="level2" Content="2. års sejlere" HorizontalAlignment="Left" Margin="139,45,0,0" VerticalAlignment="Top"/>
             <StackPanel DataContext="{Binding ElementName=UI}" Margin="-59,83,373,52">
