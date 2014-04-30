@@ -11,7 +11,7 @@
         <TextBox IsReadOnly="True" x:Name="BådTextBox" Height="30" Margin="133,89,0,460" HorizontalAlignment="Left" Width="96" />
         <Label Content="Crew:" HorizontalAlignment="Left" Width="100"  Margin="10,130,0,388"/>
 
-        <DataGrid CanUserAddRows="False" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="133,136,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
+        <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="133,136,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>

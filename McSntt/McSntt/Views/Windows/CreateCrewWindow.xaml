@@ -14,7 +14,7 @@
                 <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232">
+        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
