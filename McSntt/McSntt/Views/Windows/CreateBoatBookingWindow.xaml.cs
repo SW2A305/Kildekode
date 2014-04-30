@@ -130,13 +130,12 @@ namespace McSntt.Views.Windows
                 ExpectedArrivalTime = endTime,
                 Crew = crewSelected,
                 Captain = captain,
-                Comments = purpose,
-                RegularTripId = 1
+                Comments = purpose
             };
 
             var dbm = new RegularTripEfDal();
             
-            if (dbm.CreateOrUpdate(complete))
+            if (dbm.Create(complete))
             {
                 MessageBox.Show("Din tur er oprettet!");
             }

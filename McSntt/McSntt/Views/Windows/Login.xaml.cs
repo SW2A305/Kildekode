@@ -109,8 +109,14 @@ namespace McSntt.Views.Windows
                     memberWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Student:
+                    var StudentWindow = new StudentMainWindow();
+                    StudentWindow.Show();
+                    StudentWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Teacher:
+                    var TeacherWindow = new StudentMainWindow();
+                    TeacherWindow.Show();
+                    TeacherWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.SupportMember:
                     break;
