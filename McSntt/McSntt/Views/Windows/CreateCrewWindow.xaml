@@ -36,7 +36,7 @@
         <Button Content="Tilføj" HorizontalAlignment="Left" Margin="267,165,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_OnClick" x:Name="AddButton"/>
         <Button Content="Fjern" HorizontalAlignment="Left" Margin="267,215,0,0" VerticalAlignment="Top" Width="75" x:Name="RemoveButton" Click="RemoveButton_OnClick"/>
 
-        <TextBox Name="SearchBox" HorizontalAlignment="Left" KeyDown="SearchBox_OnKeyDown" Height="23" Margin="17,104,0,0" TextWrapping="Wrap" Text="{Binding FilterString, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="232" TextChanged="SearchBox_TextChanged"/>
+        <TextBox Name="SearchBox" HorizontalAlignment="Left" KeyDown="SearchBox_OnKeyDown" Height="23" Margin="17,104,0,0" TextWrapping="Wrap" Text="{Binding FilterString, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="232" />
 
         <Label Content="Søg nedenfor og find din besætning" FontSize="23" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="387"/>
         <Label Content="Liste over medlemmer" HorizontalAlignment="Left" Margin="17,62,0,0" VerticalAlignment="Top" Width="232"/>

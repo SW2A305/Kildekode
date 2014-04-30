@@ -6,11 +6,11 @@ using McSntt.Models;
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for MemberMainWindow.xaml
+    /// Interaction logic for StudentMainWindow.xaml
     /// </summary>
-    public partial class MemberMainWindow : Window
+    public partial class StudentMainWindow : Window
     {
-        public MemberMainWindow(SailClubMember activeUser)
+        public StudentMainWindow(SailClubMember activeUser)
         {
             // Set the list as the current DataContext
             InitializeComponent();

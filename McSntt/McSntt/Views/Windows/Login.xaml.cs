@@ -67,7 +67,7 @@ namespace McSntt.Views.Windows
                         StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
                         StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
 
-                        LoginCompleted(usr.Position);
+                        LoginCompleted(usr);
                     }
                     else
                     {
@@ -94,25 +94,34 @@ namespace McSntt.Views.Windows
             return crypto.Aggregate(hash, (current, bit) => current + bit.ToString("x2"));
         }
 
-        private void LoginCompleted(SailClubMember.Positions p)
+        private void LoginCompleted(SailClubMember p)
         {
-            switch (p)
+            switch (p.Position)
             {
                 case SailClubMember.Positions.Admin:
-                    var adminWindow = new AdminMainWindow();
+                    var adminWindow = new AdminMainWindow(p);
                     adminWindow.Show();
                     adminWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Member:
-                    var memberWindow = new MemberMainWindow();
+                    var memberWindow = new MemberMainWindow(p);
                     memberWindow.Show();
                     memberWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Student:
+                    var StudentWindow = new StudentMainWindow(p);
+                    StudentWindow.Show();
+                    StudentWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Teacher:
+                    var TeacherWindow = new StudentMainWindow(p);
+                    TeacherWindow.Show();
+                    TeacherWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.SupportMember:
+                    var SupportWindow = new StudentMainWindow(p);
+                    SupportWindow.Show();
+                    SupportWindow.Owner = this.Owner;
                     break;
             }
             this.Hide();
