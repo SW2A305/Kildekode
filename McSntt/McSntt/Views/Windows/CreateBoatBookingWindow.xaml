@@ -14,18 +14,12 @@
         <StackPanel HorizontalAlignment="Left" Height="517" Margin="10,42,0,0" VerticalAlignment="Top" Width="300">
             <TextBlock Text="Vælg en båd:"/>
             <ComboBox Name="BoatComboBox" HorizontalAlignment="Left" ItemsSource="{Binding BoatsCollection}" DropDownClosed="BoatComboBox_OnDropDownClosed" Width="290"/>
-            <StackPanel Name="DateTimePickers" Orientation="Horizontal">
-                <StackPanel>
-                    <TextBlock Text="Vælg et starttidspunkt:"/>
-                    <DatePicker Name="DatePickerStart" SelectedDate="{x:Static sys:DateTime.Now}"/>
-                    <xctk:DateTimeUpDown Name="TimeStart" Format="Custom" FormatString="HH:mm tt" Value="12:00" />
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Vælg et sluttidspunkt:"/>
-                    <DatePicker Name="DatePickerEnd" SelectedDate="{x:Static sys:DateTime.Now}"/>
-                    <xctk:DateTimeUpDown Name="TimeEnd" Format="Custom" FormatString="HH:mm tt" Value="13:30" />
-                </StackPanel>
-            </StackPanel>
+            
+            <TextBlock Text="Vælg et starttidspunkt:"/>
+            <xctk:DateTimePicker Name="DateTimeStart" Format="FullDateTime" />
+            <TextBlock Text="Vælg et sluttidspunkt:"/>
+            <xctk:DateTimePicker Name="DateTimeEnd" Format="FullDateTime" />
+
             <TextBlock Text="Vælg din besætning:"/>
             <DataGrid CanUserAddRows="False" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="180" Width="290" MaxHeight="180">
                 <DataGrid.Columns>
@@ -36,8 +30,12 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button Height="25" Margin="0,0,10,0" Name="ChangeCrew" Content="Ændre besætning" Click="ChangeCrew_Click"/>
+            <TextBlock Text="Vælg en kaptajn:" />
+            <ComboBox Name="CaptainComboBox" HorizontalAlignment="Left" ItemsSource="{Binding CurrentCrew}" DropDownClosed="CaptainComboBox_OnDropDownClosed" Width="290"/>
+            <TextBlock Text="Angiv et formål:" />
+            <TextBox Height="50" Width="290" HorizontalAlignment="Left" />
+            <Button Height="25" Margin="0,0,10,0" Name="CompleteBooking" Content="Gem Booking" Click="SaveButton_Click"/>
+            <Button Height="25" Margin="0,0,10,0" Name="CancelBooking" Content="Annuller Booking" Click="CancelButton_Click"/>
         </StackPanel>
-
-
     </Grid>
 </Window>
