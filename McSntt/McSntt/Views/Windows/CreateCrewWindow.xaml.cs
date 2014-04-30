@@ -2,18 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
@@ -51,6 +44,7 @@ namespace McSntt.Views.Windows
                 db.SailClubMembers.Load();
                 DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
+                SearchBox.Text = "Søg efter medlemmer her";
 
             }
         }
@@ -130,7 +124,6 @@ namespace McSntt.Views.Windows
             return false;
         }
 
-
         private void SearchBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -186,5 +179,13 @@ namespace McSntt.Views.Windows
                MessageBox.Show("Ugyldigt navn. \nPrøv venligst igen");
            }
        }
+
+        private void SearchBox_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            SearchBox.Text = String.Empty;
+
+            /*Resfreshes the Datagrid when starting a new search */
+            FilterString = String.Empty;
+        }
     }
 }
