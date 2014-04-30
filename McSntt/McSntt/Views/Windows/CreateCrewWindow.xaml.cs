@@ -23,7 +23,7 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateCrewWindow : Window , INotifyPropertyChanged
     {
-        public List<Person> _crewList = new List<Person>(); 
+        public IList<Person> _crewList = new List<Person>(); 
 
 
         public CreateCrewWindow()
@@ -39,7 +39,7 @@ namespace McSntt.Views.Windows
             }
         }
 
-        public CreateCrewWindow(List<Person> CrewList )
+        public CreateCrewWindow(IList<Person> CrewList )
         {
             InitializeComponent();
             _crewList = CrewList;
@@ -55,7 +55,7 @@ namespace McSntt.Views.Windows
             }
         }
 
-        private void RefreshDatagrid(DataGrid Grid, List<Person> list )
+        private void RefreshDatagrid(DataGrid Grid, IList<Person> list )
         {
             Grid.ItemsSource = null;
             Grid.ItemsSource = list;

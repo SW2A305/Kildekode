@@ -25,35 +25,50 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateLogbookWindow : Window
     {
-        public List<Person> CrewList = new List<Person>();
+        public IList<Person> CrewList = new List<Person>();
         private RegularTrip RegularSailTrip = new RegularTrip();
         private Logbook currentLogbook = new Logbook();
+
+        private readonly DateTime _hasBeenFilledTime = new DateTime();
 
         public CreateLogbookWindow(/*RegularTrip sailTrip*/)
         {
             InitializeComponent();
             
             /*RegularSailTrip = sailTrip;*/
+
+            // TEST PERSONER
+
+            var person1 = new Person {FirstName = "Knold", LastName = "Tot", PersonId = 0};
+            var person2 = new Person { FirstName = "Son", LastName = "Goku", PersonId = 1 };
+            var person3 = new Person {FirstName = "Sponge", LastName = "Bob", PersonId = 2};
+            var testlist = new List<Person> {person1, person2, person3};
+
             RegularSailTrip = new RegularTrip
             {
                 Boat = new Boat() {NickName = "Bodil2"},
                 ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
                 BoatId = 1,
-                Captain = new Person() {FirstName = "Sponge", LastName = "Bob"},
+                Captain = person3,
                 Comments = "Det blir sjaw!",
                 DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
                 PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
                 WeatherConditions = "Det 'en bæt' wind...",
-                RegularTripId = 9
+                RegularTripId = 9,
+                Crew = testlist
+
             };
-           
+            
             FormålTextBox.Text = RegularSailTrip.PurposeAndArea;
             BådTextBox.Text = RegularSailTrip.Boat.NickName;
             DateTimePickerPlannedDepature.Value = RegularSailTrip.DepartureTime;
             DateTimePickerPlannedArrival.Value = RegularSailTrip.ArrivalTime;
             CaptainTextBox.Text = RegularSailTrip.Captain.FirstName + " " + RegularSailTrip.Captain.LastName;
-
-
+            DateTimePickerActualArrival.Value = DateTime.Now;
+            DateTimePickerActualDeparture.Value = DateTime.Now;
+            _hasBeenFilledTime = DateTime.Now;
+            CrewList = RegularSailTrip.Crew;
+            CrewDataGrid.ItemsSource = CrewList;
 
         }
         
@@ -71,27 +86,44 @@ namespace McSntt.Views.Windows
 
         private void FileLogbookButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true)
+            if (JaRadioButton.IsChecked == false && NejRadioButton.IsChecked == false)
             {
+                MessageBox.Show("Udfyld venligst om båden blev skadet under sejladsen");
+            }
+            else if ((JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true) &&
+                     (DateTimePickerActualArrival.Value == _hasBeenFilledTime ||
+                     DateTimePickerActualDeparture.Value == _hasBeenFilledTime))
+            {
+                MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst fra defaultværdien");
+            }
+            else if (JaRadioButton.IsChecked == true && SkadesrapportTextBox.Text == String.Empty)
+            {
+                MessageBox.Show("Udfyld venligst skadesrapporten med en beskrivelse af skaden");
+            }
+            else if (JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true) 
+            {
+                    if (JaRadioButton.IsChecked == true)
+                    {
+                        currentLogbook.DamageInflicted = true;
+
+                        //Notify someone that the boat is damaged
+                    }
+                
+                    if (NejRadioButton.IsChecked == true)
+                    {
+                        currentLogbook.DamageInflicted = false;
+                    }
+
                 RegularSailTrip.PurposeAndArea = FormålTextBox.Text;
                 currentLogbook.DamageDescription = SkadesrapportTextBox.Text;
                 currentLogbook.ActualCrew = CrewList;
                 currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
                 currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
-                if (JaRadioButton.IsChecked == true)
-                {
-                    currentLogbook.DamageInflicted = true;
-                    //Notify someone that the boat is damaged
-                }
-                if (NejRadioButton.IsChecked == true)
-                {
-                    currentLogbook.DamageInflicted = false;
-                }
-                this.Close();
+                RegularSailTrip.Crew = CrewList;
+                this.Close();}
             }
-            else MessageBox.Show("Udfyld venligst dato felterne og om båden blev skadet under sejladsen");
-            //Implement updateDatabase method, which updates the values of the CurrentSailTrip
 
-        }
-    }
+            //Implement updateDatabase method, which updates the values of the Regular/CurrentTrip, and also uploads the Logbook
+     }
 }
+
