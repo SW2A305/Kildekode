@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -29,32 +30,21 @@ namespace McSntt.Views.UserControls
         {
             InitializeComponent();
             ITeamDal teamDal = new TeamEfDal();
-
-            #region Data til test (skal slettes)
-            var student1 = new SailClubMember();
-            student1.FirstName = "Knold";
-            var student2 = new SailClubMember();
-            student2.FirstName = "Tot";
-            var team2 = new Team { Name = "Hold 8" };
-
-            team2.TeamMembers.Add(student1);
-            team2.TeamMembers.Add(student2);
-            
-            #endregion
-
             
             teamDropdown.ItemsSource = teamDal.GetAll();
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
 
-            
-            editTeamGrid.IsEnabled = false;
+            using (var db = new McSntttContext())
+            {
+                db.SailClubMembers.Load();
+                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
+                DataGridCollection.Filter = new Predicate<object>(Filter);
 
+            }
             
-
+            //editTeamGrid.IsEnabled = false;
         }
-
-
 
         private void editTeam_Checked(object sender, RoutedEventArgs e)
         {
@@ -106,5 +96,86 @@ namespace McSntt.Views.UserControls
             studentDropdown.SelectedValuePath = "FirstName";
 
         }
+
+        #region Search
+        private ICollectionView _dataGridCollection;
+        private string _filterString;
+
+        public ICollectionView DataGridCollection
+        {
+            get { return _dataGridCollection; }
+            set { _dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        public string FilterString
+        {
+            get
+            {
+                return _filterString;
+            }
+            set
+            {
+                _filterString = value;
+                NotifyPropertyChanged("FilterString");
+                FilterCollection();
+            }
+        }
+
+        private void FilterCollection()
+        {
+            if (_dataGridCollection != null)
+            {
+                _dataGridCollection.Refresh();
+            }
+        }
+        public bool Filter(object obj)
+        {
+            var data = obj as SailClubMember;
+            if (data != null)
+            {
+                if (!string.IsNullOrEmpty(_filterString))
+                {
+                    // Sanitise input to lower
+                    var lower = _filterString.ToLower();
+
+                    // Check if either of the data points for the members match the filterstring
+                    if (data.FirstName != null)
+                        if (data.FirstName.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.LastName != null)
+                        if (data.LastName.ToLower().Contains(lower))
+                            return true;
+
+                    if (data.MemberId.ToString().Contains(lower))
+                        return true;
+
+                    // If none succeeds return false
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
+        private void memberSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                this.StudentDataGrid.Focus();
+            }
+        }
+
+
     }
 }

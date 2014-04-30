@@ -17,8 +17,8 @@
             <RadioButton x:Name="level2" Content="2. års sejlere" HorizontalAlignment="Left" Margin="139,45,0,0" VerticalAlignment="Top"/>
             <StackPanel DataContext="{Binding ElementName=UI}" Margin="-59,83,373,52">
                 <Label Height="37" FontSize="16" Content="Elever" />
-                <TextBox x:Name="memberSearch" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"  />
-                <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False">
+                <TextBox x:Name="memberSearch" Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" KeyDown="memberSearch_KeyDown"  />
+                <DataGrid x:Name="StudentDataGrid" ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False" Height="308">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
                         <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
@@ -27,7 +27,7 @@
                 </DataGrid>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Height="310" Margin="222,141,0,0" VerticalAlignment="Top" Width="187">
-                <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,0,2,0">
+                <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,0,2,0" Height="306">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
                         <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
