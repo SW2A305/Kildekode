@@ -96,7 +96,6 @@ namespace McSntt.Migrations
                      Comments = "Det blir sjaw!",
                      Crew = context.SailClubMembers.Where(x=> x.Position == SailClubMember.Positions.Admin).Cast<Person>().ToList(),
                      DepartureTime = new DateTime(2014,09,9,09,0,0),
-                     Logbook = null,
                      PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
                      WeatherConditions = "Det 'en bæt' wind...",
                      RegularTripId = 9
