@@ -9,12 +9,14 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using McSntt.Models;
 using McSntt.Views.Windows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
 {
@@ -25,6 +27,7 @@ namespace McSntt.Views.Windows
     {
         public List<Person> CrewList = new List<Person>();
         private RegularTrip RegularSailTrip = new RegularTrip();
+        private Logbook currentLogbook = new Logbook();
 
         public CreateLogbookWindow(/*RegularTrip sailTrip*/)
         {
@@ -64,6 +67,32 @@ namespace McSntt.Views.Windows
 
             CrewDataGrid.ItemsSource = null;
             CrewDataGrid.ItemsSource = CrewList;
+        }
+
+        private void FileLogbookButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true && 
+                DateTimePickerActualArrival !=null && DateTimePickerActualDeparture != null )
+            {
+                RegularSailTrip.PurposeAndArea = FormålTextBox.Text;
+                currentLogbook.DamageDescription = SkadesrapportTextBox.Text;
+                currentLogbook.ActualCrew = CrewList;
+                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
+                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
+                if (JaRadioButton.IsChecked == true)
+                {
+                    currentLogbook.DamageInflicted = true;
+                    //Notify someone that the boat is damaged
+                }
+                if (NejRadioButton.IsChecked == true)
+                {
+                    currentLogbook.DamageInflicted = false;
+                }
+                this.Close();
+            }
+            else MessageBox.Show("Udfyld venligst dato felterne og om båden blev skadet under sejladsen");
+            //Implement updateDatabase method, which updates the values of the CurrentSailTrip
+
         }
     }
 }

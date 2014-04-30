@@ -31,7 +31,8 @@
         <RadioButton x:Name="JaRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,527,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="NejRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
         <Button Content="Ændre Besætning" HorizontalAlignment="Left" Margin="10,238,0,0" VerticalAlignment="Top" Width="101" Click="Button_Click" Height="27"/>
-        <Button Content="Udfør" HorizontalAlignment="Left" Margin="673,545,0,0" VerticalAlignment="Top" Width="93" Height="24"/>
+        <Button Name="FileLogbookButton" Content="Udfør" HorizontalAlignment="Left" Margin="673,545,0,0" 
+                VerticalAlignment="Top" Width="93" Height="24" Click="FileLogbookButton_OnClick" />
         <xctk:DateTimePicker Name="DateTimePickerPlannedDepature" Width="Auto" Height="Auto" Margin="548,130,31,417"/>
         <xctk:DateTimePicker Name="DateTimePickerPlannedArrival" Height="Auto" Width="Auto" Margin="548,168,31,382"/>
         <xctk:DateTimePicker Name="DateTimePickerActualDeparture" Height="Auto" Width="Auto" Margin="548,223,31,327"/>

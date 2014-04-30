@@ -265,12 +265,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="DataAbstractionLayer\Images\cross.png" />
-    <Resource Include="DataAbstractionLayer\Images\gray.png" />
-    <Content Include="DataAbstractionLayer\Images\SundetLogo.PNG">
+    <Resource Include="Images\cross.png" />
+    <Resource Include="Images\gray.png" />
+    <Content Include="Images\SundetLogo.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="DataAbstractionLayer\Images\check.png" />
+    <Resource Include="Images\check.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
