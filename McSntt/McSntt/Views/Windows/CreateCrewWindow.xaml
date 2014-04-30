@@ -7,6 +7,11 @@
 
     <Grid>
         <DataGrid x:Name="MemberDataGrid" IsReadOnly="True" ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="17,141,0,0" VerticalAlignment="Top" Height="127" Width="232" CanUserAddRows="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="resultDataGrid_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
@@ -15,6 +20,11 @@
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="removeDataGrid_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
@@ -26,7 +36,7 @@
         <Button Content="Tilføj" HorizontalAlignment="Left" Margin="267,165,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_OnClick" x:Name="AddButton"/>
         <Button Content="Fjern" HorizontalAlignment="Left" Margin="267,215,0,0" VerticalAlignment="Top" Width="75" x:Name="RemoveButton" Click="RemoveButton_OnClick"/>
 
-        <TextBox Name="SearchBox" HorizontalAlignment="Left" KeyDown="SearchBox_OnKeyDown" Height="23" Margin="17,104,0,0" TextWrapping="Wrap" Text="{Binding FilterString, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="232"/>
+        <TextBox Name="SearchBox" HorizontalAlignment="Left" KeyDown="SearchBox_OnKeyDown" Height="23" Margin="17,104,0,0" TextWrapping="Wrap" Text="{Binding FilterString, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="232" TextChanged="SearchBox_TextChanged"/>
 
         <Label Content="Søg nedenfor og find din besætning" FontSize="23" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="387"/>
         <Label Content="Liste over medlemmer" HorizontalAlignment="Left" Margin="17,62,0,0" VerticalAlignment="Top" Width="232"/>

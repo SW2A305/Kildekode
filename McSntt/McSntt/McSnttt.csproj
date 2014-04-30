@@ -94,6 +94,9 @@
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
+    <Compile Include="Views\Windows\MemberMainWindow.xaml.cs">
+      <DependentUpon>MemberMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -158,11 +161,15 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Windows\MemberMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Windows\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\MainWindow.xaml">
+    <Page Include="Views\Windows\AdminMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -171,8 +178,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Person.cs" />
-    <Compile Include="Views\Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Windows\AdminMainWindow.xaml.cs">
+      <DependentUpon>AdminMainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Styles\Style.xaml">

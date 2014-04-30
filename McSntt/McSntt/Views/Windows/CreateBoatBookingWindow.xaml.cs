@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Forms;
+using McSntt.DataAbstractionLayer;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
@@ -24,13 +16,17 @@ namespace McSntt.Views.Windows
         public CreateBoatBookingWindow()
         {
             InitializeComponent();
-            using (var db = new McSntttContext())
-            {
-                db.Boats.Load();
-                BoatComboBox.ItemsSource = db.Boats.Local;
-                BoatComboBox.DisplayMemberPath = "NickName";
-                BoatComboBox.SelectedValuePath = "Id";
-            }
+            
+            var dbm = new BoatEfDal();
+            BoatComboBox.ItemsSource = dbm.GetAll();
+            BoatComboBox.DisplayMemberPath = "NickName";
+            BoatComboBox.SelectedValuePath = "Id";
+
+            CaptainComboBox.DisplayMemberPath = "FirstName";
+            CaptainComboBox.SelectedValuePath = "MemberId";
+
+            DateTimeStart.Value = DateTime.Now;
+            DateTimeEnd.Value = DateTime.Now;
         }
 
         private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)
@@ -48,6 +44,24 @@ namespace McSntt.Views.Windows
 
             CrewDataGrid.ItemsSource = null;
             CrewDataGrid.ItemsSource = CrewList;
+            CaptainComboBox.ItemsSource = CrewList;
         }
+
+        private void CaptainComboBox_OnDropDownClosed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Check if this is a valid trip. If not return saying error. 
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Add warning window
+        }
+
+
     }
 }
