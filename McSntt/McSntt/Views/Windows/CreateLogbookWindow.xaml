@@ -22,10 +22,10 @@
 
         <Label Content="Formål:" HorizontalAlignment="Left" Height="auto" Width="100" Margin="10,290,0,235"/>
         <TextBox x:Name="FormålTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
-                 Margin="133,291,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="232"/>
+                 Margin="133,291,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
         <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="10,376,0,130"/>
         <TextBox x:Name="SkadesrapportTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
-                 Margin="133,381,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="232"/>
+                 Margin="133,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
         <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,473,0,55"/>
         <RadioButton x:Name="JaRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,475,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="NejRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,495,0,0" VerticalAlignment="Top"/>
