@@ -18,7 +18,7 @@ namespace McSntt.Models
         public int TeamId { get; set; }
 
         private string _name;
-        private List<SailClubMember> _teamMembers;
+        private List<SailClubMember> _teamMembers = new List<SailClubMember>();
 
         public enum ClassLevel { First = 1, Second = 2}
         private ClassLevel _level;

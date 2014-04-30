@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using McSntt.Models;
 
 namespace McSntt.Migrations
@@ -95,6 +96,23 @@ namespace McSntt.Migrations
                     ImagePath = "Images/SundetLogo.png"
                 }
                 );
+            context.SailClubMembers.AddOrUpdate(
+                p => p.Username,
+                new SailClubMember
+                {
+                    FirstName = "Knold",
+                    LastName = "Knoldsen",
+                    Username = "KKnold",
+                    Address = "Scoresbysundvej 8",
+                    Postcode = "9000",
+                    Cityname = "Aalborg SØ",
+                    Email = "HalloHallo@gmail.com",
+                    PhoneNumber = "12345678",
+                    Gender = Gender.Female,
+                    MemberId = 1357,
+                    Position = SailClubMember.Positions.Student
+                }
+                );
 
             context.Teams.AddOrUpdate(
                 t => t.TeamId,
@@ -109,8 +127,14 @@ namespace McSntt.Migrations
                     Navigation = false,
                     Night = true,
                     RobeWorks = true,
+                    TeamMembers = context.SailClubMembers.Where(x => x.Username == "KKnold").ToList()
+                    
+                    
+                    
+                    
                  }
                 );
+            
         }
     }
 }

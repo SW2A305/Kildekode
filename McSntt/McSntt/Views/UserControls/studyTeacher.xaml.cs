@@ -24,6 +24,7 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class studyTeacher : UserControl
     {
+
         public studyTeacher()
         {
             InitializeComponent();
@@ -35,10 +36,13 @@ namespace McSntt.Views.UserControls
             var student2 = new SailClubMember();
             student2.FirstName = "Tot";
             var team2 = new Team { Name = "Hold 8" };
-            teamDal.Create(team2);
+
+            team2.TeamMembers.Add(student1);
+            team2.TeamMembers.Add(student2);
+            
             #endregion
 
-
+            
             teamDropdown.ItemsSource = teamDal.GetAll();
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
@@ -88,9 +92,18 @@ namespace McSntt.Views.UserControls
 
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            studentDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).TeamMembers;
+
+            try
+            {
+                studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
+                //Messagebox for test purpose, list seemingly does not exist in database
+                MessageBox.Show("" + ((Team) teamDropdown.SelectedItem).TeamMembers.Count);
+            }
+            catch (NullReferenceException ex)
+            {                               
+            }
             studentDropdown.DisplayMemberPath = "FirstName";
-            studentDropdown.SelectedValuePath = "MemberId";
+            studentDropdown.SelectedValuePath = "FirstName";
 
         }
     }
