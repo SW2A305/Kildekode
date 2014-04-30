@@ -88,10 +88,9 @@ namespace McSntt.Views.UserControls
 
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            studentDropdown.ItemsSource = ((Team) teamDropdown.SelectionBoxItem).TeamMembers;
+            studentDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).TeamMembers;
             studentDropdown.DisplayMemberPath = "FirstName";
-            studentDropdown.SelectedValuePath = "FirstName";
+            studentDropdown.SelectedValuePath = "MemberId";
 
         }
     }
