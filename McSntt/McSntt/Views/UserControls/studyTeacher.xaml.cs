@@ -23,28 +23,26 @@ namespace McSntt.Views.UserControls
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class studyTeacher : UserControl
+    public partial class studyTeacher : UserControl, INotifyPropertyChanged
     {
 
         public studyTeacher()
         {
             InitializeComponent();
             ITeamDal teamDal = new TeamEfDal();
+            ISailClubMemberDal memberDal = new SailClubMemberEfDal();
             
             teamDropdown.ItemsSource = teamDal.GetAll();
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
-
-            using (var db = new McSntttContext())
-            {
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
-
-            }
             
-            //editTeamGrid.IsEnabled = false;
+            DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
+            DataGridCollection.Filter = new Predicate<object>(Filter);
+            
+            editTeamGrid.IsEnabled = false;
         }
+
+        #region Events
 
         private void editTeam_Checked(object sender, RoutedEventArgs e)
         {
@@ -94,8 +92,9 @@ namespace McSntt.Views.UserControls
             }
             studentDropdown.DisplayMemberPath = "FirstName";
             studentDropdown.SelectedValuePath = "FirstName";
-
         }
+
+        #endregion
 
         #region Search
         private ICollectionView _dataGridCollection;
@@ -167,15 +166,5 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
-
-        private void memberSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                this.StudentDataGrid.Focus();
-            }
-        }
-
-
     }
 }
