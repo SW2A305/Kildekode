@@ -94,6 +94,9 @@
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
+    <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
+      <DependentUpon>SupportMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\TeacherMainWindow.xaml.cs">
       <DependentUpon>TeacherMainWindow.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Windows\SupportMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Windows\TeacherMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

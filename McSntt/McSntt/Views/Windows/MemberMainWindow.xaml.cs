@@ -10,7 +10,7 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class MemberMainWindow : Window
     {
-        public MemberMainWindow()
+        public MemberMainWindow(SailClubMember activeUser)
         {
             // Set the list as the current DataContext
             InitializeComponent();
