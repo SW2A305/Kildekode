@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.DataAbstractionLayer;
 using McSntt.Migrations;
 using McSntt.Models;
 
@@ -30,18 +31,12 @@ namespace McSntt.Views.UserControls
         public Members()
         {
             InitializeComponent();
-            //DataContext = this;
 
-            using (var db = new McSntttContext())
-            {
-                #region SearchUI
+            var dbm = new SailClubMemberEfDal();
+            DataGridCollection = CollectionViewSource.GetDefaultView(dbm.GetAll());
+            DataGridCollection.Filter = new Predicate<object>(Filter);
 
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
-
-                #endregion
-            }
+           
         }
 
         #region Search
