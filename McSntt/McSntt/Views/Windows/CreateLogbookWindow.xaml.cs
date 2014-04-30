@@ -71,8 +71,7 @@ namespace McSntt.Views.Windows
 
         private void FileLogbookButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true && 
-                DateTimePickerActualArrival !=null && DateTimePickerActualDeparture != null )
+            if (JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true)
             {
                 RegularSailTrip.PurposeAndArea = FormålTextBox.Text;
                 currentLogbook.DamageDescription = SkadesrapportTextBox.Text;
