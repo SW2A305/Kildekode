@@ -19,6 +19,8 @@
         <TextBox x:Name="BoatTypeTextBox" HorizontalAlignment="Left" Height="23" Margin="71,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="BoatStatusTextBox" HorizontalAlignment="Left" Height="23" Margin="71,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Content="Liste over logbøger for din valgte båd" HorizontalAlignment="Left" Margin="10,227,0,0" VerticalAlignment="Top" Width="224"/>
+        <Button x:Name="ChooseLogbookButton" Content="Se detaljer for valgte logbog" HorizontalAlignment="Left" Margin="10,504,0,0" VerticalAlignment="Top" Width="232" Click="ChooseLogbookButton_Click"/>
+        <Button x:Name="AnswerDamageReportButton" Content="Se detaljer for valgte logbog" HorizontalAlignment="Left" Margin="10,531,0,0" VerticalAlignment="Top" Width="232" Click="ChooseLogbookButton_Click"/>
 
     </Grid>
 </UserControl>
