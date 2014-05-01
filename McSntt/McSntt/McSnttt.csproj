@@ -94,7 +94,19 @@
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
+      <DependentUpon>SupportMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\TeacherMainWindow.xaml.cs">
+      <DependentUpon>TeacherMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StudentMainWindow.xaml.cs">
+      <DependentUpon>StudentMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\MemberMainWindow.xaml.cs">
+      <DependentUpon>MemberMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="McSntttContext.cs" />
@@ -149,17 +161,36 @@
     <Compile Include="Views\UserControls\studyTeacher.xaml.cs">
       <DependentUpon>studyTeacher.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\CreateBoatBookingWindow.xaml.cs">
+      <DependentUpon>CreateBoatBookingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\CreateCrewWindow.xaml.cs">
       <DependentUpon>CreateCrewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Login.xaml">
+    <Page Include="Views\Windows\SupportMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\TeacherMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\StudentMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\MemberMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\Windows\AdminMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -168,8 +199,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Person.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Windows\AdminMainWindow.xaml.cs">
+      <DependentUpon>AdminMainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Styles\Style.xaml">
@@ -217,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\studyTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\CreateBoatBookingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

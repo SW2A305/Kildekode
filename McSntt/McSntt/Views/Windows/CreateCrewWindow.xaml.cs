@@ -21,10 +21,9 @@ namespace McSntt.Views.Windows
     /// <summary>
     /// Interaction logic for CreatCrewWindow.xaml
     /// </summary>
-    public partial class CreateCrewWindow : Window , INotifyPropertyChanged
+    public partial class CreateCrewWindow : Window, INotifyPropertyChanged
     {
         public IList<Person> _crewList = new List<Person>(); 
-
 
         public CreateCrewWindow()
         {
@@ -56,6 +55,7 @@ namespace McSntt.Views.Windows
         }
 
         private void RefreshDatagrid(DataGrid Grid, IList<Person> list )
+
         {
             Grid.ItemsSource = null;
             Grid.ItemsSource = list;
@@ -67,10 +67,15 @@ namespace McSntt.Views.Windows
         public ICollectionView DataGridCollection
         {
             get { return _dataGridCollection; }
-            set { _dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
+            set
+            {
+                _dataGridCollection = value;
+                NotifyPropertyChanged("DataGridCollection");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void NotifyPropertyChanged(string property)
         {
             if (PropertyChanged != null)
@@ -81,10 +86,7 @@ namespace McSntt.Views.Windows
 
         public string FilterString
         {
-            get
-            {
-                return _filterString;
-            }
+            get { return _filterString; }
             set
             {
                 _filterString = value;
@@ -100,6 +102,7 @@ namespace McSntt.Views.Windows
                 _dataGridCollection.Refresh();
             }
         }
+
         public bool Filter(object obj)
         {
             var data = obj as SailClubMember;
@@ -149,42 +152,70 @@ namespace McSntt.Views.Windows
             RefreshDatagrid(CurrentCrewDataGrid, _crewList);
         }
 
-       private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
             CreateCrewWindowName.Close();
         }
 
-       private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
-       {
-           Person currentPerson = (Person)CurrentCrewDataGrid.SelectedItem;
+        private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Person currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
 
-           _crewList.Remove(currentPerson);
+            _crewList.Remove(currentPerson);
 
-           RefreshDatagrid(CurrentCrewDataGrid, _crewList);
-       }
+            RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+        }
 
-       private void AddGuestButton_Click(object sender, RoutedEventArgs e)
-       {
+        private void AddGuestButton_Click(object sender, RoutedEventArgs e)
+        {
 
-           if (Regex.IsMatch(FirstNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && FirstNameBox.Text != String.Empty)
-           {
-               if (Regex.IsMatch(LastNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && LastNameBox.Text != String.Empty)
-               {
-                   var p = new Person();
-                   p.FirstName = FirstNameBox.Text;
-                   p.LastName = LastNameBox.Text;
-                   _crewList.Add(p);
+            if (Regex.IsMatch(FirstNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && FirstNameBox.Text != String.Empty)
+            {
+                if (Regex.IsMatch(LastNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && LastNameBox.Text != String.Empty)
+                {
+                    var p = new Person();
+                    p.FirstName = FirstNameBox.Text;
+                    p.LastName = LastNameBox.Text;
+                    _crewList.Add(p);
 
-                   RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+                    RefreshDatagrid(CurrentCrewDataGrid, _crewList);
 
-                   FirstNameBox.Clear();
-                   LastNameBox.Clear();
-               }  
-           }
-           else
-           {
-               MessageBox.Show("Ugyldigt navn. \nPrøv venligst igen");
-           }
-       }
+                    FirstNameBox.Clear();
+                    LastNameBox.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ugyldigt navn. \nPrøv venligst igen");
+            }
+        }
+
+        private void resultDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                DataGridRow dgr = sender as DataGridRow;
+
+                Person currentPerson = (Person) MemberDataGrid.SelectedItem;
+                if (!_crewList.Contains(currentPerson))
+                {
+                    _crewList.Add(currentPerson);
+                }
+
+                RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+            }
+        }
+
+        private void removeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                Person currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
+
+                _crewList.Remove(currentPerson);
+
+                RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+            }
+        }
     }
 }
