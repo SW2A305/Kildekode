@@ -24,7 +24,7 @@
                 <Style TargetType="{x:Type DataGridRow}"/>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding DepatureTime}" Header="Planlagte Afgang"/>
+                <DataGridTextColumn Binding="{Binding DepartureTime}" Header="Planlagte Afgang"/>
                 <DataGridTextColumn Binding="{Binding ArrivalTime}" Header="Planlagte Hjemkost"/>
                 <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål"/>
             </DataGrid.Columns>
