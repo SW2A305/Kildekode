@@ -85,6 +85,7 @@ namespace McSntt.Migrations
                 }
                 );
 
+            /*
             context.RegularTrips.AddOrUpdate(
                 t => t.RegularTripId,
                 new RegularTrip
@@ -101,6 +102,7 @@ namespace McSntt.Migrations
                      RegularTripId = 9
                 }
                 );
+             */
 
             context.Boats.AddOrUpdate(
                 b => b.Id,
