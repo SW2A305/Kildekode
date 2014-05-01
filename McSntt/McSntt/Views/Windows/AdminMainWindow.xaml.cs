@@ -10,10 +10,19 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class AdminMainWindow : Window
     {
+        public AdminMainWindow()
+        {
+            // Set the list as the current DataContext
+            InitializeComponent();
+
+            Closing += Window_Closing;
+        }
         public AdminMainWindow(SailClubMember activeUser)
         {
             // Set the list as the current DataContext
             InitializeComponent();
+
+            ThisUser = activeUser;
 
             Closing += Window_Closing;
         }
@@ -26,5 +35,7 @@ namespace McSntt.Views.Windows
         {
             Application.Current.Shutdown();
         }
+
+        public SailClubMember ThisUser { get; set; }
     }
 }

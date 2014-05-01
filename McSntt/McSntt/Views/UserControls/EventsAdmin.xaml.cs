@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.Views.Windows;
 
 namespace McSntt.Views.UserControls
 {
@@ -38,6 +39,17 @@ namespace McSntt.Views.UserControls
         private void Delete_Event(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Begivenhed er slettet");
+        }
+
+        private void Subscripe(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Show_Participants(object sender, RoutedEventArgs e)
+        {
+            Window showParticipants = new ParticipantsPopup();
+            showParticipants.Show();
         }
     }
 }
