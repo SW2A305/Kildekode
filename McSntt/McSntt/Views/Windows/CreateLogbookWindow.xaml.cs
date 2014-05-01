@@ -71,7 +71,6 @@ namespace McSntt.Views.Windows
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
 
-
         }
         
         private void ChangeCrewButtonClick(object sender, RoutedEventArgs e)

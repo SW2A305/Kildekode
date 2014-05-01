@@ -8,19 +8,28 @@
              d:DesignHeight="650" d:DesignWidth="1000">
 
     <Grid>
-        <ComboBox x:Name="BoatComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="BoatComboBox_OnSelectionChanged" />
-        <Label Content="" x:Name="NameLabel" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.421,0.692" Height="44" Width="120"/>
-        <Label Content="Bådtype:" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="120"/>
-        <Image x:Name="BoatImage" HorizontalAlignment="Left" Height="234" Margin="676,125,0,0" VerticalAlignment="Top" Width="272"/>
-        
-        <ListBox x:Name="LogbookListBox" HorizontalAlignment="Left" Height="230" Margin="10,258,0,0" VerticalAlignment="Top" Width="232"/>
-        
-        <TextBox x:Name="BoatTypeTextBox" HorizontalAlignment="Left" Height="23" Margin="71,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="BoatStatusTextBox" HorizontalAlignment="Left" Height="23" Margin="71,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Liste over logbøger for din valgte båd" HorizontalAlignment="Left" Margin="10,227,0,0" VerticalAlignment="Top" Width="224"/>
-        <Button x:Name="ChooseLogbookButton" Content="Se detaljer for valgte logbog" HorizontalAlignment="Left" Margin="10,504,0,0" VerticalAlignment="Top" Width="232" Click="ChooseLogbookButton_Click"/>
-        <Button x:Name="AnswerDamageReportButton" Content="Se detaljer for valgte logbog" HorizontalAlignment="Left" Margin="10,531,0,0" VerticalAlignment="Top" Width="232" Click="ChooseLogbookButton_Click"/>
+        <ComboBox x:Name="BoatComboBox" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="BoatComboBox_OnSelectionChanged" />
+        <Label Content="Bådtype:" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="120"/>
+        <Image x:Name="BoatImage" HorizontalAlignment="Left" Height="234" Margin="565,186,0,0" VerticalAlignment="Top" Width="272"/>
+
+        <TextBox x:Name="BoatTypeTextBox" HorizontalAlignment="Left" Height="24" Margin="71,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="BoatStatusTextBox" HorizontalAlignment="Left" Height="22" Margin="71,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Liste over logbøger for din valgte båd" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" Width="224"/>
+        <Button x:Name="ChooseLogbookButton" Content="Se detaljer for valgte logbog" HorizontalAlignment="Left" Margin="10,438,0,0" VerticalAlignment="Top" Width="181" Click="ChooseLogbookButton_Click"/>
+        <Button x:Name="AnswerDamageReportButton" Content="Svar på skadesrapporten" HorizontalAlignment="Left" Margin="10,466,0,0" VerticalAlignment="Top" Width="181" Click="AnswerDamageReportButton_OnClick"/>
+
+        <DataGrid CanUserAddRows="False" x:Name="LogbookDataGrid" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Height="240" Width="425" AutoGenerateColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}"/>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding DepatureTime}" Header="Planlagte Afgang"/>
+                <DataGridTextColumn Binding="{Binding ArrivalTime}" Header="Planlagte Hjemkost"/>
+                <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Vælg en båd nedenfor" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138"/>
 
     </Grid>
 </UserControl>

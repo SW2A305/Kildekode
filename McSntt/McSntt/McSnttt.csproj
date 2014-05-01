@@ -105,8 +105,11 @@
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\PerticipantsPopup.xaml.cs">
-      <DependentUpon>PerticipantsPopup.xaml</DependentUpon>
+    <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
+      <DependentUpon>DamageReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ParticipantsPopup.xaml.cs">
+      <DependentUpon>ParticipantsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
       <DependentUpon>SupportMainWindow.xaml</DependentUpon>
@@ -184,11 +187,18 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\ViewSpecificLogbookWindow.xaml.cs">
+      <DependentUpon>ViewSpecificLogbookWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\UserControls\FrontPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\PerticipantsPopup.xaml">
+    <Page Include="Views\Windows\DamageReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ParticipantsPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -284,6 +294,10 @@
     <Page Include="Views\Windows\CreateLogbookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ViewSpecificLogbookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
