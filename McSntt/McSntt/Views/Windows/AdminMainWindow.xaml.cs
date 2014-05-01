@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using McSntt.Models;
+using McSntt.Views.UserControls;
 
 namespace McSntt.Views.Windows
 {
@@ -21,8 +22,9 @@ namespace McSntt.Views.Windows
         {
             // Set the list as the current DataContext
             InitializeComponent();
-
             ThisUser = activeUser;
+
+            FrontPageGrid.Children.Add(new FrontPage(ThisUser));
 
             Closing += Window_Closing;
         }
