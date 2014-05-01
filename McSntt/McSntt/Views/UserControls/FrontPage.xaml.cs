@@ -29,7 +29,7 @@ namespace McSntt.Views.UserControls
 
             var db = new RegularTripEfDal();
             var SailTripList = new List<RegularTrip>();
-            SailTripList = db.GetAll().Where(p => p.Crew.Contains());
+            // SailTripList = db.GetAll().Where(p => p.Crew.Contains());
         }
     }
 }
