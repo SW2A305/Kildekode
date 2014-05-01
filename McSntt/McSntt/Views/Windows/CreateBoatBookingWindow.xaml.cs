@@ -42,8 +42,8 @@ namespace McSntt.Views.Windows
         {
             var createCrewWindow = new CreateCrewWindow(CrewList);
             createCrewWindow.ShowDialog();
-            
-            CrewList = createCrewWindow._crewList.ToList();
+
+            CrewList = createCrewWindow.CrewList.ToList();
 
             // After the crew is changed refresh the data grid and captain selector
             CrewDataGrid.ItemsSource = null;
