@@ -121,7 +121,7 @@ namespace McSntt.Migrations
                     TeamId = 1,
                     Name = "Hold 1",
                     Level = Team.ClassLevel.First,
-                    TeamMembers = context.SailClubMembers.Where(x => x.Username == "KKnold").ToList()
+                    TeamMembers = context.StudentMembers.Where(x => x.Username == "KKnold").ToList()
                 }
                 );
             

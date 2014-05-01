@@ -13,6 +13,8 @@ namespace McSntt.Models
             Position = Positions.Student;
         }
 
+        Team AssociatedTeam { get; set; }
+
         #region Undervisnings kriterier
         public bool RobeWorks { get; set; }
         public bool Navigation { get; set; }

@@ -25,30 +25,62 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
+        #region Til test
+        public Team Team15 = new Team{Name = "Hold 15"};
+        public Team Team16 = new Team {Name = "Hold 16"};
+        public IList<Team> TeamList = new List<Team>();
+        public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", MemberId = 2000};
+        public StudentMember Member2 = new StudentMember { FirstName = "Tot", LastName = "Jensen", MemberId = 2001 };
+        #endregion
+
+        public IList<StudentMember> _membersList = new List<StudentMember>();  
+
         public StudyTeacher()
         {
             InitializeComponent();
             var teamDal = new TeamEfDal();
-            var memberDal = new SailClubMemberEfDal();
-            
-            teamDropdown.ItemsSource = teamDal.GetAll();
+            var memberDal = new StudentMemberEfDal();
+
+            #region Til test
+            Team15.TeamMembers.Add(Member1);
+            Team15.TeamMembers.Add(Member2);
+            TeamList.Add(Team15);
+            TeamList.Add(Team16);
+
+            teamDropdown.ItemsSource = TeamList;
+            #endregion
+
+            // To be uncommented when database works
+            //teamDropdown.ItemsSource = teamDal.GetAll();
+
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
             
-            using (var db = new McSntttContext())
-            {
-                #region SearchUI
-
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
-
-                #endregion
-            }
-
-           editTeamGrid.IsEnabled = false;
+            
+            DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
+            DataGridCollection.Filter = new Predicate<object>(Filter);
+            
+            editTeamGrid.IsEnabled = false;
         }
-        
+
+        private void RefreshDatagrid(DataGrid grid, IList<StudentMember> list)
+        {
+            grid.ItemsSource = null;
+            grid.ItemsSource = list;
+        }
+
+        private void ClearFields()
+        {
+            teamName.Text = string.Empty;
+            memberSearch.Text = string.Empty;
+            level1RadioButton.IsChecked = false;
+            level2RadioButton.IsChecked = false;
+            CurrentMemberDataGrid.ItemsSource = null;
+            teamDropdown.SelectedIndex = -1;
+            studentDropdown.SelectedIndex = -1;
+            studentDropdown.ItemsSource = null;
+        }
+
         #region Events
 
         private void editTeam_Checked(object sender, RoutedEventArgs e)
@@ -71,18 +103,34 @@ namespace McSntt.Views.UserControls
 
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
-            teamName.Text = string.Empty;
-            memberSearch.Text = string.Empty;
-            level1.IsChecked = false;
-            level2.IsChecked = false;
+            ClearFields();
         }
 
         private void deleteTeam_Click(object sender, RoutedEventArgs e)
         {
-            var team = (Team)teamDropdown.SelectionBoxItem;
-            ITeamDal teamDal = new TeamEfDal();
-            teamDal.Delete(team);
-            teamDropdown.ItemsSource = teamDal.GetAll();
+            // The try block prevents the program from crashing if
+            // you try to delete a team without having selected one
+            try
+            {
+                var team = (Team)teamDropdown.SelectedItem;
+
+                /*
+                ITeamDal teamDal = new TeamEfDal();
+                teamDal.Delete(team);
+                teamDropdown.ItemsSource = teamDal.GetAll();
+                 */
+
+                #region Til test
+                TeamList.Remove(team);
+                teamDropdown.ItemsSource = null;
+                teamDropdown.ItemsSource = TeamList;
+                #endregion
+
+                ClearFields();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -92,18 +140,43 @@ namespace McSntt.Views.UserControls
             {
                 studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
                 //Messagebox for test purpose, list seemingly does not exist in database
-                MessageBox.Show("" + ((Team)teamDropdown.SelectedItem).TeamMembers.Count);
+                //MessageBox.Show("" + ((Team)teamDropdown.SelectedItem).TeamMembers.Count);
+                _membersList = ((Team) teamDropdown.SelectedItem).TeamMembers;
+                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(_membersList);
             }
             catch (NullReferenceException ex)
             {
             }
             studentDropdown.DisplayMemberPath = "FirstName";
-            studentDropdown.SelectedValuePath = "FirstName";
+            studentDropdown.SelectedValuePath = "MemberId";
+           
+            
         }
+
+        private void AddStudent_Click(object sender, RoutedEventArgs e)
+        {
+            var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
+            if (!_membersList.Contains(currentMember))
+            {
+                _membersList.Add(currentMember);
+                studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
+                RefreshDatagrid(CurrentMemberDataGrid, _membersList);
+            }
+            
+        }
+
+        private void RemoveStudent_Click(object sender, RoutedEventArgs e)
+        {
+            var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
+            _membersList.Remove(currentMember);
+            studentDropdown.ItemsSource = null;
+            studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
+            RefreshDatagrid(CurrentMemberDataGrid, _membersList);
+        }
+
 
         #endregion
         
-
         #region Search
         private ICollectionView _dataGridCollection;
         private string _filterString;
@@ -175,5 +248,7 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
+
+        
     }
 }

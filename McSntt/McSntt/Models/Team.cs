@@ -11,14 +11,14 @@ namespace McSntt.Models
         public Team()
         {
             // Assign the id and increment the next
-            TeamId = _nextId++;
+            TeamId = ++_nextId;
         }
         // Teams have an unique ID number½
         private static int _nextId;
         public int TeamId { get; set; }
 
         private string _name;
-        private List<SailClubMember> _teamMembers = new List<SailClubMember>();
+        private IList<StudentMember> _teamMembers = new List<StudentMember>();
 
         public enum ClassLevel { First = 1, Second = 2}
         private ClassLevel _level;
@@ -30,7 +30,7 @@ namespace McSntt.Models
             set { _name = value; }
         }
 
-        public List<SailClubMember> TeamMembers
+        public IList<StudentMember> TeamMembers
         {
             get { return _teamMembers; }
             set { _teamMembers = value; }
