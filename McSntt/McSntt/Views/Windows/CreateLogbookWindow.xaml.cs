@@ -132,6 +132,8 @@ namespace McSntt.Views.Windows
                 currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
                 currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
                 RegularSailTrip.Crew = CrewList;
+                RegularSailTrip.Logbook = currentLogbook;
+
                 this.Close();}
             }
 
