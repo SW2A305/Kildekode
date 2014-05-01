@@ -97,7 +97,7 @@ namespace McSntt.DataAbstractionLayer
             {
                 var query =
                     from trip in db.RegularTrips
-                    where trip.BoatId == boat.Id
+                    where trip.Boat.BoatId == boat.BoatId
                     select trip;
 
                 if (onlyFuture)
@@ -121,7 +121,7 @@ namespace McSntt.DataAbstractionLayer
             return
                 this.GetRegularTrips(
                                      trip =>
-                                     trip.BoatId == boat.Id && trip.DepartureTime <= toDateTime
+                                     trip.Boat.BoatId == boat.BoatId && trip.DepartureTime <= toDateTime
                                      && trip.ExpectedArrivalTime >= fromDateTime);
         }
 

@@ -82,7 +82,7 @@ namespace McSntt.DataAbstractionLayer
                     {
                         foreach (Logbook item in items)
                         {
-                            db.Logbooks.AddOrUpdate(b => b.Id, item);
+                            db.Logbooks.AddOrUpdate(b => b.LogbookId, item);
                         }
 
                         db.SaveChanges();

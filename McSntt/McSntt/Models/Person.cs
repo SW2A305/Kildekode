@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
@@ -19,20 +20,22 @@ namespace McSntt.Models
     /// </summary>
     public class Person
     {
-        // TODO: THIS SHOULD BE UNIQUE -- (Tristan) It should be unique already, as it's the primary key in the DB.
-        public int PersonId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
-        public string Postcode { get; set; }
-        public string Cityname { get; set; }
-        public string DateOfBirth { get; set; }
-        public bool BoatDriver { get; set; }
-        public Gender Gender { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
+        [Key]
+        public virtual int PersonId { get; set; }
+        public virtual string FirstName { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual string Address { get; set; }
+        public virtual string Postcode { get; set; }
+        public virtual string Cityname { get; set; }
+        public virtual string DateOfBirth { get; set; }
+        public virtual bool BoatDriver { get; set; }
+        public virtual Gender Gender { get; set; }
+        public virtual string PhoneNumber { get; set; }
+        public virtual string Email { get; set; }
 
         [InverseProperty("Crew")]
-        public IList<RegularTrip> PartOfCrewOn { get; set; }
+        public virtual ICollection<RegularTrip> PartOfCrewOn { get; set; }
+        [InverseProperty("Captain")]
+        public virtual ICollection<RegularTrip> CaptainOn { get; set; }
     }
 }

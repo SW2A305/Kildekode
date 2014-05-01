@@ -124,7 +124,7 @@ namespace McSntt.Views.UserControls
                     if ((data.Gender.Equals(Gender.Female) ? "kvinde" : string.Empty).Contains(lower))
                         return true;
 
-                    if (data.MemberId.ToString().Contains(lower))
+                    if (data.SailClubMemberId.ToString().Contains(lower))
                         return true;
 
                     // If none succeeds return false

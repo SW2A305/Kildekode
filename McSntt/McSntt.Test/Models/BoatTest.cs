@@ -12,19 +12,10 @@ namespace McSntt.Test.Models
     class BoatTest : Boat
     {
         [Test]
-        public void ID_TwoInstances_diffirentIds()
-        {
-            var instanceOne = new Boat();
-            var instanceTwo = new Boat();
-
-            Assert.AreNotEqual(instanceOne.Id, instanceTwo.Id);
-        }
-
-        [Test]
         public void ID_OneInstance_FirstIdIsZero()
         {
             var instanceOne = new Boat();
-            Assert.AreNotEqual(instanceOne.Id, 0);
+            Assert.AreNotEqual(instanceOne.BoatId, 0);
         }
     }
 }

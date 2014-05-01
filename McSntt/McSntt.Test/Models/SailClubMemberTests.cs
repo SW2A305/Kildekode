@@ -12,7 +12,7 @@ namespace McSntt.Test.Models
         {
             var member = new SailClubMember();
 
-            Assert.AreEqual(default(int), member.MemberId);
+            Assert.AreEqual(default(int), member.SailClubMemberId);
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace McSntt.Test.Models
         {
             this.SetMemberId("");
 
-            Assert.AreEqual(default(int), this.MemberId);
+            Assert.AreEqual(default(int), this.SailClubMemberId);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace McSntt.Test.Models
         {
             this.SetMemberId("abc");
 
-            Assert.AreEqual(default(int), this.MemberId);
+            Assert.AreEqual(default(int), this.SailClubMemberId);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace McSntt.Test.Models
         {
             this.SetMemberId("3");
 
-            Assert.AreEqual(3, this.MemberId);
+            Assert.AreEqual(3, this.SailClubMemberId);
         }
     }
 }

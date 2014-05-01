@@ -79,8 +79,10 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=Parameters/Expression/@EntryValue">guessExpectedType("")</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=Parameters/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=varName/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=VarName/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=varName/Expression/@EntryValue">suggestVariableName()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=varName/Order/@EntryValue">4</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Field/=VarName/Order/@EntryValue">3</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=42903BB260599945A7B6433C1545D527/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
@@ -357,8 +359,8 @@ public $ViewModelName$ $ViewModelName$&#xD;
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DF7F2CC7975C514CBBE56F9210E05E84/Shortcut/@EntryValue">dal</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DF7F2CC7975C514CBBE56F9210E05E84/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DF7F2CC7975C514CBBE56F9210E05E84/Text/@EntryValue">bool Create$ModelName$($ModelName$ $VarName$);&#xD;
-bool UpdateManufacturer($ModelName$ $VarName$);&#xD;
-bool DeleteManufacturer($ModelName$ $VarName$);&#xD;
+bool Update$ModelName$($ModelName$ $VarName$);&#xD;
+bool Delete$ModelName$($ModelName$ $VarName$);&#xD;
 $ModelName$ Get$ModelName$(int $VarName$Id);&#xD;
 ObservableCollection&lt;$ModelName$&gt; Get$ModelName$s();&#xD;
 ObservableCollection&lt;$ModelName$&gt; Get$ModelName$s(Func&lt;$ModelName$, bool&gt; conditions);</s:String>

@@ -5,16 +5,16 @@ namespace McSntt.Models
 {
     public abstract class SailTrip
     {
-        public int SailTripId { get; set; }
-        public int BoatId { get; set; }
+        public virtual int SailTripId { get; set; }
+        //public virtual int BoatId { get; set; }
         public virtual Boat Boat { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DepartureTime { get; set; }
+        public virtual DateTime DepartureTime { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime ArrivalTime { get; set; }
-        public string WeatherConditions { get; set; }
-        public string Comments { get; set; }
+        public virtual DateTime ArrivalTime { get; set; }
+        public virtual string WeatherConditions { get; set; }
+        public virtual string Comments { get; set; }
 
-        public Logbook Logbook { get; set; }
+        public virtual Logbook Logbook { get; set; }
     }
 }

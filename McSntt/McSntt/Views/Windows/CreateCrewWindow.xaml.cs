@@ -122,7 +122,7 @@ namespace McSntt.Views.Windows
                         if (data.LastName.ToLower().Contains(lower))
                             return true;
 
-                    if (data.MemberId.ToString().Contains(lower))
+                    if (data.SailClubMemberId.ToString().Contains(lower))
                         return true;
 
                     // If none succeeds return false
@@ -216,6 +216,11 @@ namespace McSntt.Views.Windows
 
                 RefreshDatagrid(CurrentCrewDataGrid, _crewList);
             }
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

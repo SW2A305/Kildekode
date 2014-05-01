@@ -6,14 +6,13 @@ namespace McSntt.Models
 {
     public class RegularTrip : SailTrip
     {
-        public int RegularTripId { get; set; }
-        public int CaptainId { get; set; }
-        [ForeignKey("CaptainId")]
+        public virtual int RegularTripId { get; set; }
+        //public virtual int CaptainId { get; set; }
         public virtual Person Captain { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime ExpectedArrivalTime { get; set; }
-        public string PurposeAndArea { get; set; }
+        public virtual DateTime ExpectedArrivalTime { get; set; }
+        public virtual string PurposeAndArea { get; set; }
 
-        public IList<Person> Crew { get; set; }
+        public virtual ICollection<Person> Crew { get; set; }
     }
 }

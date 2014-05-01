@@ -8,15 +8,11 @@ namespace McSntt.Models
 {
     class Event
     {
-        public int EventId { get; set; }
-        public string EventTitle { get; set; }
-        public string EventCreatedBy { get; set; }
-        public bool SignUpReq { get; set; }
-        public string Description { get; set; }
-        public IList<Person> Participants { get; set; }
-
-
-
-
+        public virtual int EventId { get; set; }
+        public virtual string EventTitle { get; set; }
+        public virtual string EventCreatedBy { get; set; }
+        public virtual bool SignUpReq { get; set; }
+        public virtual string Description { get; set; }
+        public virtual ICollection<Person> Participants { get; set; }
     }
 }

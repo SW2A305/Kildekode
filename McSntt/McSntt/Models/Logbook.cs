@@ -1,31 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Windows.Controls.Primitives;
 
 namespace McSntt.Models
 {
     public class Logbook
     {
-        public Logbook() {         
+        public virtual int LogbookId { get; set; }
 
-            // Assign the id and increment the next
-            Id = _nextId++;
-        }
-        // Logbooks have an unique ID number
-        private static int _nextId;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public virtual DateTime ActualDepartureTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public virtual DateTime ActualArrivalTime { get; set; }
 
-        public int Id { get; private set; }
+        public virtual bool DamageInflicted { get; set; }
+        public virtual string DamageDescription { get; set; }
+        public virtual string AnswerFromBoatChief { get; set; }
 
-        public DateTime ActualDepartureTime { get; set; }
-        public DateTime ActualArrivalTime { get; set; }
+        public virtual SailClubMember FiledBy { get; set; }
 
-        public bool DamageInflicted { get; set; }
-        public string DamageDescription { get; set; }
-        public string AnswerFromBoatChief { get; set; }
-
-        public SailClubMember FiledBy { get; set; }
-
-        public IList<Person> ActualCrew { get; set; }
+        public virtual ICollection<Person> ActualCrew { get; set; }
         
     }
 }

@@ -107,7 +107,7 @@ namespace McSntt.Test.Helpers
             this.InitializeXmlStrings1();
             _parser.ImportMembersFromXml(_stream);
             
-            Assert.AreEqual(1, _sailClubMemberList[0].MemberId);
+            Assert.AreEqual(1, _sailClubMemberList[0].SailClubMemberId);
         }
 
         [Test]

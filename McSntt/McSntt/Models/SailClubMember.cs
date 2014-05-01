@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace McSntt.Models
 {
@@ -8,10 +9,11 @@ namespace McSntt.Models
     public class SailClubMember : Person
     {
         #region Properties
-        public int MemberId { get; set; }
-        public Positions Position { get; set; }
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
+        [Key]
+        public virtual int SailClubMemberId { get; set; }
+        public virtual Positions Position { get; set; }
+        public virtual string Username { get; set; }
+        public virtual string PasswordHash { get; set; }
         #endregion
 
         #region Enumerations
@@ -46,7 +48,7 @@ namespace McSntt.Models
         {
             int parsedNumber;
 
-            this.MemberId = int.TryParse(memberId, out parsedNumber) ? parsedNumber : default(int);
+            this.SailClubMemberId = int.TryParse(memberId, out parsedNumber) ? parsedNumber : default(int);
         }
     }
 }

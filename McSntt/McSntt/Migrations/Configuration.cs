@@ -32,7 +32,7 @@ namespace McSntt.Migrations
 
             
 
-            context.SailClubMembers.AddOrUpdate(
+            /*context.SailClubMembers.AddOrUpdate(
                 p => p.Username,
                 new SailClubMember
                 {
@@ -94,7 +94,7 @@ namespace McSntt.Migrations
                     Operational = true,
                     ImagePath = "Images/SundetLogo.png"
                 }
-                );
+                );*/
         }
     }
 }

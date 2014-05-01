@@ -1,80 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace McSntt.Models
 {
     public class Team
     {
-        private string _name;
-        private List<SailClubMember> _teamMembers;
-
-        public enum ClassLevel { First = 1, Second = 2}
-
-        private ClassLevel _level;
-
-        #region Undervisnings kriterier
-        private bool _robeWorks;
-        private bool _navigation;
-        private bool _motor;
-        private bool _drabant;
-        private bool _gaffelrigger;
-        private bool _night;
-        #endregion
+        public enum ClassLevel
+        {
+            First = 1,
+            Second = 2
+        }
 
         #region Properties
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        public List<SailClubMember> TeamMembers
-        {
-            get { return _teamMembers; }
-            set { _teamMembers = value; }
-        }
-
-        public bool RobeWorks
-        {
-            get { return _robeWorks; }
-            set { _robeWorks = value; }
-        }
-        public bool Navigation
-        {
-            get { return _navigation; }
-            set { _navigation = value; }
-        }
-        public bool Motor
-        {
-            get { return _motor; }
-            set { _motor = value; }
-        }
-        public bool Drabant
-        {
-            get { return _drabant; }
-            set { _drabant = value; }
-        }
-        public bool Gaffelrigger
-        {
-            get { return _gaffelrigger; }
-            set { _gaffelrigger = value; }
-        }
-        public bool Night
-        {
-            get { return _night; }
-            set { _night = value; }
-        }
-        public ClassLevel Level
-        {
-            get { return _level; }
-            set { _level = value; }
-        }
+        public virtual int TeamId { get; set; }
+        public virtual string Name { get; set; }
+        public virtual ICollection<SailClubMember> TeamMembers { get; set; }
+        public virtual bool RobeWorks { get; set; }
+        public virtual bool Navigation { get; set; }
+        public virtual bool Motor { get; set; }
+        public virtual bool Drabant { get; set; }
+        public virtual bool Gaffelrigger { get; set; }
+        public virtual bool Night { get; set; }
+        public virtual ClassLevel Level { get; set; }
         #endregion
-
-        
-
     }
 }
