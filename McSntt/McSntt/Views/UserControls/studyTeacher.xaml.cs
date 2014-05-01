@@ -21,11 +21,10 @@ using McSntt.Models;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for StudyTeacher.xaml
     /// </summary>
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
-
         public StudyTeacher()
         {
             InitializeComponent();
@@ -36,12 +35,20 @@ namespace McSntt.Views.UserControls
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
             
-            DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
-            DataGridCollection.Filter = new Predicate<object>(Filter);
-            
-            editTeamGrid.IsEnabled = false;
-        }
+            using (var db = new McSntttContext())
+            {
+                #region SearchUI
 
+                db.SailClubMembers.Load();
+                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
+                DataGridCollection.Filter = new Predicate<object>(Filter);
+
+                #endregion
+            }
+
+           editTeamGrid.IsEnabled = false;
+        }
+        
         #region Events
 
         private void editTeam_Checked(object sender, RoutedEventArgs e)
@@ -61,18 +68,18 @@ namespace McSntt.Views.UserControls
             teamDal.Create(team);
             teamDropdown.ItemsSource = teamDal.GetAll();
         }
-        
+
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             teamName.Text = string.Empty;
-            memberSearch.Text = string.Empty;
+          //  memberSearch.Text = string.Empty;
             level1.IsChecked = false;
             level2.IsChecked = false;
         }
 
         private void deleteTeam_Click(object sender, RoutedEventArgs e)
         {
-            var team = (Team) teamDropdown.SelectionBoxItem;
+            var team = (Team)teamDropdown.SelectionBoxItem;
             ITeamDal teamDal = new TeamEfDal();
             teamDal.Delete(team);
             teamDropdown.ItemsSource = teamDal.GetAll();
@@ -85,16 +92,17 @@ namespace McSntt.Views.UserControls
             {
                 studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
                 //Messagebox for test purpose, list seemingly does not exist in database
-                MessageBox.Show("" + ((Team) teamDropdown.SelectedItem).TeamMembers.Count);
+                MessageBox.Show("" + ((Team)teamDropdown.SelectedItem).TeamMembers.Count);
             }
             catch (NullReferenceException ex)
-            {                               
+            {
             }
             studentDropdown.DisplayMemberPath = "FirstName";
             studentDropdown.SelectedValuePath = "FirstName";
         }
 
         #endregion
+        
 
         #region Search
         private ICollectionView _dataGridCollection;
@@ -167,10 +175,5 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
-
-        private void StudentDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
