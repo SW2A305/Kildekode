@@ -98,7 +98,7 @@ namespace McSntt.Migrations
                 );
             context.SailClubMembers.AddOrUpdate(
                 p => p.Username,
-                new SailClubMember
+                new StudentMember()
                 {
                     FirstName = "Knold",
                     LastName = "Knoldsen",
@@ -120,19 +120,9 @@ namespace McSntt.Migrations
                 {
                     TeamId = 1,
                     Name = "Hold 1",
-                    Drabant = true,
-                    Gaffelrigger = true,
                     Level = Team.ClassLevel.First,
-                    Motor = false,
-                    Navigation = false,
-                    Night = true,
-                    RobeWorks = true,
                     TeamMembers = context.SailClubMembers.Where(x => x.Username == "KKnold").ToList()
-                    
-                    
-                    
-                    
-                 }
+                }
                 );
             
         }

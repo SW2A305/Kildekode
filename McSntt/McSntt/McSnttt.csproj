@@ -91,8 +91,9 @@
       <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201404281243051_study.cs" />
-    <Compile Include="Migrations\201404281243051_study.Designer.cs">
-      <DependentUpon>201404281243051_study.cs</DependentUpon>
+    <Compile Include="Migrations\201405011137307_Study2.cs" />
+    <Compile Include="Migrations\201405011137307_Study2.Designer.cs">
+      <DependentUpon>201405011137307_Study2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Models\Logbook.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
+    <Compile Include="Models\StudentMember.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamList.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
@@ -225,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404281243051_study.resx">
       <DependentUpon>201404281243051_study.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011137307_Study2.resx">
+      <DependentUpon>201405011137307_Study2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

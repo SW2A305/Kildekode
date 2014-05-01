@@ -72,7 +72,7 @@ namespace McSntt.Views.UserControls
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             teamName.Text = string.Empty;
-          //  memberSearch.Text = string.Empty;
+            memberSearch.Text = string.Empty;
             level1.IsChecked = false;
             level2.IsChecked = false;
         }

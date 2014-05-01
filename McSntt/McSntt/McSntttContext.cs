@@ -15,5 +15,6 @@ namespace McSntt
         public DbSet<RegularTrip> RegularTrips { get; set; }
         public DbSet<Logbook> Logbooks { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<StudentMember> StudentMembers { get; set; } 
     }
 }
