@@ -22,6 +22,8 @@ namespace McSntt.Views.Windows
             // Set the list as the current DataContext
             InitializeComponent();
 
+            ThisUser = activeUser;
+
             Closing += Window_Closing;
         }
 
@@ -33,5 +35,7 @@ namespace McSntt.Views.Windows
         {
             Application.Current.Shutdown();
         }
+
+        public SailClubMember ThisUser { get; set; }
     }
 }
