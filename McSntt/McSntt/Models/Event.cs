@@ -21,10 +21,5 @@ namespace McSntt.Models
         public string Description { get; set; }
         public IList<Person> Participants { get; set; }
         public IList<Event> EventList { get; set; }
-
-        public override string ToString()
-        {
-            return "Begivenhedsnavn: " + EventTitle + " Dato: " + EventDate;
-        }
     }
 }
