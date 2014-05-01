@@ -23,14 +23,14 @@ namespace McSntt.Views.UserControls
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class studyTeacher : UserControl, INotifyPropertyChanged
+    public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
 
-        public studyTeacher()
+        public StudyTeacher()
         {
             InitializeComponent();
-            ITeamDal teamDal = new TeamEfDal();
-            ISailClubMemberDal memberDal = new SailClubMemberEfDal();
+            var teamDal = new TeamEfDal();
+            var memberDal = new SailClubMemberEfDal();
             
             teamDropdown.ItemsSource = teamDal.GetAll();
             teamDropdown.DisplayMemberPath = "Name";
@@ -139,7 +139,8 @@ namespace McSntt.Views.UserControls
         public bool Filter(object obj)
         {
             var data = obj as SailClubMember;
-            if (data != null)
+
+            if (data != null && data.Position == SailClubMember.Positions.Student)
             {
                 if (!string.IsNullOrEmpty(_filterString))
                 {
@@ -166,5 +167,10 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
+
+        private void StudentDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

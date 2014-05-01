@@ -15,7 +15,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Undervisning" FontSize="23" />
                 </TabItem.Header>
-                <UserControls:studyTeacher></UserControls:studyTeacher>
+                <UserControls:StudyTeacher></UserControls:StudyTeacher>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="EvenetsTabItem" Margin="60,0,-70,0">
                 <TabItem.Header>
