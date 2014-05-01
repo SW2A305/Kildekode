@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using McSntt.Views.Windows;
+using McSntt.Models;
 
 namespace McSntt.Views.UserControls
 {
@@ -21,19 +22,27 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class EventsAdmin : UserControl
     {
+
+        public IList<Event> Events = new List<Event>();
+
         public EventsAdmin()
         {
             InitializeComponent();
         }
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-            Window createEventPopup = new EventsPopup();
-            createEventPopup.Show();
+            Window createEventPopup = new EventsPopup(Events);
+            createEventPopup.ShowDialog();
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Rediger Begivenhed");
+
+            AgendaListbox.ItemsSource = Events;
+
+            AgendaListbox.Items.Refresh();
+
+            //MessageBox.Show("Rediger Begivenhed");
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)

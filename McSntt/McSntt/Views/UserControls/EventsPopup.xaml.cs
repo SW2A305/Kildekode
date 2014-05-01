@@ -27,14 +27,21 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class EventsPopup : Window
     {
-        public EventsPopup()
+        public IList<Event> Events = new List<Event>();
+        public EventsPopup(IList<Event> Events)
         {
             InitializeComponent();
+
+            this.Events = Events;
+
+            ChooseDate.Value = DateTime.Today;
         }
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {
             var newEvent = new Event();
+
+            #region If not filled check
 
             if (!string.IsNullOrEmpty(EventNameBox.Text))
             {
@@ -46,19 +53,13 @@ namespace McSntt.Views.Windows
                 newEvent.Description = EventDescriptionBox.Text;
             }
 
-            if (ChooseDate.SelectedDate != null)
-            {
-                newEvent.EventDate = (DateTime)ChooseDate.SelectedDate;
-            }
+            #endregion
+
+            #region Warning messages
 
             if (string.IsNullOrEmpty(EventNameBox.Text))
             {
                 MessageBox.Show("Du mangler at angive en titel!");
-            }
-
-            else if (ChooseDate.SelectedDate == null)
-            {
-                MessageBox.Show("Du mangler at angive en dato!");
             }
 
             else if (string.IsNullOrEmpty(EventDescriptionBox.Text))
@@ -71,13 +72,19 @@ namespace McSntt.Views.Windows
                 newEvent.SignUpReq = true;
             }
 
+            #endregion
+
+            // Get the EventDate as Value or Default Value
+            newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
+/*
             IEventDal db = new EventEfDal();
             db.Create(newEvent);
-
-            if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text) && ChooseDate.SelectedDate != null)
+*/
+            if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))
             {
-                //new agendalist =
-                //EventsAdmin.AgendaListbox.Items.Add("test");
+                Events.Add(newEvent);
+
+
 
                 this.Close();
             }
