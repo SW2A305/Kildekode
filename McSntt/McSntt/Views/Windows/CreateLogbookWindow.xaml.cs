@@ -58,21 +58,23 @@ namespace McSntt.Views.Windows
                 Crew = testlist
 
             };
-            
-            FormålTextBox.Text = RegularSailTrip.PurposeAndArea;
-            BådTextBox.Text = RegularSailTrip.Boat.NickName;
+            CrewList = RegularSailTrip.Crew;
+            CrewDataGrid.ItemsSource = CrewList;
+            PurposeTextBox.Text = RegularSailTrip.PurposeAndArea;
+            BoatTextBox.Text = RegularSailTrip.Boat.NickName;
             DateTimePickerPlannedDepature.Value = RegularSailTrip.DepartureTime;
             DateTimePickerPlannedArrival.Value = RegularSailTrip.ArrivalTime;
-            CaptainTextBox.Text = RegularSailTrip.Captain.FirstName + " " + RegularSailTrip.Captain.LastName;
+            CaptainComboBox.DisplayMemberPath = "FullName";
+            CaptainComboBox.ItemsSource = CrewList;
+            CaptainComboBox.SelectedValue = RegularSailTrip.Captain;
             DateTimePickerActualArrival.Value = DateTime.Now;
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
-            CrewList = RegularSailTrip.Crew;
-            CrewDataGrid.ItemsSource = CrewList;
+
 
         }
         
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ChangeCrewButtonClick(object sender, RoutedEventArgs e)
         {
             var createCrewWindow = new CreateCrewWindow(CrewList);
             createCrewWindow.ShowDialog();
@@ -82,40 +84,50 @@ namespace McSntt.Views.Windows
 
             CrewDataGrid.ItemsSource = null;
             CrewDataGrid.ItemsSource = CrewList;
+
+            if (!CrewList.Contains((Person) CaptainComboBox.SelectedValue))
+            {
+                CaptainComboBox.SelectedValue = -1;
+            }
+            CaptainComboBox.ItemsSource = null;
+            CaptainComboBox.ItemsSource = CrewList;
         }
 
         private void FileLogbookButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (JaRadioButton.IsChecked == false && NejRadioButton.IsChecked == false)
+            if (YesRadioButton.IsChecked == false && NoRadioButton.IsChecked == false)
             {
                 MessageBox.Show("Udfyld venligst om båden blev skadet under sejladsen");
             }
-            else if ((JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true) &&
-                     (DateTimePickerActualArrival.Value == _hasBeenFilledTime ||
+            else if ((DateTimePickerActualArrival.Value == _hasBeenFilledTime ||
                      DateTimePickerActualDeparture.Value == _hasBeenFilledTime))
             {
                 MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst fra defaultværdien");
             }
-            else if (JaRadioButton.IsChecked == true && SkadesrapportTextBox.Text == String.Empty)
+            else if (YesRadioButton.IsChecked == true && DamageTextBox.Text == String.Empty)
             {
                 MessageBox.Show("Udfyld venligst skadesrapporten med en beskrivelse af skaden");
             }
-            else if (JaRadioButton.IsChecked == true || NejRadioButton.IsChecked == true) 
+            else if (!CrewList.Contains((Person)CaptainComboBox.SelectedValue))
             {
-                    if (JaRadioButton.IsChecked == true)
+                MessageBox.Show("Vælg venligst en gyldig Kaptajn");
+            }
+            else if (YesRadioButton.IsChecked == true || NoRadioButton.IsChecked == true) 
+            {
+                    if (YesRadioButton.IsChecked == true)
                     {
                         currentLogbook.DamageInflicted = true;
 
                         //Notify someone that the boat is damaged
                     }
                 
-                    if (NejRadioButton.IsChecked == true)
+                    if (NoRadioButton.IsChecked == true)
                     {
                         currentLogbook.DamageInflicted = false;
                     }
 
-                RegularSailTrip.PurposeAndArea = FormålTextBox.Text;
-                currentLogbook.DamageDescription = SkadesrapportTextBox.Text;
+                RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
+                currentLogbook.DamageDescription = DamageTextBox.Text;
                 currentLogbook.ActualCrew = CrewList;
                 currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
                 currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
