@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace McSntt.Models
 {
-    class Event
+    public class Event
     {
         public virtual int EventId { get; set; }
         public virtual string EventTitle { get; set; }

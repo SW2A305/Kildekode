@@ -1,19 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
     /// <summary>
     ///     A member of the club should be of this type, containing additional information.
     /// </summary>
+    [Table("SailClubMembers")]
     public class SailClubMember : Person
     {
         #region Properties
-        [Key]
+        [Index(IsUnique = true)]
         public virtual int SailClubMemberId { get; set; }
         public virtual Positions Position { get; set; }
         public virtual string Username { get; set; }
         public virtual string PasswordHash { get; set; }
+
+        [InverseProperty("FiledBy")]
+        public virtual ICollection<Logbook> FiledLogbooks { get; set; }
         #endregion
 
         #region Enumerations

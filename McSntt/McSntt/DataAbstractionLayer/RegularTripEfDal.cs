@@ -116,7 +116,7 @@ namespace McSntt.DataAbstractionLayer
         /// <param name="fromDateTime"></param>
         /// <param name="toDateTime"></param>
         /// <returns></returns>
-        public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, DateTime fromDateTime, DateTime toDateTime)
+        public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, DateTime? fromDateTime, DateTime? toDateTime)
         {
             return
                 this.GetRegularTrips(
@@ -132,9 +132,9 @@ namespace McSntt.DataAbstractionLayer
         /// <param name="departureTime"></param>
         /// <param name="expectedArrivalTime"></param>
         /// <returns></returns>
-        public bool CanMakeReservation(Boat boat, DateTime departureTime, DateTime expectedArrivalTime)
+        public bool CanMakeReservation(Boat boat, DateTime? departureTime, DateTime? expectedArrivalTime)
         {
-            var reservations = GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
+            var reservations = this.GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
 
             return !reservations.Any();
         }
@@ -146,7 +146,7 @@ namespace McSntt.DataAbstractionLayer
         /// <returns></returns>
         public bool CanMakeReservation(RegularTrip trip)
         {
-            return CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ExpectedArrivalTime);
+            return this.CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ExpectedArrivalTime);
         }
 
         /// <summary>

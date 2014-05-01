@@ -38,6 +38,9 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.95\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
@@ -93,10 +96,11 @@
     <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
+    <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
-    <Compile Include="Migrations\201405010103302_InitialCreate.cs" />
-    <Compile Include="Migrations\201405010103302_InitialCreate.Designer.cs">
-      <DependentUpon>201405010103302_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201405010953244_InitialCreation.cs" />
+    <Compile Include="Migrations\201405010953244_InitialCreation.Designer.cs">
+      <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MemberMainWindow.xaml.cs">
       <DependentUpon>MemberMainWindow.xaml</DependentUpon>
@@ -254,8 +258,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201405010103302_InitialCreate.resx">
-      <DependentUpon>201405010103302_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201405010953244_InitialCreation.resx">
+      <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

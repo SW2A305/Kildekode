@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAbstractionLayer\SailClubMemberEfDalTests.cs" />
     <Compile Include="Helpers\XmlMemberParserTests.cs" />
     <Compile Include="Models\BoatTest.cs" />
     <Compile Include="Models\SailClubMemberTests.cs" />

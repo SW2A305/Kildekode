@@ -18,6 +18,7 @@ namespace McSntt.Models
     /// <summary>
     ///     Represents a person, with the information needed for it.
     /// </summary>
+    [Table("Persons")]
     public class Person
     {
         [Key]
@@ -37,5 +38,9 @@ namespace McSntt.Models
         public virtual ICollection<RegularTrip> PartOfCrewOn { get; set; }
         [InverseProperty("Captain")]
         public virtual ICollection<RegularTrip> CaptainOn { get; set; }
+        [InverseProperty("Participants")]
+        public virtual ICollection<Event> ParticipatingInEvents { get; set; }
+        [InverseProperty("ActualCrew")]
+        public virtual ICollection<Logbook> PartOfActualCrewOn { get; set; }
     }
 }

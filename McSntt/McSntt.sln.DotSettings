@@ -99,7 +99,7 @@ namespace $NAMESPACE$&#xD;
 		[SetUp]&#xD;
 		public void Initialize()&#xD;
 		{&#xD;
-			_$varName$ = new $ClassName$($Parameters$);&#xD;
+			$varName$ = new $ClassName$($Parameters$);&#xD;
 		}$END$&#xD;
 	}&#xD;
 }</s:String>

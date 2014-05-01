@@ -7,9 +7,8 @@ namespace McSntt.Models
     public class RegularTrip : SailTrip
     {
         public virtual int RegularTripId { get; set; }
-        //public virtual int CaptainId { get; set; }
         public virtual Person Captain { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Column(TypeName = "DateTime2")]
         public virtual DateTime ExpectedArrivalTime { get; set; }
         public virtual string PurposeAndArea { get; set; }
 

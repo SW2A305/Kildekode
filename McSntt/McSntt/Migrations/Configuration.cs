@@ -1,100 +1,128 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Security.Cryptography;
+using EntityFramework.Extensions;
+using McSntt.Helpers;
 using McSntt.Models;
 
 namespace McSntt.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<McSntt.McSntttContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<McSntttContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "McSntt.McSntttContext";
+            this.AutomaticMigrationsEnabled = false;
+            this.ContextKey = "McSntt.McSntttContext";
         }
 
-        protected override void Seed(McSntt.McSntttContext context)
+        protected override void Seed(McSntttContext context)
         {
             //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            #region Data : Persons
+            var persons = new Person[]
+                          {
+                              new Person()
+                              {
+                                  FirstName = "Chesty",
+                                  LastName = "Duvall",
+                                  Address = "Overgade 666",
+                                  Postcode = "1666",
+                                  Cityname = "Hell-erup",
+                                  BoatDriver = false,
+                                  DateOfBirth = "1973-05-18",
+                                  Email = "chesty.duvall@doesnotexi.st",
+                                  Gender = Gender.Female,
+                                  PhoneNumber = "11223345"
+                              }
+                          };
+            #endregion
 
-            
+            #region Data : SailClubMembers
+            var sailClubMembers = new SailClubMember[]
+                                  {
+                                      new SailClubMember()
+                                      {
+                                          SailClubMemberId = 276,
+                                          FirstName = "John",
+                                          LastName = "Filbert",
+                                          Address = "Nederensgade 10",
+                                          Postcode = "1200",
+                                          Cityname = "Etsted",
+                                          BoatDriver = true,
+                                          Email = "jh247f@stashit.sck",
+                                          Gender = Gender.Male,
+                                          PhoneNumber = "11223344",
+                                          Username = "jfilbert",
+                                          PasswordHash = EncryptionHelper.Sha256("God"),
+                                          Position = SailClubMember.Positions.Member,
+                                          DateOfBirth = "1989-12-24"
+                                      },
 
-            /*context.SailClubMembers.AddOrUpdate(
-                p => p.Username,
-                new SailClubMember
-                {
-                    FirstName = "Andreas M.",
-                    LastName = "Karlsen",
-                    Email = "AndreasMKarlsen@rhyta.com",
-                    Username = "Aa",
-                    DateOfBirth = "1994-06-13",
-                    PasswordHash = "9c478bf63e9500cb5db1e85ece82f18c8eb9e52e2f9135acd7f10972c8d563ba"
+                                      new SailClubMember()
+                                      {
+                                          SailClubMemberId = 23,
+                                          FirstName = "Jonna",
+                                          LastName = "Gored",
+                                          Address = "Hovedgaden 1",
+                                          Postcode = "1004",
+                                          Cityname = "Etandetsted",
+                                          BoatDriver = false,
+                                          Email = "jg1803@stashthistoo.ccf",
+                                          Gender = Gender.Female,
+                                          PhoneNumber = "11223346",
+                                          Username = "jgored",
+                                          PasswordHash = EncryptionHelper.Sha256("password"),
+                                          Position = SailClubMember.Positions.Admin,
+                                          DateOfBirth = "1976-01-31"
+                                      }
+                                  };
+            #endregion
 
-                }
-                );
+            #region Data : Boats
+            var boats = new Boat[]
+                        {
+                            new Boat()
+                            {
+                                ImagePath = "Images/SundetLogo.png",
+                                NickName = "Sinky",
+                                Operational = false,
+                                Type = BoatType.Drabant
+                            },
 
-            context.SailClubMembers.AddOrUpdate(
-                p => p.Username,
-                new SailClubMember
-                {
-                    FirstName = "Troels",
-                    LastName = "Kroegh",
-                    Username = "Røde",
-                    Address = "Scoresbysundvej 8",
-                    Postcode = "9210",
-                    Cityname = "Aalborg SØ",
-                    Email = "HalloHallo@gmail.com",
-                    PhoneNumber = "12345678",
-                    Gender = Gender.Male,
-                    MemberId = 1339,
-                    Position = SailClubMember.Positions.Member,
-                    PasswordHash = "aaa9402664f1a41f40ebbc52c9993eb66aeb366602958fdfaa283b71e64db123" // sha256(mcsntt)
-                }
-                );
+                            new Boat()
+                            {
+                                ImagePath = "Images/SundetLogo.png",
+                                NickName = "Anna",
+                                Operational = true,
+                                Type = BoatType.Gaffelrigger
+                            }
+                        };
+            #endregion
 
-            context.SailClubMembers.AddOrUpdate(
-                p => p.Username,
-                new SailClubMember
-                {
-                    FirstName = "Søren",
-                    LastName = "Kroegh",
-                    Username = "Trampe",
-                    Address = "Scoresbysundvej 8",
-                    Postcode = "9000",
-                    Cityname = "Aalborg SØ",
-                    Email = "HalloHallo@gmail.com",
-                    PhoneNumber = "12345678",
-                    Gender = Gender.Female,
-                    MemberId = 1338,
-                    Position = SailClubMember.Positions.Admin,
-                    PasswordHash = "aaa9402664f1a41f40ebbc52c9993eb66aeb366602958fdfaa283b71e64db123" // sha256(h)
+            #region Data : RegularTrips
+            var regularTrips = new RegularTrip[]
+                               {
+                                   new RegularTrip()
+                                   {
+                                       Boat = boats[1],
+                                       Captain = sailClubMembers[0],
+                                       DepartureTime = DateTime.Now.AddDays(2),
+                                       ExpectedArrivalTime = DateTime.Now.AddDays(2).AddHours(5),
+                                       Crew = new Collection<Person>() {persons[0], sailClubMembers[1]},
+                                       PurposeAndArea = "Terrorisme",
+                                       WeatherConditions = "Cloudy with a chance of bullet rain."
+                                   }
+                               };
+            #endregion
 
-                }
-                );
-
-            context.Boats.AddOrUpdate(
-                b => b.Id,
-                new Boat
-                {
-                    NickName = "Bodil",
-                    Type = BoatType.Drabant,
-                    Operational = true,
-                    ImagePath = "Images/SundetLogo.png"
-                }
-                );*/
+            // Insert data into database
+            context.Persons.AddOrUpdate(p => new {p.FirstName, p.LastName, p.PhoneNumber}, persons);
+            context.SailClubMembers.AddOrUpdate(s => new { s.FirstName, s.LastName, s.PhoneNumber }, sailClubMembers);
+            context.Boats.AddOrUpdate(b => b.NickName, boats);
+            context.RegularTrips.AddOrUpdate(r => new {r.DepartureTime, r.ExpectedArrivalTime}, regularTrips);
         }
     }
 }
