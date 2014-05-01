@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using McSntt.DataAbstractionLayer;
@@ -41,8 +42,8 @@ namespace McSntt.Views.Windows
         {
             var createCrewWindow = new CreateCrewWindow(CrewList);
             createCrewWindow.ShowDialog();
-            
-            CrewList = createCrewWindow._crewList;
+
+            CrewList = createCrewWindow.CrewList.ToList();
 
             // After the crew is changed refresh the data grid and captain selector
             CrewDataGrid.ItemsSource = null;

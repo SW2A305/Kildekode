@@ -78,7 +78,7 @@ namespace McSntt.Views.Windows
             createCrewWindow.ShowDialog();
 
 
-            CrewList = createCrewWindow._crewList;
+            CrewList = createCrewWindow.CrewList;
 
             CrewDataGrid.ItemsSource = null;
             CrewDataGrid.ItemsSource = CrewList;
