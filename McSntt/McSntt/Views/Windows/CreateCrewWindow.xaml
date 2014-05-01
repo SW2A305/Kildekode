@@ -19,7 +19,7 @@
                 <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232">
+        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232" IsReadOnly="True">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <EventSetter Event="MouseDoubleClick" Handler="removeDataGrid_MouseDoubleClick"/>

@@ -64,6 +64,7 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
+                db.Logbooks.Load();
                 return db.Logbooks.Local;
             }
         }
