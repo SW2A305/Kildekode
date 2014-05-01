@@ -82,6 +82,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAbstractionLayer\EventEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\IEventDal.cs" />
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\ILogbookDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
