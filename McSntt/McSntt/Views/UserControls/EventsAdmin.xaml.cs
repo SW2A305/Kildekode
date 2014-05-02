@@ -33,16 +33,15 @@ namespace McSntt.Views.UserControls
         {
             Window createEventPopup = new EventsPopup(Events);
             createEventPopup.ShowDialog();
+
+            AgendaListbox.ItemsSource = Events;
+
+            AgendaListbox.Items.Refresh();
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
         {
 
-            AgendaListbox.ItemsSource = Events;
-
-            AgendaListbox.Items.Refresh();
-
-            //MessageBox.Show("Rediger Begivenhed");
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)

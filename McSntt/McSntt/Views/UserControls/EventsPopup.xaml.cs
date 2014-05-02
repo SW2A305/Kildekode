@@ -27,6 +27,8 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class EventsPopup : Window
     {
+
+
         public IList<Event> Events = new List<Event>();
         public EventsPopup(IList<Event> Events)
         {
@@ -83,8 +85,6 @@ namespace McSntt.Views.Windows
             if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))
             {
                 Events.Add(newEvent);
-
-
 
                 this.Close();
             }
