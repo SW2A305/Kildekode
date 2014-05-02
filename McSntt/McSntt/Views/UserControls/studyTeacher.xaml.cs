@@ -79,6 +79,7 @@ namespace McSntt.Views.UserControls
             teamDropdown.SelectedIndex = -1;
             studentDropdown.SelectedIndex = -1;
             studentDropdown.ItemsSource = null;
+
         }
 
         #region Events
@@ -159,6 +160,7 @@ namespace McSntt.Views.UserControls
             if (!_membersList.Contains(currentMember))
             {
                 _membersList.Add(currentMember);
+                studentDropdown.ItemsSource = null;
                 studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
                 RefreshDatagrid(CurrentMemberDataGrid, _membersList);
             }
@@ -172,6 +174,28 @@ namespace McSntt.Views.UserControls
             studentDropdown.ItemsSource = null;
             studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
             RefreshDatagrid(CurrentMemberDataGrid, _membersList);
+        }
+
+        private void studentDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                RobeWorksCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).RobeWorks;
+                NavigationCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Navigation;
+                MotorCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Motor;
+                DrabantCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Drabant;
+                GaffelriggerCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Gaffelrigger;
+                NightCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Night;
+            }
+            else
+            {
+                RobeWorksCheckBox.IsChecked = false;
+                NavigationCheckBox.IsChecked = false;
+                MotorCheckBox.IsChecked = false;
+                DrabantCheckBox.IsChecked = false;
+                GaffelriggerCheckBox.IsChecked = false;
+                NightCheckBox.IsChecked = false;
+            }
         }
 
 
@@ -249,6 +273,122 @@ namespace McSntt.Views.UserControls
         }
         #endregion
 
+        private void RobeWorksCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember) studentDropdown.SelectedItem).RobeWorks = true;
+            }
+            else
+            {
+                RobeWorksCheckBox.IsChecked = false;
+            }
+        }
+
+        private void RobeWorksCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember) studentDropdown.SelectedItem).RobeWorks = false;
+            }
+        }
+
+        private void NavigationCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Navigation = true;
+            }
+            else
+            {
+                NavigationCheckBox.IsChecked = false;
+            }
+        }
+
+        private void NavigationCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Navigation = false;
+            }
+        }
+
+        private void MotorCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Motor = true;
+            }
+            else
+            {
+                MotorCheckBox.IsChecked = false;
+            }
+        }
+
+        private void MotorCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Motor = false;
+            }
+        }
+
+        private void DrabantCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Drabant = true;
+            }
+            else
+            {
+                DrabantCheckBox.IsChecked = false;
+            }
+        }
+
+        private void DrabantCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Drabant = false;
+            }
+        }
+
+        private void GaffelriggerCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Gaffelrigger = true;
+            }
+            else
+            {
+                GaffelriggerCheckBox.IsChecked = false;
+            }
+        }
+
+        private void GaffelriggerCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Gaffelrigger = false;
+            }
+        }
+
+        private void NightCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (studentDropdown.SelectedItem != null)
+            {
+                ((StudentMember)studentDropdown.SelectedItem).Night = true;
+            }
+            else
+            {
+                NightCheckBox.IsChecked = false;
+            }
+        }
+
+
+
         
+
+
     }
 }

@@ -56,14 +56,14 @@
         </Border>
 
         <ComboBox x:Name="teamDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,10,0,0" SelectionChanged="teamDropdown_SelectionChanged"/>
-        <ComboBox x:Name="studentDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="151,10,0,0" />
+        <ComboBox x:Name="studentDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="151,10,0,0" SelectionChanged="studentDropdown_SelectionChanged" />
         <Button x:Name="extraBook" Content="Ekstra lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="288,10,0,0"/>
-        <CheckBox x:Name="theoryCheck1" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="theoryCheck2" Content="Navigation" HorizontalAlignment="Left" Margin="26,153,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="theoryCheck3" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="26,191,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="practicalCheck1" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="26,323,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="practicalCheck3" Content="Natsejlads" HorizontalAlignment="Left" Margin="26,399,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="practicalCheck2" Content="Gaffelrigger sejlads" HorizontalAlignment="Left" Margin="26,362,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="RobeWorksCheckBox" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top" Checked="RobeWorksCheckBox_Checked" Unchecked="RobeWorksCheckBox_Unchecked"/>
+        <CheckBox x:Name="NavigationCheckBox" Content="Navigation" HorizontalAlignment="Left" Margin="26,153,0,0" VerticalAlignment="Top" Checked="NavigationCheckBox_Checked" Unchecked="NavigationCheckBox_Unchecked"/>
+        <CheckBox x:Name="MotorCheckBox" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="26,191,0,0" VerticalAlignment="Top" Checked="MotorCheckBox_Checked" Unchecked="MotorCheckBox_Unchecked"/>
+        <CheckBox x:Name="DrabantCheckBox" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="26,323,0,0" VerticalAlignment="Top" Checked="DrabantCheckBox_Checked" Unchecked="DrabantCheckBox_Unchecked"/>
+        <CheckBox x:Name="NightCheckBox" Content="Natsejlads" HorizontalAlignment="Left" Margin="26,399,0,0" VerticalAlignment="Top" Checked="NightCheckBox_Checked"/>
+        <CheckBox x:Name="GaffelriggerCheckBox" Content="Gaffelrigger sejlads" HorizontalAlignment="Left" Margin="26,362,0,0" VerticalAlignment="Top" Checked="GaffelriggerCheckBox_Checked" Unchecked="GaffelriggerCheckBox_Unchecked"/>
         <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="26,69,0,0" VerticalAlignment="Top" Width="166" FontSize="16"/>
         <Label Content="Praktisk" HorizontalAlignment="Left" Margin="26,272,0,0" VerticalAlignment="Top" FontSize="16"/>
         <CheckBox x:Name="editTeam" Content="Redigér hold" HorizontalAlignment="Left" Margin="423,116,0,0" VerticalAlignment="Top" Checked="editTeam_Checked" Unchecked="editTeam_Unchecked"/>
