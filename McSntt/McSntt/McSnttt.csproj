@@ -341,6 +341,7 @@
   <ItemGroup>
     <Resource Include="Images\cross.png" />
     <Resource Include="Images\gray.png" />
+    <Resource Include="Images\forside.png" />
     <Content Include="Images\SundetLogo.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

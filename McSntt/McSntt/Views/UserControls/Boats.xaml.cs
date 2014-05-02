@@ -35,7 +35,7 @@ namespace McSntt.Views.UserControls
             db.GetAll(); */
             //Mock Boat
             var båd1 = new Boat {NickName = "Bodil1", Operational = true};
-            var båd2 = new Boat {NickName = "båd"};
+            var båd2 = new Boat {NickName = "båd", ImagePath = "pack://application:,,,/Images/forside.png"};
             var båd3 = new Boat {NickName = "SS", ImagePath = "pack://application:,,,/Images/SundetLogo.PNG"};
             var boatList = new List<Boat>();
 
