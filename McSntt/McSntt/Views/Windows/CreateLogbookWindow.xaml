@@ -24,16 +24,17 @@
         <Label Content="Formål:" HorizontalAlignment="Left" Height="auto" Width="100" Margin="10,342,0,183"/>
         <TextBox x:Name="PurposeTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
                  Margin="133,343,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
-        <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="10,428,0,78"/>
-        <TextBox x:Name="DamageTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
-                 Margin="133,433,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
-        <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,525,0,3"/>
-        <RadioButton x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,527,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
+        <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="10,449,0,57"/>
+        <TextBox x:Name="DamageTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="85" 
+                 Margin="133,454,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
+        <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,414,0,114"/>
+        <RadioButton x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="133,421,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="YesButBrokenRadioButton" Content="Ja, men skadet" HorizontalAlignment="Left" Margin="179,421,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="294,421,0,0" VerticalAlignment="Top"/>
         <Button Content="Ændre Besætning" HorizontalAlignment="Left" Margin="10,238,0,0" VerticalAlignment="Top" Width="101" Click="ChangeCrewButtonClick" Height="27"/>
         <Button Name="FileLogbookButton" Content="Udfør" HorizontalAlignment="Left" Margin="673,545,0,0" 
                 VerticalAlignment="Top" Width="93" Height="24" Click="FileLogbookButton_OnClick" />
-        
+
         <xctk:DateTimePicker Name="DateTimePickerPlannedDepature" Width="Auto" Height="Auto" Margin="548,130,31,417"/>
         <xctk:DateTimePicker Name="DateTimePickerPlannedArrival" Height="Auto" Width="Auto" Margin="548,168,31,382"/>
         <xctk:DateTimePicker Name="DateTimePickerActualDeparture" Height="Auto" Width="Auto" Margin="548,223,31,327"/>
