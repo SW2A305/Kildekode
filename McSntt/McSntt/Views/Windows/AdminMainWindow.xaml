@@ -6,10 +6,12 @@
 
     <Grid>
         <TabControl Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Style="{StaticResource TabItemStyle}"  Margin="0,0,-35,0">
+            <TabItem Style="{StaticResource TabItemStyle}"  Margin="0,0,-35,0" Name="FrontPageTabItem">
                 <TabItem.Header>
                     <TextBlock Text="Forside" FontSize="23" />
                 </TabItem.Header>
+                <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
+                </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="CalenderTabItem" Margin="35,0,-60,0">
                 <TabItem.Header>

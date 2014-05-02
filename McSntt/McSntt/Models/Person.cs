@@ -38,6 +38,11 @@ namespace McSntt.Models
             get { return FirstName + " " + LastName; }
         }
 
+        public override string ToString()
+        {
+            return FullName;
+        }
+
         [InverseProperty("Crew")]
         public IList<RegularTrip> PartOfCrewOn { get; set; }
     }
