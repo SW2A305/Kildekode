@@ -18,7 +18,7 @@ namespace McSntt.Test.DataAbstractionLayer
             var scm = _sailClubMemberEfDal.GetAll().FirstOrDefault();
 
             if (scm == null) { Assert.Fail("It's dead, Jim!");} else {
-            Assert.Fail("Count: {0}", scm.PartOfCrewOn.Count);}
+            Assert.Fail("Count: {0} / {2} [{3}] ({1})", scm.PartOfCrewOn.Count, scm.PersonId, scm.CaptainOn.Count, scm.CaptainOn.GetType().Name);}
         }
     }
 }
