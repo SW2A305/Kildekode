@@ -211,7 +211,7 @@ namespace McSntt.Views.UserControls
             {
                 var DamageReportWindow = new DamageReportWindow(CurrentLogbook);
                 DamageReportWindow.ShowDialog();
-                CurrentLogbook.Logbook.DamageDescription = DamageReportWindow.DamageReport;
+                CurrentLogbook.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
             }
 
         }
