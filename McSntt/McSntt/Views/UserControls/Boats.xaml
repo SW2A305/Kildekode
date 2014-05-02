@@ -19,14 +19,14 @@
         <Button x:Name="ChooseLogbookButton" Content="Se detaljer for valgte logbog" HorizontalAlignment="Left" Margin="10,438,0,0" VerticalAlignment="Top" Width="181" Click="ChooseLogbookButton_Click"/>
         <Button x:Name="AnswerDamageReportButton" Content="Svar på skadesrapporten" HorizontalAlignment="Left" Margin="10,466,0,0" VerticalAlignment="Top" Width="181" Click="AnswerDamageReportButton_OnClick"/>
 
-        <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="LogbookDataGrid" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Height="240" Width="425" AutoGenerateColumns="False">
+        <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="LogbookDataGrid" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Height="240" Width="425" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}"/>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding DepartureTime}" Header="Planlagte Afgang"/>
                 <DataGridTextColumn Binding="{Binding ArrivalTime}" Header="Planlagte Hjemkost"/>
-                <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål"/>
+                <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Vælg en båd nedenfor" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138"/>
