@@ -18,13 +18,15 @@ namespace McSntt.Models
         public DateTime EventDate { get; set; }
         public string EventTitle { get; set; }
         public bool SignUpReq { get; set; }
+        public string SignUpMsg { get; set; }
         public string Description { get; set; }
+        public bool Created { get; set; }
         public IList<Person> Participants { get; set; }
         public IList<Event> EventList { get; set; }
 
         public override string ToString()
         {
-            return "Begivenhedsnavn: " + EventTitle + " Dato: " + EventDate;
+            return "Begivenhedsnavn: " + EventTitle + " Dato: " + EventDate + " " + SignUpMsg;
         }
     }
 }

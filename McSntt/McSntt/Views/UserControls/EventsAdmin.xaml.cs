@@ -23,7 +23,8 @@ namespace McSntt.Views.UserControls
     public partial class EventsAdmin : UserControl
     {
 
-        public IList<Event> Events = new List<Event>();
+        //public Event newEvent = new Event();
+        public IList<Event> EventsList = new List<Event>();
 
         public EventsAdmin()
         {
@@ -31,12 +32,25 @@ namespace McSntt.Views.UserControls
         }
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-            Window createEventPopup = new EventsPopup(Events);
+           
+            var newEvent = new Event();
+            Window createEventPopup = new EventsPopup(newEvent);
+
             createEventPopup.ShowDialog();
+            AgendaListbox.ItemsSource = EventsList;
 
-            AgendaListbox.ItemsSource = Events;
+            if (newEvent.Created)
+            {
+                EventsList.Add(newEvent);
+                AgendaListbox.Items.Refresh();
+            }
 
-            AgendaListbox.Items.Refresh();
+
+            // Lige nu bruges listen fra Event klasse  ikke, den ville ikke twerke med den :(
+            //newEvent.EventList.Add(newEvent);
+            //AgendaListbox.ItemsSource = newEvent.EventList;
+
+
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)

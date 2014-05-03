@@ -29,19 +29,28 @@ namespace McSntt.Views.Windows
     {
 
 
-        public IList<Event> Events = new List<Event>();
-        public EventsPopup(IList<Event> Events)
+        public Event newEvent = new Event();
+
+        public EventsPopup(Event newEvent)
         {
             InitializeComponent();
 
-            this.Events = Events;
+            this.newEvent = newEvent;
 
             ChooseDate.Value = DateTime.Today;
+
+            newEvent.Created = false;
         }
+
+/*        public EventsPopup()
+        {
+            InitializeComponent();
+
+
+        }*/
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-            var newEvent = new Event();
 
             #region If not filled check
 
@@ -69,12 +78,14 @@ namespace McSntt.Views.Windows
                 MessageBox.Show("Du mangler at angive en beskrivelse!");
             }
 
+            #endregion
+
             if (SubscriptionCheckbox.IsChecked == true)
             {
                 newEvent.SignUpReq = true;
+                newEvent.SignUpMsg = "Tilmelding krævet!";
             }
-
-            #endregion
+          
 
             // Get the EventDate as Value or Default Value
             newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
@@ -84,8 +95,7 @@ namespace McSntt.Views.Windows
 */
             if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))
             {
-                Events.Add(newEvent);
-
+                newEvent.Created = true;
                 this.Close();
             }
         }
