@@ -34,6 +34,17 @@ namespace McSntt.Models
         public virtual string PhoneNumber { get; set; }
         public virtual string Email { get; set; }
 
+        [NotMapped]
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
+
         [InverseProperty("Crew")]
         public virtual ICollection<RegularTrip> PartOfCrewOn { get; set; }
         [InverseProperty("Captain")]

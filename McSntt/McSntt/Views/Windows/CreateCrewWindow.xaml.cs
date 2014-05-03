@@ -3,66 +3,38 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using McSntt.DataAbstractionLayer;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for CreatCrewWindow.xaml
+    ///     Interaction logic for CreatCrewWindow.xaml
     /// </summary>
     public partial class CreateCrewWindow : Window, INotifyPropertyChanged
     {
-        public List<Person> _crewList = new List<Person>();
-
-
-        public CreateCrewWindow()
-        {
-            InitializeComponent();
-
-            using (var db = new McSntttContext())
-            {
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
-
-            }
-        }
-
-        public CreateCrewWindow(List<Person> CrewList)
-        {
-            InitializeComponent();
-            _crewList = CrewList;
-
-            CurrentCrewDataGrid.ItemsSource = _crewList;
-
-            using (var db = new McSntttContext())
-            {
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
-
-            }
-        }
-
-        private void RefreshDatagrid(DataGrid Grid, List<Person> list)
-        {
-            Grid.ItemsSource = null;
-            Grid.ItemsSource = list;
-        }
+        public IList<Person> CrewList = new List<Person>();
 
         private ICollectionView _dataGridCollection;
         private string _filterString;
+
+        public CreateCrewWindow(IList<Person> CrewList)
+        {
+            InitializeComponent();
+
+            this.CrewList = CrewList;
+
+            CurrentCrewDataGrid.ItemsSource = this.CrewList;
+
+            var db = new SailClubMemberEfDal();
+            DataGridCollection = CollectionViewSource.GetDefaultView(db.GetAll());
+            DataGridCollection.Filter = Filter;
+        }
 
         public ICollectionView DataGridCollection
         {
@@ -74,16 +46,6 @@ namespace McSntt.Views.Windows
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
-
         public string FilterString
         {
             get { return _filterString; }
@@ -92,6 +54,23 @@ namespace McSntt.Views.Windows
                 _filterString = value;
                 NotifyPropertyChanged("FilterString");
                 FilterCollection();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RefreshDatagrid(DataGrid Grid, IList<Person> list)
+
+        {
+            Grid.ItemsSource = null;
+            Grid.ItemsSource = list;
+        }
+
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
 
@@ -111,7 +90,10 @@ namespace McSntt.Views.Windows
                 if (!string.IsNullOrEmpty(_filterString))
                 {
                     // Sanitise input to lower
-                    var lower = _filterString.ToLower();
+                    string lower = _filterString.ToLower();
+
+                    if (CrewList.Contains(data))
+                        return false;
 
                     // Check if either of the data points for the members match the filterstring
                     if (data.FirstName != null)
@@ -137,19 +119,21 @@ namespace McSntt.Views.Windows
         private void SearchBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                this.MemberDataGrid.Focus();
+                MemberDataGrid.Focus();
         }
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
+            var currentPerson = (SailClubMember) MemberDataGrid.SelectedItem;
 
-            Person currentPerson = (Person) MemberDataGrid.SelectedItem;
-            if (!_crewList.Contains(currentPerson))
-            {
-                _crewList.Add(currentPerson);
-            }
+            if (
+                CrewList.Where(x => x is SailClubMember)
+                    .Cast<SailClubMember>()
+                    .All(x => x.MemberId != currentPerson.MemberId))
+                CrewList.Add(currentPerson);
 
-            RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+            DataGridCollection.Filter = Filter; 
+            RefreshDatagrid(CurrentCrewDataGrid, CrewList);
         }
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
@@ -159,16 +143,15 @@ namespace McSntt.Views.Windows
 
         private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Person currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
+            var currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
 
-            _crewList.Remove(currentPerson);
+            CrewList.Remove(currentPerson);
 
-            RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+            RefreshDatagrid(CurrentCrewDataGrid, CrewList);
         }
 
         private void AddGuestButton_Click(object sender, RoutedEventArgs e)
         {
-
             if (Regex.IsMatch(FirstNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && FirstNameBox.Text != String.Empty)
             {
                 if (Regex.IsMatch(LastNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && LastNameBox.Text != String.Empty)
@@ -176,9 +159,9 @@ namespace McSntt.Views.Windows
                     var p = new Person();
                     p.FirstName = FirstNameBox.Text;
                     p.LastName = LastNameBox.Text;
-                    _crewList.Add(p);
+                    CrewList.Add(p);
 
-                    RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+                    RefreshDatagrid(CurrentCrewDataGrid, CrewList);
 
                     FirstNameBox.Clear();
                     LastNameBox.Clear();
@@ -192,29 +175,18 @@ namespace McSntt.Views.Windows
 
         private void resultDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (sender != null)
-            {
-                DataGridRow dgr = sender as DataGridRow;
-
-                Person currentPerson = (Person) MemberDataGrid.SelectedItem;
-                if (!_crewList.Contains(currentPerson))
-                {
-                    _crewList.Add(currentPerson);
-                }
-
-                RefreshDatagrid(CurrentCrewDataGrid, _crewList);
-            }
+            AddButton_OnClick(sender, e);
         }
 
         private void removeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender != null)
             {
-                Person currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
+                var currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
 
-                _crewList.Remove(currentPerson);
+                CrewList.Remove(currentPerson);
 
-                RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+                RefreshDatagrid(CurrentCrewDataGrid, CrewList);
             }
         }
 

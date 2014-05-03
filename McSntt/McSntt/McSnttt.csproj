@@ -85,6 +85,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAbstractionLayer\EventEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\IEventDal.cs" />
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\ILogbookDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
@@ -101,6 +103,22 @@
     <Compile Include="Migrations\201405010953244_InitialCreation.cs" />
     <Compile Include="Migrations\201405010953244_InitialCreation.Designer.cs">
       <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
+    <Compile Include="Migrations\201404291318130_Event.cs" />
+    <Compile Include="Migrations\201405010828219_Event2.cs" />
+    <Compile Include="Views\UserControls\FrontPage.xaml.cs">
+      <DependentUpon>FrontPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\PerticipantsPopup.xaml.cs">
+      <DependentUpon>PerticipantsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
+      <DependentUpon>SupportMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\TeacherMainWindow.xaml.cs">
+      <DependentUpon>TeacherMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StudentMainWindow.xaml.cs">
+      <DependentUpon>StudentMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MemberMainWindow.xaml.cs">
       <DependentUpon>MemberMainWindow.xaml</DependentUpon>
@@ -161,6 +179,26 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\UserControls\FrontPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\PerticipantsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\SupportMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\TeacherMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\StudentMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Windows\MemberMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -270,7 +308,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <AppDesigner Include="Properties\" />
+    <!--<AppDesigner Include="Properties\" /> -->
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -285,7 +323,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

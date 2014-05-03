@@ -33,7 +33,7 @@
             <TextBlock Text="Vælg en kaptajn:" />
             <ComboBox Name="CaptainComboBox" HorizontalAlignment="Left" ItemsSource="{Binding CurrentCrew}" DropDownClosed="CaptainComboBox_OnDropDownClosed" Width="290"/>
             <TextBlock Text="Angiv et formål:" />
-            <TextBox Height="50" Width="290" HorizontalAlignment="Left" />
+            <TextBox Name="PurposeTextBox"  Height="50" Width="290" HorizontalAlignment="Left" />
             <Button Height="25" Margin="0,0,10,0" Name="CompleteBooking" Content="Gem Booking" Click="SaveButton_Click"/>
             <Button Height="25" Margin="0,0,10,0" Name="CancelBooking" Content="Annuller Booking" Click="CancelButton_Click"/>
         </StackPanel>

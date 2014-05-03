@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using McSntt.Models;
+using McSntt.Views.UserControls;
 
 namespace McSntt.Views.Windows
 {
@@ -17,6 +18,16 @@ namespace McSntt.Views.Windows
 
             Closing += Window_Closing;
         }
+        public AdminMainWindow(SailClubMember activeUser)
+        {
+            // Set the list as the current DataContext
+            InitializeComponent();
+            ThisUser = activeUser;
+
+            FrontPageGrid.Children.Add(new FrontPage(ThisUser));
+
+            Closing += Window_Closing;
+        }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -26,5 +37,7 @@ namespace McSntt.Views.Windows
         {
             Application.Current.Shutdown();
         }
+
+        public SailClubMember ThisUser { get; set; }
     }
 }

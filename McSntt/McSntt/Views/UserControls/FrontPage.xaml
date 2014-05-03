@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="McSntt.Views.UserControls.FrontPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Width="1000" Height="650">
+    <Grid Margin="10,10,0,0">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="300">
+                <TextBlock Text="Velkommen " Name="WelcomeBlock" FontSize="20"/>
+                <TextBlock Name="InfoTextBlock" TextWrapping="Wrap"/>
+            </StackPanel>
+            <StackPanel Width="500">
+                <TextBlock Text="Dine kommende sejlture" Name="UpandcommingTextBlock"/>
+                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" Width="480" MaxHeight="180" Margin="0,0,0,0">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <EventSetter Event="MouseDoubleClick" Handler="UpcommingTripsDataGrid_MouseDoubleClick"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Boat}" Header="Boat"/>
+                        <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
+                        <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
+                                        Header="Start" />
+                        <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Text="Du mangler at udfylde logbøger for:" Name="LogbookTextBlock"/>
+                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" Width="480" MaxHeight="180" Margin="0,0,0,0">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <EventSetter Event="MouseDoubleClick" Handler="LogbookDataGrid_MouseDoubleClick"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Boat}" Header="Boat"/>
+                        <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
+                        <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
+                                        Header="Start" />
+                        <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

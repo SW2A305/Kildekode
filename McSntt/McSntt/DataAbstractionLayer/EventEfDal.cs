@@ -6,13 +6,13 @@ using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
 {
-    public class LogbookEfDal : ILogbookDal
+    public class EventEfDal : IEventDal
     {
         /// <summary>
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Create(params Logbook[] items)
+        public bool Create(params Event[] items)
         {
             return this.CreateOrUpdate(items);
         }
@@ -21,7 +21,7 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Update(params Logbook[] items)
+        public bool Update(params Event[] items)
         {
             return this.CreateOrUpdate(items);
         }
@@ -30,7 +30,7 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Delete(params Logbook[] items)
+        public bool Delete(params Event[] items)
         {
             using (var db = new McSntttContext())
             {
@@ -38,9 +38,9 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Logbook item in items)
+                        foreach (Event item in items)
                         {
-                            db.Logbooks.Remove(item);
+                            db.Events.Remove(item);
                         }
 
                         db.SaveChanges();
@@ -60,12 +60,12 @@ namespace McSntt.DataAbstractionLayer
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Logbook> GetAll()
+        public IEnumerable<Event> GetAll()
         {
             using (var db = new McSntttContext())
             {
-                db.Logbooks.Load();
-                return db.Logbooks.Local;
+                db.Events.Load();
+                return db.Events.Local;
             }
         }
 
@@ -73,7 +73,7 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        private bool CreateOrUpdate(params Logbook[] items)
+        private bool CreateOrUpdate(params Event[] items)
         {
             using (var db = new McSntttContext())
             {
@@ -81,9 +81,9 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Logbook item in items)
+                        foreach (Event item in items)
                         {
-                            db.Logbooks.AddOrUpdate(b => b.LogbookId, item);
+                            db.Events.AddOrUpdate(b => b.EventId, item);
                         }
 
                         db.SaveChanges();
@@ -100,4 +100,4 @@ namespace McSntt.DataAbstractionLayer
             return true;
         }
     }
-}
+}   

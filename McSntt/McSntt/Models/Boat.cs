@@ -14,7 +14,11 @@ namespace McSntt.Models
         public virtual string NickName { get; set; }
         public virtual string ImagePath { get; set; }
         public virtual bool Operational { get; set; }
-    }
+
+        public override string ToString()
+        {
+            return NickName;
+        }    }
 
     public enum BoatType
     {
