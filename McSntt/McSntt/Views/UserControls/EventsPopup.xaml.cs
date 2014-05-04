@@ -42,12 +42,12 @@ namespace McSntt.Views.Windows
             newEvent.Created = false;
         }
 
-/*        public EventsPopup()
+        public EventsPopup()
         {
             InitializeComponent();
 
 
-        }*/
+        }
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {
@@ -85,14 +85,10 @@ namespace McSntt.Views.Windows
                 newEvent.SignUpReq = true;
                 newEvent.SignUpMsg = "Tilmelding krævet!";
             }
-          
-
+            
             // Get the EventDate as Value or Default Value
             newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
-/*
-            IEventDal db = new EventEfDal();
-            db.Create(newEvent);
-*/
+
             if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))
             {
                 newEvent.Created = true;

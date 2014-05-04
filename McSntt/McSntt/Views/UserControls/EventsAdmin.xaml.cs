@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using McSntt.Views.Windows;
 using McSntt.Models;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace McSntt.Views.UserControls
 {
@@ -23,27 +26,50 @@ namespace McSntt.Views.UserControls
     public partial class EventsAdmin : UserControl
     {
 
+        public ObservableCollection<Event> EventsList { get; set; }
+        //public ObservableCollection<Event> EventsList = new ObservableCollection<Event>();
         //public Event newEvent = new Event();
-        public IList<Event> EventsList = new List<Event>();
+        //public IList<Event> EventsList = new List<Event>();
 
         public EventsAdmin()
         {
+            EventsList = new ObservableCollection<Event>();
+            DataContext = this;
             InitializeComponent();
+
+
+
         }
+       
         private void Create_Event(object sender, RoutedEventArgs e)
         {
            
             var newEvent = new Event();
-            Window createEventPopup = new EventsPopup(newEvent);
 
+            Window createEventPopup = new EventsPopup(newEvent);
             createEventPopup.ShowDialog();
             AgendaListbox.ItemsSource = EventsList;
 
+
             if (newEvent.Created)
             {
+
                 EventsList.Add(newEvent);
+
+                //AgendaListbox.Items.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
+                
+
                 AgendaListbox.Items.Refresh();
+
+
+
+/*
+                IEventDal db = new EventEfDal();
+                db.Create(newEvent);
+*/
             }
+
+
 
 
             // Lige nu bruges listen fra Event klasse  ikke, den ville ikke twerke med den :(
@@ -55,12 +81,14 @@ namespace McSntt.Views.UserControls
 
         private void Edit_Event(object sender, RoutedEventArgs e)
         {
-
+            
+            
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Begivenhed er slettet");
+            //AgendaListbox.Items.Remove(AgendaListbox.SelectedItems);
+            AgendaListbox.Items.Remove(AgendaListbox.SelectedItem);
         }
 
         private void Subscripe(object sender, RoutedEventArgs e)
