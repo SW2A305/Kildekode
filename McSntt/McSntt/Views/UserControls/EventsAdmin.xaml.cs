@@ -27,19 +27,12 @@ namespace McSntt.Views.UserControls
     public partial class EventsAdmin : UserControl
     {
 
-        public ObservableCollection<Event> EventsList { get; set; }
-        //public ObservableCollection<Event> EventsList = new ObservableCollection<Event>();
         //public Event newEvent = new Event();
-        //public IList<Event> EventsList = new List<Event>();
-
+        public IList<Event> EventsList = new List<Event>();
+        
         public EventsAdmin()
         {
-            EventsList = new ObservableCollection<Event>();
-            DataContext = this;
-            InitializeComponent();
-
-
-
+            InitializeComponent();    
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -56,22 +49,16 @@ namespace McSntt.Views.UserControls
             {
 
                 EventsList.Add(newEvent);
-
+                
                 //AgendaListbox.Items.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
                 
-
                 AgendaListbox.Items.Refresh();
-
-
 
 /*
                 IEventDal db = new EventEfDal();
                 db.Create(newEvent);
 */
             }
-
-
-
 
             // Lige nu bruges listen fra Event klasse  ikke, den ville ikke twerke med den :(
             //newEvent.EventList.Add(newEvent);
@@ -82,7 +69,22 @@ namespace McSntt.Views.UserControls
 
         private void Edit_Event(object sender, RoutedEventArgs e)
         {
-            
+            int i = AgendaListbox.SelectedIndex;
+
+
+
+            var selectedEvent = EventsList.ElementAt(i);
+
+            Textbox.Text = selectedEvent.Description;
+    
+            Window createEventPopup = new EventsPopup(
+                selectedEvent.EventTitle, 
+                selectedEvent.EventDate, 
+                selectedEvent.Description,
+                selectedEvent.SignUpReq);
+
+            createEventPopup.ShowDialog();
+            //AgendaListbox.ItemsSource = EventsList;
             
         }
 
@@ -90,10 +92,6 @@ namespace McSntt.Views.UserControls
         {
 
             int i = AgendaListbox.SelectedIndex;
-
-            string test = i.ToString();
-
-            Textbox.Text = test;
 
             if (i >= 0)
             {
@@ -112,6 +110,15 @@ namespace McSntt.Views.UserControls
         {
             Window showParticipants = new ParticipantsPopup();
             showParticipants.Show();
+        }
+
+        private void AgendaListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (AgendaListbox.SelectedItem != null)
+            {
+                Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
+            }
+            else Descriptionbox.Text = String.Empty;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace McSntt.Models
         //
         public override string ToString()
         {
-            return "Begivenhedsnavn: " + EventTitle + " Dato: " + EventDate + " " + SignUpMsg;
+            return Description;
         }
     }
 }

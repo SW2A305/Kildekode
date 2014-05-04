@@ -34,19 +34,28 @@ namespace McSntt.Views.Windows
         public EventsPopup(Event newEvent)
         {
             InitializeComponent();
-
+            
             this.newEvent = newEvent;
-
+            
             ChooseDate.Value = DateTime.Today;
 
             newEvent.Created = false;
         }
 
-        public EventsPopup()
+        public EventsPopup(
+            string selectedName, 
+            DateTime selectedDate,
+            string selectedDescription,
+            bool SignUpReq)
         {
             InitializeComponent();
 
+            //this.newEvent = newEvent;
 
+            EventNameBox.Text = selectedName;
+            EventDescriptionBox.Text = selectedDescription;
+            ChooseDate.Value = selectedDate;
+            SubscriptionCheckbox.IsChecked = SignUpReq;
         }
 
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -65,6 +74,9 @@ namespace McSntt.Views.Windows
             }
 
             #endregion
+
+            // Get the EventDate as Value or Default Value
+            newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
 
             #region Warning messages
 
@@ -85,9 +97,6 @@ namespace McSntt.Views.Windows
                 newEvent.SignUpReq = true;
                 newEvent.SignUpMsg = "Tilmelding krævet!";
             }
-            
-            // Get the EventDate as Value or Default Value
-            newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
 
             if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))
             {
