@@ -312,12 +312,6 @@
     <EmbeddedResource Include="Migrations\201405010953244_InitialCreation.resx">
       <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405031210481_Event3.resx">
-      <DependentUpon>201405031210481_Event3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405031231175_Event4.resx">
-      <DependentUpon>201405031231175_Event4.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

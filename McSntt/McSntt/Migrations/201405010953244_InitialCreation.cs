@@ -87,6 +87,8 @@ namespace McSntt.Migrations
                         EventTitle = c.String(),
                         SignUpReq = c.Boolean(nullable: false),
                         Description = c.String(),
+                        SignUpMsg = c.String(),
+                        Created = c.Boolean(nullable: false),
                         Event_EventId = c.Int(),
                     })
                 .PrimaryKey(t => t.EventId)
