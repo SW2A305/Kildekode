@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -87,8 +88,19 @@ namespace McSntt.Views.UserControls
 
         private void Delete_Event(object sender, RoutedEventArgs e)
         {
-            //AgendaListbox.Items.Remove(AgendaListbox.SelectedItems);
-            AgendaListbox.Items.Remove(AgendaListbox.SelectedItem);
+
+            int i = AgendaListbox.SelectedIndex;
+
+            string test = i.ToString();
+
+            Textbox.Text = test;
+
+            if (i >= 0)
+            {
+                EventsList.RemoveAt(i);
+            }
+            else MessageBox.Show("Vælg en begivenhed som skal slettes");
+            AgendaListbox.Items.Refresh();
         }
 
         private void Subscripe(object sender, RoutedEventArgs e)
