@@ -104,11 +104,20 @@
     <Compile Include="Migrations\201405010953244_InitialCreation.Designer.cs">
       <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404291318130_Event.cs" />
+    <Compile Include="Migrations\201405010828219_Event2.cs" />
+    <Compile Include="Migrations\201405011653489_UpdateMigration.cs" />
+    <Compile Include="Migrations\201405011653489_UpdateMigration.Designer.cs">
+      <DependentUpon>201405011653489_UpdateMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\PerticipantsPopup.xaml.cs">
-      <DependentUpon>PerticipantsPopup.xaml</DependentUpon>
+    <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
+      <DependentUpon>DamageReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ParticipantsPopup.xaml.cs">
+      <DependentUpon>ParticipantsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
       <DependentUpon>SupportMainWindow.xaml</DependentUpon>
@@ -178,11 +187,18 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\ViewSpecificLogbookWindow.xaml.cs">
+      <DependentUpon>ViewSpecificLogbookWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\UserControls\FrontPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\PerticipantsPopup.xaml">
+    <Page Include="Views\Windows\DamageReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ParticipantsPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -279,6 +295,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\ViewSpecificLogbookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\SailTrip.cs" />
@@ -298,6 +318,9 @@
     <EmbeddedResource Include="Migrations\201405010953244_InitialCreation.resx">
       <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011653489_UpdateMigration.resx">
+      <DependentUpon>201405011653489_UpdateMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -315,6 +338,7 @@
   <ItemGroup>
     <Resource Include="Images\cross.png" />
     <Resource Include="Images\gray.png" />
+    <Resource Include="Images\forside.png" />
     <Content Include="Images\SundetLogo.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -78,15 +78,7 @@ namespace McSntt.Views.UserControls
             };
 
             var SailTripList = new List<RegularTrip>();
-            SailTripList.Add(RegularSailTrip);
-            SailTripList.Add(RegularSailTrip2);
-
-            UpcommingTripsDataGrid.ItemsSource = null;
-            UpcommingTripsDataGrid.ItemsSource = SailTripList.Where(t => t.DepartureTime > DateTime.Now);
-
-            LogbookDataGrid.ItemsSource = null;
-            LogbookDataGrid.ItemsSource = SailTripList.Where(t => t.ArrivalTime < DateTime.Now && t.Logbook == null);
-        }
+            // SailTripList = db.GetAll().Where(p => p.Crew.Contains());
 
         private RegularTrip RegularSailTrip = new RegularTrip();
         private RegularTrip RegularSailTrip2 = new RegularTrip();

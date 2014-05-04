@@ -70,7 +70,6 @@ namespace McSntt.Views.Windows
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
 
-
         }
         
         private void ChangeCrewButtonClick(object sender, RoutedEventArgs e)
@@ -131,6 +130,8 @@ namespace McSntt.Views.Windows
                 currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
                 currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
                 RegularSailTrip.Crew = CrewList;
+                RegularSailTrip.Logbook = currentLogbook;
+
                 this.Close();}
             }
 
