@@ -104,12 +104,6 @@
     <Compile Include="Migrations\201405010953244_InitialCreation.Designer.cs">
       <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201404291318130_Event.cs" />
-    <Compile Include="Migrations\201405010828219_Event2.cs" />
-    <Compile Include="Migrations\201405011653489_UpdateMigration.cs" />
-    <Compile Include="Migrations\201405011653489_UpdateMigration.Designer.cs">
-      <DependentUpon>201405011653489_UpdateMigration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
@@ -317,9 +311,6 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201405010953244_InitialCreation.resx">
       <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405011653489_UpdateMigration.resx">
-      <DependentUpon>201405011653489_UpdateMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

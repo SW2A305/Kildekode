@@ -90,7 +90,6 @@ namespace McSntt.Views.UserControls
             {
                 Boat = båd1,
                 ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                BoatId = 1,
                 Captain = person3,
                 Comments = "Det blir sjaw!",
                 DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
@@ -105,7 +104,6 @@ namespace McSntt.Views.UserControls
             {
                 Boat = båd3,
                 ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                BoatId = 1,
                 Captain = person3,
                 Comments = "Det blir skæg!",
                 DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
@@ -120,7 +118,6 @@ namespace McSntt.Views.UserControls
             {
                 Boat = båd1,
                 ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                BoatId = 1,
                 Captain = person3,
                 Comments = "Det blir slet ikke spur sjaw!!",
                 DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),

@@ -42,43 +42,44 @@ namespace McSntt.Views.UserControls
         public void LoadData()
         {
             /*RegularSailTrip = sailTrip;*/
-            
+
             // TEST PERSONER
 
-            var person1 = new Person { FirstName = "Knold", LastName = "Tot", PersonId = 0 };
-            var person2 = new Person { FirstName = "Son", LastName = "Goku", PersonId = 1 };
-            var person3 = new Person { FirstName = "Sponge", LastName = "Bob", PersonId = 2 };
-            var testlist = new List<Person> { person1, person2, person3 };
+            var person1 = new Person {FirstName = "Knold", LastName = "Tot", PersonId = 0};
+            var person2 = new Person {FirstName = "Son", LastName = "Goku", PersonId = 1};
+            var person3 = new Person {FirstName = "Sponge", LastName = "Bob", PersonId = 2};
+            var testlist = new List<Person> {person1, person2, person3};
 
             RegularSailTrip = new RegularTrip
-            {
-                Boat = new Boat() { NickName = "Bodil2" },
-                ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                Captain = person3,
-                Comments = "Det blir sjaw!",
-                DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
-                PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
-                WeatherConditions = "Det 'en bæt' wind...",
-                RegularTripId = 9,
-                Crew = testlist
+                              {
+                                  Boat = new Boat() {NickName = "Bodil2"},
+                                  ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
+                                  Captain = person3,
+                                  Comments = "Det blir sjaw!",
+                                  DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
+                                  PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
+                                  WeatherConditions = "Det 'en bæt' wind...",
+                                  RegularTripId = 9,
+                                  Crew = testlist
 
-            };
+                              };
 
             RegularSailTrip2 = new RegularTrip
-            {
-                Boat = new Boat() { NickName = "Bodil2" },
-                ArrivalTime = new DateTime(2014, 03, 9, 12, 0, 0),
-                Captain = person3,
-                Comments = "Det blir sjaw!",
-                DepartureTime = new DateTime(2014, 03, 9, 09, 0, 0),
-                PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
-                WeatherConditions = "Det 'en bæt' wind...",
-                RegularTripId = 9,
-                Crew = testlist
-            };
+                               {
+                                   Boat = new Boat() {NickName = "Bodil2"},
+                                   ArrivalTime = new DateTime(2014, 03, 9, 12, 0, 0),
+                                   Captain = person3,
+                                   Comments = "Det blir sjaw!",
+                                   DepartureTime = new DateTime(2014, 03, 9, 09, 0, 0),
+                                   PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
+                                   WeatherConditions = "Det 'en bæt' wind...",
+                                   RegularTripId = 9,
+                                   Crew = testlist
+                               };
 
             var SailTripList = new List<RegularTrip>();
             // SailTripList = db.GetAll().Where(p => p.Crew.Contains());
+        }
 
         private RegularTrip RegularSailTrip = new RegularTrip();
         private RegularTrip RegularSailTrip2 = new RegularTrip();
