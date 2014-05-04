@@ -65,7 +65,15 @@ namespace McSntt.DataAbstractionLayer
             {
                 db.RegularTrips.Load();
 
-                return db.RegularTrips.Local;
+                return db.RegularTrips.Include("Boat").Include("Logbook").Include("Captain").Include("Crew").ToList();
+            }
+        }
+
+        public RegularTrip GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                return db.RegularTrips.Find(itemId);
             }
         }
 
@@ -77,7 +85,7 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                var query =
+                IQueryable<RegularTrip> query =
                     from trip in db.RegularTrips
                     where predicate(trip)
                     select trip;
@@ -95,7 +103,7 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                var query =
+                IQueryable<RegularTrip> query =
                     from trip in db.RegularTrips
                     where trip.Boat.BoatId == boat.BoatId
                     select trip;
@@ -126,7 +134,6 @@ namespace McSntt.DataAbstractionLayer
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="boat"></param>
         /// <param name="departureTime"></param>
@@ -134,13 +141,12 @@ namespace McSntt.DataAbstractionLayer
         /// <returns></returns>
         public bool CanMakeReservation(Boat boat, DateTime? departureTime, DateTime? expectedArrivalTime)
         {
-            var reservations = this.GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
+            IEnumerable<RegularTrip> reservations = this.GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
 
             return !reservations.Any();
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="trip"></param>
         /// <returns></returns>

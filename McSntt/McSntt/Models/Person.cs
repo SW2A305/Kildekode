@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,11 +22,13 @@ namespace McSntt.Models
     {
         [Key]
         public virtual int PersonId { get; set; }
+
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual string Address { get; set; }
         public virtual string Postcode { get; set; }
         public virtual string Cityname { get; set; }
+        // TODO Should we change this back to a date?
         public virtual string DateOfBirth { get; set; }
         public virtual bool BoatDriver { get; set; }
         public virtual Gender Gender { get; set; }
@@ -37,21 +38,24 @@ namespace McSntt.Models
         [NotMapped]
         public string FullName
         {
-            get { return FirstName + " " + LastName; }
-        }
-
-        public override string ToString()
-        {
-            return FullName;
+            get { return this.FirstName + " " + this.LastName; }
         }
 
         [InverseProperty("Crew")]
         public virtual ICollection<RegularTrip> PartOfCrewOn { get; set; }
+
         [InverseProperty("Captain")]
         public virtual ICollection<RegularTrip> CaptainOn { get; set; }
+
         [InverseProperty("Participants")]
         public virtual ICollection<Event> ParticipatingInEvents { get; set; }
+
         [InverseProperty("ActualCrew")]
         public virtual ICollection<Logbook> PartOfActualCrewOn { get; set; }
+
+        public override string ToString()
+        {
+            return this.FullName;
+        }
     }
 }

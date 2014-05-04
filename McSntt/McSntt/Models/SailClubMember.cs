@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
@@ -11,15 +10,27 @@ namespace McSntt.Models
     [Table("SailClubMembers")]
     public class SailClubMember : Person
     {
+        private Positions _position;
+
         #region Properties
         [Index(IsUnique = true)]
         public virtual int SailClubMemberId { get; set; }
-        public virtual Positions Position { get; set; }
+
+        public virtual Positions Position
+        {
+            get { return this._position; }
+            set { this._position = value; }
+        }
+
         public virtual string Username { get; set; }
         public virtual string PasswordHash { get; set; }
 
         [InverseProperty("FiledBy")]
         public virtual ICollection<Logbook> FiledLogbooks { get; set; }
+
+        // TODO If we add the Student class that we considered, then this should probably change to only allow the participation in one team?
+        [InverseProperty("TeamMembers")]
+        public virtual ICollection<Team> PartOfTeams { get; set; }
         #endregion
 
         #region Enumerations
@@ -41,7 +52,7 @@ namespace McSntt.Models
         /// </summary>
         public SailClubMember()
         {
-            this.Position = Positions.Member;
+            this._position = Positions.Member;
         }
 
         /// <summary>

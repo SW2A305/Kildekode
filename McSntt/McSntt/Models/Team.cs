@@ -13,7 +13,6 @@ namespace McSntt.Models
         #region Properties
         public virtual int TeamId { get; set; }
         public virtual string Name { get; set; }
-        public virtual ICollection<SailClubMember> TeamMembers { get; set; }
         public virtual bool RobeWorks { get; set; }
         public virtual bool Navigation { get; set; }
         public virtual bool Motor { get; set; }
@@ -21,6 +20,8 @@ namespace McSntt.Models
         public virtual bool Gaffelrigger { get; set; }
         public virtual bool Night { get; set; }
         public virtual ClassLevel Level { get; set; }
+
+        public virtual ICollection<SailClubMember> TeamMembers { get; set; }
         #endregion
     }
 }

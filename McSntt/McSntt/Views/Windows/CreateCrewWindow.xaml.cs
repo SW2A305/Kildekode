@@ -18,12 +18,12 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateCrewWindow : Window, INotifyPropertyChanged
     {
-        public IList<Person> CrewList = new List<Person>();
+        public ICollection<Person> CrewList = new List<Person>();
 
         private ICollectionView _dataGridCollection;
         private string _filterString;
 
-        public CreateCrewWindow(IList<Person> CrewList)
+        public CreateCrewWindow(ICollection<Person> CrewList)
         {
             InitializeComponent();
 
@@ -59,7 +59,7 @@ namespace McSntt.Views.Windows
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void RefreshDatagrid(DataGrid Grid, IList<Person> list)
+        private void RefreshDatagrid(DataGrid Grid, ICollection<Person> list)
 
         {
             Grid.ItemsSource = null;
@@ -129,7 +129,7 @@ namespace McSntt.Views.Windows
             if (
                 CrewList.Where(x => x is SailClubMember)
                     .Cast<SailClubMember>()
-                    .All(x => x.MemberId != currentPerson.MemberId))
+                    .All(x => x.SailClubMemberId != currentPerson.SailClubMemberId))
                 CrewList.Add(currentPerson);
 
             DataGridCollection.Filter = Filter; 

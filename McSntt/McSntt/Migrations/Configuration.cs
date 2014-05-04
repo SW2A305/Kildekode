@@ -1,9 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Security.Cryptography;
-using EntityFramework.Extensions;
 using McSntt.Helpers;
 using McSntt.Models;
 
@@ -22,9 +19,9 @@ namespace McSntt.Migrations
             //  This method will be called after migrating to the latest version.
 
             #region Data : Persons
-            var persons = new Person[]
+            var persons = new[]
                           {
-                              new Person()
+                              new Person
                               {
                                   FirstName = "Chesty",
                                   LastName = "Duvall",
@@ -41,9 +38,9 @@ namespace McSntt.Migrations
             #endregion
 
             #region Data : SailClubMembers
-            var sailClubMembers = new SailClubMember[]
+            var sailClubMembers = new[]
                                   {
-                                      new SailClubMember()
+                                      new SailClubMember
                                       {
                                           SailClubMemberId = 276,
                                           FirstName = "John",
@@ -60,8 +57,7 @@ namespace McSntt.Migrations
                                           Position = SailClubMember.Positions.Member,
                                           DateOfBirth = "1989-12-24"
                                       },
-
-                                      new SailClubMember()
+                                      new SailClubMember
                                       {
                                           SailClubMemberId = 23,
                                           FirstName = "Jonna",
@@ -82,17 +78,16 @@ namespace McSntt.Migrations
             #endregion
 
             #region Data : Boats
-            var boats = new Boat[]
+            var boats = new[]
                         {
-                            new Boat()
+                            new Boat
                             {
                                 ImagePath = "Images/SundetLogo.png",
                                 NickName = "Sinky",
                                 Operational = false,
                                 Type = BoatType.Drabant
                             },
-
-                            new Boat()
+                            new Boat
                             {
                                 ImagePath = "Images/SundetLogo.png",
                                 NickName = "Anna",
@@ -102,27 +97,47 @@ namespace McSntt.Migrations
                         };
             #endregion
 
-            #region Data : RegularTrips
-            var regularTrips = new RegularTrip[]
+            #region Data : Logbooks
+            var logbooks = new[]
+                           {
+                               new Logbook()
                                {
-                                   new RegularTrip()
+                                   ActualArrivalTime = DateTime.Now.AddDays(2).AddHours(6).AddMinutes(13),
+                                   ActualCrew = new Collection<Person> {persons[0], sailClubMembers[1]},
+                                   ActualDepartureTime = DateTime.Now.AddDays(2).AddHours(3).AddMinutes(30),
+                                   AnswerFromBoatChief = "This is my answer!",
+                                   DamageDescription = "Massive hole in the side.",
+                                   DamageInflicted = true,
+                                   FiledBy = sailClubMembers[0]
+                               }
+                           };
+            #endregion
+
+            #region Data : RegularTrips
+            var regularTrips = new[]
+                               {
+                                   new RegularTrip
                                    {
                                        Boat = boats[1],
                                        Captain = sailClubMembers[0],
                                        DepartureTime = DateTime.Now.AddDays(2),
                                        ExpectedArrivalTime = DateTime.Now.AddDays(2).AddHours(5),
-                                       Crew = new Collection<Person>() {persons[0], sailClubMembers[1]},
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
                                        PurposeAndArea = "Terrorisme",
-                                       WeatherConditions = "Cloudy with a chance of bullet rain."
+                                       WeatherConditions = "Cloudy with a chance of bullet rain.",
+                                       Logbook = logbooks[0],
+                                       ArrivalTime = logbooks[0].ActualArrivalTime,
+                                       Comments = "With great comments... Something something..."
                                    }
                                };
             #endregion
 
             // Insert data into database
             context.Persons.AddOrUpdate(p => new {p.FirstName, p.LastName, p.PhoneNumber}, persons);
-            context.SailClubMembers.AddOrUpdate(s => new { s.FirstName, s.LastName, s.PhoneNumber }, sailClubMembers);
+            context.SailClubMembers.AddOrUpdate(s => new {s.FirstName, s.LastName, s.PhoneNumber}, sailClubMembers);
             context.Boats.AddOrUpdate(b => b.NickName, boats);
-            context.RegularTrips.AddOrUpdate(r => new {r.DepartureTime, r.ExpectedArrivalTime}, regularTrips);
+            context.Logbooks.AddOrUpdate(l => new {l.DamageInflicted, l.DamageDescription}, logbooks);
+            context.RegularTrips.AddOrUpdate(r => new {r.PurposeAndArea, r.WeatherConditions}, regularTrips);
         }
     }
 }

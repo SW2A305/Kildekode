@@ -66,7 +66,22 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.SailClubMembers.Load();
-                return db.SailClubMembers.Include("PartOfCrewOn").Include("CaptainOn").ToList();
+                return db.SailClubMembers
+                         .Include("PartOfCrewOn")
+                         .Include("CaptainOn")
+                         .Include("ParticipatingInEvents")
+                         .Include("PartOfActualCrewOn")
+                         .Include("FiledLogbooks")
+                         .Include("PartOfTeams")
+                         .ToList();
+            }
+        }
+
+        public SailClubMember GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                return db.SailClubMembers.Find(itemId);
             }
         }
 

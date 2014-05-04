@@ -12,5 +12,6 @@ namespace McSntt.DataAbstractionLayer
         bool Update(params T[] items);
         bool Delete(params T[] items);
         IEnumerable<T> GetAll();
+        T GetOne(int itemId);
     }
 }

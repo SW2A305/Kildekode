@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
@@ -15,10 +12,14 @@ namespace McSntt.Models
         public virtual string ImagePath { get; set; }
         public virtual bool Operational { get; set; }
 
+        [InverseProperty("Boat")]
+        public virtual ICollection<SailTrip> SailTrips { get; set; }
+
         public override string ToString()
         {
-            return NickName;
-        }    }
+            return this.NickName;
+        }
+    }
 
     public enum BoatType
     {

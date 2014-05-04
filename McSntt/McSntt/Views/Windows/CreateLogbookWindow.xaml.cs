@@ -25,7 +25,7 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateLogbookWindow : Window
     {
-        public IList<Person> CrewList = new List<Person>();
+        public ICollection<Person> CrewList = new List<Person>();
         private RegularTrip RegularSailTrip = new RegularTrip();
         private Logbook currentLogbook = new Logbook();
 
@@ -48,7 +48,6 @@ namespace McSntt.Views.Windows
             {
                 Boat = new Boat() {NickName = "Bodil2"},
                 ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                BoatId = 1,
                 Captain = person3,
                 Comments = "Det blir sjaw!",
                 DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),

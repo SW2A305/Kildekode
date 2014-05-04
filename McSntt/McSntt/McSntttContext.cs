@@ -7,7 +7,7 @@ using McSntt.Models;
 
 namespace McSntt
 {
-    internal class McSntttContext : DbContext
+    public class McSntttContext : DbContext
     {
         public DbSet<Person> Persons { get; set; }
         public DbSet<SailClubMember> SailClubMembers { get; set; }

@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
     public class Event
     {
-        public Event()
-        {
-            EventId = _nextId++;
-        }
+        public virtual int EventId { get; set; }
 
-        private static int _nextId;
-        public int EventId { get; set; }
-        public DateTime EventDate { get; set; }
-        public string EventTitle { get; set; }
-        public bool SignUpReq { get; set; }
-        public string Description { get; set; }
-        public IList<Person> Participants { get; set; }
-        public IList<Event> EventList { get; set; }
+        [Column(TypeName = "DateTime2")]
+        public virtual DateTime EventDate { get; set; }
+
+        public virtual string EventTitle { get; set; }
+        public virtual bool SignUpReq { get; set; }
+        public virtual string Description { get; set; }
+
+        public virtual ICollection<Person> Participants { get; set; }
+        // TODO What on earth is this thing doing? We may need to reconsider this one.
+        public virtual ICollection<Event> EventList { get; set; }
     }
 }

@@ -54,7 +54,6 @@ namespace McSntt.Views.UserControls
             {
                 Boat = new Boat() { NickName = "Bodil2" },
                 ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                BoatId = 1,
                 Captain = person3,
                 Comments = "Det blir sjaw!",
                 DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
@@ -69,7 +68,6 @@ namespace McSntt.Views.UserControls
             {
                 Boat = new Boat() { NickName = "Bodil2" },
                 ArrivalTime = new DateTime(2014, 03, 9, 12, 0, 0),
-                BoatId = 1,
                 Captain = person3,
                 Comments = "Det blir sjaw!",
                 DepartureTime = new DateTime(2014, 03, 9, 09, 0, 0),
