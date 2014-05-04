@@ -64,7 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAbstractionLayer\ILectureDal.cs" />
     <Compile Include="DataAbstractionLayer\IStudentMemberDal.cs" />
+    <Compile Include="DataAbstractionLayer\LectureEfDal.cs" />
     <Compile Include="DataAbstractionLayer\StudentMemberEfDal.cs" />
     <Compile Include="DataAbstractionLayer\TeamEfDal.cs" />
     <Compile Include="DataAbstractionLayer\ITeamDal.cs" />
@@ -101,9 +103,18 @@
     <Compile Include="Migrations\201405011811500_Study3.Designer.cs">
       <DependentUpon>201405011811500_Study3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405032110457_Study4.cs" />
+    <Compile Include="Migrations\201405032110457_Study4.Designer.cs">
+      <DependentUpon>201405032110457_Study4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405032240555_study5.cs" />
+    <Compile Include="Migrations\201405032240555_study5.Designer.cs">
+      <DependentUpon>201405032240555_study5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Lecture.cs" />
     <Compile Include="Models\Logbook.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
@@ -142,6 +153,9 @@
     </Compile>
     <Compile Include="Views\UserControls\StudyTeacher.xaml.cs">
       <DependentUpon>StudyTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\NewLecture.xaml.cs">
+      <DependentUpon>NewLecture.xaml</DependentUpon>
     </Compile>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
@@ -208,6 +222,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\NewLecture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\SailTrip.cs" />
@@ -238,6 +256,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405011811500_Study3.resx">
       <DependentUpon>201405011811500_Study3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405032110457_Study4.resx">
+      <DependentUpon>201405032110457_Study4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405032240555_study5.resx">
+      <DependentUpon>201405032240555_study5.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

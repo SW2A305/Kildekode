@@ -19,6 +19,7 @@ namespace McSntt.Models
 
         private string _name;
         private IList<StudentMember> _teamMembers = new List<StudentMember>();
+        private IList<Lecture>  _lectures = new List<Lecture>();
 
         public enum ClassLevel { First = 1, Second = 2}
         private ClassLevel _level;
@@ -36,6 +37,11 @@ namespace McSntt.Models
             set { _teamMembers = value; }
         }
 
+        public IList<Lecture> Lectures
+        {
+            get { return _lectures; }
+            set { _lectures = value; }
+        }
        
         public ClassLevel Level
         {

@@ -16,7 +16,7 @@ namespace McSntt.Models
         Team AssociatedTeam { get; set; }
 
         #region Undervisnings kriterier
-        public bool RobeWorks { get; set; }
+        public bool? RopeWorks { get; set; }
         public bool Navigation { get; set; }
         public bool Motor { get; set; }
         public bool Drabant { get; set; }

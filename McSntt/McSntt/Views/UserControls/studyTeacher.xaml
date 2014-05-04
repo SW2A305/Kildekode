@@ -55,18 +55,30 @@
             </Grid>
         </Border>
 
-        <ComboBox x:Name="teamDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,10,0,0" SelectionChanged="teamDropdown_SelectionChanged"/>
-        <ComboBox x:Name="studentDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="151,10,0,0" SelectionChanged="studentDropdown_SelectionChanged" />
-        <Button x:Name="extraBook" Content="Ekstra lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="288,10,0,0"/>
-        <CheckBox x:Name="RobeWorksCheckBox" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top" Checked="RobeWorksCheckBox_Checked" Unchecked="RobeWorksCheckBox_Unchecked"/>
-        <CheckBox x:Name="NavigationCheckBox" Content="Navigation" HorizontalAlignment="Left" Margin="26,153,0,0" VerticalAlignment="Top" Checked="NavigationCheckBox_Checked" Unchecked="NavigationCheckBox_Unchecked"/>
-        <CheckBox x:Name="MotorCheckBox" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="26,191,0,0" VerticalAlignment="Top" Checked="MotorCheckBox_Checked" Unchecked="MotorCheckBox_Unchecked"/>
-        <CheckBox x:Name="DrabantCheckBox" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="26,323,0,0" VerticalAlignment="Top" Checked="DrabantCheckBox_Checked" Unchecked="DrabantCheckBox_Unchecked"/>
-        <CheckBox x:Name="NightCheckBox" Content="Natsejlads" HorizontalAlignment="Left" Margin="26,399,0,0" VerticalAlignment="Top" Checked="NightCheckBox_Checked"/>
-        <CheckBox x:Name="GaffelriggerCheckBox" Content="Gaffelrigger sejlads" HorizontalAlignment="Left" Margin="26,362,0,0" VerticalAlignment="Top" Checked="GaffelriggerCheckBox_Checked" Unchecked="GaffelriggerCheckBox_Unchecked"/>
-        <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="26,69,0,0" VerticalAlignment="Top" Width="166" FontSize="16"/>
-        <Label Content="Praktisk" HorizontalAlignment="Left" Margin="26,272,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <ComboBox x:Name="teamDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,39,0,0" SelectionChanged="teamDropdown_SelectionChanged"/>
+        <ComboBox x:Name="studentDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="151,39,0,0" SelectionChanged="studentDropdown_SelectionChanged" />
+        <Button x:Name="updateLecture" Content="Gem lektionsinformation" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="151,137,0,0" Click="updateLecture_Click" />
+        <CheckBox x:Name="RopeWorksCheckBox" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="22,211,0,0" VerticalAlignment="Top" />
+        <CheckBox x:Name="NavigationCheckBox" Content="Navigation" HorizontalAlignment="Left" Margin="22,248,0,0" VerticalAlignment="Top" />
+        <CheckBox x:Name="MotorCheckBox" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="22,286,0,0" VerticalAlignment="Top" />
+        <CheckBox x:Name="DrabantCheckBox" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="22,373,0,0" VerticalAlignment="Top" />
+        <CheckBox x:Name="NightCheckBox" Content="Natsejlads" HorizontalAlignment="Left" Margin="22,449,0,0" VerticalAlignment="Top" />
+        <CheckBox x:Name="GaffelriggerCheckBox" Content="Gaffelrigger sejlads" HorizontalAlignment="Left" Margin="22,412,0,0" VerticalAlignment="Top" />
+        <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="22,164,0,0" VerticalAlignment="Top" Width="166" FontSize="16"/>
+        <Label Content="Praktisk" HorizontalAlignment="Left" Margin="22,337,0,0" VerticalAlignment="Top" FontSize="16"/>
         <CheckBox x:Name="editTeam" Content="Redigér hold" HorizontalAlignment="Left" Margin="423,116,0,0" VerticalAlignment="Top" Checked="editTeam_Checked" Unchecked="editTeam_Unchecked"/>
+        <ComboBox x:Name="lectureDropdown" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Vælg Hold:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
+        <Label Content="Vælg Elev:" HorizontalAlignment="Left" Margin="151,8,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Vælg Lektion:&#xA;" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+        <Label Content="Elever" HorizontalAlignment="Left" Height="33" Margin="224,164,0,0" VerticalAlignment="Top" Width="101" FontSize="16"/>
+        <CheckBox x:Name="studentOne" Content="Elev 1" HorizontalAlignment="Left" Margin="224,208,0,0" VerticalAlignment="Top" />
+        <CheckBox x:Name="studentTwo" Content="Elev 2" HorizontalAlignment="Left" Margin="224,248,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="studentThree" Content="Elev 3" HorizontalAlignment="Left" Margin="224,286,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="studentFour" Content="Elev 4" HorizontalAlignment="Left" Margin="224,322,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="studentFive" Content="Elev 5" HorizontalAlignment="Left" Margin="224,362,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="studentSix" Content="Elev 6" HorizontalAlignment="Left" Margin="224,400,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="newLecture1" Content="Opret ny lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="316,137,0,0" Click="newLecture1_Click" />
 
 
 
