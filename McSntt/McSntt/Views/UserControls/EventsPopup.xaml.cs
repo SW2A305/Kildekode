@@ -43,20 +43,22 @@ namespace McSntt.Views.Windows
         }
 
         public EventsPopup(
-            string selectedName, 
-            DateTime selectedDate,
-            string selectedDescription,
+            string EventTitle,
+            DateTime EventDate,
+            string Description,
             bool SignUpReq)
         {
             InitializeComponent();
 
-            //this.newEvent = newEvent;
 
-            EventNameBox.Text = selectedName;
-            EventDescriptionBox.Text = selectedDescription;
-            ChooseDate.Value = selectedDate;
+            EventNameBox.Text = EventTitle;
+            EventDescriptionBox.Text = Description;
+            ChooseDate.Value = EventDate;
             SubscriptionCheckbox.IsChecked = SignUpReq;
+
+            
         }
+
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {

@@ -71,21 +71,32 @@ namespace McSntt.Views.UserControls
         {
             int i = AgendaListbox.SelectedIndex;
 
+            if (i >= 0)
+            {
+                
+                Event selectedEvent = EventsList.ElementAt(i);
 
 
-            var selectedEvent = EventsList.ElementAt(i);
+                
+                Window createEventPopup = new EventsPopup(
+                    selectedEvent.EventTitle,
+                    selectedEvent.EventDate,
+                    selectedEvent.Description,
+                    selectedEvent.SignUpReq);
+                  
+                    createEventPopup.ShowDialog();
 
-            Textbox.Text = selectedEvent.Description;
-    
-            Window createEventPopup = new EventsPopup(
-                selectedEvent.EventTitle, 
-                selectedEvent.EventDate, 
-                selectedEvent.Description,
-                selectedEvent.SignUpReq);
+                //Textbox.Text = selectedEvent.EventTitle;
 
-            createEventPopup.ShowDialog();
-            //AgendaListbox.ItemsSource = EventsList;
+                EventsList.RemoveAt(i);
+
+                EventsList.Insert(i, selectedEvent);
+
+                AgendaListbox.Items.Refresh();
+            }
+            else MessageBox.Show("Vælg en begivenhed at redigere");
             
+
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)
