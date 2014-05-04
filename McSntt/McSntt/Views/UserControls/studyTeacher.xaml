@@ -21,14 +21,14 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="NewTeam" Content="Nyt hold" HorizontalAlignment="Left" Margin="30,22,0,0" VerticalAlignment="Top" Width="75" Click="newTeam_Click" Height="22"/>
                 <Button x:Name="deleteTeam" Content="Slet hold" HorizontalAlignment="Left" Margin="110,22,0,0" VerticalAlignment="Top" Width="75" Click="deleteTeam_Click" Height="22"/>
-                <RadioButton x:Name="level1RadioButton" Content="1. års sejlere" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81"/>
-                <RadioButton x:Name="level2RadioButton" Content="2. års sejlere" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81"/>
+                <RadioButton x:Name="Level1RadioButton" Content="1. års sejlere" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81" Checked="Level1RadioButton_Checked"/>
+                <RadioButton x:Name="Level2RadioButton" Content="2. års sejlere" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81" Checked="Level2RadioButton_Checked"/>
                 <Button x:Name="AddStudent" Content="Tilføj" HorizontalAlignment="Center" Margin="2,142,7,0" Width="76" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Height="22" Click="AddStudent_Click"/>
                 <Button x:Name="RemoveStudent" Content="Fjern" HorizontalAlignment="Center" Margin="2,185,7,0" VerticalAlignment="Top" Width="76" Grid.Column="1" Grid.Row="1" Height="22" Click="RemoveStudent_Click"/>
                 <Button x:Name="saveChanges" Content="Gem ændringer" HorizontalAlignment="Left" Margin="84,10,0,0" VerticalAlignment="Top" Width="104" Click="saveChanges_Click" Grid.Column="2" Grid.Row="2" Height="22"/>
                 <Label Content="Holdnavn:" HorizontalAlignment="Right" Height="29" Margin="0,18,0,0" VerticalAlignment="Top" Width="78" FontSize="14" Grid.Column="1" Grid.Row="1"/>
                 <StackPanel Grid.Column="2" Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="361" Margin="7,18,0,18" Width="202">
-                    <TextBox x:Name="teamName" Height="29" TextWrapping="Wrap"/>
+                    <TextBox x:Name="teamName" Height="29" TextWrapping="Wrap" />
                     <Label Content="Holdmedlemmer" HorizontalAlignment="Left" Margin="0" FontSize="14" Height="29"/>
                     <DataGrid x:Name="CurrentMemberDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="2,0,0,0" Height="303">
                         <DataGrid.Columns>
@@ -79,6 +79,13 @@
         <CheckBox x:Name="studentFive" Content="Elev 5" HorizontalAlignment="Left" Margin="224,362,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="studentSix" Content="Elev 6" HorizontalAlignment="Left" Margin="224,400,0,0" VerticalAlignment="Top"/>
         <Button x:Name="newLecture1" Content="Opret ny lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="316,137,0,0" Click="newLecture1_Click" />
+        <RichTextBox x:Name="testText" HorizontalAlignment="Left" Height="35" Margin="116,519,0,0" VerticalAlignment="Top" Width="209">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
 
 

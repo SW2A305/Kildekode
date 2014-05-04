@@ -29,7 +29,7 @@ namespace McSntt.Views.UserControls
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
         #region Til test
-        public Team Team15 = new Team{Name = "Hold 15"};
+        public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First};
         public Team Team16 = new Team {Name = "Hold 16"};
         public IList<Team> TeamList = new List<Team>();
         public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", MemberId = 2000};
@@ -82,14 +82,12 @@ namespace McSntt.Views.UserControls
         {
             teamName.Text = string.Empty;
             memberSearch.Text = string.Empty;
-            level1RadioButton.IsChecked = false;
-            level2RadioButton.IsChecked = false;
+            Level1RadioButton.IsChecked = false;
+            Level2RadioButton.IsChecked = false;
             CurrentMemberDataGrid.ItemsSource = null;
             teamDropdown.SelectedIndex = -1;
             studentDropdown.SelectedIndex = -1;
             studentDropdown.ItemsSource = null;
-            
-
         }
 
         #region Events
@@ -154,6 +152,21 @@ namespace McSntt.Views.UserControls
                 //MessageBox.Show("" + ((Team)teamDropdown.SelectedItem).TeamMembers.Count);
                 _membersList = ((Team) teamDropdown.SelectedItem).TeamMembers;
                 CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(_membersList);
+                teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
+                
+                switch (((Team)teamDropdown.SelectedItem).Level)
+                {
+                    case 0:
+                        Level1RadioButton.IsChecked = false;
+                        break;
+                    case Team.ClassLevel.First:
+                        Level1RadioButton.IsChecked = true;
+                        break;
+                    case Team.ClassLevel.Second:
+                        Level2RadioButton.IsChecked = true;
+                        break;
+                }
+                
             }
             catch (NullReferenceException ex)
             {
@@ -163,7 +176,7 @@ namespace McSntt.Views.UserControls
 
             #region assigning students to checkboxes
 
-            if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 0)
+            if ((teamDropdown.SelectedItem != null && ((Team)teamDropdown.SelectedItem).TeamMembers.Count == 0) || teamDropdown.SelectedItem == null )
             {
                 studentOne.Content = "Elev 1";
                 studentTwo.Content = "Elev 2";
@@ -171,92 +184,111 @@ namespace McSntt.Views.UserControls
                 studentFour.Content = "Elev 4";
                 studentFive.Content = "Elev 5";
                 studentSix.Content = "Elev 6";
+                
+            }
+            
+            if (teamDropdown.SelectedItem != null)
+            {
+                if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 1)
+                {
+                    studentOne.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                }
             }
 
-
-            if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 1)
+            if (teamDropdown.SelectedItem != null)
             {
-               studentOne.Content =
-                   ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                   ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 2)
+                {
+                    studentOne.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                    studentTwo.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
+                }
+            }
+            if (teamDropdown.SelectedItem != null)
+            {
+                if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 3)
+                {
+                    studentOne.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                    studentTwo.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
+                    studentThree.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
+                }
             }
 
-            if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 2)
+            if (teamDropdown.SelectedItem != null)
             {
-                studentOne.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                studentTwo.Content = ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
+                if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 4)
+                {
+                    studentOne.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                    studentTwo.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
+                    studentThree.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
+                    studentFour.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
+                }
             }
-            if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 3)
+            if (teamDropdown.SelectedItem != null)
             {
-                studentOne.Content =
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                studentTwo.Content =
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                studentThree.Content =
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
+                if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 5)
+                {
+                    studentOne.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                    studentTwo.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
+                    studentThree.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
+                    studentFour.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
+                    studentFive.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).LastName;
+                }
             }
-
-            if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 4)
+            if (teamDropdown.SelectedItem != null)
             {
-                studentOne.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                studentTwo.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                studentThree.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                studentFour.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
+                if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 6)
+                {
+                    studentOne.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
+                    studentTwo.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
+                    studentThree.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
+                    studentFour.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
+                    studentFive.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).LastName;
+                    studentSix.Content =
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(5).FirstName + " " +
+                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(5).LastName;
+                }
             }
-            if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 5)
-            {
-                studentOne.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                studentTwo.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                studentThree.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                studentFour.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
-                studentFive.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(4).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(4).LastName;
-            }
-            if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 5)
-            {
-                studentOne.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                studentTwo.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                studentThree.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                studentFour.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
-                studentFive.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(4).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(4).LastName;
-                studentSix.Content =
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(5).FirstName + " " +
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(5).LastName;
-            }
-#endregion
+            #endregion
 
         }
 
@@ -282,16 +314,33 @@ namespace McSntt.Views.UserControls
             RefreshDatagrid(CurrentMemberDataGrid, _membersList);
         }
 
+        private void Level1RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (teamDropdown.SelectedItem != null)
+            {
+                ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.First;
+            }
+        }
+
+        private void Level2RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (teamDropdown.SelectedItem != null)
+            {
+                ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
+            }
+        }
+
         private void studentDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (studentDropdown.SelectedItem != null)
             {
-                RopeWorksCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).RopeWorks;
+                RopeWorksCheckBox.IsChecked = ((StudentMember) studentDropdown.SelectedItem).RopeWorks;
                 NavigationCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Navigation;
                 MotorCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Motor;
                 DrabantCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Drabant;
                 GaffelriggerCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Gaffelrigger;
                 NightCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Night;
+                
             }
             else
             {
@@ -499,7 +548,7 @@ namespace McSntt.Views.UserControls
         private void SaveLectureInfo(object sender, RoutedEventArgs e)
         {
             var indexCount = 0;
-            ((Lecture) lectureDropdown.SelectedItem).RopeWorks = (RopeWorksCheckBox.IsChecked == true);
+            ((Lecture) lectureDropdown.SelectedItem).RopeWorksLecture = (RopeWorksCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Motor = (MotorCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Navigation = (NavigationCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
@@ -703,6 +752,12 @@ namespace McSntt.Views.UserControls
             var window = new NewLecture();
             window.ShowDialog();
         }
+
+        
+
+        
+
+        
 
 
 

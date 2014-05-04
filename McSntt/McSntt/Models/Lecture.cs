@@ -18,7 +18,7 @@ namespace McSntt.Models
         public int LectureId { get; set; }
         public DateTime DateOfLecture { get; set; }
         #region UndervisningsOmråder
-        public bool RopeWorks { get; set; }
+        public bool RopeWorksLecture { get; set; }
         public bool Navigation { get; set; }
         public bool Motor { get; set; }
         public bool Drabant { get; set; }
