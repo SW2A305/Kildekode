@@ -27,14 +27,43 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class EventsPopup : Window
     {
-        public EventsPopup()
+
+
+        public Event newEvent = new Event();
+
+        public EventsPopup(Event newEvent)
         {
             InitializeComponent();
+            
+            this.newEvent = newEvent;
+            
+            ChooseDate.Value = DateTime.Today;
+
+            newEvent.Created = false;
         }
+
+        public EventsPopup(
+            string EventTitle,
+            DateTime EventDate,
+            string Description,
+            bool SignUpReq)
+        {
+            InitializeComponent();
+
+
+            EventNameBox.Text = EventTitle;
+            EventDescriptionBox.Text = Description;
+            ChooseDate.Value = EventDate;
+            SubscriptionCheckbox.IsChecked = SignUpReq;
+
+            
+        }
+
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-            var newEvent = new Event();
+
+            #region If not filled check
 
             if (!string.IsNullOrEmpty(EventNameBox.Text))
             {
@@ -46,19 +75,16 @@ namespace McSntt.Views.Windows
                 newEvent.Description = EventDescriptionBox.Text;
             }
 
-            if (ChooseDate.SelectedDate != null)
-            {
-                newEvent.EventDate = (DateTime)ChooseDate.SelectedDate;
-            }
+            #endregion
+
+            // Get the EventDate as Value or Default Value
+            newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
+
+            #region Warning messages
 
             if (string.IsNullOrEmpty(EventNameBox.Text))
             {
                 MessageBox.Show("Du mangler at angive en titel!");
-            }
-
-            else if (ChooseDate.SelectedDate == null)
-            {
-                MessageBox.Show("Du mangler at angive en dato!");
             }
 
             else if (string.IsNullOrEmpty(EventDescriptionBox.Text))
@@ -66,19 +92,17 @@ namespace McSntt.Views.Windows
                 MessageBox.Show("Du mangler at angive en beskrivelse!");
             }
 
+            #endregion
+
             if (SubscriptionCheckbox.IsChecked == true)
             {
                 newEvent.SignUpReq = true;
+                newEvent.SignUpMsg = "Tilmelding krævet!";
             }
 
-            IEventDal db = new EventEfDal();
-            db.Create(newEvent);
-
-            if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text) && ChooseDate.SelectedDate != null)
+            if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))
             {
-                //new agendalist =
-                //EventsAdmin.AgendaListbox.Items.Add("test");
-
+                newEvent.Created = true;
                 this.Close();
             }
         }

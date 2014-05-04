@@ -14,9 +14,16 @@ namespace McSntt.Models
         public virtual string EventTitle { get; set; }
         public virtual bool SignUpReq { get; set; }
         public virtual string Description { get; set; }
+        public virtual string SignUpMsg { get; set; }
+        public virtual bool Created { get; set; }
 
         public virtual ICollection<Person> Participants { get; set; }
         // TODO What on earth is this thing doing? We may need to reconsider this one.
         public virtual ICollection<Event> EventList { get; set; }
+        
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }
