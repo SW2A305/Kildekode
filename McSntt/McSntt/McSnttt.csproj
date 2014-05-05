@@ -104,6 +104,7 @@
     <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
+    <Compile Include="Helpers\DalLocator.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
