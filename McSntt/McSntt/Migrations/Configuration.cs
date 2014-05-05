@@ -129,7 +129,22 @@ namespace McSntt.Migrations
                                        Logbook = logbooks[0],
                                        ArrivalTime = logbooks[0].ActualArrivalTime,
                                        Comments = "With great comments... Something something..."
+                                   },
+
+                                   new RegularTrip
+                                   {
+                                       Boat = boats[1],
+                                       Captain = sailClubMembers[1],
+                                       DepartureTime = DateTime.Now.AddDays(-2),
+                                       ExpectedArrivalTime = DateTime.Now.AddDays(-2).AddHours(5),
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
+                                       PurposeAndArea = "Ass 'n' Titties",
+                                       WeatherConditions = "Ass ass titties.",
+                                       ArrivalTime = logbooks[0].ActualArrivalTime,
+                                       Comments = "lulzwut"
                                    }
+
+
                                };
             #endregion
 
