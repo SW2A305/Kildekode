@@ -19,10 +19,10 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Boat}" Header="Boat"/>
+                        <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
                         <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
                         <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
-                                        Header="Start" />
+                                        Header="Planlagte Afgang" />
                         <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -34,10 +34,10 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Boat}" Header="Boat"/>
+                        <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
                         <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
                         <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
-                                        Header="Start" />
+                                        Header="Planlagte Afgang" />
                         <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
