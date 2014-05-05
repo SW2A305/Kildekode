@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
 using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
@@ -64,7 +65,22 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                return db.Boats.Local;
+                db.Boats.Load();
+                return 
+                    db.Boats
+                    .Include("SailTrips")
+                    .ToList();
+            }
+        }
+
+        public Boat GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                return 
+                    db.Boats
+                    .Include("SailTrips")
+                    .FirstOrDefault(boat => boat.BoatId == itemId);
             }
         }
 
@@ -82,7 +98,7 @@ namespace McSntt.DataAbstractionLayer
                     {
                         foreach (Boat item in items)
                         {
-                            db.Boats.AddOrUpdate(b => b.Id, item);
+                            db.Boats.AddOrUpdate(b => b.BoatId, item);
                         }
 
                         db.SaveChanges();

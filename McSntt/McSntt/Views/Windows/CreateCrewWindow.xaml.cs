@@ -2,88 +2,77 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using McSntt.DataAbstractionLayer;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for CreatCrewWindow.xaml
+    ///     Interaction logic for CreatCrewWindow.xaml
     /// </summary>
-    public partial class CreateCrewWindow : Window , INotifyPropertyChanged
+    public partial class CreateCrewWindow : Window, INotifyPropertyChanged
     {
-        public List<Person> _crewList = new List<Person>(); 
+        public ICollection<Person> CrewList = new List<Person>();
 
+        private ICollectionView _dataGridCollection;
+        private string _filterString;
 
-        public CreateCrewWindow()
+        public CreateCrewWindow(ICollection<Person> CrewList)
         {
             InitializeComponent();
 
-            using (var db = new McSntttContext())
-            {
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
+            this.CrewList = CrewList;
 
-            }
+            CurrentCrewDataGrid.ItemsSource = this.CrewList;
+
+            var db = new SailClubMemberEfDal();
+            DataGridCollection = CollectionViewSource.GetDefaultView(db.GetAll());
+            DataGridCollection.Filter = Filter;
         }
 
-        public CreateCrewWindow(List<Person> CrewList )
+        public ICollectionView DataGridCollection
         {
-            InitializeComponent();
-            _crewList = CrewList;
-
-            CurrentCrewDataGrid.ItemsSource = _crewList;
-
-            using (var db = new McSntttContext())
+            get { return _dataGridCollection; }
+            set
             {
                 db.SailClubMembers.Load();
                 DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
                 DataGridCollection.Filter = new Predicate<object>(Filter);
                 SearchBox.Text = "Søg efter medlemmer her";
-
-            }
-        }
-
-        private void RefreshDatagrid(DataGrid Grid, List<Person> list )
-        {
-            Grid.ItemsSource = null;
-            Grid.ItemsSource = list;
-        }
-
-        private ICollectionView _dataGridCollection;
-        private string _filterString;
-
-        public ICollectionView DataGridCollection
-        {
-            get { return _dataGridCollection; }
-            set { _dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
 
         public string FilterString
         {
-            get
-            {
-                return _filterString;
-            }
+            get { return _filterString; }
             set
             {
                 _filterString = value;
                 NotifyPropertyChanged("FilterString");
                 FilterCollection();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RefreshDatagrid(DataGrid Grid, ICollection<Person> list)
+
+        {
+            Grid.ItemsSource = null;
+            Grid.ItemsSource = list;
+        }
+
+        private void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
 
@@ -94,6 +83,7 @@ namespace McSntt.Views.Windows
                 _dataGridCollection.Refresh();
             }
         }
+
         public bool Filter(object obj)
         {
             var data = obj as SailClubMember;
@@ -102,7 +92,10 @@ namespace McSntt.Views.Windows
                 if (!string.IsNullOrEmpty(_filterString))
                 {
                     // Sanitise input to lower
-                    var lower = _filterString.ToLower();
+                    string lower = _filterString.ToLower();
+
+                    if (CrewList.Contains(data))
+                        return false;
 
                     // Check if either of the data points for the members match the filterstring
                     if (data.FirstName != null)
@@ -113,7 +106,7 @@ namespace McSntt.Views.Windows
                         if (data.LastName.ToLower().Contains(lower))
                             return true;
 
-                    if (data.MemberId.ToString().Contains(lower))
+                    if (data.SailClubMemberId.ToString().Contains(lower))
                         return true;
 
                     // If none succeeds return false
@@ -127,24 +120,75 @@ namespace McSntt.Views.Windows
         private void SearchBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                this.MemberDataGrid.Focus();
+                MemberDataGrid.Focus();
         }
 
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
+            var currentPerson = (SailClubMember) MemberDataGrid.SelectedItem;
 
-            Person currentPerson = (Person) MemberDataGrid.SelectedItem;
-            if (!_crewList.Contains(currentPerson))
-            {
-                _crewList.Add(currentPerson);
-            }
+            if (
+                CrewList.Where(x => x is SailClubMember)
+                    .Cast<SailClubMember>()
+                    .All(x => x.SailClubMemberId != currentPerson.SailClubMemberId))
+                CrewList.Add(currentPerson);
 
-            RefreshDatagrid(CurrentCrewDataGrid, _crewList);
+            DataGridCollection.Filter = Filter; 
+            RefreshDatagrid(CurrentCrewDataGrid, CrewList);
         }
 
-       private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
             CreateCrewWindowName.Close();
+        }
+
+        private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
+
+            CrewList.Remove(currentPerson);
+
+            RefreshDatagrid(CurrentCrewDataGrid, CrewList);
+        }
+
+        private void AddGuestButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Regex.IsMatch(FirstNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && FirstNameBox.Text != String.Empty)
+            {
+                if (Regex.IsMatch(LastNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && LastNameBox.Text != String.Empty)
+                {
+                    var p = new Person();
+                    p.FirstName = FirstNameBox.Text;
+                    p.LastName = LastNameBox.Text;
+                    CrewList.Add(p);
+
+                    RefreshDatagrid(CurrentCrewDataGrid, CrewList);
+
+                    FirstNameBox.Clear();
+                    LastNameBox.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ugyldigt navn. \nPrøv venligst igen");
+            }
+        }
+
+        private void resultDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            AddButton_OnClick(sender, e);
+        }
+
+        private void removeDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                var currentPerson = (Person) CurrentCrewDataGrid.SelectedItem;
+
+                CrewList.Remove(currentPerson);
+
+                RefreshDatagrid(CurrentCrewDataGrid, CrewList);
+            }
         }
 
        private void RemoveButton_OnClick(object sender, RoutedEventArgs e)

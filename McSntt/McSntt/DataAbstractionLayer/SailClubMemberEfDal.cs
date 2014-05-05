@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
 using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
@@ -38,10 +39,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (SailClubMember item in items)
-                        {
-                            db.SailClubMembers.Remove(item);
-                        }
+                        foreach (SailClubMember item in items) { db.SailClubMembers.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -65,7 +63,31 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.SailClubMembers.Load();
-                return db.SailClubMembers.Local;
+                return
+                    db.SailClubMembers
+                      .Include("PartOfCrewOn")
+                      .Include("CaptainOn")
+                      .Include("ParticipatingInEvents")
+                      .Include("PartOfActualCrewOn")
+                      .Include("FiledLogbooks")
+                      .Include("PartOfTeams")
+                      .ToList();
+            }
+        }
+
+        public SailClubMember GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                return
+                    db.SailClubMembers
+                      .Include("PartOfCrewOn")
+                      .Include("CaptainOn")
+                      .Include("ParticipatingInEvents")
+                      .Include("PartOfActualCrewOn")
+                      .Include("FiledLogbooks")
+                      .Include("PartOfTeams")
+                      .FirstOrDefault(scm => scm.SailClubMemberId == itemId);
             }
         }
 
@@ -81,9 +103,8 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (SailClubMember item in items)
-                        {
-                            db.SailClubMembers.AddOrUpdate(p => p.MemberId, item);
+                        foreach (SailClubMember item in items) {
+                            db.SailClubMembers.AddOrUpdate(p => p.SailClubMemberId, item);
                         }
 
                         db.SaveChanges();

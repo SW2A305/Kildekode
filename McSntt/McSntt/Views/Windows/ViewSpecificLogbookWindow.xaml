@@ -1,0 +1,53 @@
+﻿<Window x:Class="McSntt.Views.Windows.ViewSpecificLogbookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="ViewSpecificLogbookWindow" Height="650" Width="800"
+        Style="{StaticResource WindowStyle}">
+
+    <Grid>
+        <Label Content="Din valgte logbog" FontSize="23" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Margin="10,-1,0,0"/>
+        <Label HorizontalAlignment="Left" Margin="10,45,0,0"  Content="Den valgte logbog kan ses på denne side. Du kan ikke ændre felterne her." VerticalAlignment="Top" Width="404"/>
+        <Label Content="Båd:" HorizontalAlignment="Left" Width="99"  Margin="10,89,0,439"/>
+        <TextBox Height="30" IsReadOnly="True" x:Name="BoatTextBox" Margin="133,89,0,492" HorizontalAlignment="Left" Width="96" />
+        <Label Content="Crew:" HorizontalAlignment="Left" Width="100"  Margin="10,182,0,336"/>
+        <ComboBox IsEnabled="False" Name="CaptainComboBox" HorizontalAlignment="Left" Width="100" Height="30" Margin="133,133,0,439"/>
+        <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="133,188,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
+                <DataGridTextColumn Binding="{Binding Position}" Header="Rank"/>
+                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label Content="Formål:" HorizontalAlignment="Left" Height="auto" Width="100" Margin="10,342,0,183"/>
+        <TextBox IsReadOnly="True" x:Name="PurposeTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
+                 Margin="133,343,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
+        <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="10,428,0,78"/>
+        <TextBox IsReadOnly="True" x:Name="DamageTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
+                 Margin="133,428,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
+        <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,525,0,3"/>
+        <RadioButton IsEnabled="False" x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,527,0,0" VerticalAlignment="Top"/>
+        <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
+
+
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="Auto" Height="Auto" Margin="548,130,31,464"/>
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="Auto" Width="Auto" Margin="548,168,31,426"/>
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="Auto" Width="Auto" Margin="548,223,31,371"/>
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="Auto" Width="Auto" Margin="548,258,31,336"/>
+        <Label Content="Planlagt ankomst:" HorizontalAlignment="Left" Margin="446,168,0,0" VerticalAlignment="Top"/>
+        <Label Content="Planlagt afgang:" HorizontalAlignment="Left" Margin="446,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <Label Content="Faktisk afgang:" HorizontalAlignment="Left" Margin="446,223,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <Label Content="Faktisk ankomst:" HorizontalAlignment="Left" Margin="446,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <Label Content="Kaptajn:" HorizontalAlignment="Left" Width="99"  Margin="10,133,0,395"/>
+
+        <TextBox IsReadOnly="True" x:Name="AnswerFromBoatChiefTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
+        	Margin="529,428,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
+        
+        <Label Content="Svar fra Bådansvarlig:" HorizontalAlignment="Left" Width="131" Margin="393,428,0,78"/>
+
+    </Grid>
+</Window>
+

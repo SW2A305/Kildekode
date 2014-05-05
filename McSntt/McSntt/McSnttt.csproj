@@ -38,6 +38,9 @@
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.95\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
@@ -82,6 +85,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAbstractionLayer\EventEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\IEventDal.cs" />
+    <Compile Include="DataAbstractionLayer\ILectureDal.cs" />
+    <Compile Include="DataAbstractionLayer\IStudentMemberDal.cs" />
+    <Compile Include="DataAbstractionLayer\LectureEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\StudentMemberEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\TeamEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\ITeamDal.cs" />
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\ILogbookDal.cs" />
     <Compile Include="DataAbstractionLayer\IPersonDal.cs" />
@@ -93,27 +104,47 @@
     <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
     <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
     <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
+    <Compile Include="Helpers\EncryptionHelper.cs" />
+    <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
+    <Compile Include="Migrations\201405051002354_InitialCreation.cs" />
+    <Compile Include="Migrations\201405051002354_InitialCreation.Designer.cs">
+      <DependentUpon>201405051002354_InitialCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\FrontPage.xaml.cs">
+      <DependentUpon>FrontPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
+      <DependentUpon>DamageReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ParticipantsPopup.xaml.cs">
+      <DependentUpon>ParticipantsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
+      <DependentUpon>SupportMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\TeacherMainWindow.xaml.cs">
+      <DependentUpon>TeacherMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StudentMainWindow.xaml.cs">
+      <DependentUpon>StudentMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\MemberMainWindow.xaml.cs">
+      <DependentUpon>MemberMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="McSntttContext.cs" />
-    <Compile Include="Migrations\201404210844202_InitialCreate.cs" />
-    <Compile Include="Migrations\201404210844202_InitialCreate.Designer.cs">
-      <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404280938088_Logbook.cs" />
-    <Compile Include="Migrations\201404280938088_Logbook.Designer.cs">
-      <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Lecture.cs" />
     <Compile Include="Models\Logbook.cs" />
     <Compile Include="Models\RegularTrip.cs" />
     <Compile Include="Models\SailClubMember.cs" />
+    <Compile Include="Models\StudentMember.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Models\TeamList.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
     <Compile Include="Views\UserControls\EventsAdmin.xaml.cs">
@@ -146,8 +177,11 @@
     <Compile Include="Views\UserControls\studyStudent.xaml.cs">
       <DependentUpon>studyStudent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\studyTeacher.xaml.cs">
-      <DependentUpon>studyTeacher.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\StudyTeacher.xaml.cs">
+      <DependentUpon>StudyTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\NewLecture.xaml.cs">
+      <DependentUpon>NewLecture.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\CreateBoatBookingWindow.xaml.cs">
       <DependentUpon>CreateBoatBookingWindow.xaml</DependentUpon>
@@ -158,11 +192,42 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\ViewSpecificLogbookWindow.xaml.cs">
+      <DependentUpon>ViewSpecificLogbookWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\UserControls\FrontPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\DamageReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ParticipantsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\SupportMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\TeacherMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\StudentMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\MemberMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Windows\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\MainWindow.xaml">
+    <Page Include="Views\Windows\AdminMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -171,8 +236,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Person.cs" />
-    <Compile Include="Views\Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Windows\AdminMainWindow.xaml.cs">
+      <DependentUpon>AdminMainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Styles\Style.xaml">
@@ -219,7 +284,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\studyTeacher.xaml">
+    <Page Include="Views\UserControls\StudyTeacher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\NewLecture.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -234,6 +303,10 @@
     <Page Include="Views\Windows\CreateLogbookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ViewSpecificLogbookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -251,11 +324,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201404210844202_InitialCreate.resx">
-      <DependentUpon>201404210844202_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404280938088_Logbook.resx">
-      <DependentUpon>201404280938088_Logbook.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201405051002354_InitialCreation.resx">
+      <DependentUpon>201405051002354_InitialCreation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -266,7 +336,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <AppDesigner Include="Properties\" />
+    <!--<AppDesigner Include="Properties\" /> -->
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -274,6 +344,7 @@
   <ItemGroup>
     <Resource Include="Images\cross.png" />
     <Resource Include="Images\gray.png" />
+    <Resource Include="Images\forside.png" />
     <Content Include="Images\SundetLogo.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -281,7 +352,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

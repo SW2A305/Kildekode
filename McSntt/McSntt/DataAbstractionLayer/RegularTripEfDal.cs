@@ -65,7 +65,27 @@ namespace McSntt.DataAbstractionLayer
             {
                 db.RegularTrips.Load();
 
-                return db.RegularTrips.Local;
+                return
+                    db.RegularTrips
+                      .Include("Boat")
+                      .Include("Logbook")
+                      .Include("Captain")
+                      .Include("Crew")
+                      .ToList();
+            }
+        }
+
+        public RegularTrip GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                return
+                    db.RegularTrips
+                      .Include("Boat")
+                      .Include("Logbook")
+                      .Include("Captain")
+                      .Include("Crew")
+                      .FirstOrDefault(trip => trip.RegularTripId == itemId);
             }
         }
 
@@ -77,7 +97,7 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                var query =
+                IQueryable<RegularTrip> query =
                     from trip in db.RegularTrips
                     where predicate(trip)
                     select trip;
@@ -95,9 +115,9 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                var query =
+                IQueryable<RegularTrip> query =
                     from trip in db.RegularTrips
-                    where trip.BoatId == boat.Id
+                    where trip.Boat.BoatId == boat.BoatId
                     select trip;
 
                 if (onlyFuture)
@@ -116,37 +136,35 @@ namespace McSntt.DataAbstractionLayer
         /// <param name="fromDateTime"></param>
         /// <param name="toDateTime"></param>
         /// <returns></returns>
-        public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, DateTime fromDateTime, DateTime toDateTime)
+        public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, DateTime? fromDateTime, DateTime? toDateTime)
         {
             return
                 this.GetRegularTrips(
                                      trip =>
-                                     trip.BoatId == boat.Id && trip.DepartureTime <= toDateTime
+                                     trip.Boat.BoatId == boat.BoatId && trip.DepartureTime <= toDateTime
                                      && trip.ExpectedArrivalTime >= fromDateTime);
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="boat"></param>
         /// <param name="departureTime"></param>
         /// <param name="expectedArrivalTime"></param>
         /// <returns></returns>
-        public bool CanMakeReservation(Boat boat, DateTime departureTime, DateTime expectedArrivalTime)
+        public bool CanMakeReservation(Boat boat, DateTime? departureTime, DateTime? expectedArrivalTime)
         {
-            var reservations = GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
+            IEnumerable<RegularTrip> reservations = this.GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
 
             return !reservations.Any();
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="trip"></param>
         /// <returns></returns>
         public bool CanMakeReservation(RegularTrip trip)
         {
-            return CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ExpectedArrivalTime);
+            return this.CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ExpectedArrivalTime);
         }
 
         /// <summary>

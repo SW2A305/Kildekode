@@ -7,6 +7,11 @@
 
     <Grid>
         <DataGrid x:Name="MemberDataGrid" IsReadOnly="True" ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="17,141,0,0" VerticalAlignment="Top" Height="127" Width="232" CanUserAddRows="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="resultDataGrid_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
@@ -14,7 +19,12 @@
                 <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232">
+        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232" IsReadOnly="True">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="removeDataGrid_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
