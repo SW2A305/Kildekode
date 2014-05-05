@@ -53,7 +53,20 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.StudentMembers.Load();
-                return db.StudentMembers.Local;
+                return
+                    db.StudentMembers
+                    .ToList();
+            }
+        }
+
+        public StudentMember GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                db.StudentMembers.Load();
+                return
+                    db.StudentMembers
+                      .FirstOrDefault(sm => sm.SailClubMemberId == itemId);
             }
         }
 
@@ -67,7 +80,7 @@ namespace McSntt.DataAbstractionLayer
                     {
                         foreach (StudentMember item in items)
                         {
-                            db.StudentMembers.AddOrUpdate(p => p.MemberId, item);
+                            db.StudentMembers.AddOrUpdate(p => p.SailClubMemberId, item);
                         }
 
                         db.SaveChanges();

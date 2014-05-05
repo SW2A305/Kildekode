@@ -15,7 +15,7 @@ namespace McSntt.Models
         public virtual string Name { get; set; }
         public virtual ClassLevel Level { get; set; }
 
-        public virtual ICollection<SailClubMember> TeamMembers { get; set; }
+        public virtual ICollection<StudentMember> TeamMembers { get; set; }
         public virtual ICollection<Lecture> Lectures { get; set; }
         #endregion
     }

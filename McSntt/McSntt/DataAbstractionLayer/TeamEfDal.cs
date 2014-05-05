@@ -69,7 +69,20 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.Teams.Load();
-                return db.Teams.Local;
+                return 
+                    db.Teams
+                    .ToList();
+            }
+        }
+
+        public Team GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                db.Teams.Load();
+                return
+                    db.Teams
+                      .FirstOrDefault(team => team.TeamId == itemId);
             }
         }
 

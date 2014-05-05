@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Drawing.Text;
@@ -32,12 +33,12 @@ namespace McSntt.Views.UserControls
         public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First};
         public Team Team16 = new Team {Name = "Hold 16"};
         public IList<Team> TeamList = new List<Team>();
-        public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", MemberId = 2000};
-        public StudentMember Member2 = new StudentMember { FirstName = "Tot", LastName = "Jensen", MemberId = 2001 };
+        public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", SailClubMemberId = 2000};
+        public StudentMember Member2 = new StudentMember { FirstName = "Tot", LastName = "Jensen", SailClubMemberId = 2001 };
         public Lecture Lecture = new Lecture{DateOfLecture = new DateTime(2014, 04, 5)};
         #endregion
 
-        public IList<StudentMember> _membersList = new List<StudentMember>();  
+        public ICollection<StudentMember> MembersList = new Collection<StudentMember>();
 
         public StudyTeacher()
         {
@@ -72,7 +73,7 @@ namespace McSntt.Views.UserControls
             editTeamGrid.IsEnabled = false;
         }
 
-        private void RefreshDatagrid(DataGrid grid, IList<StudentMember> list)
+        private void RefreshDatagrid(DataGrid grid, ICollection<StudentMember> list)
         {
             grid.ItemsSource = null;
             grid.ItemsSource = list;
@@ -150,8 +151,8 @@ namespace McSntt.Views.UserControls
                 studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
                 //Messagebox for test purpose, list seemingly does not exist in database
                 //MessageBox.Show("" + ((Team)teamDropdown.SelectedItem).TeamMembers.Count);
-                _membersList = ((Team) teamDropdown.SelectedItem).TeamMembers;
-                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(_membersList);
+                this.MembersList = ((Team) teamDropdown.SelectedItem).TeamMembers;
+                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(this.MembersList);
                 teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
                 
                 switch (((Team)teamDropdown.SelectedItem).Level)
@@ -168,8 +169,9 @@ namespace McSntt.Views.UserControls
                 }
                 
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
+                // TODO Is this ignoring intentional? It's bad code design.
             }
             studentDropdown.DisplayMemberPath = "FirstName";
             studentDropdown.SelectedValuePath = "MemberId";
@@ -295,12 +297,12 @@ namespace McSntt.Views.UserControls
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!_membersList.Contains(currentMember))
+            if (!this.MembersList.Contains(currentMember))
             {
-                _membersList.Add(currentMember);
+                this.MembersList.Add(currentMember);
                 studentDropdown.ItemsSource = null;
                 studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
-                RefreshDatagrid(CurrentMemberDataGrid, _membersList);
+                RefreshDatagrid(CurrentMemberDataGrid, this.MembersList);
             }
             
         }
@@ -308,10 +310,10 @@ namespace McSntt.Views.UserControls
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
             var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
-            _membersList.Remove(currentMember);
+            this.MembersList.Remove(currentMember);
             studentDropdown.ItemsSource = null;
             studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
-            RefreshDatagrid(CurrentMemberDataGrid, _membersList);
+            RefreshDatagrid(CurrentMemberDataGrid, this.MembersList);
         }
 
         private void Level1RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -416,7 +418,7 @@ namespace McSntt.Views.UserControls
                         if (data.LastName.ToLower().Contains(lower))
                             return true;
 
-                    if (data.MemberId.ToString().Contains(lower))
+                    if (data.SailClubMemberId.ToString().Contains(lower))
                         return true;
 
                     // If none succeeds return false
@@ -554,7 +556,7 @@ namespace McSntt.Views.UserControls
             ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Drabant = (DrabantCheckBox.IsChecked == true);
-            if (studentOne.Content != "Elev 1" && studentOne.IsChecked == true)
+            if ((string) this.studentOne.Content != "Elev 1" && studentOne.IsChecked == true)
             {
                 ((Lecture) lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -585,7 +587,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if (studentTwo.Content != "Elev 2" && studentTwo.IsChecked == true)
+            if ((string) this.studentTwo.Content != "Elev 2" && studentTwo.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -616,7 +618,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if (studentThree.Content != "Elev 3" && studentThree.IsChecked == true)
+            if ((string) this.studentThree.Content != "Elev 3" && studentThree.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -647,7 +649,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if (studentFour.Content != "Elev 4" && studentFour.IsChecked == true)
+            if ((string) this.studentFour.Content != "Elev 4" && studentFour.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -678,7 +680,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if (studentFive.Content != "Elev 5" && studentFive.IsChecked == true)
+            if ((string) this.studentFive.Content != "Elev 5" && studentFive.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -709,7 +711,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if (studentSix.Content != "Elev 6" && studentSix.IsChecked == true)
+            if ((string) this.studentSix.Content != "Elev 6" && studentSix.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
