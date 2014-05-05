@@ -31,7 +31,7 @@ namespace McSntt.Views.UserControls
     {
         #region Til test
         public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First, TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
-        public Team Team16 = new Team {Name = "Hold 16"};
+        public Team Team16 = new Team {Name = "Hold 16", TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
         public IList<Team> TeamList = new List<Team>();
         public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", SailClubMemberId = 2000};
         public StudentMember Member2 = new StudentMember { FirstName = "Tot", LastName = "Jensen", SailClubMemberId = 2001 };
@@ -143,6 +143,67 @@ namespace McSntt.Views.UserControls
             }
         }
 
+        private void StudentCheckBoxNameChange()
+        {
+            int i = 0;
+            if (teamDropdown.SelectedItem == null) return;
+
+            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            {
+                studentOne.IsEnabled = true;
+                studentOne.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                i++;
+            }
+            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            {
+                studentTwo.IsEnabled = true;
+                studentTwo.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                i++;
+            }
+            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            {
+                studentThree.IsEnabled = true;
+                studentThree.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                i++;
+            }
+            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            {
+                studentFour.IsEnabled = true;
+                studentFour.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                i++;
+            }
+            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            {
+                studentFive.IsEnabled = true;
+                studentFive.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                i++;
+            }
+            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            {
+                studentSix.IsEnabled = true;
+                studentSix.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                i++;
+            }
+        }
+
+        private void StudentCheckBoxNameReset()
+        {
+            if ((teamDropdown.SelectedItem == null || ((Team) teamDropdown.SelectedItem).TeamMembers.Count != 0) &&
+                teamDropdown.SelectedItem != null) return;
+            studentOne.Content = "";
+            studentOne.IsEnabled = false;
+            studentTwo.Content = "";
+            studentTwo.IsEnabled = false;
+            studentThree.Content = "";
+            studentThree.IsEnabled = false;
+            studentFour.Content = "";
+            studentFour.IsEnabled = false;
+            studentFive.Content = "";
+            studentFive.IsEnabled = false;
+            studentSix.Content = "";
+            studentSix.IsEnabled = false;
+        }
+        
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -176,121 +237,8 @@ namespace McSntt.Views.UserControls
             studentDropdown.DisplayMemberPath = "FirstName";
             studentDropdown.SelectedValuePath = "MemberId";
 
-            #region assigning students to checkboxes
-
-            if ((teamDropdown.SelectedItem != null && ((Team)teamDropdown.SelectedItem).TeamMembers.Count == 0) || teamDropdown.SelectedItem == null )
-            {
-                studentOne.Content = "Elev 1";
-                studentTwo.Content = "Elev 2";
-                studentThree.Content = "Elev 3";
-                studentFour.Content = "Elev 4";
-                studentFive.Content = "Elev 5";
-                studentSix.Content = "Elev 6";
-                
-            }
-            
-            if (teamDropdown.SelectedItem != null)
-            {
-                if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 1)
-                {
-                    studentOne.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                }
-            }
-
-            if (teamDropdown.SelectedItem != null)
-            {
-                if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 2)
-                {
-                    studentOne.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                    studentTwo.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                }
-            }
-            if (teamDropdown.SelectedItem != null)
-            {
-                if (((Team) teamDropdown.SelectedItem).TeamMembers.Count == 3)
-                {
-                    studentOne.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                    studentTwo.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                    studentThree.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                }
-            }
-
-            if (teamDropdown.SelectedItem != null)
-            {
-                if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 4)
-                {
-                    studentOne.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                    studentTwo.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                    studentThree.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                    studentFour.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
-                }
-            }
-            if (teamDropdown.SelectedItem != null)
-            {
-                if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 5)
-                {
-                    studentOne.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                    studentTwo.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                    studentThree.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                    studentFour.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
-                    studentFive.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).LastName;
-                }
-            }
-            if (teamDropdown.SelectedItem != null)
-            {
-                if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 6)
-                {
-                    studentOne.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.First().LastName;
-                    studentTwo.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(1).LastName;
-                    studentThree.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(2).LastName;
-                    studentFour.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(3).LastName;
-                    studentFive.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(4).LastName;
-                    studentSix.Content =
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(5).FirstName + " " +
-                        ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(5).LastName;
-                }
-            }
-            #endregion
+            StudentCheckBoxNameReset();
+            StudentCheckBoxNameChange();
 
         }
 
