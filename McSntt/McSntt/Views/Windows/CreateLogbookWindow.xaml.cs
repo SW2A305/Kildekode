@@ -28,8 +28,14 @@ namespace McSntt.Views.Windows
         public IList<Person> CrewList = new List<Person>();
         private RegularTrip RegularSailTrip = new RegularTrip();
         private Logbook currentLogbook = new Logbook();
+        private SailClubMember _currentSailClubMember;
 
         private readonly DateTime _hasBeenFilledTime = new DateTime();
+
+        public CreateLogbookWindow(SailClubMember p) : this()
+        {
+            _currentSailClubMember = p;
+        }
 
         public CreateLogbookWindow(/*RegularTrip sailTrip*/)
         {
@@ -132,6 +138,7 @@ namespace McSntt.Views.Windows
                 currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
                 currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
                 RegularSailTrip.Crew = CrewList;
+                currentLogbook.FiledBy = _currentSailClubMember;
                 this.Close();}
             }
 
