@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using McSntt.DataAbstractionLayer;
+using McSntt.Helpers;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
@@ -20,6 +21,8 @@ namespace McSntt.Views.Windows
         public Login()
         {
             InitializeComponent();
+            UsernameBox.Focusable = true;
+            FocusManager.SetFocusedElement(LoginBox, UsernameBox);
             // This is to ensure that the contens of the database is ready for when the login is performed.
             var sailClubMembers = new SailClubMemberEfDal().GetAll();
         }
@@ -62,7 +65,7 @@ namespace McSntt.Views.Windows
                     String.Equals(usr.Username, UsernameBox.Text, StringComparison.CurrentCultureIgnoreCase))
                 {
                     // Check if the password is correct (Case sensitive)
-                    if (usr.PasswordHash == Sha256(PasswordBox.Password))
+                    if (usr.PasswordHash == EncryptionHelper.Sha256(PasswordBox.Password))
                     {
                         StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
                         StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
@@ -83,43 +86,34 @@ namespace McSntt.Views.Windows
             }
         }
 
-
-        // This method will return a Sha256 hash as a string given a string as input. 
-        // http://stackoverflow.com/questions/12416249/hashing-a-string-with-sha256
-        static string Sha256(string password)
-        {
-            var crypt = new SHA256Managed();
-            var hash = String.Empty;
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(password), 0, Encoding.UTF8.GetByteCount(password));
-            return crypto.Aggregate(hash, (current, bit) => current + bit.ToString("x2"));
-        }
-
         private void LoginCompleted(SailClubMember p)
         {
+            GlobalInformation.CurrentUser = p;
+
             switch (p.Position)
             {
                 case SailClubMember.Positions.Admin:
-                    var adminWindow = new AdminMainWindow(p);
+                    var adminWindow = new AdminMainWindow();
                     adminWindow.Show();
                     adminWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Member:
-                    var memberWindow = new MemberMainWindow(p);
+                    var memberWindow = new MemberMainWindow();
                     memberWindow.Show();
                     memberWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Student:
-                    var StudentWindow = new StudentMainWindow(p);
+                    var StudentWindow = new StudentMainWindow();
                     StudentWindow.Show();
                     StudentWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Teacher:
-                    var TeacherWindow = new StudentMainWindow(p);
+                    var TeacherWindow = new StudentMainWindow();
                     TeacherWindow.Show();
                     TeacherWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.SupportMember:
-                    var SupportWindow = new StudentMainWindow(p);
+                    var SupportWindow = new StudentMainWindow();
                     SupportWindow.Show();
                     SupportWindow.Owner = this.Owner;
                     break;
