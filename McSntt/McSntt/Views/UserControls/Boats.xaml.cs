@@ -49,7 +49,8 @@ namespace McSntt.Views.UserControls
             {
                 CurrentBoat = (Boat) BoatComboBox.SelectionBoxItem;
                 
-                IEnumerable<RegularTrip> ListOfTrips =  regularTripDal.GetRegularTrips(x => x.Boat.BoatId == CurrentBoat.BoatId);
+                IEnumerable<RegularTrip> ListOfTrips =  regularTripDal.GetRegularTrips(x => x.Boat.BoatId == CurrentBoat.BoatId
+                                                                                       && x.Logbook != null );
 
                 if (CurrentBoat.ImagePath != null)
                 {
@@ -76,16 +77,6 @@ namespace McSntt.Views.UserControls
                 {
                     operationel = "Ikke operationel";
                 }
-
-                /*ListOfCurrentLogBooks.Clear();
-
-                foreach (var sailtrip in ListOfTrips)
-                {
-                    if (sailtrip.Boat == CurrentBoat && !ListOfCurrentLogBooks.Contains(sailtrip))
-                    {
-                        ListOfCurrentLogBooks.Add(sailtrip);
-                    }
-                }*/
 
                 BoatTypeTextBox.Text = Enum.GetName(typeof (BoatType), CurrentBoat.Type);
                 BoatStatusTextBox.Text = operationel;
@@ -122,10 +113,7 @@ namespace McSntt.Views.UserControls
                 DamageReportWindow.ShowDialog();
                 CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
                 logbookDal.Update(CurrentSailtrip.Logbook);
-
-
             }
-
         }
     }
 }
