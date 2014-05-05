@@ -28,9 +28,12 @@ namespace McSntt.Views.UserControls
     public partial class EventsAdmin : UserControl
     {
 
-        //public Event newEvent = new Event();
         public IList<Event> EventsList = new List<Event>();
-        
+
+        public ICollection<Person> Participants = new List<Person>();
+
+        public Event newEvent = new Event();
+
         public EventsAdmin()
         {
             InitializeComponent();    
@@ -50,8 +53,6 @@ namespace McSntt.Views.UserControls
             {
 
                 EventsList.Add(newEvent);
-                
-                //AgendaListbox.Items.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
 
                 EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
 
@@ -96,7 +97,6 @@ namespace McSntt.Views.UserControls
             }
             else MessageBox.Show("Vælg en begivenhed at redigere");
             
-
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)
@@ -115,13 +115,33 @@ namespace McSntt.Views.UserControls
 
         private void Subscripe(object sender, RoutedEventArgs e)
         {
-            Textbox.Text = GlobalInformation.CurrentUser.ToString();
+
+            int i = AgendaListbox.SelectedIndex;
+
+            if (i >= 0)
+            {
+
+                //ICollection<Person> Participants = new List<Person>();
+
+                Participants.Add(GlobalInformation.CurrentUser);
+
+
+
+                newEvent.Participants = Participants;
+
+
+
+                //newEvent.Participants.Add(GlobalInformation.CurrentUser);
+
+                Textbox.Text = newEvent.Participants.ToString();
+            }
+            else MessageBox.Show("Vælg en begivenhed at tilmelde");
         }
 
         private void Show_Participants(object sender, RoutedEventArgs e)
         {
             Window showParticipants = new ParticipantsPopup();
-            showParticipants.Show();
+            showParticipants.ShowDialog();
         }
 
         private void AgendaListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)

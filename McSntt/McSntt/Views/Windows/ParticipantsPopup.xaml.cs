@@ -22,6 +22,8 @@ namespace McSntt.Views.Windows
         public ParticipantsPopup()
         {
             InitializeComponent();
+
+
         }
 
         private void Close(object sender, RoutedEventArgs e)

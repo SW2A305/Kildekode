@@ -32,6 +32,6 @@
 
         </ListBox>
         <TextBlock x:Name="Descriptionbox" HorizontalAlignment="Left" Margin="530,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="294" Width="360"/>
-        <TextBox x:Name="Textbox" HorizontalAlignment="Left" Height="23" Margin="444,70,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Textbox" HorizontalAlignment="Left" Height="23" Margin="384,70,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="200"/>
     </Grid>
 </UserControl>
