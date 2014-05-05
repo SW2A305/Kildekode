@@ -37,14 +37,18 @@ namespace McSntt.Views.UserControls
         public void LoadData()
         {
             var db = new RegularTripEfDal();
+            var usrId = GlobalInformation.CurrentUser.PersonId;
 
-            var sailTripList = db.GetAll().Where(t => t.Crew.Contains(GlobalInformation.CurrentUser)).ToList();
+            var sailTripList = db.GetAll().ToList();
 
             UpcommingTripsDataGrid.ItemsSource = null;
-            UpcommingTripsDataGrid.ItemsSource = sailTripList.Where(t => t.DepartureTime > DateTime.Now);
+            UpcommingTripsDataGrid.ItemsSource =
+                sailTripList.Where(t => t.Crew.Select(p => p.PersonId).Contains(usrId))
+                    .Where(t => t.DepartureTime > DateTime.Now);
 
             LogbookDataGrid.ItemsSource = null;
-            LogbookDataGrid.ItemsSource = sailTripList.Where(t => t.ArrivalTime < DateTime.Now && t.Logbook == null);
+            LogbookDataGrid.ItemsSource =
+                sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
         }
 
         private RegularTrip _regularSailTrip = new RegularTrip();

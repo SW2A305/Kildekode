@@ -74,6 +74,23 @@ namespace McSntt.Migrations
                                           PasswordHash = EncryptionHelper.Sha256("password"),
                                           Position = SailClubMember.Positions.Admin,
                                           DateOfBirth = "1976-01-31"
+                                      },
+                                      new SailClubMember
+                                      {
+                                          SailClubMemberId = 41,
+                                          FirstName = "Magic",
+                                          LastName = "User",
+                                          Address = "Hovedgaden 3",
+                                          Postcode = "9000",
+                                          Cityname = "Etandetsted",
+                                          BoatDriver = true,
+                                          Email = "jg1803@stashthistoo.ccf",
+                                          Gender = Gender.Female,
+                                          PhoneNumber = "11223346",
+                                          Username = "a",
+                                          PasswordHash = EncryptionHelper.Sha256("a"),
+                                          Position = SailClubMember.Positions.Admin,
+                                          DateOfBirth = "1976-01-31"
                                       }
                                   };
             #endregion
@@ -123,27 +140,35 @@ namespace McSntt.Migrations
                                        Captain = sailClubMembers[0],
                                        DepartureTime = DateTime.Now.AddDays(2),
                                        ExpectedArrivalTime = DateTime.Now.AddDays(2).AddHours(5),
-                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1], sailClubMembers[0]},
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1], sailClubMembers[0], sailClubMembers[2]},
                                        PurposeAndArea = "Terrorisme",
                                        WeatherConditions = "Cloudy with a chance of bullet rain.",
                                        Logbook = logbooks[0],
                                        ArrivalTime = logbooks[0].ActualArrivalTime,
                                        Comments = "With great comments... Something something..."
                                    },
-
                                    new RegularTrip
                                    {
                                        Boat = boats[1],
                                        Captain = sailClubMembers[1],
                                        DepartureTime = DateTime.Now.AddDays(-2),
                                        ExpectedArrivalTime = DateTime.Now.AddDays(-2).AddHours(5),
-                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1], sailClubMembers[2]},
                                        PurposeAndArea = "Ass 'n' Titties",
                                        WeatherConditions = "Ass ass titties.",
                                        Comments = "lulzwut"
+                                   },
+                                   new RegularTrip
+                                   {
+                                       Boat = boats[1],
+                                       Captain = sailClubMembers[2],
+                                       DepartureTime = DateTime.Now.AddDays(-3),
+                                       ExpectedArrivalTime = DateTime.Now.AddDays(-3).AddHours(5),
+                                       Crew = new Collection<Person> {sailClubMembers[2]},
+                                       PurposeAndArea = "Ass 'n' Titties 2",
+                                       WeatherConditions = "Ass ass titties. 2",
+                                       Comments = "lulzwutaa"
                                    }
-
-
                                };
             #endregion
 
