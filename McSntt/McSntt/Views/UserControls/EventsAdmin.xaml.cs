@@ -88,6 +88,10 @@ namespace McSntt.Views.UserControls
 
                 EventsList.Insert(i, selectedEvent);
 
+                EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
+
+                AgendaListbox.ItemsSource = EventsList;
+
                 AgendaListbox.Items.Refresh();
             }
             else MessageBox.Show("Vælg en begivenhed at redigere");
