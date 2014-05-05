@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
@@ -18,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
+using McSntt.Helpers;
 using McSntt.Migrations;
 using McSntt.Models;
 
@@ -28,12 +30,13 @@ namespace McSntt.Views.UserControls
     /// </summary>ry>
     public partial class Members : UserControl, INotifyPropertyChanged
     {
+        private ISailClubMemberDal sailClubMemberDal = DalLocator.SailClubMemberDal;
+
         public Members()
         {
             InitializeComponent();
 
-            var dbm = new SailClubMemberEfDal();
-            DataGridCollection = CollectionViewSource.GetDefaultView(dbm.GetAll());
+            DataGridCollection = CollectionViewSource.GetDefaultView(sailClubMemberDal.GetAll());
             DataGridCollection.Filter = new Predicate<object>(Filter);
 
            

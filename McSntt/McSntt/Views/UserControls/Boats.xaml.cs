@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -49,8 +50,14 @@ namespace McSntt.Views.UserControls
             {
                 CurrentBoat = (Boat) BoatComboBox.SelectionBoxItem;
                 
-                IEnumerable<RegularTrip> ListOfTrips =  regularTripDal.GetRegularTrips(x => x.Boat.BoatId == CurrentBoat.BoatId
-                                                                                       && x.Logbook != null );
+                IEnumerable<RegularTrip> ListOfTripsWithLogbook = 
+                    regularTripDal.GetRegularTrips(
+                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.Logbook != null);
+
+                IEnumerable<RegularTrip> ListOfBookings =
+                    regularTripDal.GetRegularTrips(
+                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
+                        .OrderBy(x => x.DepartureTime);
 
                 if (CurrentBoat.ImagePath != null)
                 {
@@ -82,7 +89,10 @@ namespace McSntt.Views.UserControls
                 BoatStatusTextBox.Text = operationel;
 
                 LogbookDataGrid.ItemsSource = null;
-                LogbookDataGrid.ItemsSource = ListOfTrips;
+                LogbookDataGrid.ItemsSource = ListOfTripsWithLogbook;
+
+                BookedTripsDataGrid.ItemsSource = null;
+                BookedTripsDataGrid.ItemsSource = ListOfBookings;
 
             }
         }
