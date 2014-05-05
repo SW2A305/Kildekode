@@ -140,7 +140,6 @@ namespace McSntt.Migrations
                                        Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
                                        PurposeAndArea = "Ass 'n' Titties",
                                        WeatherConditions = "Ass ass titties.",
-                                       ArrivalTime = logbooks[0].ActualArrivalTime,
                                        Comments = "lulzwut"
                                    }
 
