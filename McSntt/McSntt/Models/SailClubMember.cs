@@ -27,10 +27,6 @@ namespace McSntt.Models
 
         [InverseProperty("FiledBy")]
         public virtual ICollection<Logbook> FiledLogbooks { get; set; }
-
-        // TODO If we add the Student class that we considered, then this should probably change to only allow the participation in one team?
-        [InverseProperty("TeamMembers")]
-        public virtual ICollection<Team> PartOfTeams { get; set; }
         #endregion
 
         #region Enumerations

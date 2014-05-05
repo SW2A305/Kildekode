@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +49,15 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.92.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.92.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.92.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -107,10 +117,11 @@
     <Compile Include="Helpers\DalLocator.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
+    <Compile Include="Helpers\SqliteManager.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
-    <Compile Include="Migrations\201405051002354_InitialCreation.cs" />
-    <Compile Include="Migrations\201405051002354_InitialCreation.Designer.cs">
-      <DependentUpon>201405051002354_InitialCreation.cs</DependentUpon>
+    <Compile Include="Migrations\201405052112568_InitialMigration.cs" />
+    <Compile Include="Migrations\201405052112568_InitialMigration.Designer.cs">
+      <DependentUpon>201405052112568_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
@@ -318,8 +329,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201405051002354_InitialCreation.resx">
-      <DependentUpon>201405051002354_InitialCreation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201405052112568_InitialMigration.resx">
+      <DependentUpon>201405052112568_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -336,6 +347,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="x64\SQLite.Interop.dll" />
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Images\cross.png" />
     <Resource Include="Images\gray.png" />
     <Resource Include="Images\forside.png" />

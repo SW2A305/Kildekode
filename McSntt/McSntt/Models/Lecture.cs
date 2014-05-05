@@ -10,6 +10,7 @@ namespace McSntt.Models
     public class Lecture
     {
         public virtual int LectureId { get; set; }
+        public virtual Team Team { get; set; }
         [Column(TypeName = "DateTime2")]
         public virtual DateTime DateOfLecture { get; set; }
         #region UndervisningsOmråder
