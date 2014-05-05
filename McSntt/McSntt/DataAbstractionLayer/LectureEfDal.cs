@@ -1,12 +1,8 @@
-﻿/*
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
@@ -17,19 +13,13 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Create(params Lecture[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Create(params Lecture[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Update(params Lecture[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Update(params Lecture[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
@@ -43,10 +33,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Lecture item in items)
-                        {
-                            db.Lectures.Remove(item);
-                        }
+                        foreach (Lecture item in items) { db.Lectures.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -69,8 +56,23 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                db.SailClubMembers.Load();
-                return db.Lectures.Local;
+                db.Lectures.Load();
+                return
+                    db.Lectures
+                      .Include("PresentMembers")
+                      .ToList();
+            }
+        }
+
+        public Lecture GetOne(int itemId)
+        {
+            using (var db = new McSntttContext())
+            {
+                db.Lectures.Load();
+                return
+                    db.Lectures
+                      .Include("PresentMembers")
+                      .FirstOrDefault(lecture => lecture.LectureId == itemId);
             }
         }
 
@@ -86,10 +88,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Lecture item in items)
-                        {
-                            db.Lectures.AddOrUpdate(p => p.LectureId, item);
-                        }
+                        foreach (Lecture item in items) { db.Lectures.AddOrUpdate(p => p.LectureId, item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -106,4 +105,3 @@ namespace McSntt.DataAbstractionLayer
         }
     }
 }
-*/

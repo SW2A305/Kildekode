@@ -3,23 +3,15 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
 {
-    class StudentMemberEfDal : IStudentMemberDal
+    internal class StudentMemberEfDal : IStudentMemberDal
     {
-        public bool Create(params StudentMember[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Create(params StudentMember[] items) { return this.CreateOrUpdate(items); }
 
-        public bool Update(params StudentMember[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Update(params StudentMember[] items) { return this.CreateOrUpdate(items); }
 
         public bool Delete(params StudentMember[] items)
         {
@@ -29,10 +21,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (StudentMember item in items)
-                        {
-                            db.StudentMembers.Remove(item);
-                        }
+                        foreach (StudentMember item in items) { db.StudentMembers.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -55,7 +44,8 @@ namespace McSntt.DataAbstractionLayer
                 db.StudentMembers.Load();
                 return
                     db.StudentMembers
-                    .ToList();
+                      .Include("AssociatedTeam")
+                      .ToList();
             }
         }
 
@@ -66,6 +56,7 @@ namespace McSntt.DataAbstractionLayer
                 db.StudentMembers.Load();
                 return
                     db.StudentMembers
+                      .Include("AssociatedTeam")
                       .FirstOrDefault(sm => sm.SailClubMemberId == itemId);
             }
         }
@@ -78,8 +69,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (StudentMember item in items)
-                        {
+                        foreach (StudentMember item in items) {
                             db.StudentMembers.AddOrUpdate(p => p.SailClubMemberId, item);
                         }
 

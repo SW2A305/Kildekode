@@ -16,6 +16,7 @@ namespace McSntt
         public DbSet<Logbook> Logbooks { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<StudentMember> StudentMembers { get; set; } 
+        public DbSet<StudentMember> StudentMembers { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
     }
 }

@@ -14,19 +14,13 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Create(params Team[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Create(params Team[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Update(params Team[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Update(params Team[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
@@ -42,7 +36,9 @@ namespace McSntt.DataAbstractionLayer
                     {
                         foreach (Team item in items)
                         {
-                            var t = (from x in db.Teams where x.TeamId == item.TeamId select x).First();
+                            Team t = (from x in db.Teams
+                                      where x.TeamId == item.TeamId
+                                      select x).First();
                             db.Teams.Remove(t);
                         }
 
@@ -69,9 +65,11 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.Teams.Load();
-                return 
+                return
                     db.Teams
-                    .ToList();
+                      .Include("TeamMembers")
+                      .Include("Lectures")
+                      .ToList();
             }
         }
 
@@ -82,6 +80,8 @@ namespace McSntt.DataAbstractionLayer
                 db.Teams.Load();
                 return
                     db.Teams
+                      .Include("TeamMembers")
+                      .Include("Lectures")
                       .FirstOrDefault(team => team.TeamId == itemId);
             }
         }
@@ -98,10 +98,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Team item in items)
-                        {
-                            db.Teams.AddOrUpdate(t => t.TeamId, item);
-                        }
+                        foreach (Team item in items) { db.Teams.AddOrUpdate(t => t.TeamId, item); }
 
                         db.SaveChanges();
                         transaction.Commit();
