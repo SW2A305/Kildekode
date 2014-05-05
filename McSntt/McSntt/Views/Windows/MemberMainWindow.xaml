@@ -10,6 +10,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Forside" FontSize="23" />
                 </TabItem.Header>
+                <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="StudyTabItem" Margin="35,0,-60,0">
                 <TabItem.Header>
