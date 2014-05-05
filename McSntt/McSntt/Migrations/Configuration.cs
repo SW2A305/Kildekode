@@ -141,7 +141,31 @@ namespace McSntt.Migrations
                                        PurposeAndArea = "Ass 'n' Titties",
                                        WeatherConditions = "Ass ass titties.",
                                        Comments = "lulzwut"
+                                   },
+                                   new RegularTrip
+                                   {
+                                       Boat = boats[1],
+                                       Captain = sailClubMembers[1],
+                                       DepartureTime = DateTime.Now.AddDays(3),
+                                       ExpectedArrivalTime = DateTime.Now.AddDays(3).AddHours(4),
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
+                                       PurposeAndArea = "Dykke",
+                                       WeatherConditions = "Orkan",
+                                       Comments = "lulzwut"
+                                   },
+
+                                   new RegularTrip
+                                   {
+                                       Boat = boats[1],
+                                       Captain = sailClubMembers[1],
+                                       DepartureTime = DateTime.Now.AddDays(4),
+                                       ExpectedArrivalTime = DateTime.Now.AddDays(5).AddHours(5),
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
+                                       PurposeAndArea = "Ud og Sejle",
+                                       WeatherConditions = "Det blæser",
+                                       Comments = "lulzwut"
                                    }
+
 
 
                                };

@@ -11,7 +11,7 @@
         <ComboBox x:Name="BoatComboBox" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="BoatComboBox_OnSelectionChanged" />
         <Label Content="Bådtype:" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
         <Label Content="Status:" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="120"/>
-        <Image x:Name="BoatImage" HorizontalAlignment="Left" Height="234" Margin="565,186,0,0" VerticalAlignment="Top" Width="272"/>
+        <Image x:Name="BoatImage" HorizontalAlignment="Left" Height="170" Margin="772,10,0,0" VerticalAlignment="Top" Width="218"/>
 
         <TextBox x:Name="BoatTypeTextBox" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="71,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="BoatStatusTextBox" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="71,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -24,12 +24,24 @@
                 <Style TargetType="{x:Type DataGridRow}"/>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding DepartureTime}" Header="Planlagte Afgang"/>
-                <DataGridTextColumn Binding="{Binding ArrivalTime}" Header="Planlagte Hjemkost"/>
+                <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0: dd/MM/yyyy HH:mm\}}" Header="Planlagte Afgang"/>
+                <DataGridTextColumn Binding="{Binding ArrivalTime, StringFormat=\{0: dd/MM/yyyy HH:mm\}}" Header="Planlagte Hjemkost"/>
                 <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Vælg en båd nedenfor" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138"/>
+
+        <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="BookedTripsDataGrid" HorizontalAlignment="Left" Margin="459,186,0,0" VerticalAlignment="Top" Height="240" Width="414" AutoGenerateColumns="False" >
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}"/>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0: dd/MM/yyyy HH:mm\}}" Header="Planlagte Afgang"/>
+                <DataGridTextColumn Binding="{Binding ArrivalTime, StringFormat=\{0: dd/MM/yyyy HH:mm\}}" Header="Planlagte Hjemkost"/>
+                <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Liste over kommende sejlture" HorizontalAlignment="Left" Margin="459,154,0,0" VerticalAlignment="Top" Width="224"/>
 
     </Grid>
 </UserControl>

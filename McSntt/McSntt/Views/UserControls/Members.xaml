@@ -12,7 +12,7 @@
             <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
             <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" />
             <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False"
-                      Name="DataGrid">
+                      Name="DataGrid" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn" />
                     <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn" />
