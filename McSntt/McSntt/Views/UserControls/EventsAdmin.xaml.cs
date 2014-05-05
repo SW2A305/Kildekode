@@ -51,7 +51,11 @@ namespace McSntt.Views.UserControls
                 EventsList.Add(newEvent);
                 
                 //AgendaListbox.Items.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
-                
+
+                EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
+
+                AgendaListbox.ItemsSource = EventsList;
+
                 AgendaListbox.Items.Refresh();
 
 /*
@@ -109,6 +113,7 @@ namespace McSntt.Views.UserControls
                 EventsList.RemoveAt(i);
             }
             else MessageBox.Show("Vælg en begivenhed som skal slettes");
+
             AgendaListbox.Items.Refresh();
         }
 
