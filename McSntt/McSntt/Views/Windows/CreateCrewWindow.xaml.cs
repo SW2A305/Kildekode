@@ -41,10 +41,13 @@ namespace McSntt.Views.Windows
             get { return _dataGridCollection; }
             set
             {
-                db.SailClubMembers.Load();
-                DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                DataGridCollection.Filter = new Predicate<object>(Filter);
-                SearchBox.Text = "Søg efter medlemmer her";
+                using (var db = new McSntttContext())
+                {
+                    db.SailClubMembers.Load();
+                    DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
+                    DataGridCollection.Filter = new Predicate<object>(Filter);
+                    SearchBox.Text = "Søg efter medlemmer her";
+                }
             }
         }
 
@@ -190,39 +193,6 @@ namespace McSntt.Views.Windows
                 RefreshDatagrid(CurrentCrewDataGrid, CrewList);
             }
         }
-
-       private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
-       {
-           Person currentPerson = (Person)CurrentCrewDataGrid.SelectedItem;
-
-           _crewList.Remove(currentPerson);
-
-           RefreshDatagrid(CurrentCrewDataGrid, _crewList);
-       }
-
-       private void AddGuestButton_Click(object sender, RoutedEventArgs e)
-       {
-
-           if (Regex.IsMatch(FirstNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && FirstNameBox.Text != String.Empty)
-           {
-               if (Regex.IsMatch(LastNameBox.Text, "^[A-ZÆØÅa-zæøå]*$") && LastNameBox.Text != String.Empty)
-               {
-                   var p = new Person();
-                   p.FirstName = FirstNameBox.Text;
-                   p.LastName = LastNameBox.Text;
-                   _crewList.Add(p);
-
-                   RefreshDatagrid(CurrentCrewDataGrid, _crewList);
-
-                   FirstNameBox.Clear();
-                   LastNameBox.Clear();
-               }  
-           }
-           else
-           {
-               MessageBox.Show("Ugyldigt navn. \nPrøv venligst igen");
-           }
-       }
 
         private void SearchBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
