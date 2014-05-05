@@ -100,6 +100,7 @@
     <Compile Include="DataAbstractionLayer\ILectureDal.cs" />
     <Compile Include="DataAbstractionLayer\IStudentMemberDal.cs" />
     <Compile Include="DataAbstractionLayer\LectureEfDal.cs" />
+    <Compile Include="DataAbstractionLayer\Sqlite\BoatSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\StudentMemberEfDal.cs" />
     <Compile Include="DataAbstractionLayer\TeamEfDal.cs" />
     <Compile Include="DataAbstractionLayer\ITeamDal.cs" />
