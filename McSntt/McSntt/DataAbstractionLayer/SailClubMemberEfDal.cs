@@ -39,10 +39,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (SailClubMember item in items)
-                        {
-                            db.SailClubMembers.Remove(item);
-                        }
+                        foreach (SailClubMember item in items) { db.SailClubMembers.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -66,14 +63,15 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.SailClubMembers.Load();
-                return db.SailClubMembers
-                         .Include("PartOfCrewOn")
-                         .Include("CaptainOn")
-                         .Include("ParticipatingInEvents")
-                         .Include("PartOfActualCrewOn")
-                         .Include("FiledLogbooks")
-                         .Include("PartOfTeams")
-                         .ToList();
+                return
+                    db.SailClubMembers
+                      .Include("PartOfCrewOn")
+                      .Include("CaptainOn")
+                      .Include("ParticipatingInEvents")
+                      .Include("PartOfActualCrewOn")
+                      .Include("FiledLogbooks")
+                      .Include("PartOfTeams")
+                      .ToList();
             }
         }
 
@@ -81,7 +79,15 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                return db.SailClubMembers.Find(itemId);
+                return
+                    db.SailClubMembers
+                      .Include("PartOfCrewOn")
+                      .Include("CaptainOn")
+                      .Include("ParticipatingInEvents")
+                      .Include("PartOfActualCrewOn")
+                      .Include("FiledLogbooks")
+                      .Include("PartOfTeams")
+                      .FirstOrDefault(scm => scm.SailClubMemberId == itemId);
             }
         }
 
@@ -97,8 +103,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (SailClubMember item in items)
-                        {
+                        foreach (SailClubMember item in items) {
                             db.SailClubMembers.AddOrUpdate(p => p.SailClubMemberId, item);
                         }
 

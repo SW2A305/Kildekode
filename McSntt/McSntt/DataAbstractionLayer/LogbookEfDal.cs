@@ -13,19 +13,13 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Create(params Logbook[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Create(params Logbook[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Update(params Logbook[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Update(params Logbook[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
@@ -39,10 +33,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Logbook item in items)
-                        {
-                            db.Logbooks.Remove(item);
-                        }
+                        foreach (Logbook item in items) { db.Logbooks.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -66,7 +57,11 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.Logbooks.Load();
-                return db.Logbooks.Include("FiledBy").Include("ActualCrew").ToList();
+                return
+                    db.Logbooks
+                      .Include("FiledBy")
+                      .Include("ActualCrew")
+                      .ToList();
             }
         }
 
@@ -74,7 +69,11 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                return db.Logbooks.Find(itemId);
+                return
+                    db.Logbooks
+                      .Include("FiledBy")
+                      .Include("ActualCrew")
+                      .FirstOrDefault(logbook => logbook.LogbookId == itemId);
             }
         }
 
@@ -90,10 +89,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Logbook item in items)
-                        {
-                            db.Logbooks.AddOrUpdate(b => b.LogbookId, item);
-                        }
+                        foreach (Logbook item in items) { db.Logbooks.AddOrUpdate(b => b.LogbookId, item); }
 
                         db.SaveChanges();
                         transaction.Commit();

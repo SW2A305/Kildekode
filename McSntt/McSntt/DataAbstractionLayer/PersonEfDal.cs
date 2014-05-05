@@ -13,19 +13,13 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Create(params Person[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Create(params Person[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Update(params Person[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Update(params Person[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
@@ -39,10 +33,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Person item in items)
-                        {
-                            db.Persons.Remove(item);
-                        }
+                        foreach (Person item in items) { db.Persons.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -66,7 +57,8 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 return
-                    db.Persons.Include("PartOfCrewOn")
+                    db.Persons
+                      .Include("PartOfCrewOn")
                       .Include("CaptainOn")
                       .Include("ParticipatingInEvents")
                       .Include("PartOfActualCrewOn")
@@ -78,7 +70,12 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                return db.Persons.Find(itemId);
+                return
+                    db.Persons
+                      .Include("CaptainOn")
+                      .Include("ParticipatingInEvents")
+                      .Include("PartOfActualCrewOn")
+                      .FirstOrDefault(person => person.PersonId == itemId);
             }
         }
 
@@ -94,10 +91,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Person item in items)
-                        {
-                            db.Persons.AddOrUpdate(p => p.PersonId, item);
-                        }
+                        foreach (Person item in items) { db.Persons.AddOrUpdate(p => p.PersonId, item); }
 
                         db.SaveChanges();
                         transaction.Commit();

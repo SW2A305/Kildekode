@@ -66,7 +66,10 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.Boats.Load();
-                return db.Boats.Include("SailTrips").ToList();
+                return 
+                    db.Boats
+                    .Include("SailTrips")
+                    .ToList();
             }
         }
 
@@ -74,7 +77,10 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                return db.Boats.Find(itemId);
+                return 
+                    db.Boats
+                    .Include("SailTrips")
+                    .FirstOrDefault(boat => boat.BoatId == itemId);
             }
         }
 

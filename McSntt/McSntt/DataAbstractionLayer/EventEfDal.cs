@@ -13,19 +13,13 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Create(params Event[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Create(params Event[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool Update(params Event[] items)
-        {
-            return this.CreateOrUpdate(items);
-        }
+        public bool Update(params Event[] items) { return this.CreateOrUpdate(items); }
 
         /// <summary>
         /// </summary>
@@ -39,10 +33,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Event item in items)
-                        {
-                            db.Events.Remove(item);
-                        }
+                        foreach (Event item in items) { db.Events.Remove(item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -66,7 +57,11 @@ namespace McSntt.DataAbstractionLayer
             using (var db = new McSntttContext())
             {
                 db.Events.Load();
-                return db.Events.Include("Participants").Include("EventList").ToList();
+                return
+                    db.Events
+                      .Include("Participants")
+                      .Include("EventList")
+                      .ToList();
             }
         }
 
@@ -74,7 +69,11 @@ namespace McSntt.DataAbstractionLayer
         {
             using (var db = new McSntttContext())
             {
-                return db.Events.Find(itemId);
+                return
+                    db.Events
+                      .Include("Participants")
+                      .Include("EventList")
+                      .FirstOrDefault(evt => evt.EventId == itemId);
             }
         }
 
@@ -90,10 +89,7 @@ namespace McSntt.DataAbstractionLayer
                 {
                     try
                     {
-                        foreach (Event item in items)
-                        {
-                            db.Events.AddOrUpdate(b => b.EventId, item);
-                        }
+                        foreach (Event item in items) { db.Events.AddOrUpdate(b => b.EventId, item); }
 
                         db.SaveChanges();
                         transaction.Commit();
@@ -109,4 +105,4 @@ namespace McSntt.DataAbstractionLayer
             return true;
         }
     }
-}   
+}
