@@ -1,6 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Migrations;
+using System.Linq;
+using EntityFramework.Extensions;
 using McSntt.Helpers;
 using System.Collections.Generic;
 using McSntt.Models;
@@ -18,6 +20,13 @@ namespace McSntt.Migrations
         protected override void Seed(McSntttContext context)
         {
             //  This method will be called after migrating to the latest version.
+            var query =
+                from boat in context.Boats
+                select boat;
+            query.Delete();
+
+            context.SaveChanges();
+            
 
             #region Data : Persons
             var persons = new[]
