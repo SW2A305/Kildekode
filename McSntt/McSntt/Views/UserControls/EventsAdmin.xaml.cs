@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.Helpers;
 using McSntt.Views.Windows;
 using McSntt.Models;
 using System.ComponentModel;
@@ -77,20 +78,11 @@ namespace McSntt.Views.UserControls
 
             if (i >= 0)
             {
-                
-                Event selectedEvent = EventsList.ElementAt(i);
 
+                var selectedEvent = EventsList.ElementAt(i);
 
-                
-                Window createEventPopup = new EventsPopup(
-                    selectedEvent.EventTitle,
-                    selectedEvent.EventDate,
-                    selectedEvent.Description,
-                    selectedEvent.SignUpReq);
-                  
-                    createEventPopup.ShowDialog();
-
-                //Textbox.Text = selectedEvent.EventTitle;
+                Window createEventPopup = new EventsPopup(selectedEvent);
+                createEventPopup.ShowDialog();
 
                 EventsList.RemoveAt(i);
 
@@ -119,7 +111,7 @@ namespace McSntt.Views.UserControls
 
         private void Subscripe(object sender, RoutedEventArgs e)
         {
-
+            Textbox.Text = GlobalInformation.CurrentUser.ToString();
         }
 
         private void Show_Participants(object sender, RoutedEventArgs e)
