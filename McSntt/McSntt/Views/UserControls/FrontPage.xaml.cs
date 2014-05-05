@@ -35,9 +35,12 @@ namespace McSntt.Views.UserControls
             WelcomeBlock.Text = string.Format("Velkommen {0}!", p.FullName);
             InfoTextBlock.Text =
                 "Til højre ses dine kommende ture, samt dem hvorpå der endnu ikker er udfyldt en logbog for.";
+            _p = p;
 
             LoadData();
         }
+
+        private SailClubMember _p;
 
         public void LoadData()
         {
@@ -86,8 +89,8 @@ namespace McSntt.Views.UserControls
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var LogBookWindow = new CreateLogbookWindow();
-            LogBookWindow.ShowDialog();
+            var logBookWindow = new CreateLogbookWindow(_p);
+            logBookWindow.ShowDialog();
 
             /* TODO: after database.
             LogbookDataGrid.ItemsSource = null;
