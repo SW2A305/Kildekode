@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Linq.Expressions;
 using McSntt.Models;
 
 namespace McSntt.DataAbstractionLayer
@@ -15,8 +16,8 @@ namespace McSntt.DataAbstractionLayer
         /// <returns></returns>
         public bool Create(params RegularTrip[] items)
         {
-            return !items.Any(regularTrip => regularTrip.RegularTripId > 0 && !this.CanMakeReservation(regularTrip))
-                   && this.CreateOrUpdate(items);
+            return !items.Any(regularTrip => regularTrip.RegularTripId > 0 && !CanMakeReservation(regularTrip))
+                   && CreateOrUpdate(items);
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace McSntt.DataAbstractionLayer
         /// <returns></returns>
         public bool Update(params RegularTrip[] items)
         {
-            return this.CreateOrUpdate(items);
+            return CreateOrUpdate(items);
         }
 
         /// <summary>
@@ -67,11 +68,11 @@ namespace McSntt.DataAbstractionLayer
 
                 return
                     db.RegularTrips
-                      .Include("Boat")
-                      .Include("Logbook")
-                      .Include("Captain")
-                      .Include("Crew")
-                      .ToList();
+                        .Include("Boat")
+                        .Include("Logbook")
+                        .Include("Captain")
+                        .Include("Crew")
+                        .ToList();
             }
         }
 
@@ -81,11 +82,11 @@ namespace McSntt.DataAbstractionLayer
             {
                 return
                     db.RegularTrips
-                      .Include("Boat")
-                      .Include("Logbook")
-                      .Include("Captain")
-                      .Include("Crew")
-                      .FirstOrDefault(trip => trip.RegularTripId == itemId);
+                        .Include("Boat")
+                        .Include("Logbook")
+                        .Include("Captain")
+                        .Include("Crew")
+                        .FirstOrDefault(trip => trip.RegularTripId == itemId);
             }
         }
 
@@ -93,16 +94,18 @@ namespace McSntt.DataAbstractionLayer
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public IEnumerable<RegularTrip> GetRegularTrips(Predicate<RegularTrip> predicate)
+        public IEnumerable<RegularTrip> GetRegularTrips(Func<RegularTrip, bool> predicate)
         {
             using (var db = new McSntttContext())
             {
-                IQueryable<RegularTrip> query =
-                    from trip in db.RegularTrips
-                    where predicate(trip)
-                    select trip;
+                var trips = db.RegularTrips.Include("Boat")
+                    .Include("Logbook")
+                    .Include("Captain")
+                    .Include("Crew")
+                    .AsEnumerable();
 
-                return query;
+                return
+                    trips.Where(predicate).ToList();
             }
         }
 
@@ -139,10 +142,10 @@ namespace McSntt.DataAbstractionLayer
         public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, DateTime? fromDateTime, DateTime? toDateTime)
         {
             return
-                this.GetRegularTrips(
-                                     trip =>
-                                     trip.Boat.BoatId == boat.BoatId && trip.DepartureTime <= toDateTime
-                                     && trip.ExpectedArrivalTime >= fromDateTime);
+                GetRegularTrips(
+                    trip =>
+                        trip.Boat.BoatId == boat.BoatId && trip.DepartureTime <= toDateTime
+                        && trip.ExpectedArrivalTime >= fromDateTime);
         }
 
         /// <summary>
@@ -153,7 +156,7 @@ namespace McSntt.DataAbstractionLayer
         /// <returns></returns>
         public bool CanMakeReservation(Boat boat, DateTime? departureTime, DateTime? expectedArrivalTime)
         {
-            IEnumerable<RegularTrip> reservations = this.GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
+            IEnumerable<RegularTrip> reservations = GetReservationsForBoat(boat, departureTime, expectedArrivalTime);
 
             return !reservations.Any();
         }
@@ -164,7 +167,7 @@ namespace McSntt.DataAbstractionLayer
         /// <returns></returns>
         public bool CanMakeReservation(RegularTrip trip)
         {
-            return this.CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ExpectedArrivalTime);
+            return CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ExpectedArrivalTime);
         }
 
         /// <summary>

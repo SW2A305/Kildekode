@@ -83,14 +83,14 @@ namespace McSntt.Migrations
                         {
                             new Boat
                             {
-                                ImagePath = "Images/SundetLogo.png",
+                                ImagePath = "SundetLogo.png",
                                 NickName = "Sinky",
                                 Operational = false,
                                 Type = BoatType.Drabant
                             },
                             new Boat
                             {
-                                ImagePath = "Images/SundetLogo.png",
+                                ImagePath = "SundetLogo.png",
                                 NickName = "Anna",
                                 Operational = true,
                                 Type = BoatType.Gaffelrigger
@@ -123,7 +123,7 @@ namespace McSntt.Migrations
                                        Captain = sailClubMembers[0],
                                        DepartureTime = DateTime.Now.AddDays(2),
                                        ExpectedArrivalTime = DateTime.Now.AddDays(2).AddHours(5),
-                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
+                                       Crew = new Collection<Person> {persons[0], sailClubMembers[1], sailClubMembers[0]},
                                        PurposeAndArea = "Terrorisme",
                                        WeatherConditions = "Cloudy with a chance of bullet rain.",
                                        Logbook = logbooks[0],

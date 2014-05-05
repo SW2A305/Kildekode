@@ -89,7 +89,7 @@ namespace McSntt.Views.UserControls
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var logBookWindow = new CreateLogbookWindow(_p);
+            var logBookWindow = new CreateLogbookWindow(RegularSailTrip , _p);
             logBookWindow.ShowDialog();
 
             /* TODO: after database.

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="ViewSpecificLogbookWindow" Height="650" Width="800"
+        Title="ViewSpecificLogbookWindow" Height="650" Width="800" MinHeight="650" MinWidth="800" MaxHeight="650" MaxWidth="800"
         Style="{StaticResource WindowStyle}">
 
     <Grid>
@@ -31,21 +31,35 @@
         <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,525,0,3"/>
         <RadioButton IsEnabled="False" x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,527,0,0" VerticalAlignment="Top"/>
         <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
-
-
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="Auto" Height="Auto" Margin="548,130,31,464"/>
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="Auto" Width="Auto" Margin="548,168,31,426"/>
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="Auto" Width="Auto" Margin="548,223,31,371"/>
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="Auto" Width="Auto" Margin="548,258,31,336"/>
-        <Label Content="Planlagt ankomst:" HorizontalAlignment="Left" Margin="446,168,0,0" VerticalAlignment="Top"/>
-        <Label Content="Planlagt afgang:" HorizontalAlignment="Left" Margin="446,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
-        <Label Content="Faktisk afgang:" HorizontalAlignment="Left" Margin="446,223,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
-        <Label Content="Faktisk ankomst:" HorizontalAlignment="Left" Margin="446,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
-        <Label Content="Kaptajn:" HorizontalAlignment="Left" Width="99"  Margin="10,133,0,395"/>
+    
+        <StackPanel Margin="438,188,62,282" Orientation="Horizontal" RenderTransformOrigin="0.5,-0.044">
+        <StackPanel>
+        <Label Height="30" Content="Planlagt ankomst:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <Label Height="30" Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+                <Label Height="30" Content="Faktisk afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+                <Label Height="30" Content="Faktisk ankomst:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+            </StackPanel>
+            <StackPanel>
+                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="180" Height="30"/>
+                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="30" Width="Auto"/>
+                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="30" Width="Auto"/>
+                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="30" Width="Auto"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <!-- <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="Auto" Height="30" Margin="548,136,31,453"/>
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="30" Width="Auto" Margin="548,183,31,406"/>
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="30" Width="Auto" Margin="548,232,31,357"/>
+        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="30" Width="Auto" Margin="548,286,31,303"/>
+        <Label Content="Planlagt ankomst:" HorizontalAlignment="Left" Margin="440,187,0,0" VerticalAlignment="Top"/>
+        <Label Content="Planlagt afgang:" HorizontalAlignment="Left" Margin="440,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <Label Content="Faktisk afgang:" HorizontalAlignment="Left" Margin="440,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <Label Content="Faktisk ankomst:" HorizontalAlignment="Left" Margin="440,278,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <Label Content="Kaptajn:" HorizontalAlignment="Left" Width="99"  Margin="10,133,0,395"/> -->
 
         <TextBox IsReadOnly="True" x:Name="AnswerFromBoatChiefTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
         	Margin="529,428,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
-        
+
         <Label Content="Svar fra Bådansvarlig:" HorizontalAlignment="Left" Width="131" Margin="393,428,0,78"/>
 
     </Grid>
