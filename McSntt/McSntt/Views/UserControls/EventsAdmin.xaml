@@ -23,7 +23,7 @@
                         <TextBlock Text="Begivenhedsnavn: " />
                         <TextBlock Text="{Binding Path=EventTitle}" />
                         <TextBlock Text=" Dato " />
-                        <TextBlock Text="{Binding Path=EventDate}" />
+                        <TextBlock Text="{Binding Path=EventDate, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}" />
                         <TextBlock Text=" " />
                         <TextBlock Text="{Binding Path=SignUpMsg}" />
                     </StackPanel>

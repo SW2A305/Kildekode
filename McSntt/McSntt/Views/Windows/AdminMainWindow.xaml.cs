@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using McSntt.Helpers;
 using McSntt.Models;
 using McSntt.Views.UserControls;
 
@@ -15,17 +16,6 @@ namespace McSntt.Views.Windows
         {
             // Set the list as the current DataContext
             InitializeComponent();
-
-            Closing += Window_Closing;
-        }
-        public AdminMainWindow(SailClubMember activeUser)
-        {
-            // Set the list as the current DataContext
-            InitializeComponent();
-            ThisUser = activeUser;
-
-            FrontPageGrid.Children.Add(new FrontPage(ThisUser));
-
             Closing += Window_Closing;
         }
 
@@ -37,7 +27,5 @@ namespace McSntt.Views.Windows
         {
             Application.Current.Shutdown();
         }
-
-        public SailClubMember ThisUser { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace McSntt.Views.UserControls
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
         #region Til test
-        public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First};
+        public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First, TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
         public Team Team16 = new Team {Name = "Hold 16"};
         public IList<Team> TeamList = new List<Team>();
         public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", SailClubMemberId = 2000};

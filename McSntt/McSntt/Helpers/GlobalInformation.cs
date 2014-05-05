@@ -7,5 +7,6 @@ namespace McSntt.Helpers
         static SailClubMember.Positions UserPosition { get; set; }
         static string UserFullName { get; set; }
         static int UserId { get; set; }
+        public static SailClubMember CurrentUser { get; set; }
     }
 }
