@@ -190,8 +190,9 @@ namespace McSntt.Migrations
                                        WeatherConditions = "Det blæser",
                                        Comments = "lulzwut"
                                    },
-				   new RegularTrip
-				   {
+				                   new RegularTrip
+				                   {
+                                       Boat = boats[1],
                                        Captain = sailClubMembers[2],
                                        DepartureTime = DateTime.Now.AddDays(-3),
                                        ExpectedArrivalTime = DateTime.Now.AddDays(-3).AddHours(5),
