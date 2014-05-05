@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using McSntt.DataAbstractionLayer;
 using McSntt.Models;
 using McSntt.Views.Windows;
 using MessageBox = System.Windows.MessageBox;
@@ -32,37 +33,14 @@ namespace McSntt.Views.Windows
 
         private readonly DateTime _hasBeenFilledTime = new DateTime();
 
-        public CreateLogbookWindow(SailClubMember p) : this()
-        {
-            _currentSailClubMember = p;
-        }
-
-        public CreateLogbookWindow(/*RegularTrip sailTrip*/)
+        public CreateLogbookWindow(RegularTrip sailTrip, SailClubMember p)
         {
             InitializeComponent();
             
-            /*RegularSailTrip = sailTrip;*/
+            _currentSailClubMember = p;
 
-            // TEST PERSONER
+            RegularSailTrip = sailTrip;
 
-            var person1 = new Person {FirstName = "Knold", LastName = "Tot", PersonId = 0};
-            var person2 = new Person { FirstName = "Son", LastName = "Goku", PersonId = 1 };
-            var person3 = new Person {FirstName = "Sponge", LastName = "Bob", PersonId = 2};
-            var testlist = new List<Person> {person1, person2, person3};
-
-            RegularSailTrip = new RegularTrip
-            {
-                Boat = new Boat() {NickName = "Bodil2"},
-                ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                Captain = person3,
-                Comments = "Det blir sjaw!",
-                DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
-                PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
-                WeatherConditions = "Det 'en bæt' wind...",
-                RegularTripId = 9,
-                Crew = testlist
-
-            };
             CrewList = RegularSailTrip.Crew;
             CrewDataGrid.ItemsSource = CrewList;
             PurposeTextBox.Text = RegularSailTrip.PurposeAndArea;
@@ -138,10 +116,14 @@ namespace McSntt.Views.Windows
                 currentLogbook.FiledBy = _currentSailClubMember;
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;
-                this.Close();}
-            }
 
-            //Implement updateDatabase method, which updates the values of the Regular/CurrentTrip, and also uploads the Logbook
+                var dal = new RegularTripEfDal();
+
+                dal.Update(RegularSailTrip);
+
+                this.Close();}
+
+            }
      }
 }
 
