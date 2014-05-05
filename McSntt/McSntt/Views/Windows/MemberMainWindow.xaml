@@ -11,11 +11,11 @@
                     <TextBlock Text="Forside" FontSize="23" />
                 </TabItem.Header>
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="CalenderTabItem" Margin="35,0,-60,0">
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="StudyTabItem" Margin="35,0,-60,0">
                 <TabItem.Header>
-                    <TextBlock Text="Kalender" FontSize="23" />
+                    <TextBlock Text="Undervisning" FontSize="23" />
                 </TabItem.Header>
-                <UserControls:Calendar HorizontalAlignment="Left" Margin="67,54,0,0" VerticalAlignment="Top" Height="339" Width="430"/>
+                <UserControls:StudyTeacher></UserControls:StudyTeacher>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="EvenetsTabItem" Margin="60,0,-70,0">
                 <TabItem.Header>

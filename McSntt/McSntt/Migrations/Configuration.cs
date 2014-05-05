@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Migrations;
 using McSntt.Helpers;
+using System.Collections.Generic;
 using McSntt.Models;
 
 namespace McSntt.Migrations
