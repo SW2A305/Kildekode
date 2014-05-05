@@ -65,7 +65,13 @@ namespace McSntt.Views.UserControls
 
             lectureDropdown.DisplayMemberPath = "DateOfLecture";
             lectureDropdown.SelectedValuePath = "LectureId";
-            
+
+            studentOne.IsEnabled = false;
+            studentTwo.IsEnabled = false;
+            studentThree.IsEnabled = false;
+            studentFour.IsEnabled = false;
+            studentFive.IsEnabled = false;
+            studentSix.IsEnabled = false;
             
             DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
             DataGridCollection.Filter = new Predicate<object>(Filter);
@@ -504,7 +510,7 @@ namespace McSntt.Views.UserControls
             ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Drabant = (DrabantCheckBox.IsChecked == true);
-            if ((string) this.studentOne.Content != "Elev 1" && studentOne.IsChecked == true)
+            if ((string) this.studentOne.Content != "" && studentOne.IsChecked == true)
             {
                 ((Lecture) lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -535,7 +541,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if ((string) this.studentTwo.Content != "Elev 2" && studentTwo.IsChecked == true)
+            if ((string) this.studentTwo.Content != "" && studentTwo.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -566,7 +572,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if ((string) this.studentThree.Content != "Elev 3" && studentThree.IsChecked == true)
+            if ((string) this.studentThree.Content != "" && studentThree.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -597,7 +603,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if ((string) this.studentFour.Content != "Elev 4" && studentFour.IsChecked == true)
+            if ((string) this.studentFour.Content != "" && studentFour.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -628,7 +634,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if ((string) this.studentFive.Content != "Elev 5" && studentFive.IsChecked == true)
+            if ((string) this.studentFive.Content != "" && studentFive.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
@@ -659,7 +665,7 @@ namespace McSntt.Views.UserControls
                 }
             }
             ++indexCount;
-            if ((string) this.studentSix.Content != "Elev 6" && studentSix.IsChecked == true)
+            if ((string) this.studentSix.Content != "" && studentSix.IsChecked == true)
             {
                 ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
