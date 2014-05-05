@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
+using McSntt.Helpers;
 using McSntt.Models;
 using McSntt.Views.Windows;
 using MessageBox = System.Windows.MessageBox;
@@ -30,6 +31,9 @@ namespace McSntt.Views.Windows
         private RegularTrip RegularSailTrip = new RegularTrip();
         private Logbook currentLogbook = new Logbook();
         private SailClubMember _currentSailClubMember;
+
+        private IRegularTripDal regularTripDal = DalLocator.RegularTripDal;
+        private ILogbookDal logbookDal = DalLocator.LogbookDal;
 
         private readonly DateTime _hasBeenFilledTime = new DateTime();
 
@@ -117,10 +121,10 @@ namespace McSntt.Views.Windows
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;
 
-                var dal = new RegularTripEfDal();
+                logbookDal.Create(currentLogbook);
 
-                dal.Update(RegularSailTrip);
-
+                regularTripDal.Update(RegularSailTrip);
+                
                 this.Close();}
 
             }
