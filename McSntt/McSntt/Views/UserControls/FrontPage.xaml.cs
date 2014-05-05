@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
+using McSntt.Helpers;
 using McSntt.Models;
 using McSntt.Views.Windows;
 
@@ -23,73 +24,21 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class FrontPage : UserControl
     {
-        public FrontPage()
-            : this(new SailClubMember())
-        {
-            
-        }
-        public FrontPage(SailClubMember p)
-        {
+        public FrontPage(){
             InitializeComponent();
 
-            WelcomeBlock.Text = string.Format("Velkommen {0}!", p.FullName);
+            WelcomeBlock.Text = string.Format("Velkommen {0}!", GlobalInformation.CurrentUser.FullName);
             InfoTextBlock.Text =
                 "Til højre ses dine kommende ture, samt dem hvorpå der endnu ikker er udfyldt en logbog for.";
-            _p = p;
 
             LoadData();
         }
 
-        private SailClubMember _p;
-
         public void LoadData()
         {
-            /*RegularSailTrip = sailTrip;
-
-            // TEST PERSONER
-
-            var person1 = new Person {FirstName = "Knold", LastName = "Tot", PersonId = 0};
-            var person2 = new Person {FirstName = "Son", LastName = "Goku", PersonId = 1};
-            var person3 = new Person {FirstName = "Sponge", LastName = "Bob", PersonId = 2};
-            var testlist = new List<Person> {person1, person2, person3};
-
-            RegularSailTrip = new RegularTrip
-                              {
-                                  Boat = new Boat() {NickName = "Bodil2"},
-                                  ArrivalTime = new DateTime(2014, 09, 9, 12, 0, 0),
-                                  Captain = person3,
-                                  Comments = "Det blir sjaw!",
-                                  DepartureTime = new DateTime(2014, 09, 9, 09, 0, 0),
-                                  PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
-                                  WeatherConditions = "Det 'en bæt' wind...",
-                                  RegularTripId = 9,
-                                  Crew = testlist
-
-                              };
-
-            RegularSailTrip2 = new RegularTrip
-                               {
-                                   Boat = new Boat() {NickName = "Bodil2"},
-                                   ArrivalTime = new DateTime(2014, 03, 9, 12, 0, 0),
-                                   Captain = _p,
-                                   Comments = "Det blir sjaw!",
-                                   DepartureTime = new DateTime(2014, 03, 9, 09, 0, 0),
-                                   PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
-                                   WeatherConditions = "Det 'en bæt' wind...",
-                                   RegularTripId = 9,
-                                   Crew = testlist
-                               };
-
-            var SailTripList = new List<RegularTrip>();
-            SailTripList.Add(RegularSailTrip);
-            SailTripList.Add(RegularSailTrip2);
-            // SailTripList = db.GetAll().Where(p => p.Crew.Contains());
-
-            */
-
             var db = new RegularTripEfDal();
 
-            var sailTripList = db.GetAll().Where(t => t.Crew.Contains(_p)).ToList();
+            var sailTripList = db.GetAll().Where(t => t.Crew.Contains(GlobalInformation.CurrentUser)).ToList();
 
             UpcommingTripsDataGrid.ItemsSource = null;
             UpcommingTripsDataGrid.ItemsSource = sailTripList.Where(t => t.DepartureTime > DateTime.Now);
@@ -103,7 +52,7 @@ namespace McSntt.Views.UserControls
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var logBookWindow = new CreateLogbookWindow(_p);
+            var logBookWindow = new CreateLogbookWindow(GlobalInformation.CurrentUser);
             logBookWindow.ShowDialog();
 
             /* TODO: after database.

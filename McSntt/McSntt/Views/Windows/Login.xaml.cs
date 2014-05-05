@@ -21,6 +21,8 @@ namespace McSntt.Views.Windows
         public Login()
         {
             InitializeComponent();
+            UsernameBox.Focusable = true;
+            FocusManager.SetFocusedElement(LoginBox, UsernameBox);
             // This is to ensure that the contens of the database is ready for when the login is performed.
             var sailClubMembers = new SailClubMemberEfDal().GetAll();
         }
@@ -86,30 +88,32 @@ namespace McSntt.Views.Windows
 
         private void LoginCompleted(SailClubMember p)
         {
+            GlobalInformation.CurrentUser = p;
+
             switch (p.Position)
             {
                 case SailClubMember.Positions.Admin:
-                    var adminWindow = new AdminMainWindow(p);
+                    var adminWindow = new AdminMainWindow();
                     adminWindow.Show();
                     adminWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Member:
-                    var memberWindow = new MemberMainWindow(p);
+                    var memberWindow = new MemberMainWindow();
                     memberWindow.Show();
                     memberWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Student:
-                    var StudentWindow = new StudentMainWindow(p);
+                    var StudentWindow = new StudentMainWindow();
                     StudentWindow.Show();
                     StudentWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Teacher:
-                    var TeacherWindow = new StudentMainWindow(p);
+                    var TeacherWindow = new StudentMainWindow();
                     TeacherWindow.Show();
                     TeacherWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.SupportMember:
-                    var SupportWindow = new StudentMainWindow(p);
+                    var SupportWindow = new StudentMainWindow();
                     SupportWindow.Show();
                     SupportWindow.Owner = this.Owner;
                     break;
