@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
 
@@ -59,46 +60,50 @@ namespace McSntt.Views.UserControls
             StatusTextBlock.Text = "Forsøger at logge dig ind.";
             StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
 
-            using (var db = new McSntttContext())
+            var db = new SailClubMemberEfDal();
+
+            try
             {
-                db.SailClubMembers.Load();
-
-                try
+                if (db.GetAll() != null)
                 {
-                    if (db.SailClubMembers != null)
+                    SailClubMember usr =
+                        db.GetAll()
+                            .FirstOrDefault(
+                                x =>
+                                    String.Equals(x.Username, UsernameBox.Text,
+                                        StringComparison.CurrentCultureIgnoreCase));
+
+                    // Check if user exists (Case insensitive)
+                    if (usr != null &&
+                        String.Equals(usr.Username, UsernameBox.Text, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        SailClubMember usr = db.SailClubMembers.Local.FirstOrDefault(x => String.Equals(x.Username, UsernameBox.Text, StringComparison.CurrentCultureIgnoreCase));
-
-                        // Check if user exists (Case insensitive)
-                        if (usr != null && String.Equals(usr.Username, UsernameBox.Text, StringComparison.CurrentCultureIgnoreCase))
+                        // Check if the password is correct (Case sensitive)
+                        if (usr.PasswordHash == EncryptionHelper.Sha256(PasswordBox.Password))
                         {
-                            // Check if the password is correct (Case sensitive)
-                            if (usr.PasswordHash == EncryptionHelper.Sha256(PasswordBox.Password))
-                            {
-                                StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
-                                StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+                            StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
+                            StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
 
-                                LoginCompleted(usr.Position);
-                            }
-                            else
-                            {
-                                StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                                StatusTextBlock.Text = "Forkert kodeord";
-                            }
+                            LoginCompleted(usr.Position);
                         }
                         else
                         {
                             StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-                            StatusTextBlock.Text = "Forkert Brugernavn";
+                            StatusTextBlock.Text = "Forkert kodeord";
                         }
                     }
-                }
-                catch (NullReferenceException exception)
-                {
-                    StatusTextBlock.Text = "Bruger ikke fundet" + exception;
+                    else
+                    {
+                        StatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                        StatusTextBlock.Text = "Forkert Brugernavn";
+                    }
                 }
             }
+            catch (NullReferenceException exception)
+            {
+                StatusTextBlock.Text = "Bruger ikke fundet" + exception;
+            }
         }
+
 
         private void LoginCompleted(SailClubMember.Positions p)
         {
