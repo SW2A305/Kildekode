@@ -44,7 +44,7 @@ namespace McSntt.Views.UserControls
 
         public void LoadData()
         {
-            /*RegularSailTrip = sailTrip;*/
+            /*RegularSailTrip = sailTrip;
 
             // TEST PERSONER
 
@@ -71,7 +71,7 @@ namespace McSntt.Views.UserControls
                                {
                                    Boat = new Boat() {NickName = "Bodil2"},
                                    ArrivalTime = new DateTime(2014, 03, 9, 12, 0, 0),
-                                   Captain = person3,
+                                   Captain = _p,
                                    Comments = "Det blir sjaw!",
                                    DepartureTime = new DateTime(2014, 03, 9, 09, 0, 0),
                                    PurposeAndArea = "u' ti' æ ' van' og' hjem' ien...",
@@ -81,11 +81,25 @@ namespace McSntt.Views.UserControls
                                };
 
             var SailTripList = new List<RegularTrip>();
+            SailTripList.Add(RegularSailTrip);
+            SailTripList.Add(RegularSailTrip2);
             // SailTripList = db.GetAll().Where(p => p.Crew.Contains());
+
+            */
+
+            var db = new RegularTripEfDal();
+
+            var sailTripList = db.GetAll().Where(t => t.Crew.Contains(_p)).ToList();
+
+            UpcommingTripsDataGrid.ItemsSource = null;
+            UpcommingTripsDataGrid.ItemsSource = sailTripList.Where(t => t.DepartureTime > DateTime.Now);
+
+            LogbookDataGrid.ItemsSource = null;
+            LogbookDataGrid.ItemsSource = sailTripList.Where(t => t.ArrivalTime < DateTime.Now && t.Logbook == null);
         }
 
-        private RegularTrip RegularSailTrip = new RegularTrip();
-        private RegularTrip RegularSailTrip2 = new RegularTrip();
+        private RegularTrip _regularSailTrip = new RegularTrip();
+        private RegularTrip _regularSailTrip2 = new RegularTrip();
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
