@@ -45,7 +45,7 @@ namespace McSntt.Views.Windows
 
             RegularSailTrip = sailTrip;
 
-            CrewList = RegularSailTrip.Crew;
+            CrewList = RegularSailTrip.Crew.ToList();
             CrewDataGrid.ItemsSource = CrewList;
             PurposeTextBox.Text = RegularSailTrip.PurposeAndArea;
             BoatTextBox.Text = RegularSailTrip.Boat.NickName;
@@ -121,7 +121,7 @@ namespace McSntt.Views.Windows
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;
 
-                logbookDal.Create(currentLogbook);
+                logbookDal.Create(RegularSailTrip.Logbook);
 
                 regularTripDal.Update(RegularSailTrip);
                 
