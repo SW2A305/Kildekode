@@ -1,5 +1,8 @@
-﻿namespace McSntt.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace McSntt.Models
 {
+    [Table("StudentMembers")]
     public class StudentMember : SailClubMember
     {
         public StudentMember() { base.Position = Positions.Student; }

@@ -101,15 +101,27 @@ namespace McSntt.Migrations
                     {
                         TeamId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        RobeWorks = c.Boolean(nullable: false),
+                        Level = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.TeamId);
+            
+            CreateTable(
+                "dbo.Lectures",
+                c => new
+                    {
+                        LectureId = c.Int(nullable: false, identity: true),
+                        DateOfLecture = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        RopeWorksLecture = c.Boolean(nullable: false),
                         Navigation = c.Boolean(nullable: false),
                         Motor = c.Boolean(nullable: false),
                         Drabant = c.Boolean(nullable: false),
                         Gaffelrigger = c.Boolean(nullable: false),
                         Night = c.Boolean(nullable: false),
-                        Level = c.Int(nullable: false),
+                        Team_TeamId = c.Int(),
                     })
-                .PrimaryKey(t => t.TeamId);
+                .PrimaryKey(t => t.LectureId)
+                .ForeignKey("dbo.Teams", t => t.Team_TeamId)
+                .Index(t => t.Team_TeamId);
             
             CreateTable(
                 "dbo.PersonEvents",
@@ -178,15 +190,41 @@ namespace McSntt.Migrations
                 .Index(t => t.PersonId)
                 .Index(t => t.SailClubMemberId, unique: true);
             
+            CreateTable(
+                "dbo.StudentMembers",
+                c => new
+                    {
+                        PersonId = c.Int(nullable: false),
+                        AssociatedTeam_TeamId = c.Int(),
+                        Lecture_LectureId = c.Int(),
+                        RopeWorks = c.Boolean(nullable: false),
+                        Navigation = c.Boolean(nullable: false),
+                        Motor = c.Boolean(nullable: false),
+                        Drabant = c.Boolean(nullable: false),
+                        Gaffelrigger = c.Boolean(nullable: false),
+                        Night = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.PersonId)
+                .ForeignKey("dbo.SailClubMembers", t => t.PersonId)
+                .ForeignKey("dbo.Teams", t => t.AssociatedTeam_TeamId)
+                .ForeignKey("dbo.Lectures", t => t.Lecture_LectureId)
+                .Index(t => t.PersonId)
+                .Index(t => t.AssociatedTeam_TeamId)
+                .Index(t => t.Lecture_LectureId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.StudentMembers", "Lecture_LectureId", "dbo.Lectures");
+            DropForeignKey("dbo.StudentMembers", "AssociatedTeam_TeamId", "dbo.Teams");
+            DropForeignKey("dbo.StudentMembers", "PersonId", "dbo.SailClubMembers");
             DropForeignKey("dbo.SailClubMembers", "PersonId", "dbo.Persons");
             DropForeignKey("dbo.SailTrips", "Boat_BoatId", "dbo.Boats");
             DropForeignKey("dbo.SailTrips", "Logbook_LogbookId", "dbo.Logbooks");
             DropForeignKey("dbo.SailClubMemberTeams", "Team_TeamId", "dbo.Teams");
             DropForeignKey("dbo.SailClubMemberTeams", "SailClubMember_PersonId", "dbo.SailClubMembers");
+            DropForeignKey("dbo.Lectures", "Team_TeamId", "dbo.Teams");
             DropForeignKey("dbo.Logbooks", "FiledBy_PersonId", "dbo.SailClubMembers");
             DropForeignKey("dbo.PersonRegularTrips", "RegularTrip_SailTripId", "dbo.SailTrips");
             DropForeignKey("dbo.PersonRegularTrips", "Person_PersonId", "dbo.Persons");
@@ -196,6 +234,9 @@ namespace McSntt.Migrations
             DropForeignKey("dbo.PersonEvents", "Person_PersonId", "dbo.Persons");
             DropForeignKey("dbo.Events", "Event_EventId", "dbo.Events");
             DropForeignKey("dbo.SailTrips", "Captain_PersonId", "dbo.Persons");
+            DropIndex("dbo.StudentMembers", new[] { "Lecture_LectureId" });
+            DropIndex("dbo.StudentMembers", new[] { "AssociatedTeam_TeamId" });
+            DropIndex("dbo.StudentMembers", new[] { "PersonId" });
             DropIndex("dbo.SailClubMembers", new[] { "SailClubMemberId" });
             DropIndex("dbo.SailClubMembers", new[] { "PersonId" });
             DropIndex("dbo.SailClubMemberTeams", new[] { "Team_TeamId" });
@@ -206,16 +247,19 @@ namespace McSntt.Migrations
             DropIndex("dbo.PersonLogbooks", new[] { "Person_PersonId" });
             DropIndex("dbo.PersonEvents", new[] { "Event_EventId" });
             DropIndex("dbo.PersonEvents", new[] { "Person_PersonId" });
+            DropIndex("dbo.Lectures", new[] { "Team_TeamId" });
             DropIndex("dbo.Events", new[] { "Event_EventId" });
             DropIndex("dbo.Logbooks", new[] { "FiledBy_PersonId" });
             DropIndex("dbo.SailTrips", new[] { "Boat_BoatId" });
             DropIndex("dbo.SailTrips", new[] { "Logbook_LogbookId" });
             DropIndex("dbo.SailTrips", new[] { "Captain_PersonId" });
+            DropTable("dbo.StudentMembers");
             DropTable("dbo.SailClubMembers");
             DropTable("dbo.SailClubMemberTeams");
             DropTable("dbo.PersonRegularTrips");
             DropTable("dbo.PersonLogbooks");
             DropTable("dbo.PersonEvents");
+            DropTable("dbo.Lectures");
             DropTable("dbo.Teams");
             DropTable("dbo.Events");
             DropTable("dbo.Persons");

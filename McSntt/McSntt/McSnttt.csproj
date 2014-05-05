@@ -107,9 +107,9 @@
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
-    <Compile Include="Migrations\201405010953244_InitialCreation.cs" />
-    <Compile Include="Migrations\201405010953244_InitialCreation.Designer.cs">
-      <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
+    <Compile Include="Migrations\201405051002354_InitialCreation.cs" />
+    <Compile Include="Migrations\201405051002354_InitialCreation.Designer.cs">
+      <DependentUpon>201405051002354_InitialCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
@@ -136,19 +136,6 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="McSntttContext.cs" />
-    <Compile Include="Migrations\201404281243051_study.cs" />
-    <Compile Include="Migrations\201405011137307_Study2.cs" />
-    <Compile Include="Migrations\201405011137307_Study2.Designer.cs">
-      <DependentUpon>201405011137307_Study2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201405011811500_Study3.cs" />
-    <Compile Include="Migrations\201405011811500_Study3.Designer.cs">
-      <DependentUpon>201405011811500_Study3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201405041415376_Study4.cs" />
-    <Compile Include="Migrations\201405041415376_Study4.Designer.cs">
-      <DependentUpon>201405041415376_Study4.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\Event.cs" />
@@ -337,20 +324,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201405010953244_InitialCreation.resx">
-      <DependentUpon>201405010953244_InitialCreation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404281243051_study.resx">
-      <DependentUpon>201404281243051_study.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405011137307_Study2.resx">
-      <DependentUpon>201405011137307_Study2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405011811500_Study3.resx">
-      <DependentUpon>201405011811500_Study3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405041415376_Study4.resx">
-      <DependentUpon>201405041415376_Study4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201405051002354_InitialCreation.resx">
+      <DependentUpon>201405051002354_InitialCreation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
