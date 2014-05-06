@@ -5,7 +5,7 @@
         Style="{StaticResource WindowStyle}">
     <Grid>
         <Label Content="Tilmeldte til begivenheden" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-        <ListBox HorizontalAlignment="Left" Height="198" Margin="10,35,0,0" VerticalAlignment="Top" Width="151"/>
+        <ListBox x:Name="ParticipantsListbox" HorizontalAlignment="Left" Height="198" Margin="10,35,0,0" VerticalAlignment="Top" Width="151"/>
         <Button Content="Luk" HorizontalAlignment="Left" Margin="86,240,0,0" VerticalAlignment="Top" Width="75" Click="Close"/>
 
     </Grid>

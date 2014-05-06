@@ -50,6 +50,8 @@ namespace McSntt.Views.UserControls
         {          
             var newEvent = new Event();
 
+
+
             Window createEventPopup = new EventsPopup(newEvent);
             createEventPopup.ShowDialog();
             AgendaListbox.ItemsSource = EventsList;
@@ -111,26 +113,26 @@ namespace McSntt.Views.UserControls
 
             if (i >= 0)
             {
-
-
-
-                
-
                 var selectedEvent = EventsList.ElementAt(i);
 
-                selectedEvent.Participants = new List<Person>();
+                if (selectedEvent.SignUpReq)
+                {
+                    if (selectedEvent.Participants == null)
+                    {
+                        selectedEvent.Participants = new List<Person>();
+                    }
 
-                selectedEvent.Participants.Add(GlobalInformation.CurrentUser);
-
-
-
-                //newEvent.Participants = Participants;
-
-
-
-                //newEvent.Participants.Add(GlobalInformation.CurrentUser);
-
-                //Textbox.Text = newEvent.Participants.ToString();
+                    if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                    {
+                        MessageBox.Show("Du er allerede tilmeldt");
+                    }
+                    else
+                    {
+                        selectedEvent.Participants.Add(GlobalInformation.CurrentUser);
+                        MessageBox.Show("Du er nu tilmeldt");
+                    }
+                }
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed");
             }
             else MessageBox.Show("Vælg en begivenhed at tilmelde");
         }
