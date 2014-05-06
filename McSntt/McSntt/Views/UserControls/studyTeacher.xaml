@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="985" x:Name="StudyTeacherUserControl"
+             d:DesignHeight="561" d:DesignWidth="985" x:Name="StudyTeacherUserControl"
              DataContext="{Binding ElementName=StudyTeacherUserControl}">
     <Grid>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="515" Margin="423,137,0,0" VerticalAlignment="Top" Width="547">
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="515" Margin="424,34,0,0" VerticalAlignment="Top" Width="547">
             <Grid x:Name="editTeamGrid" Height="504" VerticalAlignment="Bottom" Width="502" HorizontalAlignment="Center" Margin="21,0,22,4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="65*"/>
@@ -66,7 +66,7 @@
         <CheckBox x:Name="GaffelriggerCheckBox" Content="Gaffelrigger sejlads" HorizontalAlignment="Left" Margin="22,412,0,0" VerticalAlignment="Top" />
         <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="22,164,0,0" VerticalAlignment="Top" Width="166" FontSize="16"/>
         <Label Content="Praktisk" HorizontalAlignment="Left" Margin="22,337,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <CheckBox x:Name="editTeam" Content="Redigér hold" HorizontalAlignment="Left" Margin="423,116,0,0" VerticalAlignment="Top" Checked="editTeam_Checked" Unchecked="editTeam_Unchecked"/>
+        <CheckBox x:Name="editTeam" Content="Redigér hold" HorizontalAlignment="Left" Margin="424,13,0,0" VerticalAlignment="Top" Checked="editTeam_Checked" Unchecked="editTeam_Unchecked"/>
         <ComboBox x:Name="lectureDropdown" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Vælg Hold:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
         <Label Content="Vælg Elev:" HorizontalAlignment="Left" Margin="151,8,0,0" VerticalAlignment="Top" Width="120"/>
