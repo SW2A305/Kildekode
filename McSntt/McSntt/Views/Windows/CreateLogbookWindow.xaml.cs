@@ -88,7 +88,7 @@ namespace McSntt.Views.Windows
             else if ((DateTimePickerActualArrival.Value == _hasBeenFilledTime ||
                      DateTimePickerActualDeparture.Value == _hasBeenFilledTime))
             {
-                MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst fra defaultværdien");
+                MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst");
             }
             else if ((NoRadioButton.IsChecked == true || YesButBrokenRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
             {
