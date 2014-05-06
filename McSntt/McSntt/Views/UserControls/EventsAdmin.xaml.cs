@@ -149,8 +149,35 @@ namespace McSntt.Views.UserControls
                 {
                     Window showParticipants = new ParticipantsPopup(selectedEvent);
                     showParticipants.ShowDialog();
-                }                
+                }
             }
+            else MessageBox.Show("Vælg en begivenhed!");
+        }
+
+        private void Unsubscribe(object sender, RoutedEventArgs e)
+        {
+            int i = AgendaListbox.SelectedIndex;
+
+            if (i >= 0)
+            {
+                var selectedEvent = EventsList.ElementAt(i);
+
+                if (selectedEvent.SignUpReq)
+                {
+                    if (selectedEvent.Participants != null)
+                    {
+                        if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                        {
+                            selectedEvent.Participants.Remove(GlobalInformation.CurrentUser);
+                            MessageBox.Show("Du er nu frameldt!");
+                        }
+                        else MessageBox.Show("Du er ikke tilmeldt begivenheden!");
+                    }
+                    else MessageBox.Show("Der er ikke nogen tilmeldte til begivenheden!");
+                }
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+            }
+            else MessageBox.Show("Vælg en begivenhed at framelde dig fra!");
         }
 
         private void AgendaListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
