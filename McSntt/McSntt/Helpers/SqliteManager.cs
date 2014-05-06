@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Text;
+using System.Windows;
 
 namespace McSntt.Helpers
 {
@@ -363,7 +365,7 @@ namespace McSntt.Helpers
                 // Create table that tracks database version
                 using (var command = db.CreateCommand()) {
                     command.CommandType = CommandType.Text;
-                    command.CommandText = String.Format("CREATE TABLE {0} (name TEXT, value TEXT)", TableDbSettings);
+                    command.CommandText = String.Format("CREATE TABLE {0} (name TEXT, value INTEGER)", TableDbSettings);
                     command.ExecuteNonQuery();
                 }
 

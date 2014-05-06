@@ -22,7 +22,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         String.Format("INSERT INTO {0} (type, nickname, image_path, operational) " +
-                                      "VALUES (@type, @nickname@, @imagePath, @operational)",
+                                      "VALUES (@type, @nickname, @imagePath, @operational)",
                                       SqliteManager.TableBoats);
 
                     foreach (Boat boat in items)
@@ -127,12 +127,12 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     while (reader.Read())
                     {
                         boats.Add(new Boat()
-                                  {
-                                      BoatId = reader.GetInt32(reader.GetOrdinal("boat_id")),
-                                      ImagePath = reader.GetString(reader.GetOrdinal("image_path")),
-                                      NickName = reader.GetString(reader.GetOrdinal("nickname")),
-                                      Operational = reader.GetBoolean(reader.GetOrdinal("operational"))
-                                  });
+                        {
+                            BoatId = reader.GetInt32(reader.GetOrdinal("boat_id")),
+                            ImagePath = reader.GetString(reader.GetOrdinal("image_path")),
+                            NickName = reader.GetString(reader.GetOrdinal("nickname")),
+                            Operational = reader.GetBoolean(reader.GetOrdinal("operational"))
+                        });
                     }
                 }
 
@@ -155,7 +155,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         String.Format("SELECT * FROM {0} " +
-                                      "WHERE boat_id = @boatId" +
+                                      "WHERE boat_id = @boatId " +
                                       "LIMIT 1",
                                       SqliteManager.TableBoats);
                     command.Parameters.Add(new SQLiteParameter("@boatId", itemId));
