@@ -107,6 +107,7 @@
     <Compile Include="Helpers\DalLocator.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
+    <Compile Include="Helpers\StudyMockData.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="Migrations\201405051002354_InitialCreation.cs" />
     <Compile Include="Migrations\201405051002354_InitialCreation.Designer.cs">
@@ -117,6 +118,9 @@
     </Compile>
     <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
       <DependentUpon>DamageReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\NewTeamWindow.xaml.cs">
+      <DependentUpon>NewTeamWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\ParticipantsPopup.xaml.cs">
       <DependentUpon>ParticipantsPopup.xaml</DependentUpon>
@@ -198,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\DamageReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\NewTeamWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

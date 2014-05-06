@@ -30,7 +30,7 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
-        #region Til test
+        #region Mock data
         public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First, TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
         public Team Team16 = new Team {Name = "Hold 16", TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
         public IList<Team> TeamList = new List<Team>();
@@ -48,15 +48,13 @@ namespace McSntt.Views.UserControls
             var teamDal = new TeamEfDal();
             var memberDal = new StudentMemberEfDal();
            
-            #region Til test
+            #region Mock data
             Team15.TeamMembers.Add(Member1);
             Team15.TeamMembers.Add(Member2);
-            TeamList.Add(Team15);
-            TeamList.Add(Team16);
             Team15.Lectures.Add(Lecture);
-
-            teamDropdown.ItemsSource = TeamList;
-            lectureDropdown.ItemsSource = lectureDal.GetAll();
+            StudyMockData.TeamListGlobal.Add(Team15);
+            StudyMockData.TeamListGlobal.Add(Team16);
+            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
             #endregion
 
             // To be uncommented when database works
@@ -113,15 +111,38 @@ namespace McSntt.Views.UserControls
 
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
+            
             var team = new Team { Name = teamName.Text };
+            if (Level1RadioButton.IsChecked == true)
+            {
+                team.Level = Team.ClassLevel.First;
+            }
+            else if (Level2RadioButton.IsChecked == true)
+            {
+                team.Level = Team.ClassLevel.Second;
+            }
+            
+            /* Database
             ITeamDal teamDal = new TeamEfDal();
             teamDal.Create(team);
             teamDropdown.ItemsSource = teamDal.GetAll();
+                */
+
+            #region Mock data
+            StudyMockData.TeamListGlobal.Add(team);
+            teamDropdown.ItemsSource = null;
+            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+
+            #endregion
         }
 
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             ClearFields();
+            var newTeamWindow = new NewTeamWindow();
+            newTeamWindow.ShowDialog();
+            teamDropdown.ItemsSource = null;
+            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
         }
 
         private void deleteTeam_Click(object sender, RoutedEventArgs e)
@@ -138,10 +159,10 @@ namespace McSntt.Views.UserControls
                 teamDropdown.ItemsSource = teamDal.GetAll();
                  */
 
-                #region Til test
-                TeamList.Remove(team);
+                #region Mock data
+                StudyMockData.TeamListGlobal.Remove(team);
                 teamDropdown.ItemsSource = null;
-                teamDropdown.ItemsSource = TeamList;
+                teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
                 #endregion
 
                 ClearFields();
@@ -217,13 +238,12 @@ namespace McSntt.Views.UserControls
 
             try
             {
-                studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
-                //Messagebox for test purpose, list seemingly does not exist in database
-                //MessageBox.Show("" + ((Team)teamDropdown.SelectedItem).TeamMembers.Count);
-                this.MembersList = ((Team) teamDropdown.SelectedItem).TeamMembers;
-                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(this.MembersList);
-                teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
                 
+                studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
+                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(((Team) teamDropdown.SelectedItem).TeamMembers);
+                teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
+                lectureDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).Lectures;
+
                 switch (((Team)teamDropdown.SelectedItem).Level)
                 {
                     case 0:
@@ -253,12 +273,12 @@ namespace McSntt.Views.UserControls
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!this.MembersList.Contains(currentMember))
+            if (!((Team)teamDropdown.SelectedItem).TeamMembers.Contains(currentMember))
             {
-                this.MembersList.Add(currentMember);
+                ((Team)teamDropdown.SelectedItem).TeamMembers.Add(currentMember);
                 studentDropdown.ItemsSource = null;
                 studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
-                RefreshDatagrid(CurrentMemberDataGrid, this.MembersList);
+                RefreshDatagrid(CurrentMemberDataGrid, ((Team)teamDropdown.SelectedItem).TeamMembers);
             }
             
         }
@@ -266,10 +286,10 @@ namespace McSntt.Views.UserControls
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
             var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
-            this.MembersList.Remove(currentMember);
+            ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(currentMember);
             studentDropdown.ItemsSource = null;
             studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
-            RefreshDatagrid(CurrentMemberDataGrid, this.MembersList);
+            RefreshDatagrid(CurrentMemberDataGrid, ((Team)teamDropdown.SelectedItem).TeamMembers);
         }
 
         private void Level1RadioButton_Checked(object sender, RoutedEventArgs e)
