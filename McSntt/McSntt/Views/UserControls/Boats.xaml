@@ -42,6 +42,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Liste over kommende sejlture" HorizontalAlignment="Left" Margin="459,154,0,0" VerticalAlignment="Top" Width="224"/>
+        <Button Content="Book Båden" HorizontalAlignment="Left" Margin="169,41,0,0" VerticalAlignment="Top" Width="115" x:Name="BookButton" Click="BookButton_Click"/>
 
     </Grid>
 </UserControl>

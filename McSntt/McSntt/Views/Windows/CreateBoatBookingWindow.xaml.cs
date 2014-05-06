@@ -15,7 +15,7 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateBoatBookingWindow : Window
     {
-        public CreateBoatBookingWindow()
+        public CreateBoatBookingWindow(int index)
         {
             InitializeComponent();
             
@@ -23,13 +23,14 @@ namespace McSntt.Views.Windows
             BoatComboBox.ItemsSource = dbm.GetAll();
             BoatComboBox.DisplayMemberPath = "NickName";
             BoatComboBox.SelectedValuePath = "Id";
-            BoatComboBox.SelectedIndex = 0;
+            BoatComboBox.SelectedIndex = index;
             
             CaptainComboBox.DisplayMemberPath = "FirstName";
             CaptainComboBox.SelectedValuePath = "MemberId";
 
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
+
         }
 
         private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)

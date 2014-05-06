@@ -139,7 +139,7 @@ namespace McSntt.Views.Windows
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CreateCrewWindowName.Close();
+            this.Close();
         }
 
         private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
