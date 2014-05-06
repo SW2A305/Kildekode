@@ -6,8 +6,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="985">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="540" Margin="26,86,0,0" VerticalAlignment="Top" Width="307">
-            <CheckBox x:Name="theoryCheck1Student" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+        <Grid x:Name="progressGrid" HorizontalAlignment="Left" Height="540" Margin="26,86,0,0" VerticalAlignment="Top" Width="307">
+            <CheckBox x:Name="theoryCheck1" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top" IsEnabled="False"/>
             <CheckBox x:Name="theoryCheck2" Content="Navigation" HorizontalAlignment="Left" Margin="26,153,0,0" VerticalAlignment="Top" IsEnabled="False"/>
             <CheckBox x:Name="theoryCheck3" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="26,191,0,0" VerticalAlignment="Top" IsEnabled="False"/>
             <CheckBox x:Name="practicalCheck1" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="26,323,0,0" VerticalAlignment="Top" IsEnabled="False"/>
