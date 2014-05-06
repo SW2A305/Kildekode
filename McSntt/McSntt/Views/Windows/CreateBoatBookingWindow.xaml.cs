@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using McSntt.DataAbstractionLayer;
+using McSntt.Helpers;
 using McSntt.Models;
 using MessageBox = System.Windows.MessageBox;
 
@@ -27,6 +28,7 @@ namespace McSntt.Views.Windows
             
             CaptainComboBox.DisplayMemberPath = "FirstName";
             CaptainComboBox.SelectedValuePath = "MemberId";
+            CaptainComboBox.ItemsSource = CrewList;
 
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
@@ -38,6 +40,32 @@ namespace McSntt.Views.Windows
             
         }
         public List<Person> CrewList = new List<Person>();
+
+        public CreateBoatBookingWindow(DateTime departure, DateTime arrival, Team currentTeam) : this(-1)
+        {
+            List<Boat> boats = new List<Boat>();
+            boats = DalLocator.BoatDal.GetAll().ToList();
+            Boat Anya = new Boat
+            {
+                Type = (currentTeam.Level == Team.ClassLevel.Second) ? BoatType.Gaffelrigger : BoatType.Drabant
+            };
+
+            Boat currentBoat = boats.FirstOrDefault(
+                x => x.Type == Anya.Type);
+
+            BoatComboBox.SelectedIndex = boats.FindIndex(b => b == currentBoat);
+            CrewList.Add(GlobalInformation.CurrentUser);
+            CaptainComboBox.SelectedIndex = 0;
+            foreach (var member in currentTeam.TeamMembers)
+            {
+                CrewList.Add(member);
+            }
+            DateTimeStart.Value = departure;
+            DateTimeEnd.Value = arrival;
+            PurposeTextBox.Text = "Undervisning af:" + currentTeam.Name;
+            SaveButton_Click(new object(), new RoutedEventArgs());
+
+        }
 
         private void ChangeCrew_Click(object sender, RoutedEventArgs e)
         {
