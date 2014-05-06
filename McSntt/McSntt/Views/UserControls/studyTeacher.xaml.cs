@@ -300,6 +300,7 @@ namespace McSntt.Views.UserControls
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
+            if (MemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
             if (!((Team)teamDropdown.SelectedItem).TeamMembers.Contains(currentMember))
             {
@@ -313,6 +314,7 @@ namespace McSntt.Views.UserControls
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentMemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
             ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(currentMember);
             studentDropdown.ItemsSource = null;
