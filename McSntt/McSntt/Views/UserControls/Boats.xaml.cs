@@ -61,7 +61,9 @@ namespace McSntt.Views.UserControls
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
                         .OrderBy(x => x.DepartureTime);
 
-                BookButton.IsEnabled = true;
+                // Grey out the book button for support memebers and guests
+                if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.SupportMember)
+                    BookButton.IsEnabled = true;
 
                 if (CurrentBoat.ImagePath != null)
                 {

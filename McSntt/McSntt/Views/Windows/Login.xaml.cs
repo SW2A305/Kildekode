@@ -134,7 +134,8 @@ namespace McSntt.Views.Windows
 
             GlobalInformation.CurrentUser = new SailClubMember()
             {
-                FirstName = "Gæst"
+                FirstName = "Gæst",
+                Position = SailClubMember.Positions.SupportMember
             };
 
             var GuestWindow = new GuestMainWindow(this);
