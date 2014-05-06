@@ -2,8 +2,6 @@
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Text;
-using System.Windows;
 
 namespace McSntt.Helpers
 {
@@ -47,10 +45,7 @@ namespace McSntt.Helpers
                     string roamingAppDataFolder =
                         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppName);
 
-                    if (!Directory.Exists(roamingAppDataFolder))
-                    {
-                        Directory.CreateDirectory(roamingAppDataFolder);
-                    }
+                    if (!Directory.Exists(roamingAppDataFolder)) { Directory.CreateDirectory(roamingAppDataFolder); }
 
                     _dbFilePath = Path.Combine(roamingAppDataFolder, DbFileName);
                 }
@@ -63,8 +58,7 @@ namespace McSntt.Helpers
         {
             get
             {
-                if (String.IsNullOrEmpty(_connectionString))
-                {
+                if (String.IsNullOrEmpty(_connectionString)) {
                     _connectionString = String.Format("Data Source={0};Version=3", DbFilePath);
                 }
 
@@ -72,50 +66,33 @@ namespace McSntt.Helpers
             }
         }
 
-        public static SQLiteConnection DbConnection
-        {
-            get
-            {
-                return new SQLiteConnection(ConnectionString);
-            }
-        }
+        public static SQLiteConnection DbConnection { get { return new SQLiteConnection(ConnectionString); } }
         #endregion
-
 
         public static void InitializeDatabase()
         {
             // Make sure database even exists
-            if (!File.Exists(DbFilePath))
-            {
-                CreateDatabase();
-            }
+            if (!File.Exists(DbFilePath)) { CreateDatabase(); }
 
-            using (var db = DbConnection)
+            using (SQLiteConnection db = DbConnection)
             {
-                var dbVersion = 0;
+                int dbVersion = 0;
 
                 db.Open();
 
-                using (var command = db.CreateCommand())
+                using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText = String.Format("SELECT value FROM {0} WHERE name = @name", TableDbSettings);
                     command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
 
-                    var reader = command.ExecuteReader();
-                    
-                    if (reader.Read())
-                    {
-                        dbVersion = reader.GetInt32(reader.GetOrdinal("value"));
-                    }
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read()) { dbVersion = reader.GetInt32(reader.GetOrdinal("value")); }
                 }
 
-                if (dbVersion < DbVersion)
-                {
-                    for (int i = dbVersion; i < DbVersion; i++)
-                    {
-                        UpdateDatabase(db, i, i + 1);
-                    }
+                if (dbVersion < DbVersion) {
+                    for (int i = dbVersion; i < DbVersion; i++) { UpdateDatabase(db, i, i + 1); }
                 }
 
                 db.Close();
@@ -124,20 +101,17 @@ namespace McSntt.Helpers
 
         private static void UpdateDatabase(SQLiteConnection db, int fromVersion, int toVersion)
         {
-            if (fromVersion == 0 && toVersion == 1)
-            {
-                UpdateDatabaseFromVersion0ToVersion1(db);
-            }
+            if (fromVersion == 0 && toVersion == 1) { UpdateDatabaseFromVersion0ToVersion1(db); }
         }
 
         private static void UpdateDatabaseFromVersion0ToVersion1(SQLiteConnection db)
         {
-            using (var transaction = db.BeginTransaction())
+            using (SQLiteTransaction transaction = db.BeginTransaction())
             {
                 try
                 {
                     #region Create Table: Boats
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -151,7 +125,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: Events
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -166,15 +140,15 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: Lectures
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format(
                                           "CREATE TABLE {0} (lecture_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "team_id INTEGER, date_of_lecture TEXT, rope_works INTEGER, navigation INTEGER, "
-                                          +
-                                          "motor INTEGER, drabant INTEGER, gaffelrigger INTEGER, night INTEGER" +
+                                          "team_id INTEGER, date_of_lecture TEXT, rope_works INTEGER, " +
+                                          "navigation INTEGER, motor INTEGER, drabant INTEGER, " +
+                                          "gaffelrigger INTEGER, night INTEGER" +
                                           ")",
                                           TableLectures);
                         command.ExecuteNonQuery();
@@ -182,7 +156,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: Logbooks
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -198,7 +172,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: Persons
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -216,7 +190,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: RegularTrips
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -234,7 +208,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: SailClubMembers
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -248,7 +222,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: StudentMembers
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -264,7 +238,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create table: Teams
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -278,7 +252,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create binding-table: EventParticipantsBinder
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -292,7 +266,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create binding-table: LogbookActualCrewBinder
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -306,7 +280,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create binding-table: RegularTripCrewBinder
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -320,7 +294,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Create binding-table: LecturePresentMembersBinder
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -334,7 +308,7 @@ namespace McSntt.Helpers
                     #endregion
 
                     #region Update DB version
-                    using (var command = db.CreateCommand())
+                    using (SQLiteCommand command = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText = String.Format("UPDATE {0} SET value = @value WHERE name = @name",
@@ -347,8 +321,7 @@ namespace McSntt.Helpers
 
                     transaction.Commit();
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     transaction.Rollback();
                 }
             }
@@ -358,22 +331,24 @@ namespace McSntt.Helpers
         {
             SQLiteConnection.CreateFile(DbFilePath);
 
-            using (var db = DbConnection)
+            using (SQLiteConnection db = DbConnection)
             {
                 db.Open();
 
                 // Create table that tracks database version
-                using (var command = db.CreateCommand()) {
+                using (SQLiteCommand command = db.CreateCommand())
+                {
                     command.CommandType = CommandType.Text;
                     command.CommandText = String.Format("CREATE TABLE {0} (name TEXT, value INTEGER)", TableDbSettings);
                     command.ExecuteNonQuery();
                 }
 
                 // Insert version tracker setting
-                using (var command = db.CreateCommand())
+                using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
-                    command.CommandText = String.Format("INSERT INTO {0} (name, value) VALUES (@name, @version)", TableDbSettings);
+                    command.CommandText = String.Format("INSERT INTO {0} (name, value) VALUES (@name, @version)",
+                                                        TableDbSettings);
                     command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
                     command.Parameters.Add(new SQLiteParameter("@version", 0));
                     command.ExecuteNonQuery();
