@@ -36,33 +36,21 @@ namespace McSntt.Views.Windows
             InitializeComponent();
             
             this.newEvent = newEvent;
-            
-            ChooseDate.Value = DateTime.Today;
 
+            EventNameBox.Text = newEvent.EventTitle;
+            EventDescriptionBox.Text = newEvent.Description;
+            ChooseDate.Value = newEvent.EventDate;
+            SubscriptionCheckbox.IsChecked = newEvent.SignUpReq;
+
+            if (newEvent.EventDate == default(DateTime))
+            {
+                ChooseDate.Value = DateTime.Today;
+            }
             newEvent.Created = false;
         }
 
-        public EventsPopup(
-            string EventTitle,
-            DateTime EventDate,
-            string Description,
-            bool SignUpReq)
-        {
-            InitializeComponent();
-
-
-            EventNameBox.Text = EventTitle;
-            EventDescriptionBox.Text = Description;
-            ChooseDate.Value = EventDate;
-            SubscriptionCheckbox.IsChecked = SignUpReq;
-
-            
-        }
-
-
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-
             #region If not filled check
 
             if (!string.IsNullOrEmpty(EventNameBox.Text))
