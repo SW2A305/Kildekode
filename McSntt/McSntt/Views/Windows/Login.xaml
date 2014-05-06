@@ -7,8 +7,8 @@
         Title="Login" Width="345" Height="269"
         MinHeight="242" MinWidth="345"
         MaxHeight="240" MaxWidth="345"
-        Style="{StaticResource WindowStyle}"
-        >
+        Style="{StaticResource WindowStyle}">
+    
     <Grid>
         <StackPanel HorizontalAlignment="Left" 
                     Width="310" 
@@ -22,7 +22,7 @@
             <Button Content="Login" Click="DoLogin"/>
             <!-- To make border -->
             <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
-            <Button Content="Login som gæst" Click="DoLogin"/>
+            <Button Content="Login som gæst" Name="GuestLogin" Click="GuestLogin_OnClick"/>
             <!-- To make border -->
             <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
             <Button Content="Glemt adgangskode" />
