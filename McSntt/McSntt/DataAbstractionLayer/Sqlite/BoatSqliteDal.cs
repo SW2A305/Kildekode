@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
 using McSntt.Helpers;
 using McSntt.Models;
 
@@ -82,11 +83,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             int deletedRows = 0;
 
-            using (var db = DatabaseManager.DbConnection)
+            using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (var command = db.CreateCommand())
+                using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText =
@@ -94,7 +95,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       "WHERE boat_id = @boatId",
                                       DatabaseManager.TableBoats);
 
-                    foreach (var boat in items)
+                    foreach (Boat boat in items)
                     {
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@boatId", boat.BoatId));
@@ -112,27 +113,27 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             var boats = new List<Boat>();
 
-            using (var db = DatabaseManager.DbConnection)
+            using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (var command = db.CreateCommand())
+                using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableBoats);
 
-                    var reader = command.ExecuteReader();
+                    SQLiteDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        boats.Add(new Boat()
-                        {
-                            BoatId = reader.GetInt32(reader.GetOrdinal("boat_id")),
-                            ImagePath = reader.GetString(reader.GetOrdinal("image_path")),
-                            NickName = reader.GetString(reader.GetOrdinal("nickname")),
-                            Operational = reader.GetBoolean(reader.GetOrdinal("operational"))
-                        });
+                        boats.Add(new Boat
+                                  {
+                                      BoatId = reader.GetInt32(reader.GetOrdinal("boat_id")),
+                                      ImagePath = reader.GetString(reader.GetOrdinal("image_path")),
+                                      NickName = reader.GetString(reader.GetOrdinal("nickname")),
+                                      Operational = reader.GetBoolean(reader.GetOrdinal("operational"))
+                                  });
                     }
                 }
 
@@ -146,11 +147,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             Boat boat = null;
 
-            using (var db = DatabaseManager.DbConnection)
+            using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (var command = db.CreateCommand())
+                using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText =
@@ -160,7 +161,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableBoats);
                     command.Parameters.Add(new SQLiteParameter("@boatId", itemId));
 
-                    var reader = command.ExecuteReader();
+                    SQLiteDataReader reader = command.ExecuteReader();
 
                     if (reader.Read())
                     {
@@ -178,6 +179,24 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
 
             return boat;
+        }
+
+        public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate) { return this.GetAll(predicate, true); }
+
+        public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate, bool fetchChildData)
+        {
+            IEnumerable<Boat> boats = this.GetAll().Where(predicate);
+
+            if (fetchChildData)
+            {
+                foreach (Boat boat in boats)
+                {
+                    // TODO Complete this.
+                    boat.SailTrips = new List<SailTrip>();
+                }
+            }
+
+            return boats;
         }
     }
 }
