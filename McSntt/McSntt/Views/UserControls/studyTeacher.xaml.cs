@@ -66,17 +66,13 @@ namespace McSntt.Views.UserControls
             lectureDropdown.DisplayMemberPath = "DateOfLecture";
             lectureDropdown.SelectedValuePath = "LectureId";
 
-            studentOne.IsEnabled = false;
-            studentTwo.IsEnabled = false;
-            studentThree.IsEnabled = false;
-            studentFour.IsEnabled = false;
-            studentFive.IsEnabled = false;
-            studentSix.IsEnabled = false;
+            StudentCheckBoxNameReset();
             
             DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
             DataGridCollection.Filter = new Predicate<object>(Filter);
             
             editTeamGrid.IsEnabled = false;
+            lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
         }
 
         private void RefreshDatagrid(DataGrid grid, ICollection<StudentMember> list)
@@ -307,7 +303,7 @@ namespace McSntt.Views.UserControls
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
             }
         }
-
+        /* benyttes ikke
         private void studentDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (studentDropdown.SelectedItem != null)
@@ -330,7 +326,7 @@ namespace McSntt.Views.UserControls
                 NightCheckBox.IsChecked = false;
             }
         }
-
+        */
 
         #endregion
         
@@ -406,6 +402,7 @@ namespace McSntt.Views.UserControls
         }
         #endregion
 
+        #region updateLecture
         private void SaveLectureInfo()
         {
             if(lectureDropdown.SelectedItem == null){ return; }
@@ -473,12 +470,34 @@ namespace McSntt.Views.UserControls
             SaveLectureInfo();
             AssignToughtLectureItemsToMember();
         }
+        #endregion
 
         private void newLecture1_Click(object sender, RoutedEventArgs e)
         {
             
             var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
+        }
+
+        private void lectureDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lectureDropdown.SelectedIndex != -1)
+            {
+                lectureGrid.IsEnabled = true;
+            }
+            if (((Team) teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
+            {
+                NavigationCheckBox.IsEnabled = false;
+                MotorCheckBox.IsEnabled = false;
+                GaffelriggerCheckBox.IsEnabled = false;
+            }
+            else
+            {
+                NavigationCheckBox.IsEnabled = true;
+                MotorCheckBox.IsEnabled = true;
+                GaffelriggerCheckBox.IsEnabled = true;
+                DrabantCheckBox.IsEnabled = false;
+            }
         }
 
         
