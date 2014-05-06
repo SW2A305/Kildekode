@@ -81,6 +81,10 @@ namespace McSntt.Views.UserControls
                 AgendaListbox.ItemsSource = EventsList;
 
                 AgendaListbox.Items.Refresh();
+
+                Descriptionbox.Text = null;
+
+                Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
             }
             else MessageBox.Show("Vælg en begivenhed at redigere");           
         }
