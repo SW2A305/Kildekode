@@ -86,7 +86,7 @@ namespace McSntt.Views.UserControls
 
                 Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
             }
-            else MessageBox.Show("Vælg en begivenhed at redigere");           
+            else MessageBox.Show("Vælg en begivenhed at redigere!");           
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)
@@ -97,7 +97,7 @@ namespace McSntt.Views.UserControls
             {
                 EventsList.RemoveAt(i);
             }
-            else MessageBox.Show("Vælg en begivenhed som skal slettes");
+            else MessageBox.Show("Vælg en begivenhed som skal slettes!");
 
             AgendaListbox.Items.Refresh();
         }
@@ -119,17 +119,17 @@ namespace McSntt.Views.UserControls
 
                     if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
                     {
-                        MessageBox.Show("Du er allerede tilmeldt");
+                        MessageBox.Show("Du er allerede tilmeldt!");
                     }
                     else
                     {
                         selectedEvent.Participants.Add(GlobalInformation.CurrentUser);
-                        MessageBox.Show("Du er nu tilmeldt");
+                        MessageBox.Show("Du er nu tilmeldt!");
                     }
                 }
-                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed");
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
             }
-            else MessageBox.Show("Vælg en begivenhed at tilmelde");
+            else MessageBox.Show("Vælg en begivenhed at tilmelde!");
         }
 
         private void Show_Participants(object sender, RoutedEventArgs e)
@@ -140,8 +140,16 @@ namespace McSntt.Views.UserControls
             if (i >= 0)
             {
                 var selectedEvent = EventsList.ElementAt(i);
-                Window showParticipants = new ParticipantsPopup(selectedEvent);
-                showParticipants.ShowDialog();
+
+                if (selectedEvent.SignUpReq == false)
+                {
+                    MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+                }
+                else
+                {
+                    Window showParticipants = new ParticipantsPopup(selectedEvent);
+                    showParticipants.ShowDialog();
+                }                
             }
         }
 
