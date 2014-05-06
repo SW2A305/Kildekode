@@ -121,11 +121,8 @@
     <Compile Include="Views\Windows\ParticipantsPopup.xaml.cs">
       <DependentUpon>ParticipantsPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
-      <DependentUpon>SupportMainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Windows\TeacherMainWindow.xaml.cs">
-      <DependentUpon>TeacherMainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Windows\GuestMainWindow.xaml.cs">
+      <DependentUpon>GuestMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\StudentMainWindow.xaml.cs">
       <DependentUpon>StudentMainWindow.xaml</DependentUpon>
@@ -150,9 +147,6 @@
     <Compile Include="Views\Helpers\CalenderBackground.cs" />
     <Compile Include="Views\UserControls\EventsAdmin.xaml.cs">
       <DependentUpon>EventsAdmin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
-      <DependentUpon>BoatReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\Boats.xaml.cs">
       <DependentUpon>Boats.xaml</DependentUpon>
@@ -205,11 +199,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Windows\SupportMainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Windows\TeacherMainWindow.xaml">
+    <Page Include="Views\Windows\GuestMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -243,10 +233,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\UserControls\EventsAdmin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\BoatReservation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
