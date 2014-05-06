@@ -31,8 +31,12 @@
                 <TabItem.Header>
                     <TextBlock Text="Både" FontSize="23" />
                 </TabItem.Header>
+<<<<<<< HEAD
                 <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
+=======
+                <UserControls:Boats/>
+>>>>>>> master
             </TabItem>
         </TabControl>
 
