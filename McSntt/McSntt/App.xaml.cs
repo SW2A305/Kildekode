@@ -18,7 +18,7 @@ namespace McSntt
     {
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            SqliteManager.InitializeDatabase();
+            DatabaseManager.InitializeDatabase();
 
             var boatDal = new BoatSqliteDal();
             var boats = boatDal.GetAll();

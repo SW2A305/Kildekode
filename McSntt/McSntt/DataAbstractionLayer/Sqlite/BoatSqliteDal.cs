@@ -13,7 +13,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             int insertedRows = 0;
 
-            using (SQLiteConnection db = SqliteManager.DbConnection)
+            using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
@@ -23,7 +23,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("INSERT INTO {0} (type, nickname, image_path, operational) " +
                                       "VALUES (@type, @nickname, @imagePath, @operational)",
-                                      SqliteManager.TableBoats);
+                                      DatabaseManager.TableBoats);
 
                     foreach (Boat boat in items)
                     {
@@ -46,7 +46,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             int updatedRows = 0;
 
-            using (SQLiteConnection db = SqliteManager.DbConnection)
+            using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
@@ -58,7 +58,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       "SET type = @type, nickname = @nickname, image_path = @imagePath, " +
                                       "operational = @operational " +
                                       "WHERE boat_id = @boatId",
-                                      SqliteManager.TableBoats);
+                                      DatabaseManager.TableBoats);
 
                     foreach (Boat boat in items)
                     {
@@ -82,7 +82,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             int deletedRows = 0;
 
-            using (var db = SqliteManager.DbConnection)
+            using (var db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
@@ -92,7 +92,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("DELETE FROM {0} " +
                                       "WHERE boat_id = @boatId",
-                                      SqliteManager.TableBoats);
+                                      DatabaseManager.TableBoats);
 
                     foreach (var boat in items)
                     {
@@ -112,7 +112,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             var boats = new List<Boat>();
 
-            using (var db = SqliteManager.DbConnection)
+            using (var db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
@@ -120,7 +120,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        String.Format("SELECT * FROM {0}", SqliteManager.TableBoats);
+                        String.Format("SELECT * FROM {0}", DatabaseManager.TableBoats);
 
                     var reader = command.ExecuteReader();
 
@@ -146,7 +146,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             Boat boat = null;
 
-            using (var db = SqliteManager.DbConnection)
+            using (var db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
@@ -157,7 +157,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         String.Format("SELECT * FROM {0} " +
                                       "WHERE boat_id = @boatId " +
                                       "LIMIT 1",
-                                      SqliteManager.TableBoats);
+                                      DatabaseManager.TableBoats);
                     command.Parameters.Add(new SQLiteParameter("@boatId", itemId));
 
                     var reader = command.ExecuteReader();

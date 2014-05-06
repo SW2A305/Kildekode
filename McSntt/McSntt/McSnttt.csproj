@@ -118,7 +118,7 @@
     <Compile Include="Helpers\DalLocator.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
-    <Compile Include="Helpers\SqliteManager.cs" />
+    <Compile Include="Helpers\DatabaseManager.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="Migrations\201405052112568_InitialMigration.cs" />
     <Compile Include="Migrations\201405052112568_InitialMigration.Designer.cs">

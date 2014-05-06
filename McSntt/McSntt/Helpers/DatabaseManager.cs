@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace McSntt.Helpers
 {
-    public static class SqliteManager
+    public static class DatabaseManager
     {
         #region Table Names
         public const string TableBoats = "boats";
