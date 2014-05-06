@@ -476,7 +476,8 @@ namespace McSntt.Views.UserControls
 
         private void newLecture1_Click(object sender, RoutedEventArgs e)
         {
-            var window = new NewLecture();
+            
+            var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
         }
 
