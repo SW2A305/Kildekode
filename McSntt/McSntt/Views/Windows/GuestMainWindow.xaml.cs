@@ -9,19 +9,16 @@ using McSntt.Views.UserControls;
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for StudentMainWindow.xaml
+    /// Interaction logic for GuestMainWindow.xaml
     /// </summary>
-    public partial class StudentMainWindow : Window
+    public partial class GuestMainWindow : Window
     {
         private readonly Login _login;
-        public StudentMainWindow(Login loginWindow)
+        public GuestMainWindow(Login loginWindow)
         {
             _login = loginWindow;
             // Set the list as the current DataContext  
             InitializeComponent();
-            FrontPageGrid.Children.Add(new FrontPage());
-            StudyGrid.Children.Add(new studyStudent());
-            MembersGrid.Children.Add(new Members());
             EventsGrid.Children.Add(new EventsAdmin());
             BoatsGrid.Children.Add(new Boats());
             Closing += Window_Closing;
