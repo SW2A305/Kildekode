@@ -27,12 +27,7 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class EventsAdmin : UserControl
     {
-
         public IList<Event> EventsList = new List<Event>();
-
-        //public ICollection<Person> Participants = new List<Person>();
-
-        //public Event newEvent = new Event();
 
         public EventsAdmin()
         {
@@ -50,12 +45,9 @@ namespace McSntt.Views.UserControls
         {          
             var newEvent = new Event();
 
-
-
             Window createEventPopup = new EventsPopup(newEvent);
             createEventPopup.ShowDialog();
             AgendaListbox.ItemsSource = EventsList;
-
 
             if (newEvent.Created)
             {
@@ -90,8 +82,7 @@ namespace McSntt.Views.UserControls
 
                 AgendaListbox.Items.Refresh();
             }
-            else MessageBox.Show("Vælg en begivenhed at redigere");
-            
+            else MessageBox.Show("Vælg en begivenhed at redigere");           
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)
