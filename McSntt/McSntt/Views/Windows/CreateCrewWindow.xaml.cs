@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using McSntt.DataAbstractionLayer;
+using McSntt.Helpers;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
@@ -23,6 +24,8 @@ namespace McSntt.Views.Windows
         private ICollectionView _dataGridCollection;
         private string _filterString;
 
+        private ISailClubMemberDal sailClubMemberDal = DalLocator.SailClubMemberDal;
+
         public CreateCrewWindow(ICollection<Person> CrewList)
         {
             InitializeComponent();
@@ -31,8 +34,7 @@ namespace McSntt.Views.Windows
 
             CurrentCrewDataGrid.ItemsSource = this.CrewList;
 
-            var db = new SailClubMemberEfDal();
-            DataGridCollection = CollectionViewSource.GetDefaultView(db.GetAll());
+            DataGridCollection = CollectionViewSource.GetDefaultView(sailClubMemberDal.GetAll());
             DataGridCollection.Filter = Filter;
         }
 
@@ -41,13 +43,8 @@ namespace McSntt.Views.Windows
             get { return _dataGridCollection; }
             set
             {
-                using (var db = new McSntttContext())
-                {
-                    db.SailClubMembers.Load();
-                    DataGridCollection = CollectionViewSource.GetDefaultView(db.SailClubMembers.Local);
-                    DataGridCollection.Filter = new Predicate<object>(Filter);
-                    SearchBox.Text = "Søg efter medlemmer her";
-                }
+                _dataGridCollection = value;
+                NotifyPropertyChanged("DataGridCollection");
             }
         }
 
@@ -142,7 +139,7 @@ namespace McSntt.Views.Windows
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CreateCrewWindowName.Close();
+            this.Close();
         }
 
         private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
