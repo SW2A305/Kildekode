@@ -30,7 +30,7 @@ namespace McSntt.Views.UserControls
 
         public IList<Event> EventsList = new List<Event>();
 
-        public ICollection<Person> Participants = new List<Person>();
+        //public ICollection<Person> Participants = new List<Person>();
 
         //public Event newEvent = new Event();
 
@@ -47,8 +47,7 @@ namespace McSntt.Views.UserControls
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
-        {
-           
+        {          
             var newEvent = new Event();
 
             Window createEventPopup = new EventsPopup(newEvent);
@@ -58,7 +57,6 @@ namespace McSntt.Views.UserControls
 
             if (newEvent.Created)
             {
-
                 EventsList.Add(newEvent);
 
                 EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
@@ -66,15 +64,7 @@ namespace McSntt.Views.UserControls
                 AgendaListbox.ItemsSource = EventsList;
 
                 AgendaListbox.Items.Refresh();
-
-
             }
-
-            // Lige nu bruges listen fra Event klasse  ikke, den ville ikke twerke med den :(
-            //newEvent.EventList.Add(newEvent);
-            //AgendaListbox.ItemsSource = newEvent.EventList;
-
-
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
@@ -83,7 +73,6 @@ namespace McSntt.Views.UserControls
 
             if (i >= 0)
             {
-
                 var selectedEvent = EventsList.ElementAt(i);
 
                 Window createEventPopup = new EventsPopup(selectedEvent);
@@ -105,7 +94,6 @@ namespace McSntt.Views.UserControls
 
         private void Delete_Event(object sender, RoutedEventArgs e)
         {
-
             int i = AgendaListbox.SelectedIndex;
 
             if (i >= 0)
@@ -117,17 +105,22 @@ namespace McSntt.Views.UserControls
             AgendaListbox.Items.Refresh();
         }
 
-        private void Subscripe(object sender, RoutedEventArgs e)
+        private void Subscribe(object sender, RoutedEventArgs e)
         {
-
             int i = AgendaListbox.SelectedIndex;
 
             if (i >= 0)
             {
 
-                //ICollection<Person> Participants = new List<Person>();
 
-                Participants.Add(GlobalInformation.CurrentUser);
+
+                
+
+                var selectedEvent = EventsList.ElementAt(i);
+
+                selectedEvent.Participants = new List<Person>();
+
+                selectedEvent.Participants.Add(GlobalInformation.CurrentUser);
 
 
 
@@ -144,8 +137,15 @@ namespace McSntt.Views.UserControls
 
         private void Show_Participants(object sender, RoutedEventArgs e)
         {
-            Window showParticipants = new ParticipantsPopup();
-            showParticipants.ShowDialog();
+            
+            int i = AgendaListbox.SelectedIndex;
+
+            if (i >= 0)
+            {
+                var selectedEvent = EventsList.ElementAt(i);
+                Window showParticipants = new ParticipantsPopup(selectedEvent);
+                showParticipants.ShowDialog();
+            }
         }
 
         private void AgendaListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)

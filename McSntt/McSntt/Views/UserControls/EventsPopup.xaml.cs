@@ -51,7 +51,6 @@ namespace McSntt.Views.Windows
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-
             #region If not filled check
 
             if (!string.IsNullOrEmpty(EventNameBox.Text))
