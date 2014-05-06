@@ -8,9 +8,9 @@
     
              d:DesignHeight="722" d:DesignWidth="985">
     <Grid>
-        <Button Content="Opret" HorizontalAlignment="Left" Margin="730,20,0,0" VerticalAlignment="Top" Width="75" Click="Create_Event"/>
-        <Button Content="Rediger" HorizontalAlignment="Left" Margin="815,20,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Event"/>
-        <Button Content="Slet" HorizontalAlignment="Left" Margin="900,20,0,0" VerticalAlignment="Top" Width="75" Click="Delete_Event"/>
+        <Button x:Name="CreateBnt" Content="Opret" HorizontalAlignment="Left" Margin="730,20,0,0" VerticalAlignment="Top" Width="75" Click="Create_Event"/>
+        <Button x:Name="EditBnt" Content="Rediger" HorizontalAlignment="Left" Margin="815,20,0,0" VerticalAlignment="Top" Width="75" Click="Edit_Event"/>
+        <Button x:Name="DeleteBnt" Content="Slet" HorizontalAlignment="Left" Margin="900,20,0,0" VerticalAlignment="Top" Width="75" Click="Delete_Event"/>
         <Label Content="Agenda" HorizontalAlignment="Left" Margin="120,70,0,0" VerticalAlignment="Top" FontSize="36"/>
         <Label Content="Beskrivelse" HorizontalAlignment="Left" Margin="600,70,0,0" VerticalAlignment="Top" FontSize="36"/>
         <Button Content="Vis" HorizontalAlignment="Left" Margin="815,500,0,0" VerticalAlignment="Top" Width="75" Click="Show_Participants"/>

@@ -32,11 +32,18 @@ namespace McSntt.Views.UserControls
 
         public ICollection<Person> Participants = new List<Person>();
 
-        public Event newEvent = new Event();
+        //public Event newEvent = new Event();
 
         public EventsAdmin()
         {
-            InitializeComponent();    
+            InitializeComponent();
+
+            if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.Admin)
+            {
+                CreateBnt.Visibility = Visibility.Hidden;
+                EditBnt.Visibility = Visibility.Hidden;
+                DeleteBnt.Visibility = Visibility.Hidden;
+            }
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -60,10 +67,7 @@ namespace McSntt.Views.UserControls
 
                 AgendaListbox.Items.Refresh();
 
-/*
-                IEventDal db = new EventEfDal();
-                db.Create(newEvent);
-*/
+
             }
 
             // Lige nu bruges listen fra Event klasse  ikke, den ville ikke twerke med den :(
@@ -127,13 +131,13 @@ namespace McSntt.Views.UserControls
 
 
 
-                newEvent.Participants = Participants;
+                //newEvent.Participants = Participants;
 
 
 
                 //newEvent.Participants.Add(GlobalInformation.CurrentUser);
 
-                Textbox.Text = newEvent.Participants.ToString();
+                //Textbox.Text = newEvent.Participants.ToString();
             }
             else MessageBox.Show("Vælg en begivenhed at tilmelde");
         }
