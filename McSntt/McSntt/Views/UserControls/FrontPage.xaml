@@ -10,14 +10,9 @@
                 <TextBlock Text="Velkommen " Name="WelcomeBlock" FontSize="20"/>
                 <TextBlock Name="InfoTextBlock" TextWrapping="Wrap"/>
             </StackPanel>
-            <StackPanel Width="500">
+            <StackPanel Width="480">
                 <TextBlock Text="Dine kommende sejlture" Name="UpandcommingTextBlock"/>
-                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" Width="480" MaxHeight="180" Margin="0,0,0,0">
-                    <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <EventSetter Event="MouseDoubleClick" Handler="UpcommingTripsDataGrid_MouseDoubleClick"/>
-                        </Style>
-                    </DataGrid.RowStyle>
+                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" MaxHeight="180" Margin="0,0,0,0">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
                         <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
@@ -27,7 +22,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <TextBlock Text="Du mangler at udfylde logbøger for:" Name="LogbookTextBlock"/>
-                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" Width="480" MaxHeight="180" Margin="0,0,0,0">
+                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" MaxHeight="180" Margin="0,0,0,0">
                     <DataGrid.RowStyle>
                         <Style TargetType="{x:Type DataGridRow}">
                             <EventSetter Event="MouseDoubleClick" Handler="LogbookDataGrid_MouseDoubleClick"/>
@@ -41,6 +36,9 @@
                         <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
+                <!-- To make border -->
+                <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+                <Button Name="CreateLogBookButton" Content="Opret logbog" Height="25" Width="150" Click="CreateLogBookButton_Click" />
             </StackPanel>
 
         </StackPanel>

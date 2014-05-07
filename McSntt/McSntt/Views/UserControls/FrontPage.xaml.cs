@@ -56,7 +56,12 @@ namespace McSntt.Views.UserControls
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var logBookWindow = new CreateLogbookWindow((RegularTrip) LogbookDataGrid.CurrentItem, GlobalInformation.CurrentUser);
+            CreateLogBookButton_Click(new object(), new RoutedEventArgs());
+        }
+
+        private void CreateLogBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            var logBookWindow = new CreateLogbookWindow((RegularTrip)LogbookDataGrid.SelectedItem, GlobalInformation.CurrentUser);
             logBookWindow.ShowDialog();
 
             var db = new RegularTripEfDal();
@@ -66,11 +71,6 @@ namespace McSntt.Views.UserControls
             LogbookDataGrid.ItemsSource = null;
             LogbookDataGrid.ItemsSource =
                 sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
-        }
-
-        private void UpcommingTripsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //TODO: Show info about up and comming trip
         }
     }
 }
