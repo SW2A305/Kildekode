@@ -21,12 +21,69 @@ namespace McSntt
             DatabaseManager.InitializeDatabase();
 
             var boatDal = new BoatSqliteDal();
-            var boats = boatDal.GetAll();
+            var eventDal = new EventSqliteDal();
+            var lectureDal = new LectureSqliteDal();
+            var logbookDal = new LogbookSqliteDal();
+            var personDal = new PersonSqliteDal();
+            var tripDal = new RegularTripSqliteDal();
+            var memberDal = new SailClubMemberSqliteDal();
+            var studentDal = new StudentMemberSqliteDal();
+            var teamDal = new TeamSqliteDal();
 
-            foreach (var boat in boats)
-            {
-                MessageBox.Show("Boat: " + boat.NickName + " (" + boat.BoatId + ")");
-            }
+            // ===== BOATS =====
+            var boats = new Boat[]
+                        {
+                            new Boat()
+                            {
+                                NickName = "Trololol",
+                                Operational = true,
+                                Type = BoatType.Gaffelrigger,
+                                ImagePath = "SundetLogo.png"
+                            }, 
+                            new Boat()
+                            {
+                                NickName = "Sinky",
+                                Operational = false,
+                                Type = BoatType.Drabant,
+                                ImagePath = "SundetLogo.png"
+                            }
+                        };
+
+            bool resultCreateBoat = boatDal.Create(boats);
+
+            MessageBox.Show(String.Format("Success: {0}\r\nTeams: {1} ({2}), {3} ({4})", resultCreateBoat, boats[0].NickName, boats[0].BoatId, boats[1].NickName, boats[1].BoatId));
+
+            boats[0].NickName = "Tralalala";
+
+            bool resultUpdateBoat = boatDal.Update(boats);
+
+            MessageBox.Show(String.Format("Success: {0}\r\nTeams: {1} ({2}), {3} ({4})", resultUpdateBoat, boats[0].NickName, boats[0].BoatId, boats[1].NickName, boats[1].BoatId));
+
+
+            // ===== TEAMS =====
+            var teams = new Team[]
+                       {
+                           new Team()
+                           {
+                               Name = "Team Funk",
+                               Level = Team.ClassLevel.First
+                           },
+                           new Team()
+                           {
+                               Name = "Team Groovy",
+                               Level = Team.ClassLevel.Second
+                           }
+                       };
+
+            bool resultCreate = teamDal.Create(teams);
+
+            MessageBox.Show(String.Format("Success: {0}\r\nTeams: {1} ({2}), {3} ({4})", resultCreate, teams[0].Name, teams[0].TeamId, teams[1].Name, teams[1].TeamId));
+
+            teams[0].Name = "Team Funky";
+
+            bool resultUpdate = teamDal.Update(teams);
+
+            MessageBox.Show(String.Format("Success: {0}\r\nTeams: {1} ({2}), {3} ({4})", resultCreate, teams[0].Name, teams[0].TeamId, teams[1].Name, teams[1].TeamId));
 
             this.Shutdown();
         }

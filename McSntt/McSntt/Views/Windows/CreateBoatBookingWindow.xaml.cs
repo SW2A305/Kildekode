@@ -131,7 +131,7 @@ namespace McSntt.Views.Windows
                 ExpectedArrivalTime = endTime,
                 Crew = crewSelected,
                 Captain = captain,
-                Comments = purpose
+                PurposeAndArea = purpose
             };
 
             var dbm = new RegularTripEfDal();

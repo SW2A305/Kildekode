@@ -153,8 +153,7 @@ namespace McSntt.Migrations
                                        PurposeAndArea = "Terrorisme",
                                        WeatherConditions = "Cloudy with a chance of bullet rain.",
                                        Logbook = logbooks[0],
-                                       ArrivalTime = logbooks[0].ActualArrivalTime,
-                                       Comments = "With great comments... Something something..."
+                                       ArrivalTime = logbooks[0].ActualArrivalTime
                                    },
                                    new RegularTrip
                                    {
@@ -164,8 +163,7 @@ namespace McSntt.Migrations
                                        ExpectedArrivalTime = DateTime.Now.AddDays(-2).AddHours(5),
                                        Crew = new Collection<Person> {persons[0], sailClubMembers[1], sailClubMembers[2]},
                                        PurposeAndArea = "Ass 'n' Titties",
-                                       WeatherConditions = "Ass ass titties.",
-                                       Comments = "lulzwut"
+                                       WeatherConditions = "Ass ass titties."
                                    },
                                    new RegularTrip
                                    {
@@ -175,8 +173,7 @@ namespace McSntt.Migrations
                                        ExpectedArrivalTime = DateTime.Now.AddDays(3).AddHours(4),
                                        Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
                                        PurposeAndArea = "Dykke",
-                                       WeatherConditions = "Orkan",
-                                       Comments = "lulzwut"
+                                       WeatherConditions = "Orkan"
                                    },
 
                                    new RegularTrip
@@ -187,8 +184,7 @@ namespace McSntt.Migrations
                                        ExpectedArrivalTime = DateTime.Now.AddDays(5).AddHours(5),
                                        Crew = new Collection<Person> {persons[0], sailClubMembers[1]},
                                        PurposeAndArea = "Ud og Sejle",
-                                       WeatherConditions = "Det blæser",
-                                       Comments = "lulzwut"
+                                       WeatherConditions = "Det blæser"
                                    },
 				                   new RegularTrip
 				                   {
@@ -198,8 +194,7 @@ namespace McSntt.Migrations
                                        ExpectedArrivalTime = DateTime.Now.AddDays(-3).AddHours(5),
                                        Crew = new Collection<Person> {sailClubMembers[2]},
                                        PurposeAndArea = "Ass 'n' Titties 2",
-                                       WeatherConditions = "Ass ass titties. 2",
-                                       Comments = "lulzwutaa"
+                                       WeatherConditions = "Ass ass titties. 2"
                                    }
                                };
             #endregion

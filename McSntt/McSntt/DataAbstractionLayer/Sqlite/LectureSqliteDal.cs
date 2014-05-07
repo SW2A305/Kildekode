@@ -12,7 +12,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
     {
         public bool Create(params Lecture[] items)
         {
+            ITeamDal teamDal = DalLocator.TeamDal;
             int insertedRows = 0;
+            int teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -30,8 +32,20 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                     foreach (Lecture lecture in items)
                     {
+                        // Store team, if applicable
+                        teamId = 0;
+
+                        if (lecture.Team != null)
+                        {
+                            if (lecture.Team.TeamId > 0) { teamDal.Update(lecture.Team); }
+                            else
+                            { teamDal.Create(lecture.Team); }
+
+                            teamId = lecture.Team.TeamId;
+                        }
+
                         command.Parameters.Clear();
-                        // TODO Make sure Team is set, and extract ID.
+                        command.Parameters.Add(new SQLiteParameter("@team_id", teamId));
                         command.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
                         command.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
                         command.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
@@ -53,7 +67,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public bool Update(params Lecture[] items)
         {
+            ITeamDal teamDal = DalLocator.TeamDal;
             int updatedRows = 0;
+            int teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -72,9 +88,21 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                     foreach (Lecture lecture in items)
                     {
+                        // Store team, if applicable
+                        teamId = 0;
+
+                        if (lecture.Team != null)
+                        {
+                            if (lecture.Team.TeamId > 0) { teamDal.Update(lecture.Team); }
+                            else
+                            { teamDal.Create(lecture.Team); }
+
+                            teamId = lecture.Team.TeamId;
+                        }
+
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
-                        // TODO Make sure Team is set, and extract ID.
+                        command.Parameters.Add(new SQLiteParameter("@teamId", teamId));
                         command.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
                         command.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
                         command.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
@@ -124,7 +152,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Lecture> GetAll()
         {
-            var lectures  = new List<Lecture>();
+            var lectures = new List<Lecture>();
+            int teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -140,20 +169,22 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                     while (reader.Read())
                     {
-                    lectures.
-                        Add(
-                            new Lecture
-                            {
-                                LectureId = reader.GetInt32(reader.GetOrdinal("lecture_id")),
-                                DateOfLecture = reader.GetDateTime(reader.GetOrdinal("date_of_lecture")),
-                                Drabant = reader.GetBoolean(reader.GetOrdinal("drabant")),
-                                Gaffelrigger = reader.GetBoolean(reader.GetOrdinal("gaffelrigger")),
-                                Motor = reader.GetBoolean(reader.GetOrdinal("motor")),
-                                Navigation = reader.GetBoolean(reader.GetOrdinal("navigation")),
-                                Night = reader.GetBoolean(reader.GetOrdinal("night")),
-                                RopeWorksLecture = reader.GetBoolean(reader.GetOrdinal("rope_works"))
-                                // TODO Fetch Team
-                            });
+                        teamId = reader.GetInt32(reader.GetOrdinal("team_id"));
+
+                        lectures.
+                            Add(
+                                new Lecture
+                                {
+                                    LectureId = reader.GetInt32(reader.GetOrdinal("lecture_id")),
+                                    DateOfLecture = reader.GetDateTime(reader.GetOrdinal("date_of_lecture")),
+                                    Drabant = reader.GetBoolean(reader.GetOrdinal("drabant")),
+                                    Gaffelrigger = reader.GetBoolean(reader.GetOrdinal("gaffelrigger")),
+                                    Motor = reader.GetBoolean(reader.GetOrdinal("motor")),
+                                    Navigation = reader.GetBoolean(reader.GetOrdinal("navigation")),
+                                    Night = reader.GetBoolean(reader.GetOrdinal("night")),
+                                    RopeWorksLecture = reader.GetBoolean(reader.GetOrdinal("rope_works"))
+                                    // TODO Fetch Team
+                                });
                     }
                 }
 
@@ -161,7 +192,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
 
             return lectures
-            ;
+                ;
         }
 
         public Lecture GetOne(int itemId)
@@ -208,11 +239,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return lecture;
         }
 
-        public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate) { return this.GetAll(predicate, true); }
+        public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate)
+        {
+            return this.GetAll(predicate, true);
+        }
 
         public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate, bool fetchChildData)
         {
-            IEnumerable<Lecture> lectures  = this.GetAll().Where(predicate);
+            IEnumerable<Lecture> lectures = this.GetAll().Where(predicate);
 
             if (fetchChildData)
             {

@@ -95,13 +95,19 @@ namespace McSntt.Helpers
 
                     SQLiteDataReader reader = command.ExecuteReader();
 
-                    if (reader.Read()) { dbVersion = reader.GetInt32(reader.GetOrdinal("value")); }
+                    try {
+                        if (reader.Read()) { dbVersion = reader.GetInt32(reader.GetOrdinal("value")); }
+                    }
+                    catch (Exception)
+                    {
+                        // Do nothing here...
+                    }
                 }
 
                 if (dbVersion < DbVersion) {
                     for (int i = dbVersion; i < DbVersion; i++) { UpdateDatabase(db, i, i + 1); }
                 }
-
+                
                 db.Close();
             }
         }
