@@ -174,7 +174,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 Motor = reader.GetBoolean(reader.GetOrdinal("motor")),
                                 Navigation = reader.GetBoolean(reader.GetOrdinal("navigation")),
                                 Night = reader.GetBoolean(reader.GetOrdinal("night")),
-                                RopeWorks = reader.GetBoolean(reader.GetOrdinal("rope_works"))
+                                RopeWorks = reader.GetBoolean(reader.GetOrdinal("rope_works")),
+                                // TODO Fetch Team
                             });
                     }
                 }
@@ -237,6 +238,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 Navigation = reader.GetBoolean(reader.GetOrdinal("navigation")),
                                 Night = reader.GetBoolean(reader.GetOrdinal("night")),
                                 RopeWorks = reader.GetBoolean(reader.GetOrdinal("rope_works"))
+                                // TODO Fetch Team
                             };
                     }
                 }

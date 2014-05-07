@@ -102,8 +102,10 @@
     <Compile Include="DataAbstractionLayer\Sqlite\LectureSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\LogbookSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\PersonSqliteDal.cs" />
+    <Compile Include="DataAbstractionLayer\Sqlite\RegularTripSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\SailClubMemberSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\StudentMemberSqliteDal.cs" />
+    <Compile Include="DataAbstractionLayer\Sqlite\TeamSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\StudentMemberEfDal.cs" />
     <Compile Include="DataAbstractionLayer\TeamEfDal.cs" />
     <Compile Include="DataAbstractionLayer\ITeamDal.cs" />

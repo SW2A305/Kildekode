@@ -349,7 +349,7 @@ namespace $Namespace$&#xD;
                                       "WHERE $id_column$ = @$idMemberParam$ " +&#xD;
                                       "LIMIT 1",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
-                    command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", $ItemTypeInstance$.$IdMember$));&#xD;
+                    command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", itemId));&#xD;
 &#xD;
                     SQLiteDataReader reader = command.ExecuteReader();&#xD;
 &#xD;

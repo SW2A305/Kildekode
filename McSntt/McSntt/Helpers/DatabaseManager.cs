@@ -32,7 +32,9 @@ namespace McSntt.Helpers
         private const int DbVersion = 1;
         private const string AppName = "McSnttt";
         private const string DbFileName = "McSnttt.db";
+        private const string TestDbFileName = "McSnttt.Test.db";
 
+        private static bool _useTestDb;
         private static string _dbFilePath;
         private static string _connectionString;
 
@@ -47,7 +49,7 @@ namespace McSntt.Helpers
 
                     if (!Directory.Exists(roamingAppDataFolder)) { Directory.CreateDirectory(roamingAppDataFolder); }
 
-                    _dbFilePath = Path.Combine(roamingAppDataFolder, DbFileName);
+                    _dbFilePath = Path.Combine(roamingAppDataFolder, (_useTestDb ? TestDbFileName : DbFileName));
                 }
 
                 return _dbFilePath;
@@ -69,8 +71,13 @@ namespace McSntt.Helpers
         public static SQLiteConnection DbConnection { get { return new SQLiteConnection(ConnectionString); } }
         #endregion
 
-        public static void InitializeDatabase()
+        public static void InitializeDatabase(bool useTestDb = false)
         {
+            _useTestDb = useTestDb;
+
+            // If we're using a test DB, we should remove it each time, in order to reset it.
+            if (useTestDb) { File.Delete(DbFilePath); }
+
             // Make sure database even exists
             if (!File.Exists(DbFilePath)) { CreateDatabase(); }
 
@@ -194,11 +201,9 @@ namespace McSntt.Helpers
                         command.CommandText =
                             String.Format(
                                           "CREATE TABLE {0} (regular_trip_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "departure_time TEXT, arrival_time TEXT, boat_id INTEGER, captain_id INTEGER, "
-                                          +
-                                          "expected_arrival_time TEXT, purpose_and_area TEXT, weather_conditions TEXT, "
-                                          +
-                                          "logbook_id INTEGER" +
+                                          "departure_time TEXT, arrival_time TEXT, boat_id INTEGER, " +
+                                          "captain_id INTEGER, expected_arrival_time TEXT, purpose_and_area TEXT, " +
+                                          "weather_conditions TEXT, logbook_id INTEGER" +
                                           ")",
                                           TableRegularTrips);
                         command.ExecuteNonQuery();
