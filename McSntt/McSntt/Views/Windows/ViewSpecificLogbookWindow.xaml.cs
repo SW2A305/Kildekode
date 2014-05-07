@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using McSntt.Models;
 using McSntt.Views.Windows;
+using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 
 namespace McSntt.Views.Windows
 {

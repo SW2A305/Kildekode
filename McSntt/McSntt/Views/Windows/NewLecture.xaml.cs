@@ -36,11 +36,11 @@ namespace McSntt.Views.Windows
         {
             var lecture = new Lecture
             {
-                DateOfLecture = DateTimePickerPlannedLectureTime.Value.GetValueOrDefault()
+                DateOfLecture = DateTimePickerPlannedLectureTime.Value
             };
             DalLocator.LectureDal.Create(lecture);
-            var Departure = DateTimePickerPlannedLectureTime.Value.GetValueOrDefault();
-            var Arrival = DateTimePickerPlannedLectureTime_Copy.Value.GetValueOrDefault();
+            var Departure = DateTimePickerPlannedLectureTime.Value;
+            var Arrival = DateTimePickerPlannedLectureTime_Copy.Value;
             var book = new CreateBoatBookingWindow(Departure, Arrival, _currentTeam);
         }
     }

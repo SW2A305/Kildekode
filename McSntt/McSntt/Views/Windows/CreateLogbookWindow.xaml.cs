@@ -60,7 +60,6 @@ namespace McSntt.Views.Windows
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
 
-            dateTimePanel.Children.Add(new DateTimePicker());
 
         }
         
@@ -119,8 +118,8 @@ namespace McSntt.Views.Windows
                 RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
                 currentLogbook.DamageDescription = DamageTextBox.Text;
                 currentLogbook.ActualCrew = CrewList;
-                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
-                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
+                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value;
+                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value;
                 currentLogbook.FiledBy = _currentSailClubMember;
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;

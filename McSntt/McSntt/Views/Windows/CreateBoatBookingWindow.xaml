@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:userControls="clr-namespace:McSntt.Views.UserControls"
         x:Class="McSntt.Views.Windows.CreateBoatBookingWindow"
         Title="CreateBoatBookingWindow" 
         Height="600" 
@@ -16,9 +17,9 @@
             <ComboBox Name="BoatComboBox" HorizontalAlignment="Left" ItemsSource="{Binding BoatsCollection}" DropDownClosed="BoatComboBox_OnDropDownClosed" Width="290"/>
             
             <TextBlock Text="Vælg et starttidspunkt:"/>
-            <xctk:DateTimePicker Name="DateTimeStart" Format="FullDateTime" />
+            <userControls:DateTimePicker x:Name="DateTimeStart" />
             <TextBlock Text="Vælg et sluttidspunkt:"/>
-            <xctk:DateTimePicker Name="DateTimeEnd" Format="FullDateTime" />
+            <userControls:DateTimePicker x:Name="DateTimeEnd"  />
 
             <TextBlock Text="Vælg din besætning:"/>
             <DataGrid CanUserAddRows="False" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="180" Width="290" MaxHeight="180">

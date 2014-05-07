@@ -126,6 +126,9 @@
     <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
       <DependentUpon>DamageReportWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\EventsPopup.xaml.cs">
+      <DependentUpon>EventsPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\NewTeamWindow.xaml.cs">
       <DependentUpon>NewTeamWindow.xaml</DependentUpon>
     </Compile>
@@ -174,9 +177,6 @@
     <Compile Include="Views\UserControls\SailerSchool.xaml.cs">
       <DependentUpon>SailerSchool.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\EventsPopup.xaml.cs">
-      <DependentUpon>EventsPopup.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\studyStudent.xaml.cs">
       <DependentUpon>studyStudent.xaml</DependentUpon>
     </Compile>
@@ -209,6 +209,10 @@
     <Page Include="Views\Windows\DamageReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\EventsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Windows\NewTeamWindow.xaml">
       <SubType>Designer</SubType>
@@ -272,10 +276,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\SailerSchool.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\EventsPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
