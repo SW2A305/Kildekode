@@ -8,14 +8,14 @@
         <TabControl Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem" Height="110">
                 <TabItem.Header>
-                    <TextBlock Text="Begivenheder" FontSize="23" />
+                    <TextBlock Text="Begivenheder" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="EventsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Både" FontSize="23" />
+                    <TextBlock Text="Både" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
