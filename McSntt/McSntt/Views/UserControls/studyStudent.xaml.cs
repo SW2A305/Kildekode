@@ -47,6 +47,9 @@ namespace McSntt.Views.UserControls
             {
                 level.Text = "2. års sejlerhold";
             }
+            nextSessionDate.Text = "" +
+                                   (((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Lectures.OrderBy(
+                                       lect => lect.DateOfLecture)).FirstOrDefault(lect => lect.DateOfLecture > DateTime.Now);
 
         }
 

@@ -31,7 +31,7 @@ namespace McSntt.Views.Windows
 
             if (TeamName.Text != null)
             {
-                var team = new Team {Name = TeamName.Text, TeamMembers = new List<StudentMember>()};
+                var team = new Team {Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Teacher = GlobalInformation.CurrentUser};
                 StudyMockData.TeamListGlobal.Add(team);
                 Close();
             }

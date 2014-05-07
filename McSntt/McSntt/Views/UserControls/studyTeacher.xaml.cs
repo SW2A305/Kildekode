@@ -264,7 +264,7 @@ namespace McSntt.Views.UserControls
             {
                 CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(((Team) teamDropdown.SelectedItem).TeamMembers);
                 teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
-                lectureDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).Lectures;
+                lectureDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
 
                 switch (((Team)teamDropdown.SelectedItem).Level)
                 {
