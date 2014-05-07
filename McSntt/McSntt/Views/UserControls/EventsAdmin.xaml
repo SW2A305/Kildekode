@@ -13,7 +13,7 @@
         <Button x:Name="DeleteBnt" Content="Slet" HorizontalAlignment="Left" Margin="880,20,0,0" VerticalAlignment="Top" Width="75" Click="Delete_Event"/>
         <Label Content="Agenda" HorizontalAlignment="Left" Margin="150,70,0,0" VerticalAlignment="Top" FontSize="36"/>
         <Label Content="Beskrivelse" HorizontalAlignment="Left" Margin="660,70,0,0" VerticalAlignment="Top" FontSize="36"/>
-        <Button Content="Vis" HorizontalAlignment="Left" Margin="710,500,0,0" VerticalAlignment="Top" Width="75" Click="Show_Participants"/>
+        <Button Content="Vis tilmeldte" HorizontalAlignment="Left" Margin="710,500,0,0" VerticalAlignment="Top" Width="75" Click="Show_Participants"/>
         <Button Content="Tilmeld" HorizontalAlignment="Left" Margin="795,500,0,0" VerticalAlignment="Top" Width="75" Click="Subscribe"/>
         <Button Content="Frameld" HorizontalAlignment="Left" Margin="880,500,0,0" VerticalAlignment="Top" Width="75" Click="Unsubscribe"/>
         <ListBox x:Name="AgendaListbox" ItemsSource="{Binding Path=EventsList}" HorizontalAlignment="Left" Height="330" Margin="30,133,0,0" VerticalAlignment="Top" Width="400" BorderThickness="1" BorderBrush="Gray" SelectionChanged="AgendaListbox_SelectionChanged">            
