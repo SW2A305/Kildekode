@@ -35,14 +35,22 @@
         <Button Name="FileLogbookButton" Content="Udfør" HorizontalAlignment="Left" Margin="673,545,0,0" 
                 VerticalAlignment="Top" Width="93" Height="24" Click="FileLogbookButton_OnClick" />
 
-        <xctk:DateTimePicker Name="DateTimePickerPlannedDepature" Width="Auto" Height="Auto" Margin="548,130,31,417"/>
-        <xctk:DateTimePicker Name="DateTimePickerPlannedArrival" Height="Auto" Width="Auto" Margin="548,168,31,382"/>
-        <xctk:DateTimePicker Name="DateTimePickerActualDeparture" Height="Auto" Width="Auto" Margin="548,223,31,327"/>
-        <xctk:DateTimePicker Name="DateTimePickerActualArrival" Height="Auto" Width="Auto" Margin="548,258,31,292"/>
-        <Label Content="Planlagt ankomst:" HorizontalAlignment="Left" Margin="446,168,0,0" VerticalAlignment="Top"/>
-        <Label Content="Planlagt afgang:" HorizontalAlignment="Left" Margin="446,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
-        <Label Content="Faktisk afgang:" HorizontalAlignment="Left" Margin="446,223,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
-        <Label Content="Faktisk ankomst:" HorizontalAlignment="Left" Margin="446,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+        <StackPanel Orientation="Horizontal" Margin="438,188,17,234" RenderTransformOrigin="0.5,-0.044">
+            <StackPanel>
+                <Label Height="30"  Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <Label Height="30" Content="Planlagt ankomst:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+                <Label Height="30" Content="Faktisk afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+                <Label Height="30" Content="Faktisk ankomst:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+            </StackPanel>
+            <StackPanel>
+                <xctk:DateTimePicker x:Name="DateTimePickerPlannedDepature" Height="30" Width="180" IsReadOnly="True" />
+                <xctk:DateTimePicker x:Name="DateTimePickerPlannedArrival" Height="30" Width="180" IsReadOnly="True" />
+                <xctk:DateTimePicker x:Name="DateTimePickerActualDeparture" Height="30" Width="180" />
+                <xctk:DateTimePicker x:Name="DateTimePickerActualArrival" Height="30" Width="180" />
+            </StackPanel>
+        </StackPanel>
+
+
         <Label Content="Kaptajn:" HorizontalAlignment="Left" Width="99"  Margin="10,133,0,395"/>
 
     </Grid>

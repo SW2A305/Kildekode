@@ -33,9 +33,9 @@
         <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
     
         <StackPanel Margin="438,188,62,282" Orientation="Horizontal" RenderTransformOrigin="0.5,-0.044">
-        <StackPanel>
-        <Label Height="30" Content="Planlagt ankomst:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-                <Label Height="30" Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+            <StackPanel>
+                <Label Height="30" Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <Label Height="30" Content="Planlagt ankomst:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
                 <Label Height="30" Content="Faktisk afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
                 <Label Height="30" Content="Faktisk ankomst:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
             </StackPanel>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
@@ -45,6 +46,13 @@ namespace McSntt.Views.UserControls
 
             BookButton.IsEnabled = false;
         }
+
+        private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var logBookWindow = new ViewSpecificLogbookWindow((RegularTrip) LogbookDataGrid.CurrentItem);
+            logBookWindow.ShowDialog();
+        }
+
 
         private void BoatComboBox_OnSelectionChanged(object sender, EventArgs e)
         {

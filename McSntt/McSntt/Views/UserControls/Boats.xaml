@@ -21,7 +21,9 @@
 
         <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="LogbookDataGrid" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Height="240" Width="425" AutoGenerateColumns="False" >
             <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}"/>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="LogbookDataGrid_MouseDoubleClick"/>
+                </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0: dd/MM/yyyy HH:mm\}}" Header="Planlagte Afgang"/>
