@@ -17,7 +17,9 @@ using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
+using McSntt.Views.UserControls;
 using McSntt.Views.Windows;
+using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
@@ -57,6 +59,7 @@ namespace McSntt.Views.Windows
             DateTimePickerActualArrival.Value = DateTime.Now;
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
+
 
         }
         
@@ -115,8 +118,8 @@ namespace McSntt.Views.Windows
                 RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
                 currentLogbook.DamageDescription = DamageTextBox.Text;
                 currentLogbook.ActualCrew = CrewList;
-                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
-                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
+                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value;
+                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value;
                 currentLogbook.FiledBy = _currentSailClubMember;
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;

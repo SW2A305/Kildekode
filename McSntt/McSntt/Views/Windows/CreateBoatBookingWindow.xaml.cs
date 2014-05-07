@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
+using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
@@ -100,7 +101,7 @@ namespace McSntt.Views.Windows
             Boat boat = (Boat)BoatComboBox.SelectionBoxItem;
 
             // Get the startTime as a datetime
-            DateTime startTime = DateTimeStart.Value.GetValueOrDefault();
+            DateTime startTime = DateTimeStart.Value;
 
             if (startTime < DateTime.Now)
             {
@@ -109,7 +110,7 @@ namespace McSntt.Views.Windows
             }
 
             // Get the endTime as a datetime
-            DateTime endTime = DateTimeEnd.Value.GetValueOrDefault();
+            DateTime endTime = DateTimeEnd.Value;
 
             if (endTime < startTime)
             {

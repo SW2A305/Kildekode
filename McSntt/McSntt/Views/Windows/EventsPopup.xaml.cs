@@ -1,24 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using McSntt.DataAbstractionLayer;
 using McSntt.Models;
-using McSntt.Views.UserControls;
-using McSntt.Views.Windows;
 
 namespace McSntt.Views.Windows
 {
@@ -66,7 +48,7 @@ namespace McSntt.Views.Windows
             #endregion
 
             // Get the EventDate as Value or Default Value
-            newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
+            newEvent.EventDate = ChooseDate.Value;
 
             #region Warning messages
 
