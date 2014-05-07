@@ -46,7 +46,10 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Categories/=Tristan/@EntryIndexedValue">Tristan</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=column_005Fname/@KeyIndexDefined">True</s:Boolean>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=column_005Fname/Order/@EntryValue">2</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=column_005Fname/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=MethodName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=MethodName/Expression/@EntryValue">completeSmart()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=MethodName/Order/@EntryValue">2</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=SQLITEDATAREADER/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=SQLITEDATAREADER/Expression/@EntryValue">variableOfType("System.Data.SQLite.SQLiteDataReader")</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Field/=SQLITEDATAREADER/Order/@EntryValue">0</s:Int64>
@@ -58,7 +61,7 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Shortcut/@EntryValue">dbRead</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Text/@EntryValue">$VarName$ = $SQLITEDATAREADER$.GetInt32($SQLITEDATAREADER$.GetOrdinal("$column_name$"))$END$</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=225A37045BCD154E9E9005C35B5752D2/Text/@EntryValue">$SQLITEDATAREADER$.$MethodName$($SQLITEDATAREADER$.GetOrdinal("$column_name$"))$END$</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=3588115156282543B16876181E69ED57/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=3588115156282543B16876181E69ED57/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=3588115156282543B16876181E69ED57/Categories/=Tristan/@EntryIndexedValue">Tristan</s:String>
@@ -168,6 +171,14 @@ public $Type$ $PropertyName$&#xD;
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=ClassName/Order/@EntryValue">0</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=IDal/@KeyIndexDefined">True</s:Boolean>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=IDal/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=id_005Fcolumn/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=id_005Fcolumn/Order/@EntryValue">7</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=IdMember/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=IdMember/Order/@EntryValue">6</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=idMemberParam/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=idMemberParam/Expression/@EntryValue">decapitalize(IdMember)</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=idMemberParam/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=idMemberParam/Order/@EntryValue">8</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=ItemType/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=ItemType/Expression/@EntryValue">guessExpectedType("")</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=48FA1279EB41A443ABE78968FD47E497/Field/=ItemType/Order/@EntryValue">3</s:Int64>
@@ -218,6 +229,8 @@ namespace $Namespace$&#xD;
                         command.Parameters.Clear();&#xD;
                         // TODO Add parameters&#xD;
                         insertedRows += command.ExecuteNonQuery();&#xD;
+&#xD;
+						$ItemTypeInstance$.$IdMember$ = (int) db.LastInsertRowId;&#xD;
                     }&#xD;
                 }&#xD;
 &#xD;
@@ -241,13 +254,13 @@ namespace $Namespace$&#xD;
                     command.CommandText =&#xD;
                         String.Format("UPDATE {0} " +&#xD;
                                       "SET  " +&#xD;
-                                      "WHERE ",&#xD;
+                                      "WHERE $id_column$ = @$idMemberParam$ ",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
 &#xD;
                     foreach ($ItemType$ $ItemTypeInstance$ in items)&#xD;
                     {&#xD;
                         command.Parameters.Clear();&#xD;
-                        // TODO Add parameters&#xD;
+                        command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", $ItemTypeInstance$.$IdMember$));&#xD;
                         updatedRows += command.ExecuteNonQuery();&#xD;
                     }&#xD;
                 }&#xD;
@@ -271,13 +284,13 @@ namespace $Namespace$&#xD;
                     command.CommandType = CommandType.Text;&#xD;
                     command.CommandText =&#xD;
                         String.Format("DELETE FROM {0} " +&#xD;
-                                      "WHERE ",&#xD;
+                                      "WHERE $id_column$ = @$idMemberParam$ ",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
 &#xD;
                     foreach ($ItemType$ $ItemTypeInstance$ in items)&#xD;
                     {&#xD;
                         command.Parameters.Clear();&#xD;
-                        // TODO Add parameters&#xD;
+                        command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", $ItemTypeInstance$.$IdMember$));&#xD;
                         deletedRows += command.ExecuteNonQuery();&#xD;
                     }&#xD;
                 }&#xD;
@@ -333,10 +346,10 @@ namespace $Namespace$&#xD;
                     command.CommandType = CommandType.Text;&#xD;
                     command.CommandText =&#xD;
                         String.Format("SELECT * FROM {0} " +&#xD;
-                                      "WHERE  " +&#xD;
+                                      "WHERE $id_column$ = @$idMemberParam$ " +&#xD;
                                       "LIMIT 1",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
-                    // TODO Add parameters&#xD;
+                    command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", $ItemTypeInstance$.$IdMember$));&#xD;
 &#xD;
                     SQLiteDataReader reader = command.ExecuteReader();&#xD;
 &#xD;

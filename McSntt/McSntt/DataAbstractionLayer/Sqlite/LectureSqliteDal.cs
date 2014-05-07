@@ -40,6 +40,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@gaffelrigger", lecture.Gaffelrigger));
                         command.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
                         insertedRows += command.ExecuteNonQuery();
+
+                        lecture.LectureId = (int) db.LastInsertRowId;
                     }
                 }
 

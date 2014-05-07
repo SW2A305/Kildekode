@@ -178,11 +178,9 @@ namespace McSntt.Helpers
                         command.CommandText =
                             String.Format(
                                           "CREATE TABLE {0} (person_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "first_name TEXT, last_name TEXT, address TEXT, postcode TEXT, cityname TEXT, "
-                                          +
-                                          "date_of_birth TEXT, boat_driver INTEGER, gender INTEGER, phone_number TEXT, "
-                                          +
-                                          "email TEXT" +
+                                          "first_name TEXT, last_name TEXT, address TEXT, postcode TEXT, " +
+                                          "cityname TEXT, date_of_birth TEXT, boat_driver INTEGER, gender INTEGER, " +
+                                          "phone_number TEXT, email TEXT" +
                                           ")",
                                           TablePersons);
                         command.ExecuteNonQuery();

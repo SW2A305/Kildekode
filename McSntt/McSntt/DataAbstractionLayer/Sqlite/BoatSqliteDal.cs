@@ -34,6 +34,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@imagePath", boat.ImagePath));
                         command.Parameters.Add(new SQLiteParameter("@operational", boat.Operational));
                         insertedRows += command.ExecuteNonQuery();
+
+                        boat.BoatId = (int) db.LastInsertRowId;
                     }
                 }
 
