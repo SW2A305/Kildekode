@@ -220,8 +220,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                 }
             }
 
-            return lectures
-            ;
+            return lectures;
         }
     }
 }

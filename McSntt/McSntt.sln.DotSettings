@@ -211,7 +211,7 @@ namespace $Namespace$&#xD;
                     command.CommandText =&#xD;
                         String.Format("INSERT INTO {0} () " +&#xD;
                                       "VALUES ()",&#xD;
-                                      DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
+                                      DatabaseManager.$TableEntry$); $END$// TODO Fill this out&#xD;
 &#xD;
                     foreach ($ItemType$ $ItemTypeInstance$ in items)&#xD;
                     {&#xD;
