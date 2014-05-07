@@ -19,7 +19,7 @@ using McSntt.Helpers;
 using McSntt.Models;
 using McSntt.Views.UserControls;
 using McSntt.Views.Windows;
-using DateTimePicker = System.Windows.Forms.DateTimePicker;
+using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
