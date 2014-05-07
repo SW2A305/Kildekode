@@ -8,10 +8,10 @@
     <Grid>
             <StackPanel Orientation="Horizontal">
             <StackPanel>
-                <DatePicker x:Name="DatePicker" Width="120"/>
+                <DatePicker x:Name="DatePicker" Width="100"/>
             </StackPanel>
                 <StackPanel>
-                <xctk:TimePicker x:Name="TimePicker" Width="60" />
+                <xctk:TimePicker Background="White" x:Name="TimePicker" Width="80" />
                 </StackPanel>
             </StackPanel>
         

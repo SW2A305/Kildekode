@@ -30,7 +30,7 @@ namespace McSntt.Views.UserControls
             InitializeComponent();
         }
 
-        public DateTime DateAndTime
+        public DateTime Value
         {
             get { return _dateAndTime; }
             set

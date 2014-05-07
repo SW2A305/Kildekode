@@ -117,6 +117,9 @@
     <Compile Include="Migrations\201405070946414_StudyTeacherAdded.Designer.cs">
       <DependentUpon>201405070946414_StudyTeacherAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\DateTimePicker.xaml.cs">
+      <DependentUpon>DateTimePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
@@ -195,6 +198,10 @@
     <Compile Include="Views\Windows\ViewSpecificLogbookWindow.xaml.cs">
       <DependentUpon>ViewSpecificLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\UserControls\DateTimePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\FrontPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
