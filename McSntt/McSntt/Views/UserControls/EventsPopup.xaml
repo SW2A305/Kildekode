@@ -12,7 +12,6 @@
         <TextBox x:Name="EventDescriptionBox" HorizontalAlignment="Left" Height="168" Margin="10,132,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="369" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
         <Label Content="Beskrivelse:" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top"/>
         <Button Content="Opret" HorizontalAlignment="Left" Margin="302,331,0,0" VerticalAlignment="Top" Width="75" Click="Create_Event"/>
-        <!--<DatePicker Name="ChooseDate" HorizontalAlignment="Left" Margin="240,67,0,0" VerticalAlignment="Top" Width="137"/>-->
         <xctk:DateTimePicker Name="ChooseDate" Format="FullDateTime" HorizontalAlignment="Left" Margin="220,68,0,0" VerticalAlignment="Top" Width="157"/>
     </Grid>
 </Window>
