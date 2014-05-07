@@ -42,11 +42,12 @@
                 <Label Height="30" Content="Faktisk afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
                 <Label Height="30" Content="Faktisk ankomst:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
             </StackPanel>
-            <StackPanel>
+            <StackPanel Name="dateTimePanel">
                 <xctk:DateTimePicker x:Name="DateTimePickerPlannedDepature" Height="30" Width="180" IsReadOnly="True" />
                 <xctk:DateTimePicker x:Name="DateTimePickerPlannedArrival" Height="30" Width="180" IsReadOnly="True" />
                 <xctk:DateTimePicker x:Name="DateTimePickerActualDeparture" Height="30" Width="180" />
                 <xctk:DateTimePicker x:Name="DateTimePickerActualArrival" Height="30" Width="180" />
+                <UserControl></UserControl>
             </StackPanel>
         </StackPanel>
 

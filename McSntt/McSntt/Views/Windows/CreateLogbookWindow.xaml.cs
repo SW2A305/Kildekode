@@ -17,7 +17,9 @@ using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
+using McSntt.Views.UserControls;
 using McSntt.Views.Windows;
+using DateTimePicker = System.Windows.Forms.DateTimePicker;
 using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
@@ -57,6 +59,8 @@ namespace McSntt.Views.Windows
             DateTimePickerActualArrival.Value = DateTime.Now;
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
+
+            dateTimePanel.Children.Add(new DateTimePicker());
 
         }
         
