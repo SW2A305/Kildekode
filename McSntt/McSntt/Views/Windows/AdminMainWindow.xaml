@@ -8,35 +8,35 @@
         <TabControl Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Style="{StaticResource TabItemStyle}"  Name="FrontPageTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Forside" FontSize="23" />
+                    <TextBlock Text="Forside" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="StudyTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Undervisning" FontSize="23" />
+                    <TextBlock Text="Undervisning" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="StudyGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem" >
                 <TabItem.Header>
-                    <TextBlock Text="Begivenheder" FontSize="23" />
+                    <TextBlock Text="Begivenheder" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="EventsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="MemberTabItem" Height="110" VerticalAlignment="Top">
                 <TabItem.Header>
-                    <TextBlock Text="Medlemmer" FontSize="23" />
+                    <TextBlock Text="Medlemmer" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="MembersGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem" Margin="0,0,-65,0">
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Både" FontSize="23" />
+                    <TextBlock Text="Både" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
