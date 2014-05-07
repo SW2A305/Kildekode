@@ -77,6 +77,7 @@ namespace McSntt.Views.UserControls
             
             editTeamGrid.IsEnabled = false;
             lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
+            promoteTeam.IsEnabled = false;
 
         }
 
@@ -94,8 +95,6 @@ namespace McSntt.Views.UserControls
             Level2RadioButton.IsChecked = false;
             CurrentMemberDataGrid.ItemsSource = null;
             teamDropdown.SelectedIndex = -1;
-            studentDropdown.SelectedIndex = -1;
-            studentDropdown.ItemsSource = null;
             DrabantCheckBox.IsChecked = false;
             GaffelriggerCheckBox.IsChecked = false;
             NavigationCheckBox.IsChecked = false;
@@ -129,7 +128,6 @@ namespace McSntt.Views.UserControls
             {
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
             }
-            
             /* Database
             ITeamDal teamDal = new TeamEfDal();
             teamDal.Create(team);
@@ -226,8 +224,6 @@ namespace McSntt.Views.UserControls
 
         private void LectureDataClear()
         {
-        /*    if ((teamDropdown.SelectedItem == null || ((Team) teamDropdown.SelectedItem).TeamMembers.Count != 0) &&
-                teamDropdown.SelectedItem != null) return; */
             studentOne.Content = "";
             studentOne.IsEnabled = false;
             studentOne.IsChecked = false;
@@ -266,8 +262,6 @@ namespace McSntt.Views.UserControls
 
             try
             {
-                
-                studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
                 CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(((Team) teamDropdown.SelectedItem).TeamMembers);
                 teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
                 lectureDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).Lectures;
@@ -290,11 +284,10 @@ namespace McSntt.Views.UserControls
             {
                 // TODO Is this ignoring intentional? It's bad code design.
             }
-            studentDropdown.DisplayMemberPath = "FirstName";
-            studentDropdown.SelectedValuePath = "MemberId";
 
             LectureDataClear();
             StudentCheckBoxNameChange();
+            promoteTeam.IsEnabled = ((Team) teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
 
         }
 
@@ -305,8 +298,6 @@ namespace McSntt.Views.UserControls
             if (!((Team)teamDropdown.SelectedItem).TeamMembers.Contains(currentMember))
             {
                 ((Team)teamDropdown.SelectedItem).TeamMembers.Add(currentMember);
-                studentDropdown.ItemsSource = null;
-                studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
                 RefreshDatagrid(CurrentMemberDataGrid, ((Team)teamDropdown.SelectedItem).TeamMembers);
             }
             
@@ -317,8 +308,6 @@ namespace McSntt.Views.UserControls
             if (CurrentMemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
             ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(currentMember);
-            studentDropdown.ItemsSource = null;
-            studentDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).TeamMembers;
             RefreshDatagrid(CurrentMemberDataGrid, ((Team)teamDropdown.SelectedItem).TeamMembers);
         }
 
@@ -337,31 +326,6 @@ namespace McSntt.Views.UserControls
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
             }
         }
-        /* benyttes ikke
-        private void studentDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (studentDropdown.SelectedItem != null)
-            {
-                RopeWorksCheckBox.IsChecked = ((StudentMember) studentDropdown.SelectedItem).RopeWorks;
-                NavigationCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Navigation;
-                MotorCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Motor;
-                DrabantCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Drabant;
-                GaffelriggerCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Gaffelrigger;
-                NightCheckBox.IsChecked = ((StudentMember)studentDropdown.SelectedItem).Night;
-                
-            }
-            else
-            {
-                RopeWorksCheckBox.IsChecked = false;
-                NavigationCheckBox.IsChecked = false;
-                MotorCheckBox.IsChecked = false;
-                DrabantCheckBox.IsChecked = false;
-                GaffelriggerCheckBox.IsChecked = false;
-                NightCheckBox.IsChecked = false;
-            }
-        }
-        */
-
         #endregion
         
         #region Search
@@ -565,6 +529,8 @@ namespace McSntt.Views.UserControls
         {
             var upgradedMember = new SailClubMember();
             upgradedMember = member;
+            upgradedMember.Position = SailClubMember.Positions.Member;
+            upgradedMember.BoatDriver = true;
             DalLocator.SailClubMemberDal.Create(upgradedMember);
         }
 

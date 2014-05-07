@@ -79,11 +79,9 @@
         </Border>
 
         <ComboBox x:Name="teamDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="10,39,0,0" SelectionChanged="teamDropdown_SelectionChanged"/>
-        <ComboBox x:Name="studentDropdown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="151,39,0,0" />
         <CheckBox x:Name="editTeam" Content="Redigér hold" HorizontalAlignment="Left" Margin="424,13,0,0" VerticalAlignment="Top" Checked="editTeam_Checked" Unchecked="editTeam_Unchecked"/>
         <ComboBox x:Name="lectureDropdown" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="lectureDropdown_SelectionChanged"/>
         <Label Content="Vælg Hold:&#xA;" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
-        <Label Content="Vælg Elev:" HorizontalAlignment="Left" Margin="151,8,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Vælg Lektion:&#xA;" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
         <Button x:Name="newLecture1" Content="Opret ny lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="151,113,0,0" Click="newLecture1_Click" />
 
