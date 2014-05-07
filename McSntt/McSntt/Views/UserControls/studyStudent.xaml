@@ -18,7 +18,7 @@
             <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="26,59,0,0" VerticalAlignment="Top" Width="166" FontSize="16"/>
         </Grid>
         <TextBlock HorizontalAlignment="Left" Height="32" Margin="503,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266" FontSize="18"><Run Language="da-dk" Text="Næste undervisning:"/></TextBlock>
-        <TextBlock x:Name="nextSessionDate" HorizontalAlignment="Left" Margin="552,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="da-dk" Text="DATO"/></TextBlock>
+        <TextBlock x:Name="nextSessionDate" HorizontalAlignment="Left" Margin="503,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" Width="152" Height="36"><Run Language="da-dk" Text="DATO"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="26,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="46" FontSize="16"><Run Language="da-dk" Text="Hold:"/></TextBlock>
         <TextBlock x:Name="teamName" HorizontalAlignment="Left" Margin="72,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16"><Run Language="da-dk" Text="HOLDNAVN"/></TextBlock>
         <TextBlock x:Name="level" HorizontalAlignment="Left" Margin="26,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="da-dk" Text="1. eller 2. år"/></TextBlock>

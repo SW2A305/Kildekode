@@ -95,6 +95,29 @@ namespace McSntt.Migrations
                                   };
             #endregion
 
+      /*      var studentMembers = new[]
+            {
+                new StudentMember
+                {
+                    SailClubMemberId = 99,
+                    FirstName = "Magic",
+                    LastName = "User",
+                    Address = "Hovedgaden 3",
+                    Postcode = "9000",
+                    Cityname = "Etandetsted",
+                    BoatDriver = true,
+                    Email = "jg1803@stashthistoo.ccf",
+                    Gender = Gender.Female,
+                    PhoneNumber = "11223346",
+                    Username = "d",
+                    PasswordHash = EncryptionHelper.Sha256("d"),
+                    Position = SailClubMember.Positions.Student,
+                    DateOfBirth = "1976-01-31"
+
+                }
+            }; */
+
+
             #region Data : Boats
             var boats = new[]
                         {
