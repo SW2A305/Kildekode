@@ -31,6 +31,8 @@ namespace McSntt.Views.UserControls
             InfoTextBlock.Text =
                 "Til højre ses dine kommende ture, samt dem hvorpå der endnu ikker er udfyldt en logbog for.";
 
+            CreateLogBookButton.IsEnabled = false;
+
             LoadData();
         }
 
@@ -71,6 +73,12 @@ namespace McSntt.Views.UserControls
             LogbookDataGrid.ItemsSource = null;
             LogbookDataGrid.ItemsSource =
                 sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
+        }
+
+        private void LogbookDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Enable the button if a trip is selected.
+            CreateLogBookButton.IsEnabled = LogbookDataGrid.SelectedIndex != -1;
         }
     }
 }

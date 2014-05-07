@@ -27,7 +27,7 @@
                 <Rectangle Width="20" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
                 <StackPanel Width="470" >
                     <TextBlock Text="Du mangler at udfylde logbøger for:" FontWeight="Bold" Name="LogbookTextBlock"/>
-                    <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" MaxHeight="350" Margin="0,0,0,0">
+                    <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" MaxHeight="350" Margin="0,0,0,0" SelectionChanged="LogbookDataGrid_SelectionChanged">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}">
                                 <EventSetter Event="MouseDoubleClick" Handler="LogbookDataGrid_MouseDoubleClick"/>
