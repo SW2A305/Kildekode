@@ -5,42 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Width="1000" Height="650">
     <Grid Margin="10,10,0,0">
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Width="300">
-                <TextBlock Text="Velkommen " Name="WelcomeBlock" FontSize="20"/>
-                <TextBlock Name="InfoTextBlock" TextWrapping="Wrap"/>
-            </StackPanel>
-            <StackPanel Width="480">
-                <TextBlock Text="Dine kommende sejlture" Name="UpandcommingTextBlock"/>
-                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" MaxHeight="180" Margin="0,0,0,0">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
-                        <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
-                        <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
+        <StackPanel>
+            <TextBlock Text="Velkommen " Name="WelcomeBlock" FontSize="20"/>
+            <TextBlock Name="InfoTextBlock" TextWrapping="Wrap"/>
+            <!-- To make border -->
+            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+            <StackPanel Width="980" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
+                <StackPanel Width="400">
+                    <TextBlock Text="Dine kommende sejlture" Name="UpandcommingTextBlock"/>
+                    <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" MaxHeight="350" Margin="0,0,0,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
+                            <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
+                            <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
                                         Header="Planlagte Afgang" />
-                        <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <TextBlock Text="Du mangler at udfylde logbøger for:" Name="LogbookTextBlock"/>
-                <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="184" MaxHeight="180" Margin="0,0,0,0">
-                    <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <EventSetter Event="MouseDoubleClick" Handler="LogbookDataGrid_MouseDoubleClick"/>
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
-                        <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
-                        <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
-                                        Header="Planlagte Afgang" />
-                        <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
                 <!-- To make border -->
-                <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
-                <Button Name="CreateLogBookButton" Content="Opret logbog" Height="25" Width="150" Click="CreateLogBookButton_Click" />
+                <Rectangle Width="20" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+                <StackPanel Width="400">
+                    <TextBlock Text="Du mangler at udfylde logbøger for:" Name="LogbookTextBlock"/>
+                    <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="LogbookDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" MaxHeight="350" Margin="0,0,0,0">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <EventSetter Event="MouseDoubleClick" Handler="LogbookDataGrid_MouseDoubleClick"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
+                            <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
+                            <DataGridTextColumn Binding="{Binding DepartureTime, StringFormat=\{0:ddd dd/MM/yyyy HH:mm\}}"
+                                    Header="Planlagte Afgang" />
+                            <DataGridTextColumn Binding="{Binding PurposeAndArea}" Header="Formål" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!-- To make border -->
+                    <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+                    <Button Name="CreateLogBookButton" Content="Opret logbog" Height="25" Width="150" Click="CreateLogBookButton_Click" />
+                </StackPanel>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </UserControl>
