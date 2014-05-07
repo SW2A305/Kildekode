@@ -27,7 +27,7 @@
                 <Grid Name="MembersGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem" Margin="0,0,-65,0">
                 <TabItem.Header>
                     <TextBlock Text="Både" FontSize="23" />
                 </TabItem.Header>
