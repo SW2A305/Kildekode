@@ -87,18 +87,19 @@ namespace McSntt.Views.Windows
             {
                 MessageBox.Show("Vælg venligst en gyldig Kaptajn");
             }
-            else if (YesRadioButton.IsChecked == true || NoRadioButton.IsChecked == true) 
+            else if (YesRadioButton.IsChecked == true || NoRadioButton.IsChecked == true
+                        || YesButBrokenRadioButton.IsChecked == true) 
             {
                     if (YesRadioButton.IsChecked == true)
                     {
-                        currentLogbook.DamageInflicted = true;
+                        currentLogbook.DamageInflicted = false;
 
                         //Notify someone that the boat is damaged
                     }
                 
-                    if (NoRadioButton.IsChecked == true)
+                    if (NoRadioButton.IsChecked == true || YesButBrokenRadioButton.IsChecked == true)
                     {
-                        currentLogbook.DamageInflicted = false;
+                        currentLogbook.DamageInflicted = true;
                     }
 
                 RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
