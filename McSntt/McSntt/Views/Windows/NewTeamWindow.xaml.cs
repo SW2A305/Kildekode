@@ -24,20 +24,28 @@ namespace McSntt.Views.Windows
         public NewTeamWindow()
         {
             InitializeComponent();
+            TeamName.Focus();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-
-            if (!string.IsNullOrEmpty(TeamName.Text))
+            if (StudyMockData.TeamListGlobal.All(x => x.Name != TeamName.Text) )
             {
-                var team = new Team {Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Teacher = GlobalInformation.CurrentUser};
-                StudyMockData.TeamListGlobal.Add(team);
-                Close();
+                if (!string.IsNullOrEmpty(TeamName.Text))
+                {
+                    // TODO: The instansiating of the lists can be remove when the database works
+                    var team = new Team { Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Lectures = new LinkedList<Lecture>(), Teacher = GlobalInformation.CurrentUser };
+                    StudyMockData.TeamListGlobal.Add(team);
+                    Close();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
             else
             {
-                this.Close();
+                MessageBox.Show("Et hold med dette navn eksisterer allerede!");
             }
         }
 
@@ -48,7 +56,5 @@ namespace McSntt.Views.Windows
                 OkButton_Click(sender, e);
             }
         }
-
-
     }
 }
