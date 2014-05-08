@@ -100,6 +100,12 @@ namespace McSntt.Views.Windows
             // Get the current selected boat
             Boat boat = (Boat)BoatComboBox.SelectionBoxItem;
 
+            if (boat.Operational == false)
+            {
+                MessageBox.Show("Båden valgt er ikke operationel");
+                return;
+            }
+
             // Get the startTime as a datetime
             DateTime startTime = DateTimeStart.Value;
 
