@@ -5,7 +5,7 @@
         xmlns:userControls="clr-namespace:McSntt.Views.UserControls"
         x:Class="McSntt.Views.Windows.NewLecture"
         Style="{StaticResource WindowStyle}"
-        Title="NewLecture" Height="193" Width="405">
+        Title="NewLecture" Height="200" Width="405" MinHeight="200" MinWidth="405">
     <Grid>
         <Label Content="Angiv tidspunkt for lektion" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="228"/>
         <Button x:Name="CompleteLectureCreate" Content="OK" HorizontalAlignment="Left" Margin="299,113,0,0" VerticalAlignment="Top" Width="75" Click="CompleteLectureCreate_Click"/>
