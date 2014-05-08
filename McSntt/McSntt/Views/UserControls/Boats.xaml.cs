@@ -41,8 +41,8 @@ namespace McSntt.Views.UserControls
             image.EndInit();
             BoatImage.Source = image;
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
-                AnswerDamageReportButton.IsEnabled = true;
-            else AnswerDamageReportButton.IsEnabled = false;
+                AnswerDamageReportButton.Visibility = Visibility.Visible;
+            else AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
             BookButton.IsEnabled = false;
         }
@@ -128,13 +128,21 @@ namespace McSntt.Views.UserControls
             CurrentSailtrip = (RegularTrip) LogbookDataGrid.SelectedItem;
             if (CurrentSailtrip == null)
             {
-                MessageBox.Show("Vælg venligst en Logbog du gerne vil se");
+                MessageBox.Show("Vælg venligst en Logbog du gerne vil svare på");
             }
             else
             {
                 var DamageReportWindow = new DamageReportWindow(CurrentSailtrip);
                 DamageReportWindow.ShowDialog();
-                CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
+
+                if (DamageReportWindow.DamageReport != String.Empty && DamageReportWindow.IsAnswered)
+                {
+                    CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
+                }
+                else
+                {
+                    MessageBox.Show("Du bedes trykke udfør for at gemme dit svar og samtidig må dit svar ikke være tomt.");
+                }
                 logbookDal.Update(CurrentSailtrip.Logbook);
             }
         }

@@ -27,7 +27,7 @@ namespace McSntt.Views.UserControls
 
         private DateTime _value;
 
-        private Boolean _isReadOnly = false;
+        private bool _isReadOnly = false;
 
         public DateTimePicker()
         {
@@ -51,7 +51,7 @@ namespace McSntt.Views.UserControls
             }
         }
 
-        public Boolean IsReadOnly
+        public bool IsReadOnly
         {
             get { return _isReadOnly; }
             set

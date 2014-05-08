@@ -21,6 +21,7 @@ namespace McSntt.Views.Windows
     public partial class DamageReportWindow : Window
     {
         public string DamageReport;
+        public bool IsAnswered = false;
 
         public DamageReportWindow(RegularTrip regularSailTrip)
         {
@@ -30,6 +31,10 @@ namespace McSntt.Views.Windows
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DamageReport = DamageTextBox.Text;
+            if (DamageReport != String.Empty)
+            {
+                IsAnswered = true;
+            }
             this.Close();
 
             //update the element sent to the windows damagereportanswer
