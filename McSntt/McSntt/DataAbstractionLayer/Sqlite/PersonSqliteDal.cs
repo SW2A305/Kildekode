@@ -171,7 +171,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             ;
         }
 
-        public Person GetOne(int itemId)
+        public Person GetOne(long itemId)
         {
             Person person = null;
 

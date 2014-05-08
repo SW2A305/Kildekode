@@ -65,7 +65,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public Logbook GetOne(int itemId)
+        public Logbook GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {

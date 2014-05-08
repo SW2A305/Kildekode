@@ -172,7 +172,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return sailClubMembers;
         }
 
-        public SailClubMember GetOne(int itemId)
+        public SailClubMember GetOne(long itemId)
         {
             SailClubMember sailClubMember = null;
 

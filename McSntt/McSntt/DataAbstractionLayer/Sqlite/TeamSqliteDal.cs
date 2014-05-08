@@ -140,7 +140,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return teams;
         }
 
-        public Team GetOne(int itemId)
+        public Team GetOne(long itemId)
         {
             Team team = null;
 

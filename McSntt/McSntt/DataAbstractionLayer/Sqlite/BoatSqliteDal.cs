@@ -145,7 +145,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return boats;
         }
 
-        public Boat GetOne(int itemId)
+        public Boat GetOne(long itemId)
         {
             Boat boat = null;
 

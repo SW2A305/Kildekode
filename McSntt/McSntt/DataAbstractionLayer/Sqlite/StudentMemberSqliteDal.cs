@@ -187,7 +187,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             ;
         }
 
-        public StudentMember GetOne(int itemId)
+        public StudentMember GetOne(long itemId)
         {
             StudentMember studentMember = null;
 

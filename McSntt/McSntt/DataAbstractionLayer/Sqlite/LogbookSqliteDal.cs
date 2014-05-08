@@ -162,7 +162,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             ;
         }
 
-        public Logbook GetOne(int itemId)
+        public Logbook GetOne(long itemId)
         {
             Logbook logbook = null;
 

@@ -75,7 +75,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public SailClubMember GetOne(int itemId)
+        public SailClubMember GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {

@@ -76,7 +76,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public RegularTrip GetOne(int itemId)
+        public RegularTrip GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {

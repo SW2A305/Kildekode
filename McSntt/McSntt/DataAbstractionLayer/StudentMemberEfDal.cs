@@ -49,7 +49,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public StudentMember GetOne(int itemId)
+        public StudentMember GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {

@@ -158,7 +158,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             ;
         }
 
-        public Event GetOne(int itemId)
+        public Event GetOne(long itemId)
         {
             Event eventItem = null;
 

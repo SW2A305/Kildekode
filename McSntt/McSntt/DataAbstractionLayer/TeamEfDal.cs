@@ -73,7 +73,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public Team GetOne(int itemId)
+        public Team GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {

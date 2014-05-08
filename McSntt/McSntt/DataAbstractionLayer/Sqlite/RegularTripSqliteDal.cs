@@ -163,7 +163,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return regularTrips;
         }
 
-        public RegularTrip GetOne(int itemId)
+        public RegularTrip GetOne(long itemId)
         {
             RegularTrip regularTrip = null;
 

@@ -73,7 +73,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public Boat GetOne(int itemId)
+        public Boat GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {

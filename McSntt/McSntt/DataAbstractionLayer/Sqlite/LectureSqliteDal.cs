@@ -195,7 +195,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                 ;
         }
 
-        public Lecture GetOne(int itemId)
+        public Lecture GetOne(long itemId)
         {
             Lecture lecture = null;
 

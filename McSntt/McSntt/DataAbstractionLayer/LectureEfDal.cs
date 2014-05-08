@@ -64,7 +64,7 @@ namespace McSntt.DataAbstractionLayer
             }
         }
 
-        public Lecture GetOne(int itemId)
+        public Lecture GetOne(long itemId)
         {
             using (var db = new McSntttContext())
             {
