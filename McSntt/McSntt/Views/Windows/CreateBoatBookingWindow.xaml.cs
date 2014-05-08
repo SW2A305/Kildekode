@@ -17,6 +17,30 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class CreateBoatBookingWindow : Window
     {
+        // Constructor to use this window to edit a trip
+        public CreateBoatBookingWindow(RegularTrip rt) : this(-1)
+        {
+            // The id is combobox id + 1 (So boatId - 1)
+            BoatComboBox.SelectedIndex = rt.Boat.BoatId - 1;
+            DateTimeStart.Value = rt.DepartureTime;
+            DateTimeEnd.Value = rt.ArrivalTime;
+            CrewList = rt.Crew.ToList();
+            var per = rt.Crew.First(p => p.PersonId == rt.Captain.PersonId);
+            CaptainComboBox.SelectedIndex = rt.Crew.ToList().IndexOf(per);
+            PurposeTextBox.Text = rt.PurposeAndArea;
+
+            CompleteBooking.Content = "Gem ændringer";
+            CompleteBooking.Click -= SaveButton_Click;
+            CompleteBooking.Click += ChangeButton_Click;
+            CancelBooking.Content = "Annuler ændirnger";
+
+            CrewDataGrid.ItemsSource = null;
+            CrewDataGrid.ItemsSource = CrewList;
+            CaptainComboBox.ItemsSource = null;
+            CaptainComboBox.ItemsSource = CrewList;
+
+        }
+
         public CreateBoatBookingWindow(int index)
         {
             InitializeComponent();
@@ -33,13 +57,8 @@ namespace McSntt.Views.Windows
 
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
-
         }
 
-        private void BoatComboBox_OnDropDownClosed(object sender, EventArgs e)
-        {
-            
-        }
         public List<Person> CrewList = new List<Person>();
 
         public CreateBoatBookingWindow(DateTime departure, DateTime arrival, Team currentTeam) : this(-1)
@@ -89,13 +108,33 @@ namespace McSntt.Views.Windows
             
         }
 
-        private void CaptainComboBox_OnDropDownClosed(object sender, EventArgs e)
-        {
-
-        }
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            var thisTrip = CreateSailTrip();
+
+            if (thisTrip != null)
+            {
+                //foo;
+            }
+            //TODO: Database connection. Create NEW
+        }
+
+        private void ChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            var thisTrip = CreateSailTrip();
+
+            if (thisTrip != null)
+            {
+                //foo;
+            }
+            //TODO: Database connection. Update
+        }
+
+
+
+        private SailTrip CreateSailTrip()
+        {
+
             //TODO: Check if this is a valid trip. If not return saying error. 
             // Get the current selected boat
             Boat boat = (Boat)BoatComboBox.SelectionBoxItem;
@@ -103,7 +142,7 @@ namespace McSntt.Views.Windows
             if (boat.Operational == false)
             {
                 MessageBox.Show("Båden valgt er ikke operationel");
-                return;
+                return null;
             }
 
             // Get the startTime as a datetime
@@ -112,7 +151,7 @@ namespace McSntt.Views.Windows
             if (startTime < DateTime.Now)
             {
                 MessageBox.Show("Starttidspunktet angivet er i fortiden");
-                return;
+                return null;
             }
 
             // Get the endTime as a datetime
@@ -121,13 +160,13 @@ namespace McSntt.Views.Windows
             if (endTime < startTime)
             {
                 MessageBox.Show("Sluttidspunkt angivet er før starttidspunkt, tidsrejse tilbage i tiden er ej muligt");
-                return;
+                return null;
             }
 
             if (startTime == endTime)
             {
                 MessageBox.Show("Start og sluttidspunkt angivet er det samme.");
-                return;
+                return null;
             }
 
             // Get the crew
@@ -137,14 +176,14 @@ namespace McSntt.Views.Windows
             if (crewSelected.Count == 0)
             {
                 MessageBox.Show("Besætningslisten er tom");
-                return;
+                return null;
             }
 
             // Return error if no captain is selected
             if (CaptainComboBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Kaptajn ej angivet");
-                return;
+                return null;
             }
 
             // Get the captain
@@ -154,7 +193,7 @@ namespace McSntt.Views.Windows
             if (PurposeTextBox.Text.Trim() == String.Empty)
             {
                 MessageBox.Show("Formål ej angivet");
-                return;
+                return null;
             }
 
             var purpose = PurposeTextBox.Text.Trim();
@@ -170,17 +209,7 @@ namespace McSntt.Views.Windows
                 Comments = purpose
             };
 
-            var dbm = new RegularTripEfDal();
-            
-            if (dbm.Create(complete))
-            {
-                MessageBox.Show("Din tur er oprettet!");
-            }
-            else
-            {
-                MessageBox.Show("Doh!");
-            }
-
+            return complete;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
