@@ -202,46 +202,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return eventItem;
         }
 
-        public void LoadParticipants(Event eventItem)
+        public void LoadData(Event item)
         {
-            var personDal = DalLocator.PersonDal;
-            var personIds = new List<long>();
-
-            using (var db = DatabaseManager.DbConnection)
-            {
-                db.Open();
-
-                using (var command = db.CreateCommand())
-                {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("SELECT person_id FROM {0} WHERE event_id = @eventId",
-                                      DatabaseManager.TableEventParticipantsBinder);
-
-                    using (var reader = command.ExecuteReader()) {
-                        while (reader.Read()) {
-                            personIds.Add(DatabaseManager.ReadInt(reader, 0));
-                        }
-                    }
-                }
-
-                db.Close();
-            }
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Event> GetAll(Func<Event, bool> predicate) { return this.GetAll(predicate, true); }
-
-        public IEnumerable<Event> GetAll(Func<Event, bool> predicate, bool fetchChildData)
+        public IEnumerable<Event> GetAll(Func<Event, bool> predicate)
         {
             IEnumerable<Event> events  = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (Event eventItem in events)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return events;
         }

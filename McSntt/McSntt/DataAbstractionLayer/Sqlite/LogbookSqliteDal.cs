@@ -32,7 +32,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     foreach (Logbook logbook in items)
                     {
                         command.Parameters.Clear();
-                        // TODO Make sure "FiledBy" is set, and extract ID.
+                        command.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
                         command.Parameters.Add(new SQLiteParameter("@actualDepartureTime", logbook.ActualDepartureTime));
                         command.Parameters.Add(new SQLiteParameter("@actualArrivalTime", logbook.ActualArrivalTime));
                         command.Parameters.Add(new SQLiteParameter("@damageInflicted", logbook.DamageInflicted));
@@ -76,7 +76,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     {
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
-                        // TODO Make sure "FiledBy" is set, and extract ID.
+                        command.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
                         command.Parameters.Add(new SQLiteParameter("@actualDepartureTime", logbook.ActualDepartureTime));
                         command.Parameters.Add(new SQLiteParameter("@actualArrivalTime", logbook.ActualArrivalTime));
                         command.Parameters.Add(new SQLiteParameter("@damageInflicted", logbook.DamageInflicted));
@@ -151,8 +151,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                         AnswerFromBoatChief =
                                             DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
                                         DamageDescription = DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
-                                        DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted"))
-                                        // TODO Fetch "FiledBy"
+                                        DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted")),
+                                        FiledById = DatabaseManager.ReadInt(reader, reader.GetOrdinal("filed_by_id"))
                                     });
                         }
                     }
@@ -195,8 +195,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     ActualDepartureTime = reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
                                     AnswerFromBoatChief = DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
                                     DamageDescription = DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
-                                    DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted"))
-                                    // TODO Fetch "FiledBy"
+                                    DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted")),
+                                    FiledById = DatabaseManager.ReadInt(reader, reader.GetOrdinal("filed_by_id"))
                                 };
                         }
                     }
@@ -208,22 +208,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return logbook;
         }
 
-        public IEnumerable<Logbook> GetAll(Func<Logbook, bool> predicate)
+        public void LoadData(Logbook item)
         {
-            return this.GetAll(predicate, true);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Logbook> GetAll(Func<Logbook, bool> predicate, bool fetchChildData)
+        public IEnumerable<Logbook> GetAll(Func<Logbook, bool> predicate)
         {
             IEnumerable<Logbook> logbooks  = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (Logbook logbook in logbooks)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return logbooks;
         }

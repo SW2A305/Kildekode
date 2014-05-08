@@ -283,25 +283,16 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return studentMember;
         }
 
-        public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
+        public void LoadData(StudentMember item)
         {
-            return this.GetAll(predicate, true);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate, bool fetchChildData)
+        public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
         {
             IEnumerable<StudentMember> studentMembers  = this.GetAll().Where(predicate);
 
-            if (fetchChildData)
-            {
-                foreach (StudentMember studentMember in studentMembers)
-                {
-                    // TODO Fill this out
-                }
-            }
-
-            return studentMembers
-            ;
+            return studentMembers;
         }
     }
 }

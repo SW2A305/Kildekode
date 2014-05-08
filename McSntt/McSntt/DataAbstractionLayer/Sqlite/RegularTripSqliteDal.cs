@@ -31,9 +31,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     foreach (RegularTrip regularTrip in items)
                     {
                         command.Parameters.Clear();
-                        // TODO Make sure "Boat" is set, and extract ID.
-                        // TODO Make sure "Captain" is set, and extract ID.
-                        // TODO Make sure "Logbook" is set, and extract ID.
+                        command.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
+                        command.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
+                        command.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
                         command.Parameters.Add(new SQLiteParameter("@departureTime", regularTrip.DepartureTime));
                         command.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
                         command.Parameters.Add(new SQLiteParameter("@expectedArrivalTime", regularTrip.ExpectedArrivalTime));
@@ -75,9 +75,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     {
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
-                        // TODO Make sure "Boat" is set, and extract ID.
-                        // TODO Make sure "Captain" is set, and extract ID.
-                        // TODO Make sure "Logbook" is set, and extract ID.
+                        command.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
+                        command.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
+                        command.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
                         command.Parameters.Add(new SQLiteParameter("@departureTime", regularTrip.DepartureTime));
                         command.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
                         command.Parameters.Add(new SQLiteParameter("@expectedArrivalTime", regularTrip.ExpectedArrivalTime));
@@ -152,10 +152,10 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                                  PurposeAndArea =
                                                      DatabaseManager.ReadString(reader, reader.GetOrdinal("purpose_and_area")),
                                                  WeatherConditions =
-                                                     DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions"))
-                                                 // TODO Fetch "Boat"
-                                                 // TODO Fetch "Captain"
-                                                 // TODO Fetch "Logbook"
+                                                     DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions")),
+                                                 BoatId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("boat_id")),
+                                                 CaptainId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("captain_id")),
+                                                 LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id"))
                                              });
                         }
                     }
@@ -197,10 +197,10 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
                                     ExpectedArrivalTime = reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
                                     PurposeAndArea = DatabaseManager.ReadString(reader, reader.GetOrdinal("purpose_and_area")),
-                                    WeatherConditions = DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions"))
-                                    // TODO Fetch "Boat"
-                                    // TODO Fetch "Captain"
-                                    // TODO Fetch "Logbook"
+                                    WeatherConditions = DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions")),
+                                    BoatId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("boat_id")),
+                                    CaptainId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("captain_id")),
+                                    LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id"))
                                 };
                         }
                     }
@@ -212,19 +212,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return regularTrip;
         }
 
-        public IEnumerable<RegularTrip> GetAll(Func<RegularTrip, bool> predicate) { return this.GetAll(predicate, true); }
+        public void LoadData(RegularTrip item)
+        {
+            throw new NotImplementedException();
+        }
 
-        public IEnumerable<RegularTrip> GetAll(Func<RegularTrip, bool> predicate, bool fetchChildData)
+        public IEnumerable<RegularTrip> GetAll(Func<RegularTrip, bool> predicate)
         {
             IEnumerable<RegularTrip> regularTrips = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (RegularTrip regularTrip in regularTrips)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return regularTrips;
         }

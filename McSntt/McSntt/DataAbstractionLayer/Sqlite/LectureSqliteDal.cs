@@ -214,22 +214,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return lecture;
         }
 
-        public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate)
+        public void LoadData(Lecture item)
         {
-            return this.GetAll(predicate, true);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate, bool fetchChildData)
+        public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate)
         {
             IEnumerable<Lecture> lectures = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (Lecture lecture in lectures)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return lectures;
         }

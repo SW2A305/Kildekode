@@ -224,22 +224,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return sailClubMember;
         }
 
-        public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
+        public void LoadData(SailClubMember item)
         {
-            return this.GetAll(predicate, true);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate, bool fetchChildData)
+        public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
         {
             IEnumerable<SailClubMember> sailClubMembers = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (SailClubMember sailClubMember in sailClubMembers)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return sailClubMembers
                 ;

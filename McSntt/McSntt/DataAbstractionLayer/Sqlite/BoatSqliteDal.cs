@@ -186,28 +186,16 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return boat;
         }
 
-        public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate) { return this.GetAll(predicate, true); }
+        public void LoadData(Boat item)
+        {
+            throw new NotImplementedException();
+        }
 
-        public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate, bool fetchChildData)
+        public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate)
         {
             IEnumerable<Boat> boats = this.GetAll().Where(predicate);
 
-            if (fetchChildData)
-            {
-                foreach (Boat boat in boats)
-                {
-                    // TODO Complete this.
-                }
-            }
-
             return boats;
-        }
-
-        public void LoadSailTrips(Boat boat)
-        {
-            var tripDal = DalLocator.RegularTripDal;
-
-            boat.SailTrips = tripDal.GetAll(trip => trip.BoatId == boat.BoatId).ToList();
         }
     }
 }

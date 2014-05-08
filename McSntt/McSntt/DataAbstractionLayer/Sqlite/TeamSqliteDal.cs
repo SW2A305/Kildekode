@@ -184,19 +184,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return team;
         }
 
-        public IEnumerable<Team> GetAll(Func<Team, bool> predicate) { return this.GetAll(predicate, true); }
+        public void LoadData(Team item)
+        {
+            throw new NotImplementedException();
+        }
 
-        public IEnumerable<Team> GetAll(Func<Team, bool> predicate, bool fetchChildData)
+        public IEnumerable<Team> GetAll(Func<Team, bool> predicate)
         {
             IEnumerable<Team> teams = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (Team team in teams)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return teams;
         }

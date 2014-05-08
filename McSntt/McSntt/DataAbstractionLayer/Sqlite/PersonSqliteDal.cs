@@ -219,22 +219,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return person;
         }
 
-        public IEnumerable<Person> GetAll(Func<Person, bool> predicate)
+        public void LoadData(Person item)
         {
-            return this.GetAll(predicate, true);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Person> GetAll(Func<Person, bool> predicate, bool fetchChildData)
+        public IEnumerable<Person> GetAll(Func<Person, bool> predicate)
         {
             IEnumerable<Person> persons  = this.GetAll().Where(predicate);
-
-            if (fetchChildData)
-            {
-                foreach (Person person in persons)
-                {
-                    // TODO Fill this out
-                }
-            }
 
             return persons
             ;
