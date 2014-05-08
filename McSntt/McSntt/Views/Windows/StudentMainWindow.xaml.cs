@@ -20,7 +20,7 @@ namespace McSntt.Views.Windows
             // Set the list as the current DataContext  
             InitializeComponent();
             FrontPageGrid.Children.Add(new FrontPage());
-            StudyGrid.Children.Add(new studyStudent());
+            StudyGrid.Children.Add(new StudyStudent());
             MembersGrid.Children.Add(new Members());
             EventsGrid.Children.Add(new EventsAdmin());
             BoatsGrid.Children.Add(new Boats());

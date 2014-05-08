@@ -165,20 +165,14 @@
     <Compile Include="Views\UserControls\Boats.xaml.cs">
       <DependentUpon>Boats.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\Calendar.xaml.cs">
-      <DependentUpon>Calendar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\Logbog.xaml.cs">
-      <DependentUpon>Logbog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\Members.xaml.cs">
       <DependentUpon>Members.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\SailerSchool.xaml.cs">
       <DependentUpon>SailerSchool.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\studyStudent.xaml.cs">
-      <DependentUpon>studyStudent.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\StudyStudent.xaml.cs">
+      <DependentUpon>StudyStudent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\StudyTeacher.xaml.cs">
       <DependentUpon>StudyTeacher.xaml</DependentUpon>
@@ -263,14 +257,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\Calendar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\Logbog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UserControls\Members.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,7 +265,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\studyStudent.xaml">
+    <Page Include="Views\UserControls\StudyStudent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
