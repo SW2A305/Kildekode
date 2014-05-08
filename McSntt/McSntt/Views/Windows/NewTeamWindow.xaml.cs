@@ -32,7 +32,8 @@ namespace McSntt.Views.Windows
             {
                 if (!string.IsNullOrEmpty(TeamName.Text))
                 {
-                    var team = new Team { Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Teacher = GlobalInformation.CurrentUser };
+                    // TODO: The instansiating of the list can be remove when the database works
+                    var team = new Team { Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Lectures = new LinkedList<Lecture>(), Teacher = GlobalInformation.CurrentUser };
                     StudyMockData.TeamListGlobal.Add(team);
                     Close();
                 }

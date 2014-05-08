@@ -78,6 +78,7 @@ namespace McSntt.Views.UserControls
             editTeamGrid.IsEnabled = false;
             lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
             promoteTeam.IsEnabled = false;
+            newLecture1.IsEnabled = false;
 
         }
 
@@ -290,6 +291,7 @@ namespace McSntt.Views.UserControls
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
             int currentTeamDropdownIndex = teamDropdown.SelectedIndex;
+
             if (Level1RadioButton.IsChecked == true)
             {
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.First;
@@ -298,34 +300,36 @@ namespace McSntt.Views.UserControls
             {
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
             }
-
+            
             ((Team) teamDropdown.SelectedItem).Name = teamName.Text;
             ((Team)teamDropdown.SelectedItem).TeamMembers.Clear();
+
             foreach (var member in MembersList)
             {
+                member.AssociatedTeam = ((Team) teamDropdown.SelectedItem);
                 ((Team)teamDropdown.SelectedItem).TeamMembers.Add(member);
             }
-            teamDropdown.ItemsSource = null;
 
-            // Mock
+            teamDropdown.ItemsSource = null;
+            // TODO: Itemsource should be changed to database
             teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
             teamDropdown.SelectedIndex = currentTeamDropdownIndex;
-            
-
-            /* Database
-            ITeamDal teamDal = new TeamEfDal();
-            teamDal.Create(team);
-            teamDropdown.ItemsSource = teamDal.GetAll();
-            */
         }
 
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             ClearFields();
+            // TODO: delete StudyMockData.TeamListGlobal and add database reference
+            int currentTeamDropdownCount = StudyMockData.TeamListGlobal.Count;
             var newTeamWindow = new NewTeamWindow();
             newTeamWindow.ShowDialog();
             teamDropdown.ItemsSource = null;
             teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+
+            if (currentTeamDropdownCount != StudyMockData.TeamListGlobal.Count)
+            {
+                teamDropdown.SelectedIndex = StudyMockData.TeamListGlobal.Count - 1;
+            }
         }
 
         private void deleteTeam_Click(object sender, RoutedEventArgs e)
@@ -352,18 +356,25 @@ namespace McSntt.Views.UserControls
         
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            CurrentMemberDataGrid.ItemsSource = null;
+            MembersList.Clear();
+            lectureDropdown.ItemsSource = null;
+            promoteTeam.IsEnabled = false;
+            newLecture1.IsEnabled = false;
+            LectureDataClear();
+            StudentCheckBoxNameChange();
+
+            if (teamDropdown.SelectedItem != null)
             {
-                MembersList.Clear();
                 foreach (var member in ((Team)teamDropdown.SelectedItem).TeamMembers)
                 {
                     MembersList.Add(member);
                 }
-                CurrentMemberDataGrid.ItemsSource = null;
                 CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(MembersList);
                 teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
                 lectureDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
-
+                promoteTeam.IsEnabled = ((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
+                newLecture1.IsEnabled = true;
                 switch (((Team)teamDropdown.SelectedItem).Level)
                 {
                     case 0:
@@ -377,37 +388,22 @@ namespace McSntt.Views.UserControls
                         Level2RadioButton.IsChecked = true;
                         break;
                 }
-                
             }
-            catch (NullReferenceException)
-            {
-                // TODO Is this ignoring intentional? It's bad code design.
-            }
-
-            LectureDataClear();
-            StudentCheckBoxNameChange();
-            if (teamDropdown.SelectedItem == null)
-            {
-                promoteTeam.IsEnabled = false;
-            }
-            else
-            {
-                promoteTeam.IsEnabled = ((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
-            }
-            
-
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
             if (MemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!MembersList.Contains(currentMember))
+            if (!MembersList.Contains(currentMember) && StudyMockData.TeamListGlobal.All(x => !x.TeamMembers.Contains(currentMember)))
             {
                 MembersList.Add(currentMember);
                 RefreshDatagrid(CurrentMemberDataGrid, MembersList);
             }
-            
+            else
+            {
+                MessageBox.Show("Eleven er allerede på et hold!");
+            }
         }
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
