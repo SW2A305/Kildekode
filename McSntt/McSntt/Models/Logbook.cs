@@ -8,7 +8,7 @@ namespace McSntt.Models
     public class Logbook
     {
         [Key]
-        public virtual int LogbookId { get; set; }
+        public virtual long LogbookId { get; set; }
 
         [Column(TypeName = "DateTime2")]
         public virtual DateTime ActualDepartureTime { get; set; }

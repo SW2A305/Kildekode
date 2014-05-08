@@ -21,7 +21,7 @@ namespace McSntt.Models
     public class Person
     {
         [Key]
-        public virtual int PersonId { get; set; }
+        public virtual long PersonId { get; set; }
 
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }

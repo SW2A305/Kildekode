@@ -6,7 +6,7 @@ namespace McSntt.Models
 {
     public class RegularTrip : SailTrip
     {
-        public virtual int RegularTripId { get; set; }
+        public virtual long RegularTripId { get; set; }
         public virtual Person Captain { get; set; }
 
         [Column(TypeName = "DateTime2")]

@@ -68,11 +68,16 @@ namespace McSntt.Helpers
             }
         }
 
-        public static SQLiteConnection DbConnection { get { return new SQLiteConnection(ConnectionString); } }
+        public static SQLiteConnection DbConnection
+        {
+            get { return new SQLiteConnection(ConnectionString); }
+        }
         #endregion
 
         public static void InitializeDatabase(bool useTestDb = false)
         {
+            long dbVersion = 0;
+
             _useTestDb = useTestDb;
 
             // If we're using a test DB, we should remove it each time, in order to reset it.
@@ -83,7 +88,6 @@ namespace McSntt.Helpers
 
             using (SQLiteConnection db = DbConnection)
             {
-                int dbVersion = 0;
 
                 db.Open();
 
@@ -93,246 +97,257 @@ namespace McSntt.Helpers
                     command.CommandText = String.Format("SELECT value FROM {0} WHERE name = @name", TableDbSettings);
                     command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    try {
-                        if (reader.Read()) { dbVersion = reader.GetInt32(reader.GetOrdinal("value")); }
-                    }
-                    catch (Exception)
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        // Do nothing here...
+                        if (reader.Read()) { dbVersion = ReadData<long>(reader, reader.GetOrdinal("value")); }
                     }
                 }
 
-                if (dbVersion < DbVersion) {
-                    for (int i = dbVersion; i < DbVersion; i++) { UpdateDatabase(db, i, i + 1); }
-                }
-                
                 db.Close();
+            }
+
+            if (dbVersion < DbVersion)
+            {
+                for (long i = dbVersion; i < DbVersion; i++) { UpdateDatabase(i, i + 1); }
             }
         }
 
-        private static void UpdateDatabase(SQLiteConnection db, int fromVersion, int toVersion)
+        private static void UpdateDatabase(long fromVersion, long toVersion)
         {
-            if (fromVersion == 0 && toVersion == 1) { UpdateDatabaseFromVersion0ToVersion1(db); }
+            if (fromVersion == 0 && toVersion == 1) { UpdateDatabaseFromVersion0ToVersion1(); }
         }
 
-        private static void UpdateDatabaseFromVersion0ToVersion1(SQLiteConnection db)
+        private static void UpdateDatabaseFromVersion0ToVersion1()
         {
-            using (SQLiteTransaction transaction = db.BeginTransaction())
+            using (SQLiteConnection db = DbConnection)
             {
-                try
+                db.Open();
+
+                using (SQLiteTransaction transaction = db.BeginTransaction())
                 {
-                    #region Create Table: Boats
-                    using (SQLiteCommand command = db.CreateCommand())
+                    try
                     {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (boat_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "type INTEGER, nickname TEXT, image_path TEXT, operational INTEGER" +
-                                          ")",
-                                          TableBoats);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create Table: Boats
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (boat_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "type INTEGER, nickname TEXT, image_path TEXT, operational INTEGER" +
+                                              ")",
+                                              TableBoats);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: Events
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (event_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "event_date TEXT, event_title TEXT, sign_up_req INTEGER, description TEXT, " +
-                                          "sign_up_msg TEXT, created INTEGER" +
-                                          ")",
-                                          TableEvents);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: Events
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (event_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "event_date TEXT, event_title TEXT, sign_up_req INTEGER, description TEXT, "
+                                              +
+                                              "sign_up_msg TEXT, created INTEGER" +
+                                              ")",
+                                              TableEvents);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: Lectures
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (lecture_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "team_id INTEGER, date_of_lecture TEXT, rope_works INTEGER, " +
-                                          "navigation INTEGER, motor INTEGER, drabant INTEGER, " +
-                                          "gaffelrigger INTEGER, night INTEGER" +
-                                          ")",
-                                          TableLectures);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: Lectures
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (lecture_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "team_id INTEGER, date_of_lecture TEXT, rope_works INTEGER, " +
+                                              "navigation INTEGER, motor INTEGER, drabant INTEGER, " +
+                                              "gaffelrigger INTEGER, night INTEGER" +
+                                              ")",
+                                              TableLectures);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: Logbooks
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (logbook_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "actual_departure_time TEXT, actual_arrival_time TEXT, damage_inflicted INTEGER, "
-                                          +
-                                          "damage_description TEXT, answer_from_boat_chief TEXT, filed_by_id INTEGER" +
-                                          ")",
-                                          TableLogbooks);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: Logbooks
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (logbook_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "actual_departure_time TEXT, actual_arrival_time TEXT, damage_inflicted INTEGER, "
+                                              +
+                                              "damage_description TEXT, answer_from_boat_chief TEXT, filed_by_id INTEGER"
+                                              +
+                                              ")",
+                                              TableLogbooks);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: Persons
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (person_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "first_name TEXT, last_name TEXT, address TEXT, postcode TEXT, " +
-                                          "cityname TEXT, date_of_birth TEXT, boat_driver INTEGER, gender INTEGER, " +
-                                          "phone_number TEXT, email TEXT" +
-                                          ")",
-                                          TablePersons);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: Persons
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (person_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "first_name TEXT, last_name TEXT, address TEXT, postcode TEXT, " +
+                                              "cityname TEXT, date_of_birth TEXT, boat_driver INTEGER, gender INTEGER, "
+                                              +
+                                              "phone_number TEXT, email TEXT" +
+                                              ")",
+                                              TablePersons);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: RegularTrips
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (regular_trip_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "departure_time TEXT, arrival_time TEXT, boat_id INTEGER, " +
-                                          "captain_id INTEGER, expected_arrival_time TEXT, purpose_and_area TEXT, " +
-                                          "weather_conditions TEXT, logbook_id INTEGER" +
-                                          ")",
-                                          TableRegularTrips);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: RegularTrips
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (regular_trip_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "departure_time TEXT, arrival_time TEXT, boat_id INTEGER, " +
+                                              "captain_id INTEGER, expected_arrival_time TEXT, purpose_and_area TEXT, "
+                                              +
+                                              "weather_conditions TEXT, logbook_id INTEGER" +
+                                              ")",
+                                              TableRegularTrips);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: SailClubMembers
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (sail_club_member_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "person_id INTEGER, position INTEGER, username TEXT, password_hash TEXT" +
-                                          ")",
-                                          TableSailClubMembers);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: SailClubMembers
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (sail_club_member_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                              +
+                                              "person_id INTEGER, position INTEGER, username TEXT, password_hash TEXT" +
+                                              ")",
+                                              TableSailClubMembers);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: StudentMembers
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (student_member_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "sail_club_member_id INTEGER, team_id INTEGER, " +
-                                          "rope_works INTEGER, navigation INTEGER, motor INTEGER, drabant INTEGER, " +
-                                          "gaffelrigger INTEGER, night INTEGER" +
-                                          ")",
-                                          TableStudentMembers);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: StudentMembers
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (student_member_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                              +
+                                              "sail_club_member_id INTEGER, team_id INTEGER, " +
+                                              "rope_works INTEGER, navigation INTEGER, motor INTEGER, drabant INTEGER, "
+                                              +
+                                              "gaffelrigger INTEGER, night INTEGER" +
+                                              ")",
+                                              TableStudentMembers);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create table: Teams
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (team_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                          "name TEXT, level INTEGER" +
-                                          ")",
-                                          TableTeams);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create table: Teams
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (team_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                              "name TEXT, level INTEGER" +
+                                              ")",
+                                              TableTeams);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create binding-table: EventParticipantsBinder
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (" +
-                                          "event_id TEXT, person_id INTEGER" +
-                                          ")",
-                                          TableEventParticipantsBinder);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create binding-table: EventParticipantsBinder
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (" +
+                                              "event_id TEXT, person_id INTEGER" +
+                                              ")",
+                                              TableEventParticipantsBinder);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create binding-table: LogbookActualCrewBinder
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (" +
-                                          "logbook_id TEXT, person_id INTEGER" +
-                                          ")",
-                                          TableLogbookActualCrewBinder);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create binding-table: LogbookActualCrewBinder
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (" +
+                                              "logbook_id TEXT, person_id INTEGER" +
+                                              ")",
+                                              TableLogbookActualCrewBinder);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create binding-table: RegularTripCrewBinder
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (" +
-                                          "regular_trip_id TEXT, person_id INTEGER" +
-                                          ")",
-                                          TableRegularTripCrewBinder);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create binding-table: RegularTripCrewBinder
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (" +
+                                              "regular_trip_id TEXT, person_id INTEGER" +
+                                              ")",
+                                              TableRegularTripCrewBinder);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Create binding-table: LecturePresentMembersBinder
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText =
-                            String.Format(
-                                          "CREATE TABLE {0} (" +
-                                          "lecture_id TEXT, student_member_id INTEGER" +
-                                          ")",
-                                          TableLecturePresentMembersBinder);
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Create binding-table: LecturePresentMembersBinder
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (" +
+                                              "lecture_id TEXT, student_member_id INTEGER" +
+                                              ")",
+                                              TableLecturePresentMembersBinder);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    #region Update DB version
-                    using (SQLiteCommand command = db.CreateCommand())
-                    {
-                        command.CommandType = CommandType.Text;
-                        command.CommandText = String.Format("UPDATE {0} SET value = @value WHERE name = @name",
-                                                            TableDbSettings);
-                        command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
-                        command.Parameters.Add(new SQLiteParameter("@value", 1));
-                        command.ExecuteNonQuery();
-                    }
-                    #endregion
+                        #region Update DB version
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText = String.Format("UPDATE {0} SET value = @value WHERE name = @name",
+                                                                TableDbSettings);
+                            command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
+                            command.Parameters.Add(new SQLiteParameter("@value", 1));
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
 
-                    transaction.Commit();
+                        transaction.Commit();
+                    }
+                    catch (Exception) {
+                        transaction.Rollback();
+                        throw;
+                    }
                 }
-                catch (Exception) {
-                    transaction.Rollback();
-                }
+
+                db.Close();
             }
         }
 
@@ -348,7 +363,9 @@ namespace McSntt.Helpers
                 using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
-                    command.CommandText = String.Format("CREATE TABLE {0} (name TEXT, value INTEGER)", TableDbSettings);
+                    command.CommandText = String.Format(
+                                                        "CREATE TABLE {0} (name TEXT NOT NULL, value INTEGER DEFAULT 0)",
+                                                        TableDbSettings);
                     command.ExecuteNonQuery();
                 }
 
@@ -366,5 +383,25 @@ namespace McSntt.Helpers
                 db.Close();
             }
         }
+
+        #region SQLiteDataReader Helper Methods
+        public static int ReadInt(SQLiteDataReader reader, int columnIndex)
+        {
+            int result = 0;
+
+            if (!reader.IsDBNull(columnIndex)) { result = reader.GetInt32(columnIndex); }
+
+            return result;
+        }
+
+        public static T ReadData<T>(SQLiteDataReader reader, int columnIndex)
+        {
+            var result = default(T);
+
+            if (!reader.IsDBNull(columnIndex)) { result = reader.GetFieldValue<T>(columnIndex); }
+
+            return result;
+        }
+        #endregion
     }
 }

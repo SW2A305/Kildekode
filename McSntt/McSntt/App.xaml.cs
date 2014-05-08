@@ -31,6 +31,7 @@ namespace McSntt
             var teamDal = new TeamSqliteDal();
 
             // ===== BOATS =====
+            #region Boat Testing
             var boats = new Boat[]
                         {
                             new Boat()
@@ -58,9 +59,11 @@ namespace McSntt
             bool resultUpdateBoat = boatDal.Update(boats);
 
             MessageBox.Show(String.Format("Success: {0}\r\nTeams: {1} ({2}), {3} ({4})", resultUpdateBoat, boats[0].NickName, boats[0].BoatId, boats[1].NickName, boats[1].BoatId));
+            #endregion
 
 
             // ===== TEAMS =====
+            #region Team Testing
             var teams = new Team[]
                        {
                            new Team()
@@ -84,8 +87,9 @@ namespace McSntt
             bool resultUpdate = teamDal.Update(teams);
 
             MessageBox.Show(String.Format("Success: {0}\r\nTeams: {1} ({2}), {3} ({4})", resultCreate, teams[0].Name, teams[0].TeamId, teams[1].Name, teams[1].TeamId));
+            #endregion
 
-            this.Shutdown();
+            this.Shutdown(1);
         }
     }
 }

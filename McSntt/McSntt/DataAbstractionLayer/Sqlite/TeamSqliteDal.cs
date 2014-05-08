@@ -33,7 +33,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@level", team.Level));
                         insertedRows += command.ExecuteNonQuery();
 
-                        team.TeamId = (int) db.LastInsertRowId;
+                        team.TeamId = db.LastInsertRowId;
                     }
                 }
 

@@ -11,7 +11,7 @@ namespace McSntt.Models
         }
 
         #region Properties
-        public virtual int TeamId { get; set; }
+        public virtual long TeamId { get; set; }
         public virtual string Name { get; set; }
         public virtual ClassLevel Level { get; set; }
 

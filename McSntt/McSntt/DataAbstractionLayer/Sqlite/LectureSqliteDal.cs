@@ -14,7 +14,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             ITeamDal teamDal = DalLocator.TeamDal;
             int insertedRows = 0;
-            int teamId = 0;
+            long teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -55,7 +55,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
                         insertedRows += command.ExecuteNonQuery();
 
-                        lecture.LectureId = (int) db.LastInsertRowId;
+                        lecture.LectureId = db.LastInsertRowId;
                     }
                 }
 
@@ -69,7 +69,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         {
             ITeamDal teamDal = DalLocator.TeamDal;
             int updatedRows = 0;
-            int teamId = 0;
+            long teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {

@@ -41,7 +41,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@weatherConditions", regularTrip.WeatherConditions));
                         insertedRows += command.ExecuteNonQuery();
 
-                        regularTrip.RegularTripId = (int) db.LastInsertRowId;
+                        regularTrip.RegularTripId = db.LastInsertRowId;
                     }
                 }
 

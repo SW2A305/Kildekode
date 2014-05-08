@@ -7,7 +7,7 @@ namespace McSntt.Models
     {
         public StudentMember() { base.Position = Positions.Student; }
 
-        public int StudentMemberId { get; set; }
+        public long StudentMemberId { get; set; }
         public virtual Team AssociatedTeam { get; set; }
 
         #region Undervisnings kriterier

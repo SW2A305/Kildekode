@@ -5,7 +5,7 @@ namespace McSntt.Models
 {
     public class Boat
     {
-        public virtual int BoatId { get; set; }
+        public virtual long BoatId { get; set; }
 
         public virtual BoatType Type { get; set; }
         public virtual string NickName { get; set; }

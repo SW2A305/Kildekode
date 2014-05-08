@@ -43,7 +43,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@email", person.Email));
                         insertedRows += command.ExecuteNonQuery();
 
-                        person.PersonId = (int) db.LastInsertRowId;
+                        person.PersonId = db.LastInsertRowId;
                     }
                 }
 

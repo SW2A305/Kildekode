@@ -14,7 +14,7 @@ namespace McSntt.Models
 
         #region Properties
         [Index(IsUnique = true)]
-        public virtual int SailClubMemberId { get; set; }
+        public virtual long SailClubMemberId { get; set; }
 
         public virtual Positions Position
         {

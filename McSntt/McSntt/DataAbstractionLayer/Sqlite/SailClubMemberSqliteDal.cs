@@ -39,7 +39,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@passwordHash", sailClubMember.PasswordHash));
                         insertedRows += command.ExecuteNonQuery();
 
-                        sailClubMember.SailClubMemberId = (int) db.LastInsertRowId;
+                        sailClubMember.SailClubMemberId = db.LastInsertRowId;
                     }
                 }
 

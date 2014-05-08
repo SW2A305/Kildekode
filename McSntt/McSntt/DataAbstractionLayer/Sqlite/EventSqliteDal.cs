@@ -39,7 +39,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@created", eventItem.Created));
                         insertedRows += command.ExecuteNonQuery();
 
-                        eventItem.EventId = (int) db.LastInsertRowId;
+                        eventItem.EventId = db.LastInsertRowId;
                     }
                 }
 

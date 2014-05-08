@@ -6,7 +6,7 @@ namespace McSntt.Models
 {
     public class Event
     {
-        public virtual int EventId { get; set; }
+        public virtual long EventId { get; set; }
 
         [Column(TypeName = "DateTime2")]
         public virtual DateTime EventDate { get; set; }

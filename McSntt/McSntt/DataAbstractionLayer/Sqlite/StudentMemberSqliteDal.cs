@@ -45,7 +45,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@night", studentMember.Night));
                         insertedRows += command.ExecuteNonQuery();
 
-                        studentMember.StudentMemberId = (int) db.LastInsertRowId;
+                        studentMember.StudentMemberId = db.LastInsertRowId;
                     }
                 }
 

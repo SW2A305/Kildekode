@@ -40,7 +40,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@answerFromBoatChief", logbook.AnswerFromBoatChief));
                         insertedRows += command.ExecuteNonQuery();
 
-                        logbook.LogbookId = (int) db.LastInsertRowId;
+                        logbook.LogbookId = db.LastInsertRowId;
                     }
                 }
 
