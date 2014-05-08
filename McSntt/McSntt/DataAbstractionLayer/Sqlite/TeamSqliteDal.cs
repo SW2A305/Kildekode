@@ -22,8 +22,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText =
-                        String.Format("INSERT INTO {0} (name, level) " +
-                                      "VALUES (@name, @level)",
+                        String.Format("INSERT INTO {0} (name, level, teacher_id) " +
+                                      "VALUES (@name, @level, @teacherId)",
                                       DatabaseManager.TableTeams);
 
                     foreach (Team team in items)
@@ -31,6 +31,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@name", team.Name));
                         command.Parameters.Add(new SQLiteParameter("@level", (int)team.Level));
+                        command.Parameters.Add(new SQLiteParameter("@teacherId", team.TeacherId));
                         insertedRows += command.ExecuteNonQuery();
 
                         team.TeamId = db.LastInsertRowId;
@@ -56,7 +57,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandType = CommandType.Text;
                     command.CommandText =
                         String.Format("UPDATE {0} " +
-                                      "SET name = @name, level = @level " +
+                                      "SET name = @name, level = @level, teacher_id = @teacherId " +
                                       "WHERE team_id = @teamId ",
                                       DatabaseManager.TableTeams);
 
@@ -66,6 +67,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@teamId", team.TeamId));
                         command.Parameters.Add(new SQLiteParameter("@name", team.Name));
                         command.Parameters.Add(new SQLiteParameter("@level", (int)team.Level));
+                        command.Parameters.Add(new SQLiteParameter("@teacherId", team.TeacherId));
                         updatedRows += command.ExecuteNonQuery();
                     }
                 }
@@ -129,7 +131,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       {
                                           TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id")),
                                           Name = DatabaseManager.ReadString(reader, reader.GetOrdinal("name")),
-                                          Level = (Team.ClassLevel) DatabaseManager.ReadInt(reader, reader.GetOrdinal("level"))
+                                          Level = (Team.ClassLevel) DatabaseManager.ReadInt(reader, reader.GetOrdinal("level")),
+                                          TeacherId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("teacher_id"))
                                       });
                         }
                     }
@@ -168,7 +171,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 {
                                     TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id")),
                                     Name = DatabaseManager.ReadString(reader, reader.GetOrdinal("name")),
-                                    Level = (Team.ClassLevel)DatabaseManager.ReadInt(reader, reader.GetOrdinal("level"))
+                                    Level = (Team.ClassLevel)DatabaseManager.ReadInt(reader, reader.GetOrdinal("level")),
+                                    TeacherId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("teacher_id"))
                                 };
                         }
                     }

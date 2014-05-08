@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace McSntt.Models
 {
@@ -12,9 +9,9 @@ namespace McSntt.Models
         private Team _team;
         private long _teamId;
 
-        public virtual long LectureId { get; set; }
+        public long LectureId { get; set; }
 
-        public virtual Team Team
+        public Team Team
         {
             get
             {
@@ -23,7 +20,7 @@ namespace McSntt.Models
             set
             {
                 this._team = value;
-                this.TeamId = value.TeamId;
+                this.TeamId = (value != null ? value.TeamId : 0);
             }
         }
 
@@ -40,17 +37,16 @@ namespace McSntt.Models
             }
         }
 
-        [Column(TypeName = "DateTime2")]
-        public virtual DateTime DateOfLecture { get; set; }
+        public DateTime DateOfLecture { get; set; }
         #region UndervisningsOmråder
-        public virtual bool RopeWorksLecture { get; set; }
-        public virtual bool Navigation { get; set; }
-        public virtual bool Motor { get; set; }
-        public virtual bool Drabant { get; set; }
-        public virtual bool Gaffelrigger { get; set; }
-        public virtual bool Night { get; set; }
+        public bool RopeWorksLecture { get; set; }
+        public bool Navigation { get; set; }
+        public bool Motor { get; set; }
+        public bool Drabant { get; set; }
+        public bool Gaffelrigger { get; set; }
+        public bool Night { get; set; }
         #endregion
 
-        public virtual ICollection<StudentMember> PresentMembers { get; set; }
+        public ICollection<StudentMember> PresentMembers { get; set; }
     }
 }

@@ -2,8 +2,5 @@
 
 namespace McSntt.DataAbstractionLayer
 {
-    public interface IBoatDal : IGenericDal<Boat>
-    {
-        void LoadSailTrips(Boat boat);
-    }
+    public interface IBoatDal : IGenericDal<Boat> {}
 }

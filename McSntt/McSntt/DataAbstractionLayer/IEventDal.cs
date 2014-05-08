@@ -2,8 +2,5 @@
 
 namespace McSntt.DataAbstractionLayer
 {
-    public interface IEventDal : IGenericDal<Event>
-    {
-        void LoadParticipants(Event eventItem);
-    }
+    public interface IEventDal : IGenericDal<Event> {}
 }

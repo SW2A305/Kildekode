@@ -264,7 +264,7 @@ namespace McSntt.Helpers
                             command.CommandText =
                                 String.Format(
                                               "CREATE TABLE {0} (team_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                              "name TEXT, level INTEGER" +
+                                              "name TEXT, level INTEGER, teacher_id INTEGER" +
                                               ")",
                                               TableTeams);
                             command.ExecuteNonQuery();

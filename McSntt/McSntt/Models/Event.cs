@@ -6,17 +6,16 @@ namespace McSntt.Models
 {
     public class Event
     {
-        public virtual long EventId { get; set; }
+        public long EventId { get; set; }
 
-        [Column(TypeName = "DateTime2")]
-        public virtual DateTime EventDate { get; set; }
-        public virtual string EventTitle { get; set; }
-        public virtual bool SignUpReq { get; set; }
-        public virtual string Description { get; set; }
-        public virtual string SignUpMsg { get; set; }
-        public virtual bool Created { get; set; }
+        public DateTime EventDate { get; set; }
+        public string EventTitle { get; set; }
+        public bool SignUpReq { get; set; }
+        public string Description { get; set; }
+        public string SignUpMsg { get; set; }
+        public bool Created { get; set; }
 
-        public virtual ICollection<Person> Participants { get; set; }
+        public ICollection<Person> Participants { get; set; }
         
         public override string ToString()
         {

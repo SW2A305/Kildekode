@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
@@ -9,21 +7,13 @@ namespace McSntt.Models
     /// </summary>
     public class SailClubMember : Person
     {
-        private Positions _position;
-
         #region Properties
-        public virtual long SailClubMemberId { get; set; }
+        public long SailClubMemberId { get; set; }
 
-        public virtual Positions Position
-        {
-            get { return this._position; }
-            set { this._position = value; }
-        }
+        public Positions Position { get; set; }
 
-        public virtual string Username { get; set; }
-        public virtual string PasswordHash { get; set; }
-
-        public virtual ICollection<Logbook> FiledLogbooks { get; set; }
+        public string Username { get; set; }
+        public string PasswordHash { get; set; }
         #endregion
 
         #region Enumerations
@@ -45,7 +35,7 @@ namespace McSntt.Models
         /// </summary>
         public SailClubMember()
         {
-            this._position = Positions.Member;
+            this.Position = Positions.Member;
         }
 
         /// <summary>
