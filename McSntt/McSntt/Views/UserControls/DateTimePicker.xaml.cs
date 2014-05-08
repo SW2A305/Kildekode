@@ -25,7 +25,6 @@ namespace McSntt.Views.UserControls
     public partial class DateTimePicker : UserControl
     {
 
-        private DateTime _value;
 
         private bool _isReadOnly = false;
 
@@ -40,9 +39,7 @@ namespace McSntt.Views.UserControls
         {
             get
             {
-                _value =  DatePicker.SelectedDate.GetValueOrDefault() + TimePicker.Value.GetValueOrDefault().TimeOfDay;
-
-                return _value;
+                return (DatePicker.SelectedDate.GetValueOrDefault() + TimePicker.Value.GetValueOrDefault().TimeOfDay);
             }
             set
             {

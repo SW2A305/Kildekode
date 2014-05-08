@@ -37,8 +37,6 @@ namespace McSntt.Views.Windows
             CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.ItemsSource = regularSailTrip.Crew; 
             CaptainComboBox.SelectedValue = regularSailTrip.Captain;
-            if(regularSailTrip.Logbook.DamageInflicted)
-
             YesRadioButton.IsChecked = regularSailTrip.Logbook.DamageInflicted;
             NoRadioButton.IsChecked = !regularSailTrip.Logbook.DamageInflicted;
             DateTimePickerActualArrival.Value = regularSailTrip.Logbook.ActualArrivalTime;
