@@ -41,8 +41,8 @@ namespace McSntt.Views.UserControls
             image.EndInit();
             BoatImage.Source = image;
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
-                AnswerDamageReportButton.IsEnabled = true;
-            else AnswerDamageReportButton.IsEnabled = false;
+                AnswerDamageReportButton.Visibility = Visibility.Visible;
+            else AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
             BookButton.IsEnabled = false;
         }
