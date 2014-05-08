@@ -4,13 +4,14 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:userControls="clr-namespace:McSntt.Views.UserControls"
         x:Class="McSntt.Views.Windows.NewLecture"
-        Title="NewLecture" Height="193" Width="405">
+        Style="{StaticResource WindowStyle}"
+        Title="NewLecture" Height="200" Width="405" MinHeight="200" MinWidth="405">
     <Grid>
         <Label Content="Angiv tidspunkt for lektion" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="228"/>
         <Button x:Name="CompleteLectureCreate" Content="OK" HorizontalAlignment="Left" Margin="299,113,0,0" VerticalAlignment="Top" Width="75" Click="CompleteLectureCreate_Click"/>
 
-        <userControls:DateTimePicker x:Name="DateTimePickerPlannedLectureTime" Width="Auto" Height="Auto" Margin="10,41,190,95"/>
-        <userControls:DateTimePicker x:Name="DateTimePickerPlannedLectureTime_Copy" Width="Auto" Height="Auto" Margin="10,107,190,29"/>
+        <userControls:DateTimePicker x:Name="DateTimePickerPlannedLectureTime" Width="Auto" Height="Auto" Margin="14,36,159,81"/>
+        <userControls:DateTimePicker x:Name="DateTimePickerPlannedLectureTimeEnd" Width="Auto" Height="Auto" Margin="14,107,159,10"/>
         <Label Content="Angiv forventet slut tidspunkt for lektion" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top"/>
 
     </Grid>
