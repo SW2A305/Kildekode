@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,6 +16,7 @@ using McSntt.Models;
 using McSntt.Views.Windows;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace McSntt.Views.UserControls
@@ -65,9 +70,11 @@ namespace McSntt.Views.UserControls
             editTeamGrid.IsEnabled = false;
             lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
             promoteTeam.IsEnabled = false;
+            newLecture1.IsEnabled = false;
 
         }
 
+        #region Methods
         private void RefreshDatagrid(DataGrid grid, ICollection<StudentMember> list)
         {
             grid.ItemsSource = null;
@@ -76,93 +83,91 @@ namespace McSntt.Views.UserControls
 
         private void ClearFields()
         {
+            CurrentMemberDataGrid.ItemsSource = null;
+            MembersList.Clear();
+            lectureDropdown.ItemsSource = null;
+            promoteTeam.IsEnabled = false;
+            newLecture1.IsEnabled = false;
+            LectureDataClear();
+            StudentCheckBoxNameChange();
+            TeacherName.Width = 92;
+            TeacherName.Text = "";
             teamName.Text = string.Empty;
             memberSearch.Text = string.Empty;
             Level1RadioButton.IsChecked = false;
             Level2RadioButton.IsChecked = false;
-            CurrentMemberDataGrid.ItemsSource = null;
-            teamDropdown.SelectedIndex = -1;
-            DrabantCheckBox.IsChecked = false;
-            GaffelriggerCheckBox.IsChecked = false;
-            NavigationCheckBox.IsChecked = false;
-            MotorCheckBox.IsChecked = false;
-            RopeWorksCheckBox.IsChecked = false;
-            NightCheckBox.IsChecked = false;
             LectureDataClear();
         }
 
-        #region Events
-
-        private void editTeam_Checked(object sender, RoutedEventArgs e)
+        private void PromoteTeam(StudentMember member)
         {
-            editTeamGrid.IsEnabled = true;
+            var upgradedMember = new SailClubMember();
+            upgradedMember = member;
+            upgradedMember.Position = SailClubMember.Positions.Member;
+            upgradedMember.BoatDriver = true;
+            DalLocator.SailClubMemberDal.Create(upgradedMember);
         }
 
-        private void editTeam_Unchecked(object sender, RoutedEventArgs e)
+        #region UpdateLecture
+        private void SaveLectureInfo()
         {
-            editTeamGrid.IsEnabled = false;
-        }
-
-        private void saveChanges_Click(object sender, RoutedEventArgs e)
-        {
-            
-      //      var team = new Team { Name = teamName.Text };
-            if (Level1RadioButton.IsChecked == true)
+            if (lectureDropdown.SelectedItem == null) { return; }
+            var indexCount = 0;
+            ((Lecture)lectureDropdown.SelectedItem).RopeWorksLecture = (RopeWorksCheckBox.IsChecked == true);
+            ((Lecture)lectureDropdown.SelectedItem).Motor = (MotorCheckBox.IsChecked == true);
+            ((Lecture)lectureDropdown.SelectedItem).Navigation = (NavigationCheckBox.IsChecked == true);
+            ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
+            ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);
+            ((Lecture)lectureDropdown.SelectedItem).Drabant = (DrabantCheckBox.IsChecked == true);
+            if (studentOne.IsChecked == true)
             {
-                ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.First;
+                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
             }
-            else if (Level2RadioButton.IsChecked == true)
+            ++indexCount;
+            if (studentTwo.IsChecked == true)
             {
-                ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
+                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
             }
-            /* Database
-            ITeamDal teamDal = new TeamEfDal();
-            teamDal.Create(team);
-            teamDropdown.ItemsSource = teamDal.GetAll();
-                */
-
-            #region Mock data
-            /*
-            StudyMockData.TeamListGlobal.Add(team);
-            teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal; */
-
-            #endregion
+            ++indexCount;
+            if (studentThree.IsChecked == true)
+            {
+                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+            }
+            ++indexCount;
+            if (studentFour.IsChecked == true)
+            {
+                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+            }
+            ++indexCount;
+            if (studentFive.IsChecked == true)
+            {
+                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+            }
+            ++indexCount;
+            if (studentSix.IsChecked == true)
+            {
+                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+            }
+            ++indexCount;
         }
 
-        private void newTeam_Click(object sender, RoutedEventArgs e)
+        private void AssignToughtLectureItemsToMember()
         {
-            ClearFields();
-            var newTeamWindow = new NewTeamWindow();
-            newTeamWindow.ShowDialog();
-            teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
-        }
-
-        private void deleteTeam_Click(object sender, RoutedEventArgs e)
-        {
-            // The try block prevents the program from crashing if
-            // you try to delete a team without having selected one
-            try
+            foreach (var member in ((Lecture)lectureDropdown.SelectedItem).PresentMembers)
             {
-                var team = (Team)teamDropdown.SelectedItem;
-
-                /*
-                ITeamDal teamDal = new TeamEfDal();
-                teamDal.Delete(team);
-                teamDropdown.ItemsSource = teamDal.GetAll();
-                 */
-
-                #region Mock data
-                StudyMockData.TeamListGlobal.Remove(team);
-                teamDropdown.ItemsSource = null;
-                teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
-                #endregion
-
-                ClearFields();
-            }
-            catch (Exception)
-            {
+                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
+                if (((Lecture)lectureDropdown.SelectedItem).Motor == true) { member.Motor = true; }
+                if (((Lecture)lectureDropdown.SelectedItem).RopeWorksLecture == true) { member.RopeWorks = true; }
+                if (((Lecture)lectureDropdown.SelectedItem).Night == true) { member.Night = true; }
+                if (((Lecture)lectureDropdown.SelectedItem).Gaffelrigger == true) { member.Gaffelrigger = true; }
+                if (((Lecture)lectureDropdown.SelectedItem).Drabant == true) { member.Drabant = true; }
+                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
             }
         }
 
@@ -173,39 +178,51 @@ namespace McSntt.Views.UserControls
 
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentOne.IsEnabled = true;
+                studentOne.IsEnabled = StudentChecBoxIsEnable();
                 studentOne.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentTwo.IsEnabled = true;
+                studentTwo.IsEnabled = StudentChecBoxIsEnable();
                 studentTwo.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentThree.IsEnabled = true;
+                studentThree.IsEnabled = StudentChecBoxIsEnable();
                 studentThree.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentFour.IsEnabled = true;
+                studentFour.IsEnabled = StudentChecBoxIsEnable();
                 studentFour.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentFive.IsEnabled = true;
+                studentFive.IsEnabled = StudentChecBoxIsEnable();
                 studentFive.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentSix.IsEnabled = true;
+                studentSix.IsEnabled = StudentChecBoxIsEnable();
                 studentSix.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
+            }
+        }
+
+        private bool StudentChecBoxIsEnable()
+        {
+            if (lectureDropdown.SelectedItem != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -242,21 +259,34 @@ namespace McSntt.Views.UserControls
             NightCheckBox.IsChecked = false;
             NightCheckBox.IsEnabled = false;
         }
+        #endregion
+        #endregion
 
-        
+        #region Events
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            try
+            ClearFields();
+            if (teamDropdown.SelectedItem != null)
             {
-                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(((Team) teamDropdown.SelectedItem).TeamMembers);
-                teamName.Text = ((Team) teamDropdown.SelectedItem).Name;
-                lectureDropdown.ItemsSource = ((Team) teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
-
+                foreach (var member in ((Team)teamDropdown.SelectedItem).TeamMembers)
+                {
+                    MembersList.Add(member);
+                }
+                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(MembersList);
+                teamName.Text = ((Team)teamDropdown.SelectedItem).Name;
+                lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+                promoteTeam.IsEnabled = ((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
+                newLecture1.IsEnabled = true;
+                if (((Team)teamDropdown.SelectedItem).Teacher != null)
+                {
+                    TeacherName.Width = Double.NaN;
+                    TeacherName.Text = ((Team)teamDropdown.SelectedItem).Teacher.FullName;
+                }
                 switch (((Team)teamDropdown.SelectedItem).Level)
                 {
                     case 0:
                         Level1RadioButton.IsChecked = false;
+                        Level2RadioButton.IsChecked = false;
                         break;
                     case Team.ClassLevel.First:
                         Level1RadioButton.IsChecked = true;
@@ -265,56 +295,186 @@ namespace McSntt.Views.UserControls
                         Level2RadioButton.IsChecked = true;
                         break;
                 }
-                
             }
-            catch (NullReferenceException)
+        }
+
+        #region Editing of team
+        private void editTeam_Checked(object sender, RoutedEventArgs e)
+        {
+            editTeamGrid.IsEnabled = true;
+        }
+
+        private void editTeam_Unchecked(object sender, RoutedEventArgs e)
+        {
+            editTeamGrid.IsEnabled = false;
+        }
+
+        private void newTeam_Click(object sender, RoutedEventArgs e)
+        {
+            teamDropdown.SelectedIndex = -1;
+            // TODO: delete StudyMockData.TeamListGlobal and add database reference
+            int currentTeamDropdownCount = StudyMockData.TeamListGlobal.Count;
+            var newTeamWindow = new NewTeamWindow();
+            newTeamWindow.ShowDialog();
+            teamDropdown.ItemsSource = null;
+            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+
+            if (currentTeamDropdownCount != StudyMockData.TeamListGlobal.Count)
             {
-                // TODO Is this ignoring intentional? It's bad code design.
+                teamDropdown.SelectedIndex = StudyMockData.TeamListGlobal.Count - 1;
             }
+        }
 
-            LectureDataClear();
-            StudentCheckBoxNameChange();
-            promoteTeam.IsEnabled = ((Team) teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
+        private void deleteTeam_Click(object sender, RoutedEventArgs e)
+        {
+            if (teamDropdown.SelectedItem != null)
+            {
+                var team = (Team)teamDropdown.SelectedItem;
 
+                /*
+                ITeamDal teamDal = new TeamEfDal();
+                teamDal.Delete(team);
+                teamDropdown.ItemsSource = teamDal.GetAll();
+                */
+
+                #region Mock data
+                StudyMockData.TeamListGlobal.Remove(team);
+                teamDropdown.ItemsSource = null;
+                teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+                #endregion
+
+                ClearFields();
+            }
+        }
+        
+        private void promoteTeam_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var member in (((Team)teamDropdown.SelectedItem).TeamMembers))
+            {
+                if (member.Night == true && member.Navigation == true &&
+                    member.Motor == true && member.RopeWorks == true &&
+                    member.Drabant == true && member.Gaffelrigger == true)
+                {
+                    PromoteTeam(member);
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(member);
+                }
+                else
+                {
+                    MessageBox.Show("" + member.FullName + " er endnu ikke klar til at få sit duelighedsbevis\nTovværksarbejde " +
+                                    member.RopeWorks + "\nNavigation " + member.Navigation + "\nMotor- og brandlære " + member.Motor + "\nNatsejlads " +
+                                    member.Night + "\nDrabantsejling " + member.Drabant + "\nGaffelriggersejling " + member.Gaffelrigger);
+                }
+            }
+            // TODO: Team should probably be deleted if all members have been upgraded
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
         {
             if (MemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!((Team)teamDropdown.SelectedItem).TeamMembers.Contains(currentMember))
+            if (!MembersList.Contains(currentMember) && StudyMockData.TeamListGlobal.All(x => !x.TeamMembers.Contains(currentMember)))
             {
-                ((Team)teamDropdown.SelectedItem).TeamMembers.Add(currentMember);
-                RefreshDatagrid(CurrentMemberDataGrid, ((Team)teamDropdown.SelectedItem).TeamMembers);
+                MembersList.Add(currentMember);
+                RefreshDatagrid(CurrentMemberDataGrid, MembersList);
             }
-            
+            else
+            {
+                MessageBox.Show("Eleven er allerede på et hold!");
+            }
         }
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentMemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
-            ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(currentMember);
-            RefreshDatagrid(CurrentMemberDataGrid, ((Team)teamDropdown.SelectedItem).TeamMembers);
+            MembersList.Remove(currentMember);
+            RefreshDatagrid(CurrentMemberDataGrid, MembersList);
         }
 
-        private void Level1RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
-            if (teamDropdown.SelectedItem != null)
+            int currentTeamDropdownIndex = teamDropdown.SelectedIndex;
+
+            if (Level1RadioButton.IsChecked == true)
             {
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.First;
             }
-        }
-
-        private void Level2RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (teamDropdown.SelectedItem != null)
+            else if (Level2RadioButton.IsChecked == true)
             {
                 ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
             }
+
+            if (((Team) teamDropdown.SelectedItem).Name != teamName.Text)
+            {
+                // TODO: Change reference to database
+                if (StudyMockData.TeamListGlobal.All(x => x.Name != teamName.Text))
+                {
+                    ((Team) teamDropdown.SelectedItem).Name = teamName.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Et hold med dette navn eksisterer allerede!");
+                }
+            }
+
+            ((Team)teamDropdown.SelectedItem).TeamMembers.Clear();
+            foreach (var member in MembersList)
+            {
+                member.AssociatedTeam = ((Team)teamDropdown.SelectedItem);
+                ((Team)teamDropdown.SelectedItem).TeamMembers.Add(member);
+            }
+
+            teamDropdown.ItemsSource = null;
+            // TODO: Itemsource should be changed to database
+            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+            teamDropdown.SelectedIndex = currentTeamDropdownIndex;
         }
         #endregion
+
+        #region Lecture
+        private void lectureDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LectureDataClear();
+            StudentCheckBoxNameChange();
+            if (lectureDropdown.SelectedItem == null) { return; }
+            if (lectureDropdown.SelectedIndex != -1)
+            {
+                lectureGrid.IsEnabled = true;
+            }
+            if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
+            {
+                NavigationCheckBox.IsEnabled = false;
+                MotorCheckBox.IsEnabled = false;
+                GaffelriggerCheckBox.IsEnabled = false;
+                NightCheckBox.IsEnabled = true;
+                DrabantCheckBox.IsEnabled = true;
+                RopeWorksCheckBox.IsEnabled = true;
+            }
+            else
+            {
+                NavigationCheckBox.IsEnabled = true;
+                MotorCheckBox.IsEnabled = true;
+                GaffelriggerCheckBox.IsEnabled = true;
+                NightCheckBox.IsEnabled = false;
+                DrabantCheckBox.IsEnabled = false;
+                RopeWorksCheckBox.IsEnabled = false;
+            }
+        }
+
+        private void updateLecture_Click(object sender, RoutedEventArgs e)
+        {
+            SaveLectureInfo();
+            AssignToughtLectureItemsToMember();
+        }
         
+        private void newLecture1_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new NewLecture(teamDropdown.SelectedItem);
+            window.ShowDialog();
+        }
+        #endregion
+        #endregion
+
         #region Search
         private ICollectionView _dataGridCollection;
         private string _filterString;
@@ -386,150 +546,5 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
-
-        #region updateLecture
-        private void SaveLectureInfo()
-        {
-            if(lectureDropdown.SelectedItem == null){ return; }
-            var indexCount = 0;
-            ((Lecture) lectureDropdown.SelectedItem).RopeWorksLecture = (RopeWorksCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Motor = (MotorCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Navigation = (NavigationCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Drabant = (DrabantCheckBox.IsChecked == true);
-            if (studentOne.IsChecked == true)
-            {
-                ((Lecture) lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team) teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
-            }
-            ++indexCount;
-            if (studentTwo.IsChecked == true)
-            {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
-            }
-            ++indexCount;
-            if (studentThree.IsChecked == true)
-            {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
-            }
-            ++indexCount;
-            if (studentFour.IsChecked == true)
-            {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
-            }
-            ++indexCount;
-            if (studentFive.IsChecked == true)
-            {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
-            }
-            ++indexCount;
-            if (studentSix.IsChecked == true)
-            {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
-            }
-            ++indexCount;
-        }
-
-        private void AssignToughtLectureItemsToMember()
-        {
-            foreach (var member in ((Lecture)lectureDropdown.SelectedItem).PresentMembers)
-            {
-                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true){ member.Navigation = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Motor == true) { member.Motor = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).RopeWorksLecture == true) { member.RopeWorks = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Night == true) { member.Night = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Gaffelrigger == true) { member.Gaffelrigger = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Drabant == true) { member.Drabant = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
-            }
-        }
-
-        private void updateLecture_Click(object sender, RoutedEventArgs e)
-        {
-            SaveLectureInfo();
-            AssignToughtLectureItemsToMember();
-        }
-        #endregion
-
-        private void newLecture1_Click(object sender, RoutedEventArgs e)
-        {
-            
-            var window = new NewLecture(teamDropdown.SelectedItem);
-            window.ShowDialog();
-        }
-
-        private void lectureDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LectureDataClear();
-            StudentCheckBoxNameChange();
-            if (lectureDropdown.SelectedItem == null) {return;}
-            if(lectureDropdown.SelectedIndex != -1)
-            {
-                lectureGrid.IsEnabled = true;
-            }
-            if (((Team) teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
-            {
-                NavigationCheckBox.IsEnabled = false;
-                MotorCheckBox.IsEnabled = false;
-                GaffelriggerCheckBox.IsEnabled = false;
-                RopeWorksCheckBox.IsEnabled = true;
-                DrabantCheckBox.IsEnabled = true;
-                NightCheckBox.IsEnabled = true;
-            }
-            else
-            {
-                NavigationCheckBox.IsEnabled = true;
-                MotorCheckBox.IsEnabled = true;
-                GaffelriggerCheckBox.IsEnabled = true;
-                NightCheckBox.IsEnabled = true;
-                DrabantCheckBox.IsEnabled = false;
-                RopeWorksCheckBox.IsEnabled = false;
-            }
-        }
-
-        private void promoteTeam_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var member in (((Team)teamDropdown.SelectedItem).TeamMembers))
-            {
-                if (member.Night == true && member.Navigation == true &&
-                    member.Motor == true && member.RopeWorks == true &&
-                    member.Drabant == true && member.Gaffelrigger == true)
-                {
-                    PromoteTeam(member);
-                }
-                else
-                {
-                    MessageBox.Show("" + member.FullName + " er endnu ikke klar til at få sit duelighedsbevis\nTovværksarbejde " +
-                                    member.RopeWorks + "\nNavigation " + member.Navigation + "\nMotor- og brandlære " + member.Motor + "\nNatsejlads " +
-                                    member.Night + "\nDrabantsejling " + member.Drabant + "\nGaffelriggersejling " + member.Gaffelrigger);
-                }
-            }
-        }
-
-        private void PromoteTeam(StudentMember member)
-        {
-            var upgradedMember = new SailClubMember();
-            upgradedMember = member;
-            upgradedMember.Position = SailClubMember.Positions.Member;
-            upgradedMember.BoatDriver = true;
-            DalLocator.SailClubMemberDal.Create(upgradedMember);
-        }
-
-        
-
-        
-
-        
-
-
-
-
-
     }
 }
