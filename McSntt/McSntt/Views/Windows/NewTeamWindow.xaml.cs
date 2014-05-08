@@ -24,6 +24,7 @@ namespace McSntt.Views.Windows
         public NewTeamWindow()
         {
             InitializeComponent();
+            TeamName.Focus();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -32,7 +33,7 @@ namespace McSntt.Views.Windows
             {
                 if (!string.IsNullOrEmpty(TeamName.Text))
                 {
-                    // TODO: The instansiating of the list can be remove when the database works
+                    // TODO: The instansiating of the lists can be remove when the database works
                     var team = new Team { Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Lectures = new LinkedList<Lecture>(), Teacher = GlobalInformation.CurrentUser };
                     StudyMockData.TeamListGlobal.Add(team);
                     Close();
@@ -44,9 +45,8 @@ namespace McSntt.Views.Windows
             }
             else
             {
-                MessageBox.Show("Hold med dette navn eksisterer allerede!");
+                MessageBox.Show("Et hold med dette navn eksisterer allerede!");
             }
-            
         }
 
         private void TeamName_KeyDown(object sender, KeyEventArgs e)
@@ -56,7 +56,5 @@ namespace McSntt.Views.Windows
                 OkButton_Click(sender, e);
             }
         }
-
-
     }
 }
