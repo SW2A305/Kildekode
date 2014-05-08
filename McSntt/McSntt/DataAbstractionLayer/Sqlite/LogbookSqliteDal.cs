@@ -136,22 +136,25 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableLogbooks);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                    logbooks.
-                        Add(
-                            new Logbook
-                            {
-                                LogbookId = reader.GetInt32(reader.GetOrdinal("logbook_id")),
-                                ActualArrivalTime = reader.GetDateTime(reader.GetOrdinal("actual_arrival_time")),
-                                ActualDepartureTime = reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
-                                AnswerFromBoatChief = reader.GetString(reader.GetOrdinal("answer_from_boat_chief")),
-                                DamageDescription = reader.GetString(reader.GetOrdinal("damage_description")),
-                                DamageInflicted = reader.GetBoolean(reader.GetOrdinal("damage_inflicted"))
-                                // TODO Fetch "FiledBy"
-                            });
+                        while (reader.Read())
+                        {
+                            logbooks.
+                                Add(
+                                    new Logbook
+                                    {
+                                        LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id")),
+                                        ActualArrivalTime = reader.GetDateTime(reader.GetOrdinal("actual_arrival_time")),
+                                        ActualDepartureTime =
+                                            reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
+                                        AnswerFromBoatChief =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
+                                        DamageDescription = DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
+                                        DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted"))
+                                        // TODO Fetch "FiledBy"
+                                    });
+                        }
                     }
                 }
 
@@ -180,21 +183,22 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableLogbooks);
                     command.Parameters.Add(new SQLiteParameter("@logbookId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        logbook =
-                            new Logbook
-                            {
-                                LogbookId = reader.GetInt32(reader.GetOrdinal("logbook_id")),
-                                ActualArrivalTime = reader.GetDateTime(reader.GetOrdinal("actual_arrival_time")),
-                                ActualDepartureTime = reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
-                                AnswerFromBoatChief = reader.GetString(reader.GetOrdinal("answer_from_boat_chief")),
-                                DamageDescription = reader.GetString(reader.GetOrdinal("damage_description")),
-                                DamageInflicted = reader.GetBoolean(reader.GetOrdinal("damage_inflicted"))
-                                // TODO Fetch "FiledBy"
-                            };
+                        if (reader.Read())
+                        {
+                            logbook =
+                                new Logbook
+                                {
+                                    LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id")),
+                                    ActualArrivalTime = reader.GetDateTime(reader.GetOrdinal("actual_arrival_time")),
+                                    ActualDepartureTime = reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
+                                    AnswerFromBoatChief = DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
+                                    DamageDescription = DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
+                                    DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted"))
+                                    // TODO Fetch "FiledBy"
+                                };
+                        }
                     }
                 }
 

@@ -9,6 +9,7 @@ namespace McSntt.Models
 
         public long StudentMemberId { get; set; }
         public virtual Team AssociatedTeam { get; set; }
+        public long AssociatedTeamId { get; set; }
 
         #region Undervisnings kriterier
         public virtual bool RopeWorks { get; set; }

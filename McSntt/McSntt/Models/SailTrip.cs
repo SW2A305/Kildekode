@@ -13,7 +13,9 @@ namespace McSntt.Models
         public virtual DateTime ArrivalTime { get; set; }
 
         public virtual Boat Boat { get; set; }
+        public long BoatId { get; set; }
         public virtual string WeatherConditions { get; set; }
         public virtual Logbook Logbook { get; set; }
+        public long LogbookId { get; set; }
     }
 }

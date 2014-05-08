@@ -132,22 +132,23 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableEvents);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                    events.
-                        Add(
-                            new Event
-                            {
-                                EventId = reader.GetInt32(reader.GetOrdinal("event_id")),
-                                EventDate = reader.GetDateTime(reader.GetOrdinal("event_date")),
-                                EventTitle = reader.GetString(reader.GetOrdinal("event_title")),
-                                Created = reader.GetBoolean(reader.GetOrdinal("created")),
-                                Description = reader.GetString(reader.GetOrdinal("description")),
-                                SignUpMsg = reader.GetString(reader.GetOrdinal("sign_up_msg")),
-                                SignUpReq = reader.GetBoolean(reader.GetOrdinal("sign_up_req"))
-                            });
+                        while (reader.Read())
+                        {
+                            events.
+                                Add(
+                                    new Event
+                                    {
+                                        EventId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("event_id")),
+                                        EventDate = reader.GetDateTime(reader.GetOrdinal("event_date")),
+                                        EventTitle = DatabaseManager.ReadString(reader, reader.GetOrdinal("event_title")),
+                                        Created = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("created")),
+                                        Description = DatabaseManager.ReadString(reader, reader.GetOrdinal("description")),
+                                        SignUpMsg = DatabaseManager.ReadString(reader, reader.GetOrdinal("sign_up_msg")),
+                                        SignUpReq = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("sign_up_req"))
+                                    });
+                        }
                     }
                 }
 
@@ -176,21 +177,22 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableEvents);
                     command.Parameters.Add(new SQLiteParameter("@eventId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        eventItem =
-                            new Event
-                            {
-                                EventId = reader.GetInt32(reader.GetOrdinal("event_id")),
-                                EventDate = reader.GetDateTime(reader.GetOrdinal("event_date")),
-                                EventTitle = reader.GetString(reader.GetOrdinal("event_title")),
-                                Created = reader.GetBoolean(reader.GetOrdinal("created")),
-                                Description = reader.GetString(reader.GetOrdinal("description")),
-                                SignUpMsg = reader.GetString(reader.GetOrdinal("sign_up_msg")),
-                                SignUpReq = reader.GetBoolean(reader.GetOrdinal("sign_up_req"))
-                            };
+                        if (reader.Read())
+                        {
+                            eventItem =
+                                new Event
+                                {
+                                    EventId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("event_id")),
+                                    EventDate = reader.GetDateTime(reader.GetOrdinal("event_date")),
+                                    EventTitle = DatabaseManager.ReadString(reader, reader.GetOrdinal("event_title")),
+                                    Created = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("created")),
+                                    Description = DatabaseManager.ReadString(reader, reader.GetOrdinal("description")),
+                                    SignUpMsg = DatabaseManager.ReadString(reader, reader.GetOrdinal("sign_up_msg")),
+                                    SignUpReq = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("sign_up_req"))
+                                };
+                        }
                     }
                 }
 
@@ -198,6 +200,33 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
 
             return eventItem;
+        }
+
+        public void LoadParticipants(Event eventItem)
+        {
+            var personDal = DalLocator.PersonDal;
+            var personIds = new List<long>();
+
+            using (var db = DatabaseManager.DbConnection)
+            {
+                db.Open();
+
+                using (var command = db.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText =
+                        String.Format("SELECT person_id FROM {0} WHERE event_id = @eventId",
+                                      DatabaseManager.TableEventParticipantsBinder);
+
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            personIds.Add(DatabaseManager.ReadInt(reader, 0));
+                        }
+                    }
+                }
+
+                db.Close();
+            }
         }
 
         public IEnumerable<Event> GetAll(Func<Event, bool> predicate) { return this.GetAll(predicate, true); }

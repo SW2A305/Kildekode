@@ -13,7 +13,7 @@ namespace McSntt.Models
         public virtual bool Operational { get; set; }
 
         [InverseProperty("Boat")]
-        public virtual ICollection<SailTrip> SailTrips { get; set; }
+        public virtual List<RegularTrip> SailTrips { get; set; }
 
         public override string ToString()
         {

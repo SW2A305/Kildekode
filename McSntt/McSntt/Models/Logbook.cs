@@ -21,6 +21,7 @@ namespace McSntt.Models
         public virtual string AnswerFromBoatChief { get; set; }
 
         public virtual SailClubMember FiledBy { get; set; }
+        public long FiledById { get; set; }
 
         public virtual ICollection<Person> ActualCrew { get; set; }
     }

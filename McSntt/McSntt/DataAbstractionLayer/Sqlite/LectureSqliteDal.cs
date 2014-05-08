@@ -12,9 +12,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
     {
         public bool Create(params Lecture[] items)
         {
-            ITeamDal teamDal = DalLocator.TeamDal;
             int insertedRows = 0;
-            long teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -32,20 +30,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                     foreach (Lecture lecture in items)
                     {
-                        // Store team, if applicable
-                        teamId = 0;
-
-                        if (lecture.Team != null)
-                        {
-                            if (lecture.Team.TeamId > 0) { teamDal.Update(lecture.Team); }
-                            else
-                            { teamDal.Create(lecture.Team); }
-
-                            teamId = lecture.Team.TeamId;
-                        }
-
                         command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@team_id", teamId));
+                        command.Parameters.Add(new SQLiteParameter("@teamId", lecture.TeamId));
                         command.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
                         command.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
                         command.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
@@ -67,9 +53,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public bool Update(params Lecture[] items)
         {
-            ITeamDal teamDal = DalLocator.TeamDal;
             int updatedRows = 0;
-            long teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -88,21 +72,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                     foreach (Lecture lecture in items)
                     {
-                        // Store team, if applicable
-                        teamId = 0;
-
-                        if (lecture.Team != null)
-                        {
-                            if (lecture.Team.TeamId > 0) { teamDal.Update(lecture.Team); }
-                            else
-                            { teamDal.Create(lecture.Team); }
-
-                            teamId = lecture.Team.TeamId;
-                        }
-
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
-                        command.Parameters.Add(new SQLiteParameter("@teamId", teamId));
+                        command.Parameters.Add(new SQLiteParameter("@teamId", lecture.TeamId));
                         command.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
                         command.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
                         command.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
@@ -153,7 +125,6 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public IEnumerable<Lecture> GetAll()
         {
             var lectures = new List<Lecture>();
-            int teamId = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -165,26 +136,27 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableLectures);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        teamId = reader.GetInt32(reader.GetOrdinal("team_id"));
+                        while (reader.Read())
+                        {
+                            int teamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"));
 
-                        lectures.
-                            Add(
-                                new Lecture
-                                {
-                                    LectureId = reader.GetInt32(reader.GetOrdinal("lecture_id")),
-                                    DateOfLecture = reader.GetDateTime(reader.GetOrdinal("date_of_lecture")),
-                                    Drabant = reader.GetBoolean(reader.GetOrdinal("drabant")),
-                                    Gaffelrigger = reader.GetBoolean(reader.GetOrdinal("gaffelrigger")),
-                                    Motor = reader.GetBoolean(reader.GetOrdinal("motor")),
-                                    Navigation = reader.GetBoolean(reader.GetOrdinal("navigation")),
-                                    Night = reader.GetBoolean(reader.GetOrdinal("night")),
-                                    RopeWorksLecture = reader.GetBoolean(reader.GetOrdinal("rope_works"))
-                                    // TODO Fetch Team
-                                });
+                            lectures.
+                                Add(
+                                    new Lecture
+                                    {
+                                        LectureId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("lecture_id")),
+                                        DateOfLecture = reader.GetDateTime(reader.GetOrdinal("date_of_lecture")),
+                                        Drabant = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("drabant")),
+                                        Gaffelrigger = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("gaffelrigger")),
+                                        Motor = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("motor")),
+                                        Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
+                                        Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
+                                        RopeWorksLecture = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
+                                        TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"))
+                                    });
+                        }
                     }
                 }
 
@@ -213,23 +185,26 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableLectures);
                     command.Parameters.Add(new SQLiteParameter("@lectureId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        lecture =
-                            new Lecture
-                            {
-                                LectureId = reader.GetInt32(reader.GetOrdinal("lecture_id")),
-                                DateOfLecture = reader.GetDateTime(reader.GetOrdinal("date_of_lecture")),
-                                Drabant = reader.GetBoolean(reader.GetOrdinal("drabant")),
-                                Gaffelrigger = reader.GetBoolean(reader.GetOrdinal("gaffelrigger")),
-                                Motor = reader.GetBoolean(reader.GetOrdinal("motor")),
-                                Navigation = reader.GetBoolean(reader.GetOrdinal("navigation")),
-                                Night = reader.GetBoolean(reader.GetOrdinal("night")),
-                                RopeWorksLecture = reader.GetBoolean(reader.GetOrdinal("rope_works"))
-                                // TODO Fetch Team
-                            };
+                        if (reader.Read())
+                        {
+                            int teamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"));
+
+                            lecture =
+                                new Lecture
+                                {
+                                    LectureId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("lecture_id")),
+                                    DateOfLecture = reader.GetDateTime(reader.GetOrdinal("date_of_lecture")),
+                                    Drabant = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("drabant")),
+                                    Gaffelrigger = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("gaffelrigger")),
+                                    Motor = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("motor")),
+                                    Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
+                                    Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
+                                    RopeWorksLecture = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
+                                    TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"))
+                                };
+                        }
                     }
                 }
 

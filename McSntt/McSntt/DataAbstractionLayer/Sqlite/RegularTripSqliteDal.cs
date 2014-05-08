@@ -137,23 +137,27 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableRegularTrips);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                    regularTrips.Add(
-                           new RegularTrip
-                           {
-                               RegularTripId = reader.GetInt32(reader.GetOrdinal("regular_trip_id")),
-                               ArrivalTime = reader.GetDateTime(reader.GetOrdinal("arrival_time")),
-                               DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
-                               ExpectedArrivalTime = reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
-                               PurposeAndArea = reader.GetString(reader.GetOrdinal("purpose_and_area")),
-                               WeatherConditions = reader.GetString(reader.GetOrdinal("weather_conditions"))
-                               // TODO Fetch "Boat"
-                               // TODO Fetch "Captain"
-                               // TODO Fetch "Logbook"
-                           });
+                        while (reader.Read())
+                        {
+                            regularTrips.Add(
+                                             new RegularTrip
+                                             {
+                                                 RegularTripId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("regular_trip_id")),
+                                                 ArrivalTime = reader.GetDateTime(reader.GetOrdinal("arrival_time")),
+                                                 DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
+                                                 ExpectedArrivalTime =
+                                                     reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
+                                                 PurposeAndArea =
+                                                     DatabaseManager.ReadString(reader, reader.GetOrdinal("purpose_and_area")),
+                                                 WeatherConditions =
+                                                     DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions"))
+                                                 // TODO Fetch "Boat"
+                                                 // TODO Fetch "Captain"
+                                                 // TODO Fetch "Logbook"
+                                             });
+                        }
                     }
                 }
 
@@ -181,23 +185,24 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableRegularTrips); // TODO Fill this out
                     command.Parameters.Add(new SQLiteParameter("@regularTripId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        regularTrip =
-                            new RegularTrip
-                            {
-                                RegularTripId = reader.GetInt32(reader.GetOrdinal("regular_trip_id")),
-                                ArrivalTime = reader.GetDateTime(reader.GetOrdinal("arrival_time")),
-                                DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
-                                ExpectedArrivalTime = reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
-                                PurposeAndArea = reader.GetString(reader.GetOrdinal("purpose_and_area")),
-                                WeatherConditions = reader.GetString(reader.GetOrdinal("weather_conditions"))
-                                // TODO Fetch "Boat"
-                                // TODO Fetch "Captain"
-                                // TODO Fetch "Logbook"
-                            };
+                        if (reader.Read())
+                        {
+                            regularTrip =
+                                new RegularTrip
+                                {
+                                    RegularTripId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("regular_trip_id")),
+                                    ArrivalTime = reader.GetDateTime(reader.GetOrdinal("arrival_time")),
+                                    DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
+                                    ExpectedArrivalTime = reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
+                                    PurposeAndArea = DatabaseManager.ReadString(reader, reader.GetOrdinal("purpose_and_area")),
+                                    WeatherConditions = DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions"))
+                                    // TODO Fetch "Boat"
+                                    // TODO Fetch "Captain"
+                                    // TODO Fetch "Logbook"
+                                };
+                        }
                     }
                 }
 

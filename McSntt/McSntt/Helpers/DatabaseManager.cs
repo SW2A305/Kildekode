@@ -364,7 +364,7 @@ namespace McSntt.Helpers
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText = String.Format(
-                                                        "CREATE TABLE {0} (name TEXT NOT NULL, value INTEGER DEFAULT 0)",
+                                                        "CREATE TABLE {0} (name TEXT NOT NULL, value INTEGER)",
                                                         TableDbSettings);
                     command.ExecuteNonQuery();
                 }
@@ -385,11 +385,29 @@ namespace McSntt.Helpers
         }
 
         #region SQLiteDataReader Helper Methods
+        public static bool ReadBoolean(SQLiteDataReader reader, int columnIndex)
+        {
+            bool result = false;
+
+            if (!reader.IsDBNull(columnIndex)) { result = reader.GetBoolean(columnIndex); }
+
+            return result;
+        }
+
         public static int ReadInt(SQLiteDataReader reader, int columnIndex)
         {
             int result = 0;
 
             if (!reader.IsDBNull(columnIndex)) { result = reader.GetInt32(columnIndex); }
+
+            return result;
+        }
+
+        public static string ReadString(SQLiteDataReader reader, int columnIndex)
+        {
+            string result = "";
+
+            if (!reader.IsDBNull(columnIndex)) { result = reader.GetString(columnIndex); }
 
             return result;
         }

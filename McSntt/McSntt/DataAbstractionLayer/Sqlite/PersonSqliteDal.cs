@@ -38,7 +38,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@cityname", person.Cityname));
                         command.Parameters.Add(new SQLiteParameter("@dateOfBirth", person.DateOfBirth));
                         command.Parameters.Add(new SQLiteParameter("@boatDriver", person.BoatDriver));
-                        command.Parameters.Add(new SQLiteParameter("@gender", person.Gender));
+                        command.Parameters.Add(new SQLiteParameter("@gender", (int)person.Gender));
                         command.Parameters.Add(new SQLiteParameter("@phoneNumber", person.PhoneNumber));
                         command.Parameters.Add(new SQLiteParameter("@email", person.Email));
                         insertedRows += command.ExecuteNonQuery();
@@ -84,7 +84,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@cityname", person.Cityname));
                         command.Parameters.Add(new SQLiteParameter("@dateOfBirth", person.DateOfBirth));
                         command.Parameters.Add(new SQLiteParameter("@boatDriver", person.BoatDriver));
-                        command.Parameters.Add(new SQLiteParameter("@gender", person.Gender));
+                        command.Parameters.Add(new SQLiteParameter("@gender", (int)person.Gender));
                         command.Parameters.Add(new SQLiteParameter("@phoneNumber", person.PhoneNumber));
                         command.Parameters.Add(new SQLiteParameter("@email", person.Email));
                         updatedRows += command.ExecuteNonQuery();
@@ -141,26 +141,27 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TablePersons);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                    persons.
-                        Add(
-                            new Person
-                            {
-                                PersonId = reader.GetInt32(reader.GetOrdinal("person_id")),
-                                FirstName = reader.GetString(reader.GetOrdinal("first_name")),
-                                LastName = reader.GetString(reader.GetOrdinal("last_name")),
-                                Address = reader.GetString(reader.GetOrdinal("address")),
-                                Postcode = reader.GetString(reader.GetOrdinal("postcode")),
-                                Cityname = reader.GetString(reader.GetOrdinal("cityname")),
-                                BoatDriver = reader.GetBoolean(reader.GetOrdinal("boat_driver")),
-                                DateOfBirth = reader.GetString(reader.GetOrdinal("date_of_birth")),
-                                Gender = reader.GetFieldValue<Gender>(reader.GetOrdinal("gender")),
-                                Email = reader.GetString(reader.GetOrdinal("email")),
-                                PhoneNumber = reader.GetString(reader.GetOrdinal("phone_number"))
-                            });
+                        while (reader.Read())
+                        {
+                            persons.
+                                Add(
+                                    new Person
+                                    {
+                                        PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
+                                        FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
+                                        LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
+                                        Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
+                                        Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
+                                        Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
+                                        BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                        DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                        Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
+                                        Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
+                                        PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number"))
+                                    });
+                        }
                     }
                 }
 
@@ -189,25 +190,26 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TablePersons);
                     command.Parameters.Add(new SQLiteParameter("@personId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        person =
-                            new Person
-                            {
-                                PersonId = reader.GetInt32(reader.GetOrdinal("person_id")),
-                                FirstName = reader.GetString(reader.GetOrdinal("first_name")),
-                                LastName = reader.GetString(reader.GetOrdinal("last_name")),
-                                Address = reader.GetString(reader.GetOrdinal("address")),
-                                Postcode = reader.GetString(reader.GetOrdinal("postcode")),
-                                Cityname = reader.GetString(reader.GetOrdinal("cityname")),
-                                BoatDriver = reader.GetBoolean(reader.GetOrdinal("boat_driver")),
-                                DateOfBirth = reader.GetString(reader.GetOrdinal("date_of_birth")),
-                                Gender = reader.GetFieldValue<Gender>(reader.GetOrdinal("gender")),
-                                Email = reader.GetString(reader.GetOrdinal("email")),
-                                PhoneNumber = reader.GetString(reader.GetOrdinal("phone_number"))
-                            };
+                        if (reader.Read())
+                        {
+                            person =
+                                new Person
+                                {
+                                    PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
+                                    FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
+                                    LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
+                                    Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
+                                    Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
+                                    Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
+                                    BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                    DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                    Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
+                                    Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
+                                    PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number"))
+                                };
+                        }
                     }
                 }
 

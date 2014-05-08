@@ -29,7 +29,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     foreach (Boat boat in items)
                     {
                         command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@type", boat.Type));
+                        command.Parameters.Add(new SQLiteParameter("@type", (int)boat.Type));
                         command.Parameters.Add(new SQLiteParameter("@nickname", boat.NickName));
                         command.Parameters.Add(new SQLiteParameter("@imagePath", boat.ImagePath));
                         command.Parameters.Add(new SQLiteParameter("@operational", boat.Operational));
@@ -66,7 +66,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     foreach (Boat boat in items)
                     {
                         command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@boatId", boat.BoatId));
+                        command.Parameters.Add(new SQLiteParameter("@boatId", (int)boat.BoatId));
                         command.Parameters.Add(new SQLiteParameter("@type", boat.Type));
                         command.Parameters.Add(new SQLiteParameter("@nickname", boat.NickName));
                         command.Parameters.Add(new SQLiteParameter("@imagePath", boat.ImagePath));
@@ -125,17 +125,19 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableBoats);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        boats.Add(new Boat
-                                  {
-                                      BoatId = reader.GetInt32(reader.GetOrdinal("boat_id")),
-                                      ImagePath = reader.GetString(reader.GetOrdinal("image_path")),
-                                      NickName = reader.GetString(reader.GetOrdinal("nickname")),
-                                      Operational = reader.GetBoolean(reader.GetOrdinal("operational"))
-                                  });
+                        while (reader.Read())
+                        {
+                            boats.Add(new Boat
+                                      {
+                                          BoatId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("boat_id")),
+                                          ImagePath = DatabaseManager.ReadString(reader, reader.GetOrdinal("image_path")),
+                                          NickName = DatabaseManager.ReadString(reader, reader.GetOrdinal("nickname")),
+                                          Operational = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("operational")),
+                                          Type = (BoatType) DatabaseManager.ReadInt(reader, reader.GetOrdinal("type"))
+                                      });
+                        }
                     }
                 }
 
@@ -169,10 +171,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     {
                         boat = new Boat
                                {
-                                   BoatId = reader.GetInt32(reader.GetOrdinal("boat_id")),
-                                   ImagePath = reader.GetString(reader.GetOrdinal("image_path")),
-                                   NickName = reader.GetString(reader.GetOrdinal("nickname")),
-                                   Operational = reader.GetBoolean(reader.GetOrdinal("operational"))
+                                   BoatId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("boat_id")),
+                                   ImagePath = DatabaseManager.ReadString(reader, reader.GetOrdinal("image_path")),
+                                   NickName = DatabaseManager.ReadString(reader, reader.GetOrdinal("nickname")),
+                                   Operational = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("operational")),
+                                   Type = (BoatType) DatabaseManager.ReadInt(reader, reader.GetOrdinal("type")),
                                };
                     }
                 }
@@ -194,11 +197,17 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                 foreach (Boat boat in boats)
                 {
                     // TODO Complete this.
-                    boat.SailTrips = new List<SailTrip>();
                 }
             }
 
             return boats;
+        }
+
+        public void LoadSailTrips(Boat boat)
+        {
+            var tripDal = DalLocator.RegularTripDal;
+
+            boat.SailTrips = tripDal.GetAll(trip => trip.BoatId == boat.BoatId).ToList();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     {
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@name", team.Name));
-                        command.Parameters.Add(new SQLiteParameter("@level", team.Level));
+                        command.Parameters.Add(new SQLiteParameter("@level", (int)team.Level));
                         insertedRows += command.ExecuteNonQuery();
 
                         team.TeamId = db.LastInsertRowId;
@@ -65,7 +65,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@teamId", team.TeamId));
                         command.Parameters.Add(new SQLiteParameter("@name", team.Name));
-                        command.Parameters.Add(new SQLiteParameter("@level", team.Level));
+                        command.Parameters.Add(new SQLiteParameter("@level", (int)team.Level));
                         updatedRows += command.ExecuteNonQuery();
                     }
                 }
@@ -120,17 +120,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.CommandText =
                         String.Format("SELECT * FROM {0}", DatabaseManager.TableTeams);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                    teams.Add(
-                           new Team
-                           {
-                               TeamId = reader.GetInt32(reader.GetOrdinal("team_id")),
-                               Name = reader.GetString(reader.GetOrdinal("name")),
-                               Level = reader.GetFieldValue<Team.ClassLevel>(reader.GetOrdinal("level"))
-                           });
+                        while (reader.Read())
+                        {
+                            teams.Add(
+                                      new Team
+                                      {
+                                          TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id")),
+                                          Name = DatabaseManager.ReadString(reader, reader.GetOrdinal("name")),
+                                          Level = (Team.ClassLevel) DatabaseManager.ReadInt(reader, reader.GetOrdinal("level"))
+                                      });
+                        }
                     }
                 }
 
@@ -158,17 +159,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableTeams); // TODO Fill this out
                     command.Parameters.Add(new SQLiteParameter("@teamId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        team =
-                            new Team
-                            {
-                                TeamId = reader.GetInt32(reader.GetOrdinal("team_id")),
-                                Name = reader.GetString(reader.GetOrdinal("name")),
-                                Level = reader.GetFieldValue<Team.ClassLevel>(reader.GetOrdinal("level"))
-                            };
+                        if (reader.Read())
+                        {
+                            team =
+                                new Team
+                                {
+                                    TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id")),
+                                    Name = DatabaseManager.ReadString(reader, reader.GetOrdinal("name")),
+                                    Level = (Team.ClassLevel)DatabaseManager.ReadInt(reader, reader.GetOrdinal("level"))
+                                };
+                        }
                     }
                 }
 

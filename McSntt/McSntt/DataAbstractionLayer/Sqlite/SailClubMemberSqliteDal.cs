@@ -34,7 +34,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@personId", sailClubMember.PersonId));
-                        command.Parameters.Add(new SQLiteParameter("@position", sailClubMember.Position));
+                        command.Parameters.Add(new SQLiteParameter("@position", (int)sailClubMember.Position));
                         command.Parameters.Add(new SQLiteParameter("@username", sailClubMember.Username));
                         command.Parameters.Add(new SQLiteParameter("@passwordHash", sailClubMember.PasswordHash));
                         insertedRows += command.ExecuteNonQuery();
@@ -76,7 +76,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@sailClubMemberId", sailClubMember.SailClubMemberId));
                         command.Parameters.Add(new SQLiteParameter("@personId", sailClubMember.PersonId));
-                        command.Parameters.Add(new SQLiteParameter("@position", sailClubMember.Position));
+                        command.Parameters.Add(new SQLiteParameter("@position", (int)sailClubMember.Position));
                         command.Parameters.Add(new SQLiteParameter("@username", sailClubMember.Username));
                         command.Parameters.Add(new SQLiteParameter("@passwordHash", sailClubMember.PasswordHash));
                         updatedRows += command.ExecuteNonQuery();
@@ -138,31 +138,31 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         String.Format("SELECT * FROM {0}, {1} WHERE {0}.person_id = {1}.person_id",
                                       DatabaseManager.TableSailClubMembers, DatabaseManager.TablePersons);
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        sailClubMembers.
-                            Add(
-                                new SailClubMember
-                                {
-                                    SailClubMemberId = reader.GetInt32(reader.GetOrdinal("sail_club_member_id")),
-                                    PersonId = reader.GetInt32(reader.GetOrdinal("person_id")),
-                                    FirstName = reader.GetString(reader.GetOrdinal("first_name")),
-                                    LastName = reader.GetString(reader.GetOrdinal("last_name")),
-                                    Address = reader.GetString(reader.GetOrdinal("address")),
-                                    Postcode = reader.GetString(reader.GetOrdinal("postcode")),
-                                    Cityname = reader.GetString(reader.GetOrdinal("cityname")),
-                                    BoatDriver = reader.GetBoolean(reader.GetOrdinal("boat_driver")),
-                                    DateOfBirth = reader.GetString(reader.GetOrdinal("date_of_birth")),
-                                    Gender = reader.GetFieldValue<Gender>(reader.GetOrdinal("gender")),
-                                    Email = reader.GetString(reader.GetOrdinal("email")),
-                                    PhoneNumber = reader.GetString(reader.GetOrdinal("phone_number")),
-                                    Username = reader.GetString(reader.GetOrdinal("username")),
-                                    PasswordHash = reader.GetString(reader.GetOrdinal("password_hash")),
-                                    Position =
-                                        reader.GetFieldValue<SailClubMember.Positions>(reader.GetOrdinal("position"))
-                                });
+                        while (reader.Read())
+                        {
+                            sailClubMembers.
+                                Add(
+                                    new SailClubMember
+                                    {
+                                        SailClubMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
+                                        PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
+                                        FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
+                                        LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
+                                        Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
+                                        Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
+                                        Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
+                                        BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                        DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                        Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
+                                        Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
+                                        PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
+                                        Username = DatabaseManager.ReadString(reader, reader.GetOrdinal("username")),
+                                        PasswordHash = DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
+                                        Position = (SailClubMember.Positions) DatabaseManager.ReadInt(reader, reader.GetOrdinal("position"))
+                                    });
+                        }
                     }
                 }
 
@@ -191,30 +191,30 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       DatabaseManager.TableSailClubMembers);
                     command.Parameters.Add(new SQLiteParameter("@sailClubMemberId", itemId));
 
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
-                        sailClubMember =
-                            new SailClubMember
-                            {
-                                SailClubMemberId = reader.GetInt32(reader.GetOrdinal("sail_club_member_id")),
-                                PersonId = reader.GetInt32(reader.GetOrdinal("person_id")),
-                                FirstName = reader.GetString(reader.GetOrdinal("first_name")),
-                                LastName = reader.GetString(reader.GetOrdinal("last_name")),
-                                Address = reader.GetString(reader.GetOrdinal("address")),
-                                Postcode = reader.GetString(reader.GetOrdinal("postcode")),
-                                Cityname = reader.GetString(reader.GetOrdinal("cityname")),
-                                BoatDriver = reader.GetBoolean(reader.GetOrdinal("boat_driver")),
-                                DateOfBirth = reader.GetString(reader.GetOrdinal("date_of_birth")),
-                                Gender = reader.GetFieldValue<Gender>(reader.GetOrdinal("gender")),
-                                Email = reader.GetString(reader.GetOrdinal("email")),
-                                PhoneNumber = reader.GetString(reader.GetOrdinal("phone_number")),
-                                Username = reader.GetString(reader.GetOrdinal("username")),
-                                PasswordHash = reader.GetString(reader.GetOrdinal("password_hash")),
-                                Position =
-                                    reader.GetFieldValue<SailClubMember.Positions>(reader.GetOrdinal("position"))
-                            };
+                        if (reader.Read())
+                        {
+                            sailClubMember =
+                                new SailClubMember
+                                {
+                                    SailClubMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
+                                    PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
+                                    FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
+                                    LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
+                                    Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
+                                    Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
+                                    Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
+                                    BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                    DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                    Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
+                                    Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
+                                    PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
+                                    Username = DatabaseManager.ReadString(reader, reader.GetOrdinal("username")),
+                                    PasswordHash = DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
+                                    Position = (SailClubMember.Positions) DatabaseManager.ReadInt(reader, reader.GetOrdinal("position"))
+                                };
+                        }
                     }
                 }
 

@@ -8,6 +8,7 @@ namespace McSntt.Models
     {
         public virtual long RegularTripId { get; set; }
         public virtual Person Captain { get; set; }
+        public long CaptainId { get; set; }
 
         [Column(TypeName = "DateTime2")]
         public virtual DateTime ExpectedArrivalTime { get; set; }

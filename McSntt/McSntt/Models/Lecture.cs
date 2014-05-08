@@ -9,8 +9,37 @@ namespace McSntt.Models
 {
     public class Lecture
     {
+        private Team _team;
+        private long _teamId;
+
         public virtual long LectureId { get; set; }
-        public virtual Team Team { get; set; }
+
+        public virtual Team Team
+        {
+            get
+            {
+                return this._team;
+            }
+            set
+            {
+                this._team = value;
+                this.TeamId = value.TeamId;
+            }
+        }
+
+        public long TeamId
+        {
+            get
+            {
+                if (_teamId == 0 && _team != null) { _teamId = _team.TeamId; }
+                return this._teamId;
+            }
+            set
+            {
+                this._teamId = value;
+            }
+        }
+
         [Column(TypeName = "DateTime2")]
         public virtual DateTime DateOfLecture { get; set; }
         #region UndervisningsOmråder
