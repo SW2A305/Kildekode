@@ -29,7 +29,7 @@ namespace McSntt.Views.Windows
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
 
-            if (TeamName.Text != null)
+            if (!string.IsNullOrEmpty(TeamName.Text))
             {
                 var team = new Team {Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Teacher = GlobalInformation.CurrentUser};
                 StudyMockData.TeamListGlobal.Add(team);
