@@ -7,13 +7,11 @@ namespace McSntt.Models
     /// <summary>
     ///     A member of the club should be of this type, containing additional information.
     /// </summary>
-    [Table("SailClubMembers")]
     public class SailClubMember : Person
     {
         private Positions _position;
 
         #region Properties
-        [Index(IsUnique = true)]
         public virtual long SailClubMemberId { get; set; }
 
         public virtual Positions Position
@@ -25,7 +23,6 @@ namespace McSntt.Models
         public virtual string Username { get; set; }
         public virtual string PasswordHash { get; set; }
 
-        [InverseProperty("FiledBy")]
         public virtual ICollection<Logbook> FiledLogbooks { get; set; }
         #endregion
 

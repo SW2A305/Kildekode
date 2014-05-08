@@ -38,7 +38,7 @@ namespace McSntt.Views.UserControls
 
         public void LoadData()
         {
-            var db = new RegularTripEfDal();
+            var db = DalLocator.RegularTripDal;
             var usrId = GlobalInformation.CurrentUser.PersonId;
 
             var sailTripList = db.GetAll().ToList();
@@ -66,7 +66,7 @@ namespace McSntt.Views.UserControls
             var logBookWindow = new CreateLogbookWindow((RegularTrip)LogbookDataGrid.SelectedItem, GlobalInformation.CurrentUser);
             logBookWindow.ShowDialog();
 
-            var db = new RegularTripEfDal();
+            var db = DalLocator.RegularTripDal;
             var usrId = GlobalInformation.CurrentUser.PersonId;
             var sailTripList = db.GetAll().ToList();
 

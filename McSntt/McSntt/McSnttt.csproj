@@ -36,25 +36,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.Extended">
-      <HintPath>..\packages\EntityFramework.Extended.6.1.0.95\lib\net45\EntityFramework.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.92.0\lib\net45\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.92.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -93,11 +79,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataAbstractionLayer\EventEfDal.cs" />
     <Compile Include="DataAbstractionLayer\IEventDal.cs" />
     <Compile Include="DataAbstractionLayer\ILectureDal.cs" />
     <Compile Include="DataAbstractionLayer\IStudentMemberDal.cs" />
-    <Compile Include="DataAbstractionLayer\LectureEfDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\BoatSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\EventSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\LectureSqliteDal.cs" />
@@ -107,8 +91,6 @@
     <Compile Include="DataAbstractionLayer\Sqlite\SailClubMemberSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\StudentMemberSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\TeamSqliteDal.cs" />
-    <Compile Include="DataAbstractionLayer\StudentMemberEfDal.cs" />
-    <Compile Include="DataAbstractionLayer\TeamEfDal.cs" />
     <Compile Include="DataAbstractionLayer\ITeamDal.cs" />
     <Compile Include="DataAbstractionLayer\IGenericDal.cs" />
     <Compile Include="DataAbstractionLayer\ILogbookDal.cs" />
@@ -116,25 +98,12 @@
     <Compile Include="DataAbstractionLayer\IBoatDal.cs" />
     <Compile Include="DataAbstractionLayer\IRegularTripDal.cs" />
     <Compile Include="DataAbstractionLayer\ISailClubMemberDal.cs" />
-    <Compile Include="DataAbstractionLayer\LogbookEfDal.cs" />
-    <Compile Include="DataAbstractionLayer\PersonEfDal.cs" />
-    <Compile Include="DataAbstractionLayer\BoatEfDal.cs" />
-    <Compile Include="DataAbstractionLayer\RegularTripEfDal.cs" />
-    <Compile Include="DataAbstractionLayer\SailClubMemberEfDal.cs" />
     <Compile Include="Helpers\DalLocator.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
     <Compile Include="Helpers\StudyMockData.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
-    <Compile Include="Migrations\201405052112568_InitialMigration.cs" />
-    <Compile Include="Migrations\201405052112568_InitialMigration.Designer.cs">
-      <DependentUpon>201405052112568_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201405070946414_StudyTeacherAdded.cs" />
-    <Compile Include="Migrations\201405070946414_StudyTeacherAdded.Designer.cs">
-      <DependentUpon>201405070946414_StudyTeacherAdded.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\DateTimePicker.xaml.cs">
       <DependentUpon>DateTimePicker.xaml</DependentUpon>
     </Compile>
@@ -165,8 +134,6 @@
     <Compile Include="Views\Windows\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="McSntttContext.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Lecture.cs" />
@@ -327,12 +294,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201405052112568_InitialMigration.resx">
-      <DependentUpon>201405052112568_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405070946414_StudyTeacherAdded.resx">
-      <DependentUpon>201405070946414_StudyTeacherAdded.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

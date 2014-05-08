@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
-using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
 using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
@@ -21,7 +18,7 @@ namespace McSntt.Views.Windows
         public CreateBoatBookingWindow(RegularTrip rt) : this(-1)
         {
             // The id is combobox id + 1 (So boatId - 1)
-            BoatComboBox.SelectedIndex = rt.Boat.BoatId - 1;
+            BoatComboBox.SelectedIndex = (int) (rt.Boat.BoatId - 1);
             DateTimeStart.Value = rt.DepartureTime;
             DateTimeEnd.Value = rt.ArrivalTime;
             CrewList = rt.Crew.ToList();
@@ -44,8 +41,8 @@ namespace McSntt.Views.Windows
         public CreateBoatBookingWindow(int index)
         {
             InitializeComponent();
-            
-            var dbm = new BoatEfDal();
+
+            var dbm = DalLocator.BoatDal;
             BoatComboBox.ItemsSource = dbm.GetAll();
             BoatComboBox.DisplayMemberPath = "NickName";
             BoatComboBox.SelectedValuePath = "Id";
