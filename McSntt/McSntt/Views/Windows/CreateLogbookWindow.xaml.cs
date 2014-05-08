@@ -97,6 +97,10 @@ namespace McSntt.Views.Windows
             {
                 MessageBox.Show("Udfyld venligst skadesrapporten med en beskrivelse af skaden");
             }
+            else if (WeatherConditionTextBox.Text == String.Empty)
+            {
+                MessageBox.Show("Udfyld venligst vejrforholdene");
+            }
             else if (!CrewList.Contains((Person)CaptainComboBox.SelectedValue))
             {
                 MessageBox.Show("Vælg venligst en gyldig Kaptajn");
@@ -122,6 +126,7 @@ namespace McSntt.Views.Windows
                 currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value;
                 currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value;
                 currentLogbook.FiledBy = _currentSailClubMember;
+                RegularSailTrip.WeatherConditions = WeatherConditionTextBox.Text;
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;
 

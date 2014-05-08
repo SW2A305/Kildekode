@@ -62,6 +62,9 @@
         	Margin="529,428,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
 
         <Label Content="Svar fra Bådansvarlig:" HorizontalAlignment="Left" Width="131" Margin="393,428,0,78"/>
+        <TextBox x:Name="WeatherConditionTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
+        	Margin="527,342,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
+        <Label Content="Vejrforhold:" HorizontalAlignment="Left" Height="auto" Width="100" Margin="422,346,0,219"/>
 
     </Grid>
 </Window>
