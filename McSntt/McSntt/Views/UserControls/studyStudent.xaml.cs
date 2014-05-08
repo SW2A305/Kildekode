@@ -18,11 +18,11 @@ using McSntt.Models;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for studyStudent.xaml
+    /// Interaction logic for StudyStudent.xaml
     /// </summary>
-    public partial class studyStudent : UserControl
+    public partial class StudyStudent : UserControl
     {
-        public studyStudent()
+        public StudyStudent()
         {
             InitializeComponent();
             progressGrid.IsEnabled = false;
