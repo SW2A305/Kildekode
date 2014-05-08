@@ -7,14 +7,14 @@
         x:Class="McSntt.Views.Windows.CreateBoatBookingWindow"
         Title="CreateBoatBookingWindow" 
         Height="600" 
-        Width="800"
+        Width="320"
         Style="{StaticResource WindowStyle}">
 
     <Grid>
         <TextBlock Margin="10,10,0,0" Text="Opret ny bådbooking" VerticalAlignment="Top" FontSize="20"/>
         <StackPanel HorizontalAlignment="Left" Height="517" Margin="10,42,0,0" VerticalAlignment="Top" Width="300">
             <TextBlock Text="Vælg en båd:"/>
-            <ComboBox Name="BoatComboBox" HorizontalAlignment="Left" ItemsSource="{Binding BoatsCollection}" DropDownClosed="BoatComboBox_OnDropDownClosed" Width="290"/>
+            <ComboBox Name="BoatComboBox" HorizontalAlignment="Left" ItemsSource="{Binding BoatsCollection}" Width="290"/>
             
             <TextBlock Text="Vælg et starttidspunkt:"/>
             <userControls:DateTimePicker x:Name="DateTimeStart" />
@@ -32,7 +32,7 @@
             </DataGrid>
             <Button Height="25" Margin="0,0,10,0" Name="ChangeCrew" Content="Ændre besætning" Click="ChangeCrew_Click"/>
             <TextBlock Text="Vælg en kaptajn:" />
-            <ComboBox Name="CaptainComboBox" HorizontalAlignment="Left" ItemsSource="{Binding CurrentCrew}" DropDownClosed="CaptainComboBox_OnDropDownClosed" Width="290"/>
+            <ComboBox Name="CaptainComboBox" HorizontalAlignment="Left" ItemsSource="{Binding CurrentCrew}" Width="290"/>
             <TextBlock Text="Angiv et formål:" />
             <TextBox Name="PurposeTextBox"  Height="50" Width="290" HorizontalAlignment="Left" />
             <Button Height="25" Margin="0,0,10,0" Name="CompleteBooking" Content="Gem Booking" Click="SaveButton_Click"/>

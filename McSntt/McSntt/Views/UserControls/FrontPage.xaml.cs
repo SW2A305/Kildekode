@@ -80,5 +80,16 @@ namespace McSntt.Views.UserControls
             // Enable the button if a trip is selected.
             CreateLogBookButton.IsEnabled = LogbookDataGrid.SelectedIndex != -1;
         }
+
+        private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var changewindow = new CreateBoatBookingWindow((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            changewindow.ShowDialog();
+        }
+
+        private void DelteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            //TODO: Database slet medlem og opdater grid
+        }
     }
 }
