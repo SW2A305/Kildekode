@@ -17,7 +17,9 @@ using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
+using McSntt.Views.UserControls;
 using McSntt.Views.Windows;
+using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
@@ -58,6 +60,7 @@ namespace McSntt.Views.Windows
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
 
+
         }
         
         private void ChangeCrewButtonClick(object sender, RoutedEventArgs e)
@@ -88,7 +91,7 @@ namespace McSntt.Views.Windows
             else if ((DateTimePickerActualArrival.Value == _hasBeenFilledTime ||
                      DateTimePickerActualDeparture.Value == _hasBeenFilledTime))
             {
-                MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst fra defaultværdien");
+                MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst");
             }
             else if ((NoRadioButton.IsChecked == true || YesButBrokenRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
             {
@@ -115,8 +118,8 @@ namespace McSntt.Views.Windows
                 RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
                 currentLogbook.DamageDescription = DamageTextBox.Text;
                 currentLogbook.ActualCrew = CrewList;
-                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value.GetValueOrDefault();
-                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value.GetValueOrDefault();
+                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value;
+                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value;
                 currentLogbook.FiledBy = _currentSailClubMember;
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;

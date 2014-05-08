@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using McSntt.Models;
 
 namespace McSntt.Views.Windows
 {
@@ -19,9 +20,15 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class ParticipantsPopup : Window
     {
-        public ParticipantsPopup()
+        public ParticipantsPopup(Event participant)
         {
             InitializeComponent();
+
+            var participantsList = participant.Participants;
+
+            ParticipantsListbox.ItemsSource = participantsList;
+
+            ParticipantsListbox.Items.Refresh();
         }
 
         private void Close(object sender, RoutedEventArgs e)

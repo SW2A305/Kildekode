@@ -1,37 +1,16 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:UserControls="clr-namespace:McSntt.Views.UserControls" x:Class="McSntt.Views.Windows.StudentMainWindow"
+        xmlns:UserControls="clr-namespace:McSntt.Views.UserControls" x:Class="McSntt.Views.Windows.GuestMainWindow"
         Title="Sundet Administration " Height="720" Width="1024" UseLayoutRounding="False" x:Name="UI">
 
     <Grid>
         <TabControl Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Style="{StaticResource TabItemStyle}"  Name="FrontPageTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Forside" FontSize="23" Width="140" TextAlignment="Center"/>
-                </TabItem.Header>
-                <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
-            </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="StudyTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Undervisning" FontSize="23" Width="140" TextAlignment="Center"/>
-                </TabItem.Header>
-                <Grid Name="StudyGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
-            </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem" >
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem" Height="110">
                 <TabItem.Header>
                     <TextBlock Text="Begivenheder" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="EventsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
-            </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="MemberTabItem" Height="110" VerticalAlignment="Top">
-                <TabItem.Header>
-                    <TextBlock Text="Medlemmer" FontSize="23" Width="140" TextAlignment="Center"/>
-                </TabItem.Header>
-                <Grid Name="MembersGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">

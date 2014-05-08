@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:userControls="clr-namespace:McSntt.Views.UserControls"
         Title="ViewSpecificLogbookWindow" Height="650" Width="800" MinHeight="650" MinWidth="800" MaxHeight="650" MaxWidth="800"
         Style="{StaticResource WindowStyle}">
 
@@ -33,24 +34,24 @@
         <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
     
         <StackPanel Margin="438,188,62,282" Orientation="Horizontal" RenderTransformOrigin="0.5,-0.044">
-        <StackPanel>
-        <Label Height="30" Content="Planlagt ankomst:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-                <Label Height="30" Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
+            <StackPanel>
+                <Label Height="30" Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+                <Label Height="30" Content="Planlagt ankomst:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
                 <Label Height="30" Content="Faktisk afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
                 <Label Height="30" Content="Faktisk ankomst:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
             </StackPanel>
             <StackPanel>
-                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="180" Height="30"/>
-                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="30" Width="Auto"/>
-                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="30" Width="Auto"/>
-                <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="30" Width="Auto"/>
+                <userControls:DateTimePicker IsReadOnly="True" x:Name="DateTimePickerPlannedDepature" Width="180" Height="30"/>
+                <userControls:DateTimePicker IsReadOnly="True" x:Name="DateTimePickerPlannedArrival" Height="30" Width="Auto"/>
+                <userControls:DateTimePicker IsReadOnly="True" x:Name="DateTimePickerActualDeparture" Height="30" Width="Auto"/>
+                <userControls:DateTimePicker IsReadOnly="True" x:Name="DateTimePickerActualArrival" Height="30" Width="Auto"/>
             </StackPanel>
         </StackPanel>
         
-        <!-- <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="Auto" Height="30" Margin="548,136,31,453"/>
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="30" Width="Auto" Margin="548,183,31,406"/>
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="30" Width="Auto" Margin="548,232,31,357"/>
-        <xctk:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="30" Width="Auto" Margin="548,286,31,303"/>
+        <!-- <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="Auto" Height="30" Margin="548,136,31,453"/>
+        <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="30" Width="Auto" Margin="548,183,31,406"/>
+        <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="30" Width="Auto" Margin="548,232,31,357"/>
+        <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualArrival" Height="30" Width="Auto" Margin="548,286,31,303"/>
         <Label Content="Planlagt ankomst:" HorizontalAlignment="Left" Margin="440,187,0,0" VerticalAlignment="Top"/>
         <Label Content="Planlagt afgang:" HorizontalAlignment="Left" Margin="440,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>
         <Label Content="Faktisk afgang:" HorizontalAlignment="Left" Margin="440,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.435,3.777"/>

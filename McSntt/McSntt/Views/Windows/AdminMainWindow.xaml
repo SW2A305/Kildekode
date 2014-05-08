@@ -6,57 +6,54 @@
 
     <Grid>
         <TabControl Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Style="{StaticResource TabItemStyle}"  Margin="0,0,-35,0" Name="FrontPageTabItem">
+            <TabItem Style="{StaticResource TabItemStyle}"  Name="FrontPageTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Forside" FontSize="23" />
+                    <TextBlock Text="Forside" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <UserControls:FrontPage></UserControls:FrontPage>
                 </Grid>
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="CalenderTabItem" Margin="35,0,-60,0">
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="StudyTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Kalender" FontSize="23" />
+                    <TextBlock Text="Undervisning" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
-                <UserControls:Calendar HorizontalAlignment="Left" Margin="67,54,0,0" VerticalAlignment="Top" Height="339" Width="430"/>
-            </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="EvenetsTabItem" Margin="60,0,-70,0">
-                <TabItem.Header>
-                    <TextBlock Text="Begivenheder" FontSize="23" />
-                </TabItem.Header>
-                <UserControls:EventsAdmin HorizontalAlignment="Left" Height="722" Margin="0,0,0,0" VerticalAlignment="Top"/>
-            </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" Margin="70,0,-110,0" x:Name="BookiTabItem">
-                <TabItem.Header>
-                    <TextBlock Text="Booking" FontSize="23" />
-                </TabItem.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="184*"/>
-                        <ColumnDefinition Width="801*"/>
-                    </Grid.ColumnDefinitions>
-                    <UserControls:BoatReservation Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Grid Name="StudyGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="MemberTabItem" Height="110" VerticalAlignment="Top" Margin="110,0,-130,-0">
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem" >
                 <TabItem.Header>
-                    <TextBlock Text="Medlemmer" FontSize="23" />
+                    <TextBlock Text="Begivenheder" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
-                <UserControls:Members/>
+                <Grid Name="EventsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
+                </Grid>
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem" Margin="130,0,-180,0" >
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="MemberTabItem" Height="110" VerticalAlignment="Top">
                 <TabItem.Header>
-                    <TextBlock Text="Både" FontSize="23" />
-                    
+                    <TextBlock Text="Medlemmer" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
-                <UserControls:Boats/>
+                <Grid Name="MembersGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
+                </Grid>
+            </TabItem>
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">
+                <TabItem.Header>
+                    <TextBlock Text="Både" FontSize="23" Width="140" TextAlignment="Center"/>
+                </TabItem.Header>
+                <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
+                </Grid>
             </TabItem>
         </TabControl>
-
-        <Image HorizontalAlignment="Right" Height="108" Margin="0,10,8,0" VerticalAlignment="Top" Width="100">
-            <Image.Source>
-                <BitmapImage UriSource="..\..\Images\SundetLogo.PNG"/>
-            </Image.Source>
-        </Image>
+       
+        <StackPanel  Width="92" Height="110" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <!-- To make border -->
+            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+            <Button Content="Log ud" Name="LogOutButton" Click="LogOutButton_OnClick" Height="20" Width="80" HorizontalAlignment="Left"></Button>
+            <!-- To make border -->
+            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+            <Image HorizontalAlignment="Left" VerticalAlignment="Top" Height="72" Width="82">
+                <Image.Source>
+                    <BitmapImage UriSource="..\..\Images\SundetLogo.PNG"/>
+                </Image.Source>
+            </Image>
+        </StackPanel>
     </Grid>
 </Window>

@@ -31,6 +31,8 @@ namespace McSntt.Views.UserControls
             InfoTextBlock.Text =
                 "Til højre ses dine kommende ture, samt dem hvorpå der endnu ikker er udfyldt en logbog for.";
 
+            CreateLogBookButton.IsEnabled = false;
+
             LoadData();
         }
 
@@ -56,7 +58,12 @@ namespace McSntt.Views.UserControls
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var logBookWindow = new CreateLogbookWindow((RegularTrip) LogbookDataGrid.CurrentItem, GlobalInformation.CurrentUser);
+            CreateLogBookButton_Click(new object(), new RoutedEventArgs());
+        }
+
+        private void CreateLogBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            var logBookWindow = new CreateLogbookWindow((RegularTrip)LogbookDataGrid.SelectedItem, GlobalInformation.CurrentUser);
             logBookWindow.ShowDialog();
 
             var db = new RegularTripEfDal();
@@ -68,9 +75,21 @@ namespace McSntt.Views.UserControls
                 sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
         }
 
-        private void UpcommingTripsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void LogbookDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //TODO: Show info about up and comming trip
+            // Enable the button if a trip is selected.
+            CreateLogBookButton.IsEnabled = LogbookDataGrid.SelectedIndex != -1;
+        }
+
+        private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var changewindow = new CreateBoatBookingWindow((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            changewindow.ShowDialog();
+        }
+
+        private void DelteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            //TODO: Database slet medlem og opdater grid
         }
     }
 }

@@ -125,10 +125,18 @@
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
+    <Compile Include="Helpers\StudyMockData.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="Migrations\201405052112568_InitialMigration.cs" />
     <Compile Include="Migrations\201405052112568_InitialMigration.Designer.cs">
       <DependentUpon>201405052112568_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405070946414_StudyTeacherAdded.cs" />
+    <Compile Include="Migrations\201405070946414_StudyTeacherAdded.Designer.cs">
+      <DependentUpon>201405070946414_StudyTeacherAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\DateTimePicker.xaml.cs">
+      <DependentUpon>DateTimePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
@@ -136,14 +144,17 @@
     <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
       <DependentUpon>DamageReportWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\EventsPopup.xaml.cs">
+      <DependentUpon>EventsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\NewTeamWindow.xaml.cs">
+      <DependentUpon>NewTeamWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\ParticipantsPopup.xaml.cs">
       <DependentUpon>ParticipantsPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\SupportMainWindow.xaml.cs">
-      <DependentUpon>SupportMainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Windows\TeacherMainWindow.xaml.cs">
-      <DependentUpon>TeacherMainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Windows\GuestMainWindow.xaml.cs">
+      <DependentUpon>GuestMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\StudentMainWindow.xaml.cs">
       <DependentUpon>StudentMainWindow.xaml</DependentUpon>
@@ -169,17 +180,8 @@
     <Compile Include="Views\UserControls\EventsAdmin.xaml.cs">
       <DependentUpon>EventsAdmin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\BoatReservation.xaml.cs">
-      <DependentUpon>BoatReservation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\Boats.xaml.cs">
       <DependentUpon>Boats.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\Calendar.xaml.cs">
-      <DependentUpon>Calendar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\Logbog.xaml.cs">
-      <DependentUpon>Logbog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\Members.xaml.cs">
       <DependentUpon>Members.xaml</DependentUpon>
@@ -187,11 +189,8 @@
     <Compile Include="Views\UserControls\SailerSchool.xaml.cs">
       <DependentUpon>SailerSchool.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\EventsPopup.xaml.cs">
-      <DependentUpon>EventsPopup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\studyStudent.xaml.cs">
-      <DependentUpon>studyStudent.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\StudyStudent.xaml.cs">
+      <DependentUpon>StudyStudent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\StudyTeacher.xaml.cs">
       <DependentUpon>StudyTeacher.xaml</DependentUpon>
@@ -211,6 +210,10 @@
     <Compile Include="Views\Windows\ViewSpecificLogbookWindow.xaml.cs">
       <DependentUpon>ViewSpecificLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\UserControls\DateTimePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\FrontPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,15 +222,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\EventsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\NewTeamWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\ParticipantsPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Windows\SupportMainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Windows\TeacherMainWindow.xaml">
+    <Page Include="Views\Windows\GuestMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -264,19 +271,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\BoatReservation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UserControls\Boats.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\Calendar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\Logbog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -288,11 +283,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\EventsPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\studyStudent.xaml">
+    <Page Include="Views\UserControls\StudyStudent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -338,6 +329,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201405052112568_InitialMigration.resx">
       <DependentUpon>201405052112568_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405070946414_StudyTeacherAdded.resx">
+      <DependentUpon>201405070946414_StudyTeacherAdded.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

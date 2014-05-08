@@ -67,9 +67,6 @@ namespace McSntt.Views.Windows
                     // Check if the password is correct (Case sensitive)
                     if (usr.PasswordHash == EncryptionHelper.Sha256(PasswordBox.Password))
                     {
-                        StatusTextBlock.Text = "Velkommen, " + usr.FirstName + "!";
-                        StatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
-
                         LoginCompleted(usr);
                     }
                     else
@@ -93,29 +90,29 @@ namespace McSntt.Views.Windows
             switch (p.Position)
             {
                 case SailClubMember.Positions.Admin:
-                    var adminWindow = new AdminMainWindow();
+                    var adminWindow = new AdminMainWindow(this);
                     adminWindow.Show();
                     adminWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Member:
-                    var memberWindow = new MemberMainWindow();
+                    var memberWindow = new MemberMainWindow(this);
                     memberWindow.Show();
                     memberWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Student:
-                    var StudentWindow = new StudentMainWindow();
-                    StudentWindow.Show();
-                    StudentWindow.Owner = this.Owner;
+                    var studentWindow = new StudentMainWindow(this);
+                    studentWindow.Show();
+                    studentWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Teacher:
-                    var TeacherWindow = new StudentMainWindow();
-                    TeacherWindow.Show();
-                    TeacherWindow.Owner = this.Owner;
+                    var teacherWindow = new AdminMainWindow(this);
+                    teacherWindow.Show();
+                    teacherWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.SupportMember:
-                    var SupportWindow = new StudentMainWindow();
-                    SupportWindow.Show();
-                    SupportWindow.Owner = this.Owner;
+                    var supportWindow = new GuestMainWindow(this);
+                    supportWindow.Show();
+                    supportWindow.Owner = this.Owner;
                     break;
             }
             this.Hide();
@@ -131,6 +128,20 @@ namespace McSntt.Views.Windows
             }
         }
         #endregion
-    }
 
+        private void GuestLogin_OnClick(object sender, RoutedEventArgs e)
+        {
+
+            GlobalInformation.CurrentUser = new SailClubMember()
+            {
+                FirstName = "Gæst",
+                Position = SailClubMember.Positions.SupportMember
+            };
+
+            var GuestWindow = new GuestMainWindow(this);
+            GuestWindow.Show();
+            GuestWindow.Owner = this.Owner;
+            this.Hide();
+        }
+    }
 }

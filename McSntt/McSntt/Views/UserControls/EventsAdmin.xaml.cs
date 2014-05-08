@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using McSntt.Helpers;
 using McSntt.Views.Windows;
 using McSntt.Models;
 using System.ComponentModel;
@@ -26,49 +27,38 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class EventsAdmin : UserControl
     {
-
-        //public Event newEvent = new Event();
         public IList<Event> EventsList = new List<Event>();
-        
+
         public EventsAdmin()
         {
-            InitializeComponent();    
+            InitializeComponent();
+
+            if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.Admin)
+            {
+                CreateBnt.Visibility = Visibility.Hidden;
+                EditBnt.Visibility = Visibility.Hidden;
+                DeleteBnt.Visibility = Visibility.Hidden;
+            }
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
-        {
-           
+        {          
             var newEvent = new Event();
 
             Window createEventPopup = new EventsPopup(newEvent);
             createEventPopup.ShowDialog();
             AgendaListbox.ItemsSource = EventsList;
 
-
             if (newEvent.Created)
             {
-
                 EventsList.Add(newEvent);
-                
-                //AgendaListbox.Items.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
 
                 EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
 
                 AgendaListbox.ItemsSource = EventsList;
 
                 AgendaListbox.Items.Refresh();
-
-/*
-                IEventDal db = new EventEfDal();
-                db.Create(newEvent);
-*/
             }
-
-            // Lige nu bruges listen fra Event klasse  ikke, den ville ikke twerke med den :(
-            //newEvent.EventList.Add(newEvent);
-            //AgendaListbox.ItemsSource = newEvent.EventList;
-
-
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
@@ -77,55 +67,117 @@ namespace McSntt.Views.UserControls
 
             if (i >= 0)
             {
-                
-                Event selectedEvent = EventsList.ElementAt(i);
+                var selectedEvent = EventsList.ElementAt(i);
 
-
-                
-                Window createEventPopup = new EventsPopup(
-                    selectedEvent.EventTitle,
-                    selectedEvent.EventDate,
-                    selectedEvent.Description,
-                    selectedEvent.SignUpReq);
-                  
-                    createEventPopup.ShowDialog();
-
-                //Textbox.Text = selectedEvent.EventTitle;
+                Window createEventPopup = new EventsPopup(selectedEvent);
+                createEventPopup.ShowDialog();
 
                 EventsList.RemoveAt(i);
 
                 EventsList.Insert(i, selectedEvent);
 
-                AgendaListbox.Items.Refresh();
-            }
-            else MessageBox.Show("Vælg en begivenhed at redigere");
-            
+                EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
 
+                AgendaListbox.ItemsSource = EventsList;
+
+                AgendaListbox.Items.Refresh();
+
+                Descriptionbox.Text = null;
+
+                Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
+            }
+            else MessageBox.Show("Vælg en begivenhed at redigere!");           
         }
 
         private void Delete_Event(object sender, RoutedEventArgs e)
         {
-
             int i = AgendaListbox.SelectedIndex;
 
             if (i >= 0)
             {
                 EventsList.RemoveAt(i);
             }
-            else MessageBox.Show("Vælg en begivenhed som skal slettes");
+            else MessageBox.Show("Vælg en begivenhed som skal slettes!");
 
             AgendaListbox.Items.Refresh();
         }
 
-        private void Subscripe(object sender, RoutedEventArgs e)
+        private void Subscribe(object sender, RoutedEventArgs e)
         {
+            int i = AgendaListbox.SelectedIndex;
 
+            if (i >= 0)
+            {
+                var selectedEvent = EventsList.ElementAt(i);
+
+                if (selectedEvent.SignUpReq)
+                {
+                    if (selectedEvent.Participants == null)
+                    {
+                        selectedEvent.Participants = new List<Person>();
+                    }
+
+                    if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                    {
+                        MessageBox.Show("Du er allerede tilmeldt!");
+                    }
+                    else
+                    {
+                        selectedEvent.Participants.Add(GlobalInformation.CurrentUser);
+                        MessageBox.Show("Du er nu tilmeldt!");
+                    }
+                }
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+            }
+            else MessageBox.Show("Vælg en begivenhed at tilmelde!");
         }
 
         private void Show_Participants(object sender, RoutedEventArgs e)
         {
-            Window showParticipants = new ParticipantsPopup();
-            showParticipants.Show();
+            
+            int i = AgendaListbox.SelectedIndex;
+
+            if (i >= 0)
+            {
+                var selectedEvent = EventsList.ElementAt(i);
+
+                if (selectedEvent.SignUpReq == false)
+                {
+                    MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+                }
+                else
+                {
+                    Window showParticipants = new ParticipantsPopup(selectedEvent);
+                    showParticipants.ShowDialog();
+                }
+            }
+            else MessageBox.Show("Vælg en begivenhed!");
+        }
+
+        private void Unsubscribe(object sender, RoutedEventArgs e)
+        {
+            int i = AgendaListbox.SelectedIndex;
+
+            if (i >= 0)
+            {
+                var selectedEvent = EventsList.ElementAt(i);
+
+                if (selectedEvent.SignUpReq)
+                {
+                    if (selectedEvent.Participants != null)
+                    {
+                        if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                        {
+                            selectedEvent.Participants.Remove(GlobalInformation.CurrentUser);
+                            MessageBox.Show("Du er nu frameldt!");
+                        }
+                        else MessageBox.Show("Du er ikke tilmeldt begivenheden!");
+                    }
+                    else MessageBox.Show("Der er ikke nogen tilmeldte til begivenheden!");
+                }
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+            }
+            else MessageBox.Show("Vælg en begivenhed at framelde dig fra!");
         }
 
         private void AgendaListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)

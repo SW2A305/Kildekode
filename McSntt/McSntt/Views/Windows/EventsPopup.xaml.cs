@@ -1,24 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using McSntt.DataAbstractionLayer;
 using McSntt.Models;
-using McSntt.Views.UserControls;
-using McSntt.Views.Windows;
 
 namespace McSntt.Views.Windows
 {
@@ -36,33 +18,21 @@ namespace McSntt.Views.Windows
             InitializeComponent();
             
             this.newEvent = newEvent;
-            
-            ChooseDate.Value = DateTime.Today;
 
+            EventNameBox.Text = newEvent.EventTitle;
+            EventDescriptionBox.Text = newEvent.Description;
+            ChooseDate.Value = newEvent.EventDate;
+            SubscriptionCheckbox.IsChecked = newEvent.SignUpReq;
+
+            if (newEvent.EventDate == default(DateTime))
+            {
+                ChooseDate.Value = DateTime.Today;
+            }
             newEvent.Created = false;
         }
 
-        public EventsPopup(
-            string EventTitle,
-            DateTime EventDate,
-            string Description,
-            bool SignUpReq)
-        {
-            InitializeComponent();
-
-
-            EventNameBox.Text = EventTitle;
-            EventDescriptionBox.Text = Description;
-            ChooseDate.Value = EventDate;
-            SubscriptionCheckbox.IsChecked = SignUpReq;
-
-            
-        }
-
-
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-
             #region If not filled check
 
             if (!string.IsNullOrEmpty(EventNameBox.Text))
@@ -78,7 +48,7 @@ namespace McSntt.Views.Windows
             #endregion
 
             // Get the EventDate as Value or Default Value
-            newEvent.EventDate = ChooseDate.Value.GetValueOrDefault();
+            newEvent.EventDate = ChooseDate.Value;
 
             #region Warning messages
 

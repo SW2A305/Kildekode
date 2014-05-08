@@ -23,24 +23,25 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class NewLecture : Window
     {
-        public int Year;
-        public int Month;
-        public int Day;
-        public NewLecture()
+        private Team _currentTeam;
+        public NewLecture(object currentTeam)
         {
             InitializeComponent();
-
+            _currentTeam = currentTeam as Team;
         }
 
-        
+
 
         private void CompleteLectureCreate_Click(object sender, RoutedEventArgs e)
         {
             var lecture = new Lecture
             {
-                DateOfLecture = DateTimePickerPlannedLectureTime.Value.GetValueOrDefault()
+                DateOfLecture = DateTimePickerPlannedLectureTime.Value
             };
             DalLocator.LectureDal.Create(lecture);
+            var Departure = DateTimePickerPlannedLectureTime.Value;
+            var Arrival = DateTimePickerPlannedLectureTimeEnd.Value;
+            var book = new CreateBoatBookingWindow(Departure, Arrival, _currentTeam);
         }
     }
 }

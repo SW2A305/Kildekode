@@ -17,6 +17,7 @@ namespace McSntt.Models
 
         public virtual ICollection<StudentMember> TeamMembers { get; set; }
         public virtual ICollection<Lecture> Lectures { get; set; }
+        public virtual SailClubMember Teacher { get; set; }
         #endregion
     }
 }

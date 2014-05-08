@@ -10,7 +10,6 @@ namespace McSntt.Models
 
         [Column(TypeName = "DateTime2")]
         public virtual DateTime EventDate { get; set; }
-
         public virtual string EventTitle { get; set; }
         public virtual bool SignUpReq { get; set; }
         public virtual string Description { get; set; }

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
@@ -18,11 +18,11 @@ namespace McSntt.Views.UserControls
     /// ry>
     public partial class Boats : UserControl
     {
-        private IBoatDal boatDal = DalLocator.BoatDal;
-        private IRegularTripDal regularTripDal = DalLocator.RegularTripDal;
-        private ILogbookDal logbookDal = DalLocator.LogbookDal;
-
         private readonly RegularTrip RegularSailTrip1 = new RegularTrip();
+        private readonly IBoatDal boatDal = DalLocator.BoatDal;
+        private readonly ILogbookDal logbookDal = DalLocator.LogbookDal;
+        private readonly IRegularTripDal regularTripDal = DalLocator.RegularTripDal;
+
         public Boat CurrentBoat = new Boat();
         public RegularTrip CurrentSailtrip = new RegularTrip();
 
@@ -40,7 +40,17 @@ namespace McSntt.Views.UserControls
             image.UriSource = new Uri("pack://application:,,,/Images/gray.PNG");
             image.EndInit();
             BoatImage.Source = image;
+            if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
+                AnswerDamageReportButton.Visibility = Visibility.Visible;
+            else AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
+            BookButton.IsEnabled = false;
+        }
+
+        private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var logBookWindow = new ViewSpecificLogbookWindow((RegularTrip) LogbookDataGrid.CurrentItem);
+            logBookWindow.ShowDialog();
         }
 
 
@@ -49,8 +59,8 @@ namespace McSntt.Views.UserControls
             if (BoatComboBox.SelectedIndex != -1)
             {
                 CurrentBoat = (Boat) BoatComboBox.SelectionBoxItem;
-                
-                IEnumerable<RegularTrip> ListOfTripsWithLogbook = 
+
+                IEnumerable<RegularTrip> ListOfTripsWithLogbook =
                     regularTripDal.GetRegularTrips(
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.Logbook != null);
 
@@ -58,6 +68,10 @@ namespace McSntt.Views.UserControls
                     regularTripDal.GetRegularTrips(
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
                         .OrderBy(x => x.DepartureTime);
+
+                // Grey out the book button for support memebers and guests
+                if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.SupportMember)
+                    BookButton.IsEnabled = true;
 
                 if (CurrentBoat.ImagePath != null)
                 {
@@ -93,13 +107,12 @@ namespace McSntt.Views.UserControls
 
                 BookedTripsDataGrid.ItemsSource = null;
                 BookedTripsDataGrid.ItemsSource = ListOfBookings;
-
             }
+            else BookButton.IsEnabled = false;
         }
 
         private void ChooseLogbookButton_Click(object sender, RoutedEventArgs e)
         {
-            
             CurrentSailtrip = (RegularTrip) LogbookDataGrid.SelectedItem;
             if (CurrentSailtrip == null)
                 MessageBox.Show("Vælg venligst en Logbog du gerne vil se");
@@ -112,18 +125,32 @@ namespace McSntt.Views.UserControls
 
         private void AnswerDamageReportButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CurrentSailtrip = (RegularTrip)LogbookDataGrid.SelectedItem;
+            CurrentSailtrip = (RegularTrip) LogbookDataGrid.SelectedItem;
             if (CurrentSailtrip == null)
             {
-                MessageBox.Show("Vælg venligst en Logbog du gerne vil se");
+                MessageBox.Show("Vælg venligst en Logbog du gerne vil svare på");
             }
             else
             {
                 var DamageReportWindow = new DamageReportWindow(CurrentSailtrip);
                 DamageReportWindow.ShowDialog();
-                CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
+
+                if (DamageReportWindow.DamageReport != String.Empty && DamageReportWindow.IsAnswered)
+                {
+                    CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
+                }
+                else
+                {
+                    MessageBox.Show("Du bedes trykke udfør for at gemme dit svar og samtidig må dit svar ikke være tomt.");
+                }
                 logbookDal.Update(CurrentSailtrip.Logbook);
             }
+        }
+
+        private void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+            var BookWindow = new CreateBoatBookingWindow(BoatComboBox.SelectedIndex);
+            BookWindow.ShowDialog();
         }
     }
 }
