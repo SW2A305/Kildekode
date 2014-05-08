@@ -32,6 +32,8 @@ namespace McSntt.Views.UserControls
                 "Til højre ses dine kommende ture, samt dem hvorpå der endnu ikker er udfyldt en logbog for.";
 
             CreateLogBookButton.IsEnabled = false;
+            ChangeButton.IsEnabled = false;
+            DeleteButton.IsEnabled = false;
 
             LoadData();
         }
@@ -87,9 +89,18 @@ namespace McSntt.Views.UserControls
             changewindow.ShowDialog();
         }
 
-        private void DelteButton_OnClick(object sender, RoutedEventArgs e)
+        private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
             //TODO: Database slet medlem og opdater grid
+        }
+
+        private void UpcommingTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (UpcommingTripsDataGrid.SelectedIndex != -1)
+            {
+                DeleteButton.IsEnabled = true;
+                ChangeButton.IsEnabled = true;
+            }
         }
     }
 }
