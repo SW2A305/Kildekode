@@ -15,5 +15,6 @@ namespace McSntt.DataAbstractionLayer
         IEnumerable<T> GetAll(Func<T, bool> predicate);
         T GetOne(long itemId);
         void LoadData(T item);
+        void LoadData(IEnumerable<T> items);
     }
 }

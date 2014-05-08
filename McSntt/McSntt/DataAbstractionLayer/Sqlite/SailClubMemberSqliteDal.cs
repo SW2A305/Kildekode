@@ -224,10 +224,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return sailClubMember;
         }
 
-        public void LoadData(SailClubMember item)
-        {
-            throw new NotImplementedException();
-        }
+        public void LoadData(SailClubMember item) {}
+
+        public void LoadData(IEnumerable<SailClubMember> items) {}
 
         public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
         {

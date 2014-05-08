@@ -219,10 +219,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return person;
         }
 
-        public void LoadData(Person item)
-        {
-            throw new NotImplementedException();
-        }
+        public void LoadData(Person item) {}
+
+        public void LoadData(IEnumerable<Person> items) {}
 
         public IEnumerable<Person> GetAll(Func<Person, bool> predicate)
         {

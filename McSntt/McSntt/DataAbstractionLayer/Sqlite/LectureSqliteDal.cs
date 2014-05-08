@@ -219,6 +219,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             throw new NotImplementedException();
         }
 
+        public void LoadData(IEnumerable<Lecture> items)
+        {
+            foreach (var item in items)
+            {
+                LoadData(item);
+            }
+        }
+
         public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate)
         {
             IEnumerable<Lecture> lectures = this.GetAll().Where(predicate);

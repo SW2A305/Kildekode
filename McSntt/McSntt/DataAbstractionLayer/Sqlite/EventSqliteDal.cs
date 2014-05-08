@@ -204,7 +204,44 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public void LoadData(Event item)
         {
-            throw new NotImplementedException();
+            // Load Participants
+            var personDal = DalLocator.PersonDal;
+
+            using (var db = DatabaseManager.DbConnection)
+            {
+                db.Open();
+
+                using (var command = db.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText =
+                        String.Format("SELECT person_id FROM {0} WHERE event_id = @eventId",
+                                      DatabaseManager.TableEventParticipantsBinder);
+                    command.Parameters.Add(new SQLiteParameter("@eventId", item.EventId));
+
+                    item.Participants = new List<Person>();
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            long personId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id"));
+
+                            if (personId > 0)
+                            {
+                                item.Participants.Add(personDal.GetOne(personId));
+                            }
+                        }
+                    }
+                }
+
+                db.Close();
+            }
+        }
+
+        public void LoadData(IEnumerable<Event> items)
+        {
+            foreach (var item in items)
+            {
+                LoadData(item);
+            }
         }
 
         public IEnumerable<Event> GetAll(Func<Event, bool> predicate)

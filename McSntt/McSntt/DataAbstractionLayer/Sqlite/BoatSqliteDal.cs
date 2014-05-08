@@ -186,10 +186,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return boat;
         }
 
-        public void LoadData(Boat item)
-        {
-            throw new NotImplementedException();
-        }
+        public void LoadData(Boat item) {}
+
+        public void LoadData(IEnumerable<Boat> items) {}
 
         public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate)
         {
