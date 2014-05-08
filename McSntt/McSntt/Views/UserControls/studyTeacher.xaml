@@ -71,7 +71,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
-                <Button x:Name="promoteTeam" Content="Promote hold" HorizontalAlignment="Left" Margin="25,24,0,0" VerticalAlignment="Top" Width="101" Grid.Column="2" Click="promoteTeam_Click"/>
+                <Button x:Name="promoteTeam" Content="Forfrem hold" HorizontalAlignment="Left" Margin="25,24,0,0" VerticalAlignment="Top" Width="101" Grid.Column="2" Click="promoteTeam_Click"/>
 
 
 

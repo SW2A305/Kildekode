@@ -459,7 +459,6 @@ namespace McSntt.Views.UserControls
                 if (((Lecture)lectureDropdown.SelectedItem).Night == true) { member.Night = true; }
                 if (((Lecture)lectureDropdown.SelectedItem).Gaffelrigger == true) { member.Gaffelrigger = true; }
                 if (((Lecture)lectureDropdown.SelectedItem).Drabant == true) { member.Drabant = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
             }
         }
 
@@ -515,6 +514,7 @@ namespace McSntt.Views.UserControls
                     member.Drabant == true && member.Gaffelrigger == true)
                 {
                     PromoteTeam(member);
+                    ((Team) teamDropdown.SelectedItem).TeamMembers.Remove(member);
                 }
                 else
                 {
