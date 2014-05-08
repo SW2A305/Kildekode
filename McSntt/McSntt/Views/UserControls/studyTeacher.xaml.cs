@@ -456,6 +456,7 @@ namespace McSntt.Views.UserControls
                     member.Drabant == true && member.Gaffelrigger == true)
                 {
                     PromoteTeam(member);
+                    ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(member);
                 }
                 else
                 {
