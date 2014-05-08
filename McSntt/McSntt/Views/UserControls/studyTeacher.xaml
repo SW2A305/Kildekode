@@ -43,8 +43,8 @@
                 </Grid.ColumnDefinitions>
                 <Button x:Name="NewTeam" Content="Nyt hold" HorizontalAlignment="Left" Margin="30,22,0,0" VerticalAlignment="Top" Width="75" Click="newTeam_Click" Height="22"/>
                 <Button x:Name="deleteTeam" Content="Slet hold" HorizontalAlignment="Left" Margin="110,22,0,0" VerticalAlignment="Top" Width="75" Click="deleteTeam_Click" Height="22"/>
-                <RadioButton x:Name="Level1RadioButton" Content="1. års sejlere" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81" Checked="Level1RadioButton_Checked"/>
-                <RadioButton x:Name="Level2RadioButton" Content="2. års sejlere" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81" Checked="Level2RadioButton_Checked"/>
+                <RadioButton x:Name="Level1RadioButton" Content="1. års sejlere" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81"/>
+                <RadioButton x:Name="Level2RadioButton" Content="2. års sejlere" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="81"/>
                 <Button x:Name="AddStudent" Content="Tilføj" HorizontalAlignment="Center" Margin="2,142,7,0" Width="76" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Height="22" Click="AddStudent_Click"/>
                 <Button x:Name="RemoveStudent" Content="Fjern" HorizontalAlignment="Center" Margin="2,185,7,0" VerticalAlignment="Top" Width="76" Grid.Column="1" Grid.Row="1" Height="22" Click="RemoveStudent_Click"/>
                 <Button x:Name="saveChanges" Content="Gem ændringer" HorizontalAlignment="Left" Margin="84,10,0,0" VerticalAlignment="Top" Width="104" Click="saveChanges_Click" Grid.Column="2" Grid.Row="2" Height="22"/>

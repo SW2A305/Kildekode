@@ -28,17 +28,24 @@ namespace McSntt.Views.Windows
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-
-            if (!string.IsNullOrEmpty(TeamName.Text))
+            if (StudyMockData.TeamListGlobal.All(x => x.Name != TeamName.Text) )
             {
-                var team = new Team {Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Teacher = GlobalInformation.CurrentUser};
-                StudyMockData.TeamListGlobal.Add(team);
-                Close();
+                if (!string.IsNullOrEmpty(TeamName.Text))
+                {
+                    var team = new Team { Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Teacher = GlobalInformation.CurrentUser };
+                    StudyMockData.TeamListGlobal.Add(team);
+                    Close();
+                }
+                else
+                {
+                    this.Close();
+                }
             }
             else
             {
-                this.Close();
+                MessageBox.Show("Hold med dette navn eksisterer allerede!");
             }
+            
         }
 
         private void TeamName_KeyDown(object sender, KeyEventArgs e)
