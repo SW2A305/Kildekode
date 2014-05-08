@@ -18,11 +18,11 @@ using McSntt.Models;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for studyStudent.xaml
+    /// Interaction logic for StudyStudent.xaml
     /// </summary>
-    public partial class studyStudent : UserControl
+    public partial class StudyStudent : UserControl
     {
-        public studyStudent()
+        public StudyStudent()
         {
             InitializeComponent();
             progressGrid.IsEnabled = false;
@@ -39,14 +39,7 @@ namespace McSntt.Views.UserControls
             theoryCheck2.IsEnabled = false;
             theoryCheck3.IsEnabled = false;
             teamName.Text = ((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Name;
-            if (((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Level == Team.ClassLevel.First)
-            {
-                level.Text = "1. års sejlerhold";
-            }
-            else
-            {
-                level.Text = "2. års sejlerhold";
-            }
+            level.Text = ((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Level == Team.ClassLevel.First ? "1. års sejlerhold" : "2. års sejlerhold";
             nextSessionDate.Text = "" +
                                    (((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Lectures.OrderBy(
                                        lect => lect.DateOfLecture)).FirstOrDefault(lect => lect.DateOfLecture > DateTime.Now);

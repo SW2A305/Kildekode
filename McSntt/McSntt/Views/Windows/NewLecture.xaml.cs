@@ -40,7 +40,7 @@ namespace McSntt.Views.Windows
             };
             DalLocator.LectureDal.Create(lecture);
             var Departure = DateTimePickerPlannedLectureTime.Value;
-            var Arrival = DateTimePickerPlannedLectureTime_Copy.Value;
+            var Arrival = DateTimePickerPlannedLectureTimeEnd.Value;
             var book = new CreateBoatBookingWindow(Departure, Arrival, _currentTeam);
         }
     }
