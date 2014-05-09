@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+<<<<<<< HEAD
+=======
+using McSntt.DataAbstractionLayer;
+>>>>>>> master
 using McSntt.Helpers;
 using McSntt.Models;
-using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
-using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for CreateBoatBooking.xaml
+    ///     Interaction logic for CreateBoatBooking.xaml
     /// </summary>
-    public partial class CreateBoatBookingWindow : Window
+    public partial class CreateBoatBookingWindow
     {
         // Constructor to use this window to edit a trip
+        public List<Person> CrewList = new List<Person>();
+
         public CreateBoatBookingWindow(RegularTrip rt) : this(-1)
         {
             // The id is combobox id + 1 (So boatId - 1)
@@ -22,8 +26,8 @@ namespace McSntt.Views.Windows
             DateTimeStart.Value = rt.DepartureTime;
             DateTimeEnd.Value = rt.ArrivalTime;
             CrewList = rt.Crew.ToList();
-            var per = rt.Crew.First(p => p.PersonId == rt.Captain.PersonId);
-            CaptainComboBox.SelectedIndex = rt.Crew.ToList().IndexOf(per);
+            // Select the Captain in the ComboBox
+            CaptainComboBox.SelectedIndex = rt.Crew.ToList().IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
             PurposeTextBox.Text = rt.PurposeAndArea;
 
             CompleteBooking.Content = "Gem ændringer";
@@ -35,7 +39,6 @@ namespace McSntt.Views.Windows
             CrewDataGrid.ItemsSource = CrewList;
             CaptainComboBox.ItemsSource = null;
             CaptainComboBox.ItemsSource = CrewList;
-
         }
 
         public CreateBoatBookingWindow(int index)
@@ -47,7 +50,7 @@ namespace McSntt.Views.Windows
             BoatComboBox.DisplayMemberPath = "NickName";
             BoatComboBox.SelectedValuePath = "Id";
             BoatComboBox.SelectedIndex = index;
-            
+
             CaptainComboBox.DisplayMemberPath = "FirstName";
             CaptainComboBox.SelectedValuePath = "MemberId";
             CaptainComboBox.ItemsSource = CrewList;
@@ -56,24 +59,21 @@ namespace McSntt.Views.Windows
             DateTimeEnd.Value = DateTime.Today;
         }
 
-        public List<Person> CrewList = new List<Person>();
-
         public CreateBoatBookingWindow(DateTime departure, DateTime arrival, Team currentTeam) : this(-1)
         {
-            List<Boat> boats = new List<Boat>();
-            boats = DalLocator.BoatDal.GetAll().ToList();
-            Boat Anya = new Boat
+            List<Boat> boats = DalLocator.BoatDal.GetAll().ToList();
+            var anya = new Boat
             {
                 Type = (currentTeam.Level == Team.ClassLevel.Second) ? BoatType.Gaffelrigger : BoatType.Drabant
             };
 
             Boat currentBoat = boats.FirstOrDefault(
-                x => x.Type == Anya.Type);
+                x => x.Type == anya.Type);
 
             BoatComboBox.SelectedIndex = boats.FindIndex(b => b == currentBoat);
             CrewList.Add(GlobalInformation.CurrentUser);
             CaptainComboBox.SelectedIndex = 0;
-            foreach (var member in currentTeam.TeamMembers)
+            foreach (StudentMember member in currentTeam.TeamMembers)
             {
                 CrewList.Add(member);
             }
@@ -81,7 +81,6 @@ namespace McSntt.Views.Windows
             DateTimeEnd.Value = arrival;
             PurposeTextBox.Text = "Undervisning af:" + currentTeam.Name;
             SaveButton_Click(new object(), new RoutedEventArgs());
-
         }
 
         private void ChangeCrew_Click(object sender, RoutedEventArgs e)
@@ -96,18 +95,17 @@ namespace McSntt.Views.Windows
             CrewDataGrid.ItemsSource = CrewList;
             CaptainComboBox.ItemsSource = null;
             CaptainComboBox.ItemsSource = CrewList;
-            
+
             // Assign a default captain to the first member
             if (CaptainComboBox.SelectedIndex == -1 && CrewList.Count > 0)
             {
                 CaptainComboBox.SelectedIndex = 0;
             }
-            
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var thisTrip = CreateSailTrip();
+            SailTrip thisTrip = CreateSailTrip();
 
             if (thisTrip != null)
             {
@@ -118,7 +116,7 @@ namespace McSntt.Views.Windows
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
-            var thisTrip = CreateSailTrip();
+            SailTrip thisTrip = CreateSailTrip();
 
             if (thisTrip != null)
             {
@@ -128,13 +126,11 @@ namespace McSntt.Views.Windows
         }
 
 
-
         private SailTrip CreateSailTrip()
         {
-
             //TODO: Check if this is a valid trip. If not return saying error. 
             // Get the current selected boat
-            Boat boat = (Boat)BoatComboBox.SelectionBoxItem;
+            var boat = (Boat) BoatComboBox.SelectionBoxItem;
 
             if (boat.Operational == false)
             {
@@ -167,7 +163,7 @@ namespace McSntt.Views.Windows
             }
 
             // Get the crew
-            var crewSelected = CrewList;
+            List<Person> crewSelected = CrewList;
 
             // Return error if no crew is selected
             if (crewSelected.Count == 0)
@@ -193,10 +189,10 @@ namespace McSntt.Views.Windows
                 return null;
             }
 
-            var purpose = PurposeTextBox.Text.Trim();
+            string purpose = PurposeTextBox.Text.Trim();
 
             // All checks are passed, create the trip.
-            var complete = new RegularTrip()
+            var complete = new RegularTrip
             {
                 Boat = boat,
                 DepartureTime = startTime,
@@ -212,10 +208,11 @@ namespace McSntt.Views.Windows
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             //TODO: Add warning window
-            MessageBoxResult result = MessageBox.Show("Er du sikker på at du vil annullere din booking?", "Bådbooking", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            MessageBoxResult result = MessageBox.Show("Er du sikker på at du vil annullere din booking?", "Bådbooking",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                this.Close();
+                Close();
             }
         }
     }

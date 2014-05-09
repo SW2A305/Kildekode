@@ -110,6 +110,9 @@
     <Compile Include="Views\UserControls\FrontPage.xaml.cs">
       <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\CreateAndEditBoats.xaml.cs">
+      <DependentUpon>CreateAndEditBoats.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\DamageReportWindow.xaml.cs">
       <DependentUpon>DamageReportWindow.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\FrontPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\CreateAndEditBoats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

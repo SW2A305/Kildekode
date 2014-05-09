@@ -67,6 +67,7 @@ namespace McSntt.Views.UserControls
             DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
             DataGridCollection.Filter = new Predicate<object>(Filter);
             
+            
             editTeamGrid.IsEnabled = false;
             lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
             promoteTeam.IsEnabled = false;
@@ -440,6 +441,12 @@ namespace McSntt.Views.UserControls
             if (lectureDropdown.SelectedIndex != -1)
             {
                 lectureGrid.IsEnabled = true;
+                NavigationCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Navigation;
+                MotorCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Motor;
+                GaffelriggerCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Gaffelrigger;
+                NightCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Night;
+                DrabantCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Drabant;
+                RopeWorksCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).RopeWorksLecture;
             }
             if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
             {
@@ -471,6 +478,17 @@ namespace McSntt.Views.UserControls
         {
             var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
+        }
+
+        private void DeleteLecture_Click(object sender, RoutedEventArgs e)
+        {
+            var lecture = ((Lecture) lectureDropdown.SelectedItem);
+            LectureDataClear();
+            // TODO: delete mockdata reference
+            ((Team) teamDropdown.SelectedItem).Lectures.Remove(lecture);
+            //DalLocator.LectureDal.Delete(lecture);
+            lectureDropdown.ItemsSource = null;
+            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
         }
         #endregion
         #endregion
@@ -546,5 +564,7 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
+
+        
     }
 }

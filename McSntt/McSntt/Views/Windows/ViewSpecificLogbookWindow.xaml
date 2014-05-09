@@ -29,9 +29,9 @@
         <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="10,428,0,78"/>
         <TextBox IsReadOnly="True" x:Name="DamageTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="69" 
                  Margin="133,428,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
-        <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,525,0,3"/>
+        <Label Content="Er båden skadet?:" HorizontalAlignment="Left" Width="125"  Margin="10,525,0,3"/>
         <RadioButton IsEnabled="False" x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,527,0,0" VerticalAlignment="Top"/>
-        <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="130,547,0,0" VerticalAlignment="Top"/>
+        <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="192,529,0,0" VerticalAlignment="Top"/>
     
         <StackPanel Margin="438,188,62,282" Orientation="Horizontal" RenderTransformOrigin="0.5,-0.044">
             <StackPanel>
