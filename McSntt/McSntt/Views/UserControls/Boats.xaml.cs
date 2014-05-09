@@ -45,6 +45,8 @@ namespace McSntt.Views.UserControls
             else AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
             BookButton.IsEnabled = false;
+            ChangeButton.IsEnabled = false;
+            DeleteButton.IsEnabled = false;
         }
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -151,6 +153,26 @@ namespace McSntt.Views.UserControls
         {
             var BookWindow = new CreateBoatBookingWindow(BoatComboBox.SelectedIndex);
             BookWindow.ShowDialog();
+        }
+
+        private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var changewindow = new CreateBoatBookingWindow((RegularTrip)BookedTripsDataGrid.SelectedItem);
+            changewindow.ShowDialog();
+        }
+
+        private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            //TODO: Database slet medlem og opdater grid
+        }
+
+        private void BookedTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (BookedTripsDataGrid.SelectedIndex != -1 && GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
+            {
+                DeleteButton.IsEnabled = true;
+                ChangeButton.IsEnabled = true;
+            }
         }
     }
 }
