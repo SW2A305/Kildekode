@@ -9,6 +9,8 @@ namespace McSntt.Models
         private long _captainId;
 
         public long RegularTripId { get; set; }
+
+        // TODO: The following is depceciated, it's set it SailTrip SUPERCLASS!
         public DateTime ExpectedArrivalTime { get; set; }
         public string PurposeAndArea { get; set; }
 
