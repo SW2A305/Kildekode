@@ -86,6 +86,7 @@
         <Button x:Name="newLecture1" Content="Opret ny lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="151,113,0,0" Click="newLecture1_Click" />
         <Label Content="Lærer:" HorizontalAlignment="Left" Margin="151,8,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TeacherName" HorizontalAlignment="Left" Margin="151,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FFF1EEEE" IsReadOnly="True" Width="92" FontSize="14"/>
+        <Button x:Name="DeleteLecture" Content="Slet lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="257,113,0,0" Width="92" Click="DeleteLecture_Click" />
 
 
 
