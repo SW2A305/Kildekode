@@ -18,7 +18,6 @@ namespace McSntt.Views.UserControls
     /// ry>
     public partial class Boats : UserControl
     {
-        private readonly RegularTrip RegularSailTrip1 = new RegularTrip();
         private readonly IBoatDal boatDal = DalLocator.BoatDal;
         private readonly ILogbookDal logbookDal = DalLocator.LogbookDal;
         private readonly IRegularTripDal regularTripDal = DalLocator.RegularTripDal;
@@ -65,11 +64,11 @@ namespace McSntt.Views.UserControls
                 CurrentBoat = (Boat) BoatComboBox.SelectionBoxItem;
 
                 IEnumerable<RegularTrip> ListOfTripsWithLogbook =
-                    regularTripDal.GetRegularTrips(
+                    regularTripDal.GetAll(
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.Logbook != null);
 
                 IEnumerable<RegularTrip> ListOfBookings =
-                    regularTripDal.GetRegularTrips(
+                    regularTripDal.GetAll(
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
                         .OrderBy(x => x.DepartureTime);
 
