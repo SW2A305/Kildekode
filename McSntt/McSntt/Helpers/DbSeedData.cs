@@ -128,7 +128,132 @@ namespace McSntt.Helpers
                     PasswordHash = EncryptionHelper.Sha256("holm"),
                     Position = SailClubMember.Positions.Member,
                     DateOfBirth = "1984-03-25"
-                }
+                },
+                 new SailClubMember
+                {
+                    FirstName = "Kasper",
+                    LastName = "Eriksen",
+                    Address = "Hovedvej 33",
+                    Postcode = "8210",
+                    Cityname = "Århus",
+                    BoatDriver = true,
+                    Email = "KasperEriksen@armyspy.com",
+                    Gender = Gender.Male,
+                    PhoneNumber = "88888888",
+                    Username = "kasper",
+                    PasswordHash = EncryptionHelper.Sha256("eriksen"),
+                    Position = SailClubMember.Positions.Member,
+                    DateOfBirth = "1979-01-01"
+                },
+                 new SailClubMember
+                {
+                    FirstName = "Lars",
+                    LastName = "Olsen",
+                    Address = "Gaden 22",
+                    Postcode = "8400",
+                    Cityname = "Balle",
+                    BoatDriver = true,
+                    Email = "Larsolsen@armyspy.com",
+                    Gender = Gender.Male,
+                    PhoneNumber = "78961230",
+                    Username = "lars",
+                    PasswordHash = EncryptionHelper.Sha256("olsen"),
+                    Position = SailClubMember.Positions.Admin,
+                    DateOfBirth = "1973-08-17"
+                },
+                 new SailClubMember
+                {
+                    FirstName = "Karen",
+                    LastName = "Wolff",
+                    Address = "Bagervej 1",
+                    Postcode = "7000",
+                    Cityname = "Thisted",
+                    BoatDriver = true,
+                    Email = "Wolff@armyspy.com",
+                    Gender = Gender.Female,
+                    PhoneNumber = "22112233",
+                    Username = "karen",
+                    PasswordHash = EncryptionHelper.Sha256("wolff"),
+                    Position = SailClubMember.Positions.Admin,
+                    DateOfBirth = "1884-11-25"
+                }, new SailClubMember
+                {
+                    FirstName = "Bodil",
+                    LastName = "Kjær",
+                    Address = "Rødhusvej 23",
+                    Postcode = "1500",
+                    Cityname = "København",
+                    BoatDriver = true,
+                    Email = "Kjær@armyspy.com",
+                    Gender = Gender.Female,
+                    PhoneNumber = "78451236",
+                    Username = "bodil",
+                    PasswordHash = EncryptionHelper.Sha256("kjær"),
+                    Position = SailClubMember.Positions.Member,
+                    DateOfBirth = "1965-02-27"
+                }, new SailClubMember
+                {
+                    FirstName = "Anne",
+                    LastName = "Frank",
+                    Address = "Overgade 1",
+                    Postcode = "6700",
+                    Cityname = "Nørager",
+                    BoatDriver = true,
+                    Email = "AnneF@armyspy.com",
+                    Gender = Gender.Female,
+                    PhoneNumber = "11223344",
+                    Username = "anne",
+                    PasswordHash = EncryptionHelper.Sha256("frank"),
+                    Position = SailClubMember.Positions.Member,
+                    DateOfBirth = "1924-09-02"
+                },
+                 new SailClubMember
+                {
+                    FirstName = "Anders",
+                    LastName = "And",
+                    Address = "Paradisæblevej 123",
+                    Postcode = "1111",
+                    Cityname = "Andeby",
+                    BoatDriver = true,
+                    Email = "AndersA@armyspy.com",
+                    Gender = Gender.Male,
+                    PhoneNumber = "45639878",
+                    Username = "anders",
+                    PasswordHash = EncryptionHelper.Sha256("and"),
+                    Position = SailClubMember.Positions.Member,
+                    DateOfBirth = "1945-06-28"
+                },
+                 new SailClubMember
+                {
+                    FirstName = "Rip",
+                    LastName = "And",
+                    Address = "Paradisæblevej 123",
+                    Postcode = "1111",
+                    Cityname = "Andeby",
+                    BoatDriver = true,
+                    Email = "RipA@armyspy.com",
+                    Gender = Gender.Male,
+                    PhoneNumber = "45639871",
+                    Username = "rip",
+                    PasswordHash = EncryptionHelper.Sha256("and"),
+                    Position = SailClubMember.Positions.Member,
+                    DateOfBirth = "1976-03-23"
+                }, new SailClubMember
+                {
+                    FirstName = "Marcus",
+                    LastName = "Husmand",
+                    Address = "Genvej 1",
+                    Postcode = "7800",
+                    Cityname = "Lånum",
+                    BoatDriver = true,
+                    Email = "Husmand@armyspy.com",
+                    Gender = Gender.Male,
+                    PhoneNumber = "79461382",
+                    Username = "marcus",
+                    PasswordHash = EncryptionHelper.Sha256("husmand"),
+                    Position = SailClubMember.Positions.Member,
+                    DateOfBirth = "1974-06-17"
+                },
             };
             #endregion
 
@@ -224,7 +349,52 @@ namespace McSntt.Helpers
                     Username = "philip",
                     PasswordHash = EncryptionHelper.Sha256("olsen"),
                     DateOfBirth = "1998-08-02"
-                }
+                },
+                   new StudentMember
+                {
+                    FirstName = "Oswald",
+                    LastName = "Bjørn",
+                    Address = "Hadsundvej 88",
+                    Postcode = "4050",
+                    Cityname = "Oslo",
+                    BoatDriver = false,
+                    Email = "OswaldB@teleworm.us",
+                    Gender = Gender.Male,
+                    PhoneNumber = "11447799",
+                    Username = "oswald",
+                    PasswordHash = EncryptionHelper.Sha256("bjørn"),
+                    DateOfBirth = "1994-04-03"
+                },
+                   new StudentMember
+                {
+                    FirstName = "Ulla",
+                    LastName = "Henriksen",
+                    Address = "kastevej 2",
+                    Postcode = "9010",
+                    Cityname = "Aalborg",
+                    BoatDriver = false,
+                    Email = "UllaH@teleworm.us",
+                    Gender = Gender.Female,
+                    PhoneNumber = "13467946",
+                    Username = "ulla",
+                    PasswordHash = EncryptionHelper.Sha256("henriksen"),
+                    DateOfBirth = "1992-11-22"
+                },
+                   new StudentMember
+                {
+                    FirstName = "Per",
+                    LastName = "Teglgård",
+                    Address = "Grusvej 200",
+                    Postcode = "4500",
+                    Cityname = "Herning",
+                    BoatDriver = false,
+                    Email = "PTeglgård@teleworm.us",
+                    Gender = Gender.Male,
+                    PhoneNumber = "36148520",
+                    Username = "per",
+                    PasswordHash = EncryptionHelper.Sha256("teglgård"),
+                    DateOfBirth = "1991-01-22"
+                },
             };
             #endregion
 
