@@ -28,10 +28,9 @@
         <Label Content="Skadesrapport:" HorizontalAlignment="Left" Width="100" Margin="10,449,0,57"/>
         <TextBox x:Name="DamageTextBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="85" 
 			Margin="133,454,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="232"/>
-        <Label Content="Er båden operationel:" HorizontalAlignment="Left" Width="125"  Margin="10,414,0,114"/>
+        <Label Content="Er båden skadet? :" HorizontalAlignment="Left" Width="125"  Margin="10,414,0,114"/>
         <RadioButton x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="133,421,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="YesButBrokenRadioButton" Content="Ja, men skadet" HorizontalAlignment="Left" Margin="179,421,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="294,421,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="193,421,0,0" VerticalAlignment="Top"/>
         <Button Content="Ændre Besætning" HorizontalAlignment="Left" Margin="10,238,0,0" VerticalAlignment="Top" Width="101" Click="ChangeCrewButtonClick" Height="27"/>
         <Button x:Name="FileLogbookButton" Content="Udfør" HorizontalAlignment="Left" Margin="673,545,0,0" 
 			VerticalAlignment="Top" Width="93" Height="24" Click="FileLogbookButton_OnClick" />
