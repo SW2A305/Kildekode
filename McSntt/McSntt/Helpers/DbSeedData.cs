@@ -157,8 +157,8 @@ namespace McSntt.Helpers
             {
                 new Logbook()
                 {
-                    ActualArrivalTime = DateTime.Now.AddDays(-2),
-                    ActualDepartureTime = DateTime.Now.AddDays(-4),
+                    ActualArrivalTime = new DateTime(2014, 05, 08, 19, 0, 0),
+                    ActualDepartureTime = new DateTime(2014, 05, 07, 9, 0, 0),
                     AnswerFromBoatChief = "Der bliver udbedret i løbet af en uge, båden er stadig operationel",
                     DamageDescription = "Nogle bræder er flækket ved styrbord",
                     DamageInflicted = true,
@@ -166,8 +166,8 @@ namespace McSntt.Helpers
 
                 new Logbook()
                 {
-                    ActualArrivalTime = DateTime.Now.AddDays(-2),
-                    ActualDepartureTime = DateTime.Now.AddDays(-4),
+                    ActualArrivalTime = new DateTime(2014, 05, 09, 21, 0, 0),
+                    ActualDepartureTime = new DateTime(2014, 05, 07, 9, 0, 0),
                     DamageInflicted = false,
                 }
             };
@@ -183,15 +183,15 @@ namespace McSntt.Helpers
                             {
                                 PurposeAndArea = "Plyndre England, husk nattøj",
                                 WeatherConditions = "12 m/s fra vest, overskyet",
-                                DepartureTime = new DateTime(2014, 05, 12, 13, 0, 0),
-                                ArrivalTime = new DateTime(2014, 05, 15, 19, 0, 0)
+                                DepartureTime = new DateTime(2014, 05, 07, 13, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 08, 19, 0, 0)
                             },
                             new RegularTrip()
                             {
                                 PurposeAndArea = "Heldagstur",
                                 WeatherConditions = "2 m/s fra nord, høj sol",
-                                DepartureTime = new DateTime(2014, 05, 14, 9, 0, 0),
-                                ArrivalTime = new DateTime(2014, 05, 14, 21, 0, 0)
+                                DepartureTime = new DateTime(2014, 05, 07, 9, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 09, 21, 0, 0)
                             },
                             new RegularTrip()
                             {
@@ -540,6 +540,96 @@ namespace McSntt.Helpers
             #endregion
 
             #region Data linking
+
+            #region Lectures
+            lectures[0].Team = teams[1];
+            lectures[1].Team = teams[0];
+            lectures[2].Team = teams[0];
+            #endregion
+
+            #region logbooks
+            trips[0].Logbook = logbooks[1];
+            trips[1].Logbook = logbooks[0];
+            #endregion
+
+            #region Boats
+
+            trips[0].Boat = boats[0];
+            trips[1].Boat = boats[1];
+            trips[2].Boat = boats[2];
+            trips[3].Boat = boats[1];
+            trips[4].Boat = boats[1];
+
+            #endregion Boats
+
+            #region Crew
+
+            // TODO add crew to the trips in array trips.
+
+            trips[0].Crew.Add(sailClubMembers[0]);
+            trips[0].Crew.Add(sailClubMembers[1]);
+            trips[0].Crew.Add(sailClubMembers[2]);
+            trips[0].Crew.Add(sailClubMembers[3]);
+            trips[0].Crew.Add(sailClubMembers[4]);
+
+            trips[1].Crew.Add(sailClubMembers[3]);
+            trips[1].Crew.Add(sailClubMembers[4]);
+            trips[1].Crew.Add(sailClubMembers[5]);
+            trips[1].Crew.Add(sailClubMembers[6]);
+            trips[1].Crew.Add(sailClubMembers[7]);
+
+            trips[2].Crew.Add(sailClubMembers[1]);
+            trips[2].Crew.Add(sailClubMembers[3]);
+            trips[2].Crew.Add(sailClubMembers[5]);
+            trips[2].Crew.Add(sailClubMembers[6]);
+            trips[2].Crew.Add(sailClubMembers[7]);
+
+            trips[3].Crew.Add(sailClubMembers[5]);
+            trips[3].Crew.Add(sailClubMembers[4]);
+            trips[3].Crew.Add(sailClubMembers[2]);
+            trips[3].Crew.Add(sailClubMembers[1]);
+            trips[3].Crew.Add(sailClubMembers[7]);
+
+            trips[4].Crew.Add(sailClubMembers[7]);
+            trips[4].Crew.Add(sailClubMembers[3]);
+            trips[4].Crew.Add(sailClubMembers[0]);
+            trips[4].Crew.Add(sailClubMembers[2]);
+            trips[4].Crew.Add(sailClubMembers[5]);
+
+            #endregion Crew
+
+            #region Teams
+
+            teams[0].TeamMembers.Add(studentMembers[1]);
+            teams[0].TeamMembers.Add(studentMembers[2]);
+            teams[0].TeamMembers.Add(studentMembers[3]);
+            teams[0].TeamMembers.Add(studentMembers[4]);
+            teams[0].TeamMembers.Add(studentMembers[0]);
+
+            teams[1].TeamMembers.Add(studentMembers[5]);
+            teams[1].TeamMembers.Add(studentMembers[6]);
+            teams[1].TeamMembers.Add(studentMembers[7]);
+            teams[1].TeamMembers.Add(studentMembers[8]);
+
+            #endregion
+
+            #region Events
+
+            events[0].Participants.Add(sailClubMembers[3]);
+            events[0].Participants.Add(sailClubMembers[4]);
+            events[0].Participants.Add(sailClubMembers[2]);
+            events[0].Participants.Add(sailClubMembers[1]);
+            events[0].Participants.Add(sailClubMembers[0]);
+
+            events[1].Participants.Add(sailClubMembers[0]);
+            events[1].Participants.Add(sailClubMembers[1]);
+            events[1].Participants.Add(sailClubMembers[2]);
+            events[1].Participants.Add(sailClubMembers[3]);
+            events[1].Participants.Add(sailClubMembers[4]);
+            events[1].Participants.Add(sailClubMembers[5]);
+            events[1].Participants.Add(sailClubMembers[9]);
+            #endregion
+
             #endregion
 
             #region Save data
