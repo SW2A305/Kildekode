@@ -114,6 +114,41 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: Lectures
+            var lectures = new Lecture[]
+                         {
+                             new Lecture()
+                             {
+                                 DateOfLecture = new DateTime(2014, 5, 9, 15, 00, 00),
+                                 RopeWorksLecture = true,
+                                 Drabant = true,
+                                 Gaffelrigger = false,
+                                 Motor = false,
+                                 Navigation = false,
+                                 Night = false,
+                             },
+
+                             new Lecture()
+                             {
+                                 DateOfLecture = new DateTime(2014, 5, 21, 12, 30, 00),
+                                 RopeWorksLecture = false,
+                                 Drabant = false,
+                                 Gaffelrigger = true,
+                                 Motor = true,
+                                 Navigation = false,
+                                 Night = false,
+                             },
+
+                             new Lecture()
+                             {
+                                 DateOfLecture = new DateTime(2014, 5, 30, 23, 55, 00),
+                                 RopeWorksLecture = false,
+                                 Drabant = false,
+                                 Gaffelrigger = true,
+                                 Motor = false,
+                                 Navigation = true,
+                                 Night = true
+                             }  
+                         };
             #endregion
 
             #region DataArray :: Logbooks
@@ -145,7 +180,40 @@ namespace McSntt.Helpers
             var trips = new RegularTrip[]
                         {
                             new RegularTrip()
-                            {}
+                            {
+                                PurposeAndArea = "Plyndre England, husk nattøj",
+                                WeatherConditions = "12 m/s fra vest, overskyet",
+                                DepartureTime = new DateTime(2014, 05, 12, 13, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 15, 19, 0, 0)
+                            },
+                            new RegularTrip()
+                            {
+                                PurposeAndArea = "Heldagstur",
+                                WeatherConditions = "2 m/s fra nord, høj sol",
+                                DepartureTime = new DateTime(2014, 05, 14, 9, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 14, 21, 0, 0)
+                            },
+                            new RegularTrip()
+                            {
+                                PurposeAndArea = "Fredag den 13, en spooky tur!",
+                                WeatherConditions = "4 m/s, Fuldmåne",
+                                DepartureTime = new DateTime(2014, 06, 13, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 06, 14, 08, 0, 0)
+                            },
+                            new RegularTrip()
+                            {
+                                PurposeAndArea = "Torsdag den 12, meget freligt",
+                                WeatherConditions = "4 m/s, høj sol.",
+                                DepartureTime = new DateTime(2014, 06, 12, 13, 0, 0),
+                                ArrivalTime = new DateTime(2014, 06, 14, 17, 0, 0)
+                            },
+                            new RegularTrip()
+                            {
+                                PurposeAndArea = "Generobre skåne",
+                                WeatherConditions = "6 m/s fra vest, klar himmel",
+                                DepartureTime = new DateTime(2014, 05, 21, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 23, 08, 0, 0)
+                            }
                         };
             #endregion
 
@@ -284,6 +352,20 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: Teams
+            var teams = new Team[]
+                         {
+                             new Team()
+                             {
+                                 Name = "MasterRace",
+                                 Level = Team.ClassLevel.Second
+                             },
+
+                             new Team()
+                             {
+                                 Name = "Svenskerne",
+                                 Level = Team.ClassLevel.First
+                             }
+                         };
             #endregion
             #endregion
 
