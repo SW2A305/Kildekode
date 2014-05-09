@@ -6,7 +6,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.Boats"
              mc:Ignorable="d" d:DesignWidth="1000" Height="530">
 
-    <Grid Margin="0,0,0,10">
+    <Grid Margin="1,0,-1,10">
         <ComboBox x:Name="BoatComboBox" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="BoatComboBox_OnSelectionChanged" />
         <Label Content="Bådtype:" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
         <Label Content="Status:" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="120"/>

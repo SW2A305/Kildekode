@@ -35,6 +35,8 @@ namespace McSntt.Views.Windows
             CheckBox.IsChecked = boat.Operational;
             BoatTypeComboBox.SelectedIndex = (int)boat.Type;
             NickNameTextBox.Text = boat.NickName;
+            SaveButton.Click -= Button_Click;
+            SaveButton.Click += EditButton_Click;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -54,6 +56,25 @@ namespace McSntt.Views.Windows
                 newBoat.ImagePath = "SundetLogo.png";
                 newBoat.Operational = CheckBox.IsChecked.GetValueOrDefault();
                 DalLocator.BoatDal.Create(newBoat);
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NickNameTextBox.Text == String.Empty || NickNameTextBox.Text == "Skriv navn på båden")
+            {
+                MessageBox.Show("Giv Venligst båden et navn.");
+            }
+            else if (BoatTypeComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vælg venligst en Bådtype for båden");
+            }
+            else
+            {
+                newBoat.NickName = NickNameTextBox.Text;
+                newBoat.Type = (BoatType)BoatTypeComboBox.SelectedItem;
+                newBoat.Operational = CheckBox.IsChecked.GetValueOrDefault();
+                DalLocator.BoatDal.Update(newBoat);
             }
         }
 
