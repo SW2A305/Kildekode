@@ -73,6 +73,42 @@ namespace McSntt.Helpers
                                  EventDate = DateTime.Now.AddDays(2),
                                  EventTitle = "Fest i Klubhuset",
                                  SignUpReq = true,
+                             },
+
+                             new Event()
+                             {
+                                 Created = true,
+                                 Description = "Generalforsamling i Klubhuset med valg af ny formand og godkendelse af budget.",
+                                 EventDate = DateTime.Now.AddDays(10),
+                                 EventTitle = "Generalforsamling i Klubhuset",
+                                 SignUpReq = true,
+                             },
+
+                             new Event()
+                             {
+                                 Created = true,
+                                 Description = "Afslapningsøl efter kapsejlads, taberen giver!",
+                                 EventDate = DateTime.Now.AddDays(12),
+                                 EventTitle = "Øl efter kapsejlads",
+                                 SignUpReq = false,
+                             },
+
+                             new Event()
+                             {
+                                 Created = true,
+                                 Description = "Reparation af nyindkøbt J80'er.",
+                                 EventDate = DateTime.Now.AddDays(15),
+                                 EventTitle = "Bådreparation",
+                                 SignUpReq = false,
+                             },
+
+                             new Event()
+                             {
+                                 Created = true,
+                                 Description = "Der er åbent hus med brød og pølser samt øl og vand til medlemmer og gæster",
+                                 EventDate = DateTime.Now.AddDays(20),
+                                 EventTitle = "Åbent hus",
+                                 SignUpReq = false,
                              }
                          };
             #endregion
