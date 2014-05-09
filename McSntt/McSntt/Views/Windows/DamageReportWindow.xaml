@@ -7,5 +7,6 @@
         <TextBox x:Name="DamageTextBox" Height="160" Margin="10,37,10,73"></TextBox>
         <Label Content="Skriv en meddelelse om skaden til logbogen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="253"/>
         <Button Content="Udfør" HorizontalAlignment="Left" Margin="207,236,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <CheckBox Content="Ikke Operationel" x:Name="OperationalCheckBox" HorizontalAlignment="Left" Margin="86,236,0,0" VerticalAlignment="Top" Width="116"/>
     </Grid>
 </Window>

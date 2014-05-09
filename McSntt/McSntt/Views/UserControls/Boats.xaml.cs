@@ -44,6 +44,7 @@ namespace McSntt.Views.UserControls
                 AnswerDamageReportButton.Visibility = Visibility.Visible;
             else AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
+            EditBoatButton.IsEnabled = false;
             BookButton.IsEnabled = false;
         }
 
@@ -58,6 +59,7 @@ namespace McSntt.Views.UserControls
         {
             if (BoatComboBox.SelectedIndex != -1)
             {
+                EditBoatButton.IsEnabled = true;
                 CurrentBoat = (Boat) BoatComboBox.SelectionBoxItem;
 
                 IEnumerable<RegularTrip> ListOfTripsWithLogbook =
@@ -108,7 +110,12 @@ namespace McSntt.Views.UserControls
                 BookedTripsDataGrid.ItemsSource = null;
                 BookedTripsDataGrid.ItemsSource = ListOfBookings;
             }
-            else BookButton.IsEnabled = false;
+            else
+            {
+                BookButton.IsEnabled = false;
+                EditBoatButton.IsEnabled = false;
+            }
+
         }
 
         private void ChooseLogbookButton_Click(object sender, RoutedEventArgs e)
@@ -151,6 +158,18 @@ namespace McSntt.Views.UserControls
         {
             var BookWindow = new CreateBoatBookingWindow(BoatComboBox.SelectedIndex);
             BookWindow.ShowDialog();
+        }
+
+        private void AddBoatButton_Click(object sender, RoutedEventArgs e)
+        {
+            var boatWindow = new CreateAndEditBoats();
+            boatWindow.ShowDialog();
+        }
+
+        private void EditBoatButton_Click(object sender, RoutedEventArgs e)
+        {
+            var boatWindow = new CreateAndEditBoats((Boat) BoatComboBox.SelectedItem);
+            boatWindow.ShowDialog();
         }
     }
 }
