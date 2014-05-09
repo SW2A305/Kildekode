@@ -13,7 +13,7 @@
             <StackPanel Width="980" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
                 <StackPanel Width="470">
                     <TextBlock Text="Dine kommende sejlture:" Name="UpandcommingTextBlock" FontWeight="Bold"/>
-                    <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" MaxHeight="350" Margin="0,0,0,0">
+                    <DataGrid IsReadOnly="True" CanUserAddRows="False" x:Name="UpcommingTripsDataGrid" AutoGenerateColumns="False" Height="350" MaxHeight="350" SelectionChanged="UpcommingTripsDataGrid_OnSelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Boat}" Header="Båd"/>
                             <DataGridTextColumn Binding="{Binding Captain}" Header="Kaptajn"/>
@@ -28,7 +28,7 @@
                         <Button Name="ChangeButton" Content="Ændre booking" Height="25" Width="150" Click="ChangeButton_OnClick" />
                         <!-- To make border -->
                         <Rectangle Width="10" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
-                        <Button Name="DelteButton" Content="Slet booking" Height="25" Width="150" Click="DelteButton_OnClick" />
+                        <Button Name="DeleteButton" Content="Slet booking" Height="25" Width="150" Click="DeleteButton_OnClick" />
                     </StackPanel>
                 </StackPanel>
                 <!-- To make border -->
