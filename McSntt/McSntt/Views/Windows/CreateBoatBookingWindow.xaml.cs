@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-<<<<<<< HEAD
-=======
 using McSntt.DataAbstractionLayer;
->>>>>>> master
 using McSntt.Helpers;
 using McSntt.Models;
 
