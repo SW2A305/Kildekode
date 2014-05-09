@@ -12,6 +12,9 @@ namespace McSntt.DataAbstractionLayer
         bool Update(params T[] items);
         bool Delete(params T[] items);
         IEnumerable<T> GetAll();
-        T GetOne(int itemId);
+        IEnumerable<T> GetAll(Func<T, bool> predicate);
+        T GetOne(long itemId);
+        void LoadData(T item);
+        void LoadData(IEnumerable<T> items);
     }
 }

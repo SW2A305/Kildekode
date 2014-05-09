@@ -1,13 +1,8 @@
-﻿
-using System;
-using System.Data.Entity;
+﻿using System;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
 
@@ -24,7 +19,7 @@ namespace McSntt.Views.Windows
             UsernameBox.Focusable = true;
             FocusManager.SetFocusedElement(LoginBox, UsernameBox);
             // This is to ensure that the contens of the database is ready for when the login is performed.
-            var sailClubMembers = new SailClubMemberEfDal().GetAll();
+            var sailClubMembers = DalLocator.SailClubMemberDal.GetAll();
         }
 
         #region Login
@@ -52,7 +47,7 @@ namespace McSntt.Views.Windows
                 return;
             }
 
-            var sailClubMembers = new SailClubMemberEfDal().GetAll();
+            var sailClubMembers = DalLocator.SailClubMemberDal.GetAll();
 
             if (sailClubMembers != null)
             {

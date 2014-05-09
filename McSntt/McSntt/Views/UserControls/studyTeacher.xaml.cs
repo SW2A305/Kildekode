@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Entity;
-using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,13 +10,6 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
@@ -51,8 +41,8 @@ namespace McSntt.Views.UserControls
         public StudyTeacher()
         {
             InitializeComponent();
-            var teamDal = new TeamEfDal();
-            var memberDal = new StudentMemberEfDal();
+            var teamDal = DalLocator.TeamDal;
+            var memberDal = DalLocator.StudentMemberDal;
            
             #region Mock data
             Team15.TeamMembers.Add(Member1);

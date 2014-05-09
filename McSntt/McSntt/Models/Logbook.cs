@@ -1,27 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
     public class Logbook
     {
-        [Key]
-        public virtual int LogbookId { get; set; }
+        private SailClubMember _filedBy;
+        private long _filedById;
 
-        [Column(TypeName = "DateTime2")]
-        public virtual DateTime ActualDepartureTime { get; set; }
+        public long LogbookId { get; set; }
+        public DateTime ActualDepartureTime { get; set; }
+        public DateTime ActualArrivalTime { get; set; }
 
-        [Column(TypeName = "DateTime2")]
-        public virtual DateTime ActualArrivalTime { get; set; }
+        public bool DamageInflicted { get; set; }
+        public string DamageDescription { get; set; }
+        public string AnswerFromBoatChief { get; set; }
 
-        public virtual bool DamageInflicted { get; set; }
-        public virtual string DamageDescription { get; set; }
-        public virtual string AnswerFromBoatChief { get; set; }
+        public SailClubMember FiledBy
+        {
+            get { return this._filedBy; }
+            set
+            {
+                this._filedBy = value;
+                this.FiledById = (value != null ? value.SailClubMemberId : 0);
+            }
+        }
 
-        public virtual SailClubMember FiledBy { get; set; }
+        public long FiledById
+        {
+            get
+            {
+                if (_filedById == 0 && _filedBy != null) { _filedById = _filedBy.SailClubMemberId; }
+                return this._filedById;
+            }
+            set { this._filedById = value; }
+        }
 
-        public virtual ICollection<Person> ActualCrew { get; set; }
+        public ICollection<Person> ActualCrew { get; set; }
     }
 }

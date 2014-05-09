@@ -5,15 +5,12 @@ namespace McSntt.Models
 {
     public class Boat
     {
-        public virtual int BoatId { get; set; }
+        public long BoatId { get; set; }
 
-        public virtual BoatType Type { get; set; }
-        public virtual string NickName { get; set; }
-        public virtual string ImagePath { get; set; }
-        public virtual bool Operational { get; set; }
-
-        [InverseProperty("Boat")]
-        public virtual ICollection<SailTrip> SailTrips { get; set; }
+        public BoatType Type { get; set; }
+        public string NickName { get; set; }
+        public string ImagePath { get; set; }
+        public bool Operational { get; set; }
 
         public override string ToString()
         {

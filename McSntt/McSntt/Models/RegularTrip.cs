@@ -1,18 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
     public class RegularTrip : SailTrip
     {
-        public virtual int RegularTripId { get; set; }
-        public virtual Person Captain { get; set; }
+        private Person _captain;
+        private long _captainId;
 
-        [Column(TypeName = "DateTime2")]
-        public virtual DateTime ExpectedArrivalTime { get; set; }
-        public virtual string PurposeAndArea { get; set; }
+        public long RegularTripId { get; set; }
+        public DateTime ExpectedArrivalTime { get; set; }
+        public string PurposeAndArea { get; set; }
 
-        public virtual ICollection<Person> Crew { get; set; }
+        public Person Captain
+        {
+            get { return this._captain; }
+            set
+            {
+                this._captain = value;
+                this.CaptainId = (value != null ? value.PersonId : 0);
+            }
+        }
+
+        public long CaptainId
+        {
+            get
+            {
+                if (_captainId == 0 && _captain != null) { _captainId = _captain.PersonId; }
+                return this._captainId;
+            }
+            set { this._captainId = value; }
+        }
+
+        public ICollection<Person> Crew { get; set; }
     }
 }

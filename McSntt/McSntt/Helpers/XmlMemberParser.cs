@@ -12,7 +12,7 @@ namespace McSntt.Helpers
 
         /// <summary>
         /// </summary>
-        public XmlMemberParser() : this(new SailClubMemberEfDal()) {}
+        public XmlMemberParser() : this(DalLocator.SailClubMemberDal) {}
 
         /// <summary>
         /// </summary>
