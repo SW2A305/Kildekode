@@ -99,6 +99,7 @@
     <Compile Include="DataAbstractionLayer\IRegularTripDal.cs" />
     <Compile Include="DataAbstractionLayer\ISailClubMemberDal.cs" />
     <Compile Include="Helpers\DalLocator.cs" />
+    <Compile Include="Helpers\DbSeedData.cs" />
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
