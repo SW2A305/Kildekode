@@ -210,7 +210,43 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public void LoadData(Logbook item)
         {
-            throw new NotImplementedException();
+            // Load FiledBy
+            var memberDal = DalLocator.SailClubMemberDal;
+            
+            if (item.FiledById > 0) { item.FiledBy = memberDal.GetOne(item.FiledById); }
+
+            // Load ActualCrew
+            var personDal = DalLocator.PersonDal;
+
+            using (var db = DatabaseManager.DbConnection)
+            {
+                db.Open();
+
+                using (var command = db.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText =
+                        String.Format("SELECT person_id FROM {0} WHERE logbook_id = @logbookId",
+                                      DatabaseManager.TableLogbookActualCrewBinder);
+                    command.Parameters.Add(new SQLiteParameter("@logbookId", item.LogbookId));
+
+                    item.ActualCrew = new List<Person>();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            long personId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id"));
+
+                            if (personId > 0)
+                            {
+                                item.ActualCrew.Add(personDal.GetOne(personId));
+                            }
+                        }
+                    }
+                }
+
+                db.Close();
+            }
         }
 
         public void LoadData(IEnumerable<Logbook> items)

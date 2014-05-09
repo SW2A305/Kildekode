@@ -186,7 +186,20 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public void LoadData(Team item)
         {
-            throw new NotImplementedException();
+            // Load Teacher
+            var memberDal = DalLocator.SailClubMemberDal;
+
+            if (item.TeacherId > 0) { item.Teacher = memberDal.GetOne(item.TeacherId); }
+
+            // Load TeamMembers
+            var studentDal = DalLocator.StudentMemberDal;
+
+            item.TeamMembers = studentDal.GetAll(student => student.AssociatedTeamId == item.TeamId).ToList();
+
+            // Load Lectures
+            var lectureDal = DalLocator.LectureDal;
+
+            item.Lectures = lectureDal.GetAll(lecture => lecture.TeamId == item.TeamId).ToList();
         }
 
         public void LoadData(IEnumerable<Team> items)

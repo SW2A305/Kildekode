@@ -216,7 +216,43 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public void LoadData(Lecture item)
         {
-            throw new NotImplementedException();
+            // Load Team
+            var teamDal = DalLocator.TeamDal;
+
+            if (item.TeamId > 0) { item.Team = teamDal.GetOne(item.TeamId); }
+
+            // Load PresentMembers
+            var studentDal = DalLocator.StudentMemberDal;
+
+            using (var db = DatabaseManager.DbConnection)
+            {
+                db.Open();
+
+                using (var command = db.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText =
+                        String.Format("SELECT student_member_id FROM {0} WHERE lecture_id = @lectureId",
+                                      DatabaseManager.TableLecturePresentMembersBinder);
+                    command.Parameters.Add(new SQLiteParameter("@lectureId", item.LectureId));
+
+                    item.PresentMembers = new List<StudentMember>();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            long studentMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("student_member_id"));
+
+                            if (studentMemberId > 0)
+                            {
+                                item.PresentMembers.Add(studentDal.GetOne(studentMemberId));
+                            }
+                        }
+                    }
+                }
+
+                db.Close();
+            }
         }
 
         public void LoadData(IEnumerable<Lecture> items)

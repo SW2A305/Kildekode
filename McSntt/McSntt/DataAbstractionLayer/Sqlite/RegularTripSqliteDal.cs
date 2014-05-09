@@ -214,7 +214,51 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public void LoadData(RegularTrip item)
         {
-            throw new NotImplementedException();
+            // Load Captain
+            var personDal = DalLocator.PersonDal;
+
+            if (item.CaptainId > 0) { item.Captain = personDal.GetOne(item.CaptainId); }
+
+            // Load Boat
+            var boatDal = DalLocator.BoatDal;
+
+            if (item.BoatId > 0) { item.Boat = boatDal.GetOne(item.BoatId); }
+
+            // Load Logbook
+            var logbookDal = DalLocator.LogbookDal;
+
+            if (item.LogbookId > 0) { item.Logbook = logbookDal.GetOne(item.LogbookId); }
+
+            // Load Crew
+            using (var db = DatabaseManager.DbConnection)
+            {
+                db.Open();
+
+                using (var command = db.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText =
+                        String.Format("SELECT person_id FROM {0} WHERE regular_trip_id = @regularTripId",
+                                      DatabaseManager.TableRegularTripCrewBinder);
+                    command.Parameters.Add(new SQLiteParameter("@regularTripId", item.RegularTripId));
+
+                    item.Crew = new List<Person>();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            long personId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id"));
+
+                            if (personId > 0)
+                            {
+                                item.Crew.Add(personDal.GetOne(personId));
+                            }
+                        }
+                    }
+                }
+
+                db.Close();
+            }
         }
 
         public void LoadData(IEnumerable<RegularTrip> items)
