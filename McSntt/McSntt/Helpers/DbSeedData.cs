@@ -1,4 +1,6 @@
-﻿using McSntt.Models;
+﻿using System;
+using McSntt.Models;
+using Xceed.Wpf.DataGrid;
 
 namespace McSntt.Helpers
 {
@@ -6,6 +8,7 @@ namespace McSntt.Helpers
     {
         public static void CreateSeedData()
         {
+            #region Arrays
             #region DataArray :: Boats
             var boats = new[]
                         {
@@ -19,12 +22,59 @@ namespace McSntt.Helpers
 
                             new Boat()
                             {
-                                
+                                NickName = "Anna",
+                                Type = BoatType.Drabant,
+                                ImagePath = "Drabant.jpg",
+                                Operational = true
+                            },
+
+                            new Boat()
+                            {
+                                NickName = "Isabella",
+                                Type = BoatType.J80,
+                                ImagePath = "J80.jpg",
+                                Operational = false
+                            },
+
+                            new Boat()
+                            {
+                                NickName = "Kennara",
+                                Type = BoatType.Mini12,
+                                ImagePath = "Mini12.jpg",
+                                Operational = true
+                            }, 
+
+                            new Boat()
+                            {
+                                NickName = "Trine",
+                                Type = BoatType.Spækhugger,
+                                ImagePath = "Spækhugger.jpg",
+                                Operational = true
                             }
                         };
             #endregion
 
             #region DataArray :: Events
+            var events = new Event[]
+                         {
+                             new Event()
+                             {
+                                 Created = true,
+                                 Description = "Vi spiser Pizza ved Molen",
+                                 EventDate = DateTime.Now.AddDays(2),
+                                 EventTitle = "PizzaParty",
+                                 SignUpReq = true,
+                             },
+
+                             new Event()
+                             {
+                                 Created = true,
+                                 Description = "Der er fest klokken 23:00. Klæd jer ud som forskellige bådtyper! Det bliver både sjovt og hyggeligt!",
+                                 EventDate = DateTime.Now.AddDays(2),
+                                 EventTitle = "Fest i Klubhuset",
+                                 SignUpReq = true,
+                             }
+                         };
             #endregion
 
             #region DataArray :: Lectures
@@ -37,6 +87,11 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: RegularTrips
+            var trips = new RegularTrip[]
+                        {
+                            new RegularTrip()
+                            {}
+                        };
             #endregion
 
             #region DataArray :: SailClubMembers
@@ -174,6 +229,10 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: Teams
+            #endregion
+            #endregion
+
+            #region Data linking
             #endregion
         }
     }
