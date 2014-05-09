@@ -13,35 +13,81 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public bool Create(params Lecture[] items)
         {
             int insertedRows = 0;
+            int lectureRowsInserted = 0;
+            int studentRowsInserted = 0;
+            int studentRowsExpected = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (SQLiteCommand command = db.CreateCommand())
+                using (SQLiteCommand lectureCommand = db.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("INSERT INTO {0} (team_id, date_of_lecture, rope_works, navigation, " +
-                                      "motor, drabant, gaffelrigger, night) " +
-                                      "VALUES (@teamId, @dateOfLecture, @ropeWorks, @navigation, @motor, " +
-                                      "@drabant, @gaffelrigger, @night)",
-                                      DatabaseManager.TableLectures);
-
-                    foreach (Lecture lecture in items)
+                    using (var studentCommand = db.CreateCommand())
                     {
-                        command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@teamId", lecture.TeamId));
-                        command.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
-                        command.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
-                        command.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
-                        command.Parameters.Add(new SQLiteParameter("@motor", lecture.Motor));
-                        command.Parameters.Add(new SQLiteParameter("@drabant", lecture.Drabant));
-                        command.Parameters.Add(new SQLiteParameter("@gaffelrigger", lecture.Gaffelrigger));
-                        command.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
-                        insertedRows += command.ExecuteNonQuery();
+                        lectureCommand.CommandType = CommandType.Text;
+                        lectureCommand.CommandText =
+                            String.Format("INSERT INTO {0} (team_id, date_of_lecture, rope_works, navigation, " +
+                                          "motor, drabant, gaffelrigger, night) " +
+                                          "VALUES (@teamId, @dateOfLecture, @ropeWorks, @navigation, @motor, " +
+                                          "@drabant, @gaffelrigger, @night)",
+                                          DatabaseManager.TableLectures);
 
-                        lecture.LectureId = db.LastInsertRowId;
+                        studentCommand.CommandType = CommandType.Text;
+                        studentCommand.CommandText =
+                            String.Format("INSERT OR IGNORE INTO {0} (lecture_id, student_member_id) " +
+                                          "VALUES (@lectureId, @studentMemberId)",
+                                          DatabaseManager.TableLecturePresentMembersBinder);
+
+                        foreach (Lecture lecture in items)
+                        {
+                            using (SQLiteTransaction transaction = db.BeginTransaction())
+                            {
+                                lectureCommand.Parameters.Clear();
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@teamId", lecture.TeamId));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@dateOfLecture",
+                                                                                  lecture.DateOfLecture));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@motor", lecture.Motor));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@drabant", lecture.Drabant));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@gaffelrigger", lecture.Gaffelrigger));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
+                                lectureRowsInserted = lectureCommand.ExecuteNonQuery();
+
+                                lecture.LectureId = db.LastInsertRowId;
+
+                                // Link to present members
+                                studentRowsExpected = 0;
+
+                                if (lecture.PresentMembers != null)
+                                {
+                                    studentRowsExpected = lecture.PresentMembers.Count;
+                                    studentRowsInserted = 0;
+
+                                    foreach (StudentMember studentMember in lecture.PresentMembers)
+                                    {
+                                        studentCommand.Parameters.Clear();
+                                        studentCommand.Parameters.Add(new SQLiteParameter("@lectureId",
+                                                                                          lecture.LectureId));
+                                        studentCommand.Parameters.Add(new SQLiteParameter("@studentMemberId",
+                                                                                          studentMember.StudentMemberId));
+                                        studentRowsInserted += studentCommand.ExecuteNonQuery();
+                                    }
+                                }
+
+                                // Verify that everything was inserted correctly
+                                if (studentRowsInserted == studentRowsExpected)
+                                {
+                                    transaction.Commit();
+                                    insertedRows += lectureRowsInserted;
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -54,35 +100,89 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public bool Update(params Lecture[] items)
         {
             int updatedRows = 0;
+            int lectureRowsUpdated = 0;
+            int studentRowsInserted = 0;
+            int studentRowsExpected = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (SQLiteCommand command = db.CreateCommand())
+                using (SQLiteCommand lectureCommand = db.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("UPDATE {0} " +
-                                      "SET  team_id = @teamId, date_of_lecture = @dateOfLecture, " +
-                                      "rope_works = @ropeWorks, navigation = @navigation, motor = @motor, " +
-                                      "drabant = @motor, gaffelrigger = @gaffelrigger, night = @night" +
-                                      "WHERE lecture_id = @lectureId",
-                                      DatabaseManager.TableLectures);
-
-                    foreach (Lecture lecture in items)
+                    using (var studentCommand = db.CreateCommand())
                     {
-                        command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
-                        command.Parameters.Add(new SQLiteParameter("@teamId", lecture.TeamId));
-                        command.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
-                        command.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
-                        command.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
-                        command.Parameters.Add(new SQLiteParameter("@motor", lecture.Motor));
-                        command.Parameters.Add(new SQLiteParameter("@drabant", lecture.Drabant));
-                        command.Parameters.Add(new SQLiteParameter("@gaffelrigger", lecture.Gaffelrigger));
-                        command.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
-                        updatedRows += command.ExecuteNonQuery();
+                        lectureCommand.CommandType = CommandType.Text;
+                        lectureCommand.CommandText =
+                            String.Format("UPDATE {0} " +
+                                          "SET  team_id = @teamId, date_of_lecture = @dateOfLecture, " +
+                                          "rope_works = @ropeWorks, navigation = @navigation, motor = @motor, " +
+                                          "drabant = @motor, gaffelrigger = @gaffelrigger, night = @night" +
+                                          "WHERE lecture_id = @lectureId",
+                                          DatabaseManager.TableLectures);
+
+                        studentCommand.CommandType = CommandType.Text;
+                        studentCommand.CommandText =
+                            String.Format("INSERT OR IGNORE INTO {0} (lecture_id, student_member_id) " +
+                                          "VALUES (@lectureId, @studentMemberId)",
+                                          DatabaseManager.TableLecturePresentMembersBinder);
+
+                        foreach (Lecture lecture in items)
+                        {
+                            using (SQLiteTransaction transaction = db.BeginTransaction())
+                            {
+                                lectureCommand.Parameters.Clear();
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@teamId", lecture.TeamId));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@dateOfLecture", lecture.DateOfLecture));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@ropeWorks", lecture.RopeWorksLecture));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@navigation", lecture.Navigation));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@motor", lecture.Motor));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@drabant", lecture.Drabant));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@gaffelrigger", lecture.Gaffelrigger));
+                                lectureCommand.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
+                                updatedRows += lectureCommand.ExecuteNonQuery();
+
+                                // Link to present members, removing existing ones first
+                                using (SQLiteCommand deleteCommand = db.CreateCommand())
+                                {
+                                    deleteCommand.CommandType = CommandType.Text;
+                                    deleteCommand.CommandText =
+                                        String.Format("DELETE FROM {0} " +
+                                                      "WHERE lecture_id = @lectureId",
+                                                      DatabaseManager.TableLecturePresentMembersBinder);
+                                    deleteCommand.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
+                                    deleteCommand.ExecuteNonQuery();
+                                }
+
+                                studentRowsExpected = 0;
+
+                                if (lecture.PresentMembers != null)
+                                {
+                                    studentRowsExpected = lecture.PresentMembers.Count;
+                                    studentRowsInserted = 0;
+
+                                    foreach (StudentMember studentMember in lecture.PresentMembers)
+                                    {
+                                        studentCommand.Parameters.Clear();
+                                        studentCommand.Parameters.Add(new SQLiteParameter("@lectureId",
+                                                                                          lecture.LectureId));
+                                        studentCommand.Parameters.Add(new SQLiteParameter("@studentMemberId",
+                                                                                          studentMember.StudentMemberId));
+                                        studentRowsInserted += studentCommand.ExecuteNonQuery();
+                                    }
+                                }
+
+                                // Verify that everything was inserted correctly
+                                if (studentRowsInserted == studentRowsExpected)
+                                {
+                                    transaction.Commit();
+                                    updatedRows += lectureRowsUpdated;
+                                }
+                                else
+                                { transaction.Rollback(); }
+                            }
+                        }
                     }
                 }
 
@@ -113,6 +213,17 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
                         deletedRows += command.ExecuteNonQuery();
+
+                        using (SQLiteCommand deleteCommand = db.CreateCommand())
+                        {
+                            deleteCommand.CommandType = CommandType.Text;
+                            deleteCommand.CommandText =
+                                String.Format("DELETE FROM {0} " +
+                                              "WHERE lecture_id = @lectureId",
+                                              DatabaseManager.TableEventParticipantsBinder);
+                            deleteCommand.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
+                            deleteCommand.ExecuteNonQuery();
+                        }
                     }
                 }
 

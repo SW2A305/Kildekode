@@ -13,34 +13,84 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public bool Create(params Logbook[] items)
         {
             int insertedRows = 0;
+            int logbookRowsInserted = 0;
+            int crewRowsInserted = 0;
+            int crewRowsExpected = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (SQLiteCommand command = db.CreateCommand())
+                using (SQLiteCommand logbookCommand = db.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("INSERT INTO {0} (actual_departure_time, actual_arrival_time, " +
-                                      "damage_inflicted, damage_description, answer_from_boat_chief, " +
-                                      "filed_by_id) " +
-                                      "VALUES (@actualDepartureTime, @actualArrivalTime, @damageInflicted, " +
-                                      "@damageDescription, @answerFromBoatChief, @filedById)",
-                                      DatabaseManager.TableLogbooks);
-
-                    foreach (Logbook logbook in items)
+                    using (var personCommand = db.CreateCommand())
                     {
-                        command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
-                        command.Parameters.Add(new SQLiteParameter("@actualDepartureTime", logbook.ActualDepartureTime));
-                        command.Parameters.Add(new SQLiteParameter("@actualArrivalTime", logbook.ActualArrivalTime));
-                        command.Parameters.Add(new SQLiteParameter("@damageInflicted", logbook.DamageInflicted));
-                        command.Parameters.Add(new SQLiteParameter("@damageDescription", logbook.DamageDescription));
-                        command.Parameters.Add(new SQLiteParameter("@answerFromBoatChief", logbook.AnswerFromBoatChief));
-                        insertedRows += command.ExecuteNonQuery();
+                        logbookCommand.CommandType = CommandType.Text;
+                        logbookCommand.CommandText =
+                            String.Format("INSERT INTO {0} (actual_departure_time, actual_arrival_time, " +
+                                          "damage_inflicted, damage_description, answer_from_boat_chief, " +
+                                          "filed_by_id) " +
+                                          "VALUES (@actualDepartureTime, @actualArrivalTime, @damageInflicted, " +
+                                          "@damageDescription, @answerFromBoatChief, @filedById)",
+                                          DatabaseManager.TableLogbooks);
 
-                        logbook.LogbookId = db.LastInsertRowId;
+                        personCommand.CommandType = CommandType.Text;
+                        personCommand.CommandText =
+                            String.Format("INSERT OR IGNORE INTO {0} (logbook_id, person_id) " +
+                                          "VALUES (@logbookId, @personId)",
+                                          DatabaseManager.TableLogbookActualCrewBinder);
+
+                        foreach (Logbook logbook in items)
+                        {
+                            using (var transaction = db.BeginTransaction())
+                            {
+                                logbookCommand.Parameters.Clear();
+                                logbookCommand.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
+                                logbookCommand.Parameters.Add(new SQLiteParameter("@actualDepartureTime",
+                                                                                  logbook.ActualDepartureTime));
+                                logbookCommand.Parameters.Add(new SQLiteParameter("@actualArrivalTime",
+                                                                                  logbook.ActualArrivalTime));
+                                logbookCommand.Parameters.Add(new SQLiteParameter("@damageInflicted",
+                                                                                  logbook.DamageInflicted));
+                                logbookCommand.Parameters.Add(new SQLiteParameter("@damageDescription",
+                                                                                  logbook.DamageDescription));
+                                logbookCommand.Parameters.Add(new SQLiteParameter("@answerFromBoatChief",
+                                                                                  logbook.AnswerFromBoatChief));
+                                logbookRowsInserted = logbookCommand.ExecuteNonQuery();
+
+                                logbook.LogbookId = db.LastInsertRowId;
+
+                                // Link to participants
+                                crewRowsExpected = 0;
+
+                                if (logbook.ActualCrew != null)
+                                {
+                                    crewRowsExpected = logbook.ActualCrew.Count;
+                                    crewRowsInserted = 0;
+
+                                    foreach (Person person in logbook.ActualCrew)
+                                    {
+                                        personCommand.Parameters.Clear();
+                                        personCommand.Parameters.Add(new SQLiteParameter("@logbookId",
+                                                                                          logbook.LogbookId));
+                                        personCommand.Parameters.Add(new SQLiteParameter("@personId",
+                                                                                          person.PersonId));
+                                        crewRowsInserted += personCommand.ExecuteNonQuery();
+                                    }
+                                }
+
+                                // Verify that everything was inserted correctly
+                                if (crewRowsInserted == crewRowsExpected)
+                                {
+                                    transaction.Commit();
+                                    insertedRows += logbookRowsInserted;
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -53,6 +103,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public bool Update(params Logbook[] items)
         {
             int updatedRows = 0;
+            int logbookRowsUpdated = 0;
+            int crewRowsInserted = 0;
+            int crewRowsExpected = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -60,29 +113,86 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                 using (SQLiteCommand command = db.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("UPDATE {0} " +
-                                      "SET  actual_departure_time = @actualDepartureTime, " +
-                                      "actual_arrival_time = @actualArrivalTime, " +
-                                      "damage_inflicted = @damageInflicted, " +
-                                      "damage_description = @damageDescription, " +
-                                      "answer_from_boat_chief = @answerFromBoatChief, " +
-                                      "filed_by_id = @filedById " +
-                                      "WHERE logbook_id = @logbookId",
-                                      DatabaseManager.TableLogbooks);
-
-                    foreach (Logbook logbook in items)
+                    using (var personCommand = db.CreateCommand())
                     {
-                        command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
-                        command.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
-                        command.Parameters.Add(new SQLiteParameter("@actualDepartureTime", logbook.ActualDepartureTime));
-                        command.Parameters.Add(new SQLiteParameter("@actualArrivalTime", logbook.ActualArrivalTime));
-                        command.Parameters.Add(new SQLiteParameter("@damageInflicted", logbook.DamageInflicted));
-                        command.Parameters.Add(new SQLiteParameter("@damageDescription", logbook.DamageDescription));
-                        command.Parameters.Add(new SQLiteParameter("@answerFromBoatChief", logbook.AnswerFromBoatChief));
-                        updatedRows += command.ExecuteNonQuery();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText =
+                            String.Format("UPDATE {0} " +
+                                          "SET  actual_departure_time = @actualDepartureTime, " +
+                                          "actual_arrival_time = @actualArrivalTime, " +
+                                          "damage_inflicted = @damageInflicted, " +
+                                          "damage_description = @damageDescription, " +
+                                          "answer_from_boat_chief = @answerFromBoatChief, " +
+                                          "filed_by_id = @filedById " +
+                                          "WHERE logbook_id = @logbookId",
+                                          DatabaseManager.TableLogbooks);
+
+                        personCommand.CommandType = CommandType.Text;
+                        personCommand.CommandText =
+                            String.Format("INSERT OR IGNORE INTO {0} (logbook_id, person_id) " +
+                                          "VALUES (@logbookId, @personId)",
+                                          DatabaseManager.TableLogbookActualCrewBinder);
+
+                        foreach (Logbook logbook in items)
+                        {
+                            using (var transaction = db.BeginTransaction())
+                            {
+                                command.Parameters.Clear();
+                                command.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
+                                command.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
+                                command.Parameters.Add(new SQLiteParameter("@actualDepartureTime",
+                                                                           logbook.ActualDepartureTime));
+                                command.Parameters.Add(new SQLiteParameter("@actualArrivalTime",
+                                                                           logbook.ActualArrivalTime));
+                                command.Parameters.Add(new SQLiteParameter("@damageInflicted", logbook.DamageInflicted));
+                                command.Parameters.Add(new SQLiteParameter("@damageDescription",
+                                                                           logbook.DamageDescription));
+                                command.Parameters.Add(new SQLiteParameter("@answerFromBoatChief",
+                                                                           logbook.AnswerFromBoatChief));
+                                logbookRowsUpdated = command.ExecuteNonQuery();
+
+                                // Link to actual crew, removing existing ones first
+                                using (SQLiteCommand deleteCommand = db.CreateCommand())
+                                {
+                                    deleteCommand.CommandType = CommandType.Text;
+                                    deleteCommand.CommandText =
+                                        String.Format("DELETE FROM {0} " +
+                                                      "WHERE logbook_id = @logbookId",
+                                                      DatabaseManager.TableLogbookActualCrewBinder);
+                                    deleteCommand.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
+                                    deleteCommand.ExecuteNonQuery();
+                                }
+
+                                crewRowsExpected = 0;
+
+                                if (logbook.ActualCrew != null)
+                                {
+                                    crewRowsExpected = logbook.ActualCrew.Count;
+                                    crewRowsInserted = 0;
+
+                                    foreach (Person person in logbook.ActualCrew)
+                                    {
+                                        personCommand.Parameters.Clear();
+                                        personCommand.Parameters.Add(new SQLiteParameter("@logbookId",
+                                                                                         logbook.LogbookId));
+                                        personCommand.Parameters.Add(new SQLiteParameter("@personId",
+                                                                                         person.PersonId));
+                                        crewRowsInserted += personCommand.ExecuteNonQuery();
+                                    }
+                                }
+
+                                // Verify that everything was inserted correctly
+                                if (crewRowsInserted == crewRowsExpected)
+                                {
+                                    transaction.Commit();
+                                    updatedRows += logbookRowsUpdated;
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -113,6 +223,17 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
                         deletedRows += command.ExecuteNonQuery();
+
+                        using (SQLiteCommand deleteCommand = db.CreateCommand())
+                        {
+                            deleteCommand.CommandType = CommandType.Text;
+                            deleteCommand.CommandText =
+                                String.Format("DELETE FROM {0} " +
+                                              "WHERE logbook_id = @logbookId",
+                                              DatabaseManager.TableLogbookActualCrewBinder);
+                            deleteCommand.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
+                            deleteCommand.ExecuteNonQuery();
+                        }
                     }
                 }
 

@@ -13,35 +13,82 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public bool Create(params RegularTrip[] items)
         {
             int insertedRows = 0;
+            int tripRowsInserted = 0;
+            int crewRowsInserted = 0;
+            int crewRowsExpected = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (SQLiteCommand command = db.CreateCommand())
+                using (SQLiteCommand tripCommand = db.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("INSERT INTO {0} (departure_time, arrival_time, boat_id, captain_id, " +
-                                      "expected_arrival_time, purpose_and_area, weather_conditions, logbook_id) " +
-                                      "VALUES (@departureTime, @arrivalTime, @boatId, @captainId, " +
-                                      "@expectedArrivalTime, @purposeAndArea, @weatherConditions, @logbookId)",
-                                      DatabaseManager.TableRegularTrips);
-
-                    foreach (RegularTrip regularTrip in items)
+                    using (var personCommand = db.CreateCommand())
                     {
-                        command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
-                        command.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
-                        command.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
-                        command.Parameters.Add(new SQLiteParameter("@departureTime", regularTrip.DepartureTime));
-                        command.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
-                        command.Parameters.Add(new SQLiteParameter("@expectedArrivalTime", regularTrip.ExpectedArrivalTime));
-                        command.Parameters.Add(new SQLiteParameter("@purposeAndArea", regularTrip.PurposeAndArea));
-                        command.Parameters.Add(new SQLiteParameter("@weatherConditions", regularTrip.WeatherConditions));
-                        insertedRows += command.ExecuteNonQuery();
+                        tripCommand.CommandType = CommandType.Text;
+                        tripCommand.CommandText =
+                            String.Format("INSERT INTO {0} (departure_time, arrival_time, boat_id, captain_id, " +
+                                          "expected_arrival_time, purpose_and_area, weather_conditions, logbook_id) " +
+                                          "VALUES (@departureTime, @arrivalTime, @boatId, @captainId, " +
+                                          "@expectedArrivalTime, @purposeAndArea, @weatherConditions, @logbookId)",
+                                          DatabaseManager.TableRegularTrips);
 
-                        regularTrip.RegularTripId = db.LastInsertRowId;
+                        personCommand.CommandType = CommandType.Text;
+                        personCommand.CommandText =
+                            String.Format("INSERT OR IGNORE INTO {0} (regular_trip_id, person_id) " +
+                                          "VALUES (@regularTripId, @personId)",
+                                          DatabaseManager.TableRegularTripCrewBinder);
+
+                        foreach (RegularTrip regularTrip in items)
+                        {
+                            using (var transaction = db.BeginTransaction())
+                            {
+                                tripCommand.Parameters.Clear();
+                                tripCommand.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@departureTime", regularTrip.DepartureTime));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@expectedArrivalTime",
+                                                                           regularTrip.ExpectedArrivalTime));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@purposeAndArea", regularTrip.PurposeAndArea));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@weatherConditions",
+                                                                           regularTrip.WeatherConditions));
+                                tripRowsInserted = tripCommand.ExecuteNonQuery();
+
+                                regularTrip.RegularTripId = db.LastInsertRowId;
+
+                                // Link to crew
+                                crewRowsExpected = 0;
+
+                                if (regularTrip.Crew != null)
+                                {
+                                    crewRowsExpected = regularTrip.Crew.Count;
+                                    crewRowsInserted = 0;
+
+                                    foreach (Person person in regularTrip.Crew)
+                                    {
+                                        personCommand.Parameters.Clear();
+                                        personCommand.Parameters.Add(new SQLiteParameter("@regularTripId",
+                                                                                          regularTrip.RegularTripId));
+                                        personCommand.Parameters.Add(new SQLiteParameter("@personId",
+                                                                                          person.PersonId));
+                                        crewRowsInserted += personCommand.ExecuteNonQuery();
+                                    }
+                                }
+
+                                // Verify that everything was inserted correctly
+                                if (crewRowsInserted == crewRowsExpected)
+                                {
+                                    transaction.Commit();
+                                    insertedRows += tripRowsInserted;
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -54,36 +101,91 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public bool Update(params RegularTrip[] items)
         {
             int updatedRows = 0;
+            int tripRowsUpdated = 0;
+            int crewRowsInserted = 0;
+            int crewRowsExpected = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (SQLiteCommand command = db.CreateCommand())
+                using (SQLiteCommand tripCommand = db.CreateCommand())
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText =
-                        String.Format("UPDATE {0} " +
-                                      "SET departure_time = @departureTime, arrival_time = @arrivalTime, " +
-                                      "boat_id = @boatId, captain_id = @captainId, logbook_id = @logbookId, " +
-                                      "expected_arrival_time = @expectedArrivalTime, " +
-                                      "purpose_and_area = @purposeAndArea, weather_conditions = @weatherConditions " +
-                                      "WHERE regular_trip_id = @regularTripId ",
-                                      DatabaseManager.TableRegularTrips);
-
-                    foreach (RegularTrip regularTrip in items)
+                    using (var personCommand = db.CreateCommand())
                     {
-                        command.Parameters.Clear();
-                        command.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
-                        command.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
-                        command.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
-                        command.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
-                        command.Parameters.Add(new SQLiteParameter("@departureTime", regularTrip.DepartureTime));
-                        command.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
-                        command.Parameters.Add(new SQLiteParameter("@expectedArrivalTime", regularTrip.ExpectedArrivalTime));
-                        command.Parameters.Add(new SQLiteParameter("@purposeAndArea", regularTrip.PurposeAndArea));
-                        command.Parameters.Add(new SQLiteParameter("@weatherConditions", regularTrip.WeatherConditions));
-                        updatedRows += command.ExecuteNonQuery();
+                        tripCommand.CommandType = CommandType.Text;
+                        tripCommand.CommandText =
+                            String.Format("UPDATE {0} " +
+                                          "SET departure_time = @departureTime, arrival_time = @arrivalTime, " +
+                                          "boat_id = @boatId, captain_id = @captainId, logbook_id = @logbookId, " +
+                                          "expected_arrival_time = @expectedArrivalTime, " +
+                                          "purpose_and_area = @purposeAndArea, weather_conditions = @weatherConditions " +
+                                          "WHERE regular_trip_id = @regularTripId ",
+                                          DatabaseManager.TableRegularTrips);
+
+                        foreach (RegularTrip regularTrip in items)
+                        {
+                            using (var transaction = db.BeginTransaction())
+                            {
+                                tripCommand.Parameters.Clear();
+                                tripCommand.Parameters.Add(new SQLiteParameter("@regularTripId",
+                                                                               regularTrip.RegularTripId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@departureTime",
+                                                                               regularTrip.DepartureTime));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@expectedArrivalTime",
+                                                                               regularTrip.ExpectedArrivalTime));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@purposeAndArea",
+                                                                               regularTrip.PurposeAndArea));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@weatherConditions",
+                                                                               regularTrip.WeatherConditions));
+                                tripRowsUpdated = tripCommand.ExecuteNonQuery();
+
+                                // Link to crew, removing existing ones first
+                                using (SQLiteCommand deleteCommand = db.CreateCommand())
+                                {
+                                    deleteCommand.CommandType = CommandType.Text;
+                                    deleteCommand.CommandText =
+                                        String.Format("DELETE FROM {0} " +
+                                                      "WHERE regular_trip_id = @regularTripId",
+                                                      DatabaseManager.TableRegularTripCrewBinder);
+                                    deleteCommand.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
+                                    deleteCommand.ExecuteNonQuery();
+                                }
+
+                                crewRowsExpected = 0;
+
+                                if (regularTrip.Crew != null)
+                                {
+                                    crewRowsExpected = regularTrip.Crew.Count;
+                                    crewRowsInserted = 0;
+
+                                    foreach (Person person in regularTrip.Crew)
+                                    {
+                                        personCommand.Parameters.Clear();
+                                        personCommand.Parameters.Add(new SQLiteParameter("@regularTripId",
+                                                                                          regularTrip.RegularTripId));
+                                        personCommand.Parameters.Add(new SQLiteParameter("@personId",
+                                                                                          person.PersonId));
+                                        crewRowsInserted += personCommand.ExecuteNonQuery();
+                                    }
+                                }
+
+                                // Verify that everything was inserted correctly
+                                if (crewRowsInserted == crewRowsExpected)
+                                {
+                                    transaction.Commit();
+                                    updatedRows += tripRowsUpdated;
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -114,6 +216,17 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
                         deletedRows += command.ExecuteNonQuery();
+
+                        using (SQLiteCommand deleteCommand = db.CreateCommand())
+                        {
+                            deleteCommand.CommandType = CommandType.Text;
+                            deleteCommand.CommandText =
+                                String.Format("DELETE FROM {0} " +
+                                              "WHERE regular_trip_id = @regularTripId",
+                                              DatabaseManager.TableRegularTripCrewBinder);
+                            deleteCommand.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
+                            deleteCommand.ExecuteNonQuery();
+                        }
                     }
                 }
 
@@ -274,31 +387,6 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             IEnumerable<RegularTrip> regularTrips = this.GetAll().Where(predicate);
 
             return regularTrips;
-        }
-
-        public IEnumerable<RegularTrip> GetRegularTrips(Func<RegularTrip, bool> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, bool onlyFuture = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<RegularTrip> GetReservationsForBoat(Boat boat, DateTime? fromDateTime, DateTime? toDateTime)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CanMakeReservation(Boat boat, DateTime? departureTime, DateTime? expectedArrivalTime)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CanMakeReservation(RegularTrip trip)
-        {
-            throw new NotImplementedException();
         }
     }
 }
