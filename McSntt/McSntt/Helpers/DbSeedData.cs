@@ -268,13 +268,13 @@ namespace McSntt.Helpers
                          {
                              new Team()
                              {
-                                 Name = "Hold 1",
+                                 Name = "MasterRace",
                                  Level = Team.ClassLevel.Second
                              },
 
                              new Team()
                              {
-                                 Name = "Hold 2",
+                                 Name = "Svenskerne",
                                  Level = Team.ClassLevel.First
                              }
                          };
