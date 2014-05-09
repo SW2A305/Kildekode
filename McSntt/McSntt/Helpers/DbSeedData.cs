@@ -78,6 +78,41 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: Lectures
+            var lectures = new Lecture[]
+                         {
+                             new Lecture()
+                             {
+                                 DateOfLecture = new DateTime(2014, 5, 9, 15, 00, 00),
+                                 RopeWorksLecture = true,
+                                 Drabant = true,
+                                 Gaffelrigger = false,
+                                 Motor = false,
+                                 Navigation = false,
+                                 Night = false,
+                             },
+
+                             new Lecture()
+                             {
+                                 DateOfLecture = new DateTime(2014, 5, 21, 12, 30, 00),
+                                 RopeWorksLecture = false,
+                                 Drabant = false,
+                                 Gaffelrigger = true,
+                                 Motor = true,
+                                 Navigation = false,
+                                 Night = false,
+                             },
+
+                             new Lecture()
+                             {
+                                 DateOfLecture = new DateTime(2014, 5, 30, 23, 55, 00),
+                                 RopeWorksLecture = false,
+                                 Drabant = false,
+                                 Gaffelrigger = true,
+                                 Motor = false,
+                                 Navigation = true,
+                                 Night = true
+                             }  
+                         };
             #endregion
 
             #region DataArray :: Logbooks
@@ -229,6 +264,20 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: Teams
+            var teams = new Team[]
+                         {
+                             new Team()
+                             {
+                                 Name = "Hold 1",
+                                 Level = Team.ClassLevel.Second
+                             },
+
+                             new Team()
+                             {
+                                 Name = "Hold 2",
+                                 Level = Team.ClassLevel.First
+                             }
+                         };
             #endregion
             #endregion
 
