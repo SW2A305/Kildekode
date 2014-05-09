@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using McSntt.Models;
-using Xceed.Wpf.DataGrid;
 
 namespace McSntt.Helpers
 {
@@ -541,18 +541,74 @@ namespace McSntt.Helpers
 
             #region Data linking
 
-            #region Lectures
+            #region Lectures -> Team
             lectures[0].Team = teams[1];
             lectures[1].Team = teams[0];
             lectures[2].Team = teams[0];
             #endregion
 
-            #region logbooks
+            #region Lectures -> PresentMembers
+            lectures[0].PresentMembers = new List<StudentMember>()
+                                         {
+                                             studentMembers[5],
+                                             studentMembers[6],
+                                             studentMembers[7],
+                                             studentMembers[8]
+                                         };
+            lectures[1].PresentMembers = new List<StudentMember>()
+                                         {
+                                             studentMembers[0],
+                                             studentMembers[2],
+                                             studentMembers[3],
+                                             studentMembers[4]
+                                         };
+            lectures[2].PresentMembers = new List<StudentMember>()
+                                         {
+                                             studentMembers[0],
+                                             studentMembers[1],
+                                             studentMembers[2],
+                                             studentMembers[3],
+                                             studentMembers[4]
+                                         };
+            #endregion
+
+            #region Logbooks -> FiledBy
+            logbooks[0].FiledBy = sailClubMembers[0];
+            logbooks[1].FiledBy = sailClubMembers[3];
+            #endregion
+
+            #region Logbooks -> ActualCrew
+            logbooks[0].ActualCrew = new List<Person>
+                                     {
+                                         sailClubMembers[3],
+                                         sailClubMembers[4],
+                                         sailClubMembers[5],
+                                         sailClubMembers[7]
+                                     };
+            logbooks[1].ActualCrew = new List<Person>
+                                     {
+                                         sailClubMembers[0],
+                                         sailClubMembers[1],
+                                         sailClubMembers[2],
+                                         sailClubMembers[3],
+                                         sailClubMembers[4]
+                                     };
+            #endregion
+
+            #region Trips -> Captain
+            trips[0].Captain = sailClubMembers[0];
+            trips[1].Captain = sailClubMembers[3];
+            trips[2].Captain = sailClubMembers[1];
+            trips[3].Captain = sailClubMembers[5];
+            trips[4].Captain = sailClubMembers[7];
+            #endregion
+
+            #region Trips -> Logbook
             trips[0].Logbook = logbooks[1];
             trips[1].Logbook = logbooks[0];
             #endregion
 
-            #region Boats
+            #region Trips -> Boat
 
             trips[0].Boat = boats[0];
             trips[1].Boat = boats[1];
@@ -562,78 +618,126 @@ namespace McSntt.Helpers
 
             #endregion Boats
 
-            #region Crew
+            #region Trips -> Crew
 
             // TODO add crew to the trips in array trips.
 
-            trips[0].Crew.Add(sailClubMembers[0]);
-            trips[0].Crew.Add(sailClubMembers[1]);
-            trips[0].Crew.Add(sailClubMembers[2]);
-            trips[0].Crew.Add(sailClubMembers[3]);
-            trips[0].Crew.Add(sailClubMembers[4]);
+            trips[0].Crew = new List<Person>
+                            {
+                                sailClubMembers[0],
+                                sailClubMembers[1],
+                                sailClubMembers[2],
+                                sailClubMembers[3],
+                                sailClubMembers[4]
+                            };
 
-            trips[1].Crew.Add(sailClubMembers[3]);
-            trips[1].Crew.Add(sailClubMembers[4]);
-            trips[1].Crew.Add(sailClubMembers[5]);
-            trips[1].Crew.Add(sailClubMembers[6]);
-            trips[1].Crew.Add(sailClubMembers[7]);
+            trips[1].Crew = new List<Person>
+                            {
+                                sailClubMembers[3],
+                                sailClubMembers[4],
+                                sailClubMembers[5],
+                                sailClubMembers[6],
+                                sailClubMembers[7]
+                            };
 
-            trips[2].Crew.Add(sailClubMembers[1]);
-            trips[2].Crew.Add(sailClubMembers[3]);
-            trips[2].Crew.Add(sailClubMembers[5]);
-            trips[2].Crew.Add(sailClubMembers[6]);
-            trips[2].Crew.Add(sailClubMembers[7]);
+            trips[2].Crew = new List<Person>
+                            {
+                                sailClubMembers[1],
+                                sailClubMembers[3],
+                                sailClubMembers[5],
+                                sailClubMembers[6],
+                                sailClubMembers[7]
+                            };
 
-            trips[3].Crew.Add(sailClubMembers[5]);
-            trips[3].Crew.Add(sailClubMembers[4]);
-            trips[3].Crew.Add(sailClubMembers[2]);
-            trips[3].Crew.Add(sailClubMembers[1]);
-            trips[3].Crew.Add(sailClubMembers[7]);
+            trips[3].Crew = new List<Person>
+                            {
+                                sailClubMembers[5],
+                                sailClubMembers[4],
+                                sailClubMembers[2],
+                                sailClubMembers[1],
+                                sailClubMembers[7]
+                            };
 
-            trips[4].Crew.Add(sailClubMembers[7]);
-            trips[4].Crew.Add(sailClubMembers[3]);
-            trips[4].Crew.Add(sailClubMembers[0]);
-            trips[4].Crew.Add(sailClubMembers[2]);
-            trips[4].Crew.Add(sailClubMembers[5]);
-
+            trips[4].Crew = new List<Person>
+                            {
+                                sailClubMembers[7],
+                                sailClubMembers[3],
+                                sailClubMembers[0],
+                                sailClubMembers[2],
+                                sailClubMembers[5]
+                            };
             #endregion Crew
 
-            #region Teams
+            #region Events -> Participants
 
-            teams[0].TeamMembers.Add(studentMembers[1]);
-            teams[0].TeamMembers.Add(studentMembers[2]);
-            teams[0].TeamMembers.Add(studentMembers[3]);
-            teams[0].TeamMembers.Add(studentMembers[4]);
-            teams[0].TeamMembers.Add(studentMembers[0]);
+            events[0].Participants = new List<Person>
+                                     {
+                                         sailClubMembers[3],
+                                         sailClubMembers[4],
+                                         sailClubMembers[2],
+                                         sailClubMembers[1],
+                                         sailClubMembers[0]
+                                     };
 
-            teams[1].TeamMembers.Add(studentMembers[5]);
-            teams[1].TeamMembers.Add(studentMembers[6]);
-            teams[1].TeamMembers.Add(studentMembers[7]);
-            teams[1].TeamMembers.Add(studentMembers[8]);
+            events[1].Participants = new List<Person>
+                                     {
+                                         sailClubMembers[0],
+                                         sailClubMembers[1],
+                                         sailClubMembers[2],
+                                         sailClubMembers[3],
+                                         sailClubMembers[4],
+                                         sailClubMembers[5],
+                                         sailClubMembers[9]
+                                     };
+            #endregion
+
+            #region StudentMembers -> AssociatedTeam
+
+            #region Team #0
+            studentMembers[0].AssociatedTeam = teams[0];
+            studentMembers[1].AssociatedTeam = teams[0];
+            studentMembers[2].AssociatedTeam = teams[0];
+            studentMembers[3].AssociatedTeam = teams[0];
+            studentMembers[4].AssociatedTeam = teams[0];
+            #endregion
+
+            #region Team #1
+            studentMembers[5].AssociatedTeam = teams[1];
+            studentMembers[6].AssociatedTeam = teams[1];
+            studentMembers[7].AssociatedTeam = teams[1];
+            studentMembers[8].AssociatedTeam = teams[1];
+            #endregion
 
             #endregion
 
-            #region Events
-
-            events[0].Participants.Add(sailClubMembers[3]);
-            events[0].Participants.Add(sailClubMembers[4]);
-            events[0].Participants.Add(sailClubMembers[2]);
-            events[0].Participants.Add(sailClubMembers[1]);
-            events[0].Participants.Add(sailClubMembers[0]);
-
-            events[1].Participants.Add(sailClubMembers[0]);
-            events[1].Participants.Add(sailClubMembers[1]);
-            events[1].Participants.Add(sailClubMembers[2]);
-            events[1].Participants.Add(sailClubMembers[3]);
-            events[1].Participants.Add(sailClubMembers[4]);
-            events[1].Participants.Add(sailClubMembers[5]);
-            events[1].Participants.Add(sailClubMembers[9]);
+            #region Teams -> Teacher
+            teams[0].Teacher = sailClubMembers[3];
+            teams[1].Teacher = sailClubMembers[5];
             #endregion
 
             #endregion
 
             #region Save data
+            var boatDal = DalLocator.BoatDal;
+            var eventDal = DalLocator.EventDal;
+            var lectureDal = DalLocator.LectureDal;
+            var logbookDal = DalLocator.LogbookDal;
+            var tripDal = DalLocator.RegularTripDal;
+            var scmDal = DalLocator.SailClubMemberDal;
+            var smDal = DalLocator.StudentMemberDal;
+            var teamDal = DalLocator.TeamDal;
 
+            // Store the ones that doesn't require anything else first...
+            boatDal.Create(boats);
+            scmDal.Create(sailClubMembers);
+
+            // Now store the others in an order that doesn't clash with anything
+            eventDal.Create(events);
+            logbookDal.Create(logbooks);
+            tripDal.Create(trips);
+            teamDal.Create(teams);
+            smDal.Create(studentMembers);
+            lectureDal.Create(lectures);
             #endregion
         }
     }
