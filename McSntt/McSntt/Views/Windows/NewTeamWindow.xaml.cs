@@ -29,13 +29,13 @@ namespace McSntt.Views.Windows
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudyMockData.TeamListGlobal.All(x => x.Name != TeamName.Text) )
+            if (DalLocator.TeamDal.GetAll().All(x => x.Name != TeamName.Text) )
             {
                 if (!string.IsNullOrEmpty(TeamName.Text))
                 {
                     // TODO: The instansiating of the lists can be remove when the database works
-                    var team = new Team { Name = TeamName.Text, TeamMembers = new List<StudentMember>(), Lectures = new LinkedList<Lecture>(), Teacher = GlobalInformation.CurrentUser };
-                    StudyMockData.TeamListGlobal.Add(team);
+                    var team = new Team { Name = TeamName.Text, Teacher = GlobalInformation.CurrentUser };
+                    DalLocator.TeamDal.Create();
                     Close();
                 }
                 else

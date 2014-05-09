@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
+using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,6 +13,13 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
@@ -26,53 +36,26 @@ namespace McSntt.Views.UserControls
     /// </summary>
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
-        #region Mock data
-        public Team Team15 = new Team{Name = "Hold 15", Level = Team.ClassLevel.First, TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
-        public Team Team16 = new Team {Name = "Hold 16", TeamMembers = new List<StudentMember>(), Lectures = new List<Lecture>()};
-        public IList<Team> TeamList = new List<Team>();
-        public StudentMember Member1 = new StudentMember {FirstName = "Knold", LastName = "Jensen", SailClubMemberId = 2000};
-        public StudentMember Member2 = new StudentMember { FirstName = "Tot", LastName = "Jensen", SailClubMemberId = 2001 };
-        public Lecture Lecture = new Lecture{DateOfLecture = new DateTime(2014, 04, 5), PresentMembers = new List<StudentMember>()};
-        #endregion
-
-        private ILectureDal lectureDal = DalLocator.LectureDal;
         public ICollection<StudentMember> MembersList = new Collection<StudentMember>();
 
         public StudyTeacher()
         {
             InitializeComponent();
-            var teamDal = DalLocator.TeamDal;
-            var memberDal = DalLocator.StudentMemberDal;
-           
-            #region Mock data
-            Team15.TeamMembers.Add(Member1);
-            Team15.TeamMembers.Add(Member2);
-            Team15.Lectures.Add(Lecture);
-            StudyMockData.TeamListGlobal.Add(Team15);
-            StudyMockData.TeamListGlobal.Add(Team16);
-            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
-            #endregion
 
-            // To be uncommented when database works
-            //teamDropdown.ItemsSource = teamDal.GetAll();
-
+            teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
 
             lectureDropdown.DisplayMemberPath = "DateOfLecture";
             lectureDropdown.SelectedValuePath = "LectureId";
 
-            LectureDataClear();
-            
-            DataGridCollection = CollectionViewSource.GetDefaultView(memberDal.GetAll());
+            DataGridCollection = CollectionViewSource.GetDefaultView(DalLocator.StudentMemberDal.GetAll());
             DataGridCollection.Filter = new Predicate<object>(Filter);
-            
             
             editTeamGrid.IsEnabled = false;
             lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
             promoteTeam.IsEnabled = false;
             newLecture1.IsEnabled = false;
-
         }
 
         #region Methods
@@ -313,12 +296,12 @@ namespace McSntt.Views.UserControls
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             teamDropdown.SelectedIndex = -1;
-            // TODO: delete StudyMockData.TeamListGlobal and add database reference
-            int currentTeamDropdownCount = StudyMockData.TeamListGlobal.Count;
+            // TODO: We need a count for the DbSet
+            int currentTeamDropdownCount = DalLocator.TeamDal.GetAll().Count();
             var newTeamWindow = new NewTeamWindow();
             newTeamWindow.ShowDialog();
             teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+            teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
 
             if (currentTeamDropdownCount != StudyMockData.TeamListGlobal.Count)
             {
@@ -331,19 +314,11 @@ namespace McSntt.Views.UserControls
             if (teamDropdown.SelectedItem != null)
             {
                 var team = (Team)teamDropdown.SelectedItem;
-
-                /*
-                ITeamDal teamDal = new TeamEfDal();
-                teamDal.Delete(team);
-                teamDropdown.ItemsSource = teamDal.GetAll();
-                */
-
-                #region Mock data
-                StudyMockData.TeamListGlobal.Remove(team);
+                
+                DalLocator.TeamDal.Delete(team);
                 teamDropdown.ItemsSource = null;
-                teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
-                #endregion
-
+                teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
+                
                 ClearFields();
             }
         }
@@ -373,7 +348,7 @@ namespace McSntt.Views.UserControls
         {
             if (MemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!MembersList.Contains(currentMember) && StudyMockData.TeamListGlobal.All(x => !x.TeamMembers.Contains(currentMember)))
+            if (!MembersList.Contains(currentMember) && DalLocator.TeamDal.GetAll().All(x => !x.TeamMembers.Contains(currentMember)))
             {
                 MembersList.Add(currentMember);
                 RefreshDatagrid(CurrentMemberDataGrid, MembersList);
@@ -395,22 +370,22 @@ namespace McSntt.Views.UserControls
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
             int currentTeamDropdownIndex = teamDropdown.SelectedIndex;
+            var currentTeam = ((Team) teamDropdown.SelectedItem);
 
             if (Level1RadioButton.IsChecked == true)
             {
-                ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.First;
+                currentTeam.Level = Team.ClassLevel.First;
             }
             else if (Level2RadioButton.IsChecked == true)
             {
-                ((Team)teamDropdown.SelectedItem).Level = Team.ClassLevel.Second;
+                currentTeam.Level = Team.ClassLevel.Second;
             }
 
-            if (((Team) teamDropdown.SelectedItem).Name != teamName.Text)
+            if (currentTeam.Name != teamName.Text)
             {
-                // TODO: Change reference to database
-                if (StudyMockData.TeamListGlobal.All(x => x.Name != teamName.Text))
+                if (DalLocator.TeamDal.GetAll().All(x => x.Name != teamName.Text))
                 {
-                    ((Team) teamDropdown.SelectedItem).Name = teamName.Text;
+                    currentTeam.Name = teamName.Text;
                 }
                 else
                 {
@@ -422,12 +397,13 @@ namespace McSntt.Views.UserControls
             foreach (var member in MembersList)
             {
                 member.AssociatedTeam = ((Team)teamDropdown.SelectedItem);
-                ((Team)teamDropdown.SelectedItem).TeamMembers.Add(member);
+                currentTeam.TeamMembers.Add(member);
             }
 
+            DalLocator.TeamDal.Update(currentTeam);
+
             teamDropdown.ItemsSource = null;
-            // TODO: Itemsource should be changed to database
-            teamDropdown.ItemsSource = StudyMockData.TeamListGlobal;
+            teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
             teamDropdown.SelectedIndex = currentTeamDropdownIndex;
         }
         #endregion
@@ -441,12 +417,6 @@ namespace McSntt.Views.UserControls
             if (lectureDropdown.SelectedIndex != -1)
             {
                 lectureGrid.IsEnabled = true;
-                NavigationCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Navigation;
-                MotorCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Motor;
-                GaffelriggerCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Gaffelrigger;
-                NightCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Night;
-                DrabantCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).Drabant;
-                RopeWorksCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedItem).RopeWorksLecture;
             }
             if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
             {
@@ -478,17 +448,6 @@ namespace McSntt.Views.UserControls
         {
             var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
-        }
-
-        private void DeleteLecture_Click(object sender, RoutedEventArgs e)
-        {
-            var lecture = ((Lecture) lectureDropdown.SelectedItem);
-            LectureDataClear();
-            // TODO: delete mockdata reference
-            ((Team) teamDropdown.SelectedItem).Lectures.Remove(lecture);
-            //DalLocator.LectureDal.Delete(lecture);
-            lectureDropdown.ItemsSource = null;
-            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
         }
         #endregion
         #endregion
@@ -564,7 +523,5 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
-
-        
     }
 }
