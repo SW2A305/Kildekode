@@ -81,6 +81,25 @@ namespace McSntt.Helpers
             #endregion
 
             #region DataArray :: Logbooks
+
+            var logbooks = new Logbook[]
+            {
+                new Logbook()
+                {
+                    ActualArrivalTime = DateTime.Now.AddDays(-2),
+                    ActualDepartureTime = DateTime.Now.AddDays(-4),
+                    AnswerFromBoatChief = "Der bliver udbedret i løbet af en uge, båden er stadig operationel",
+                    DamageDescription = "Nogle bræder er flækket ved styrbord",
+                    DamageInflicted = true,
+                },
+
+                new Logbook()
+                {
+                    ActualArrivalTime = DateTime.Now.AddDays(-2),
+                    ActualDepartureTime = DateTime.Now.AddDays(-4),
+                    DamageInflicted = false,
+                }
+            };
             #endregion
 
             #region DataArray :: Persons
