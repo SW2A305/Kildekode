@@ -147,7 +147,6 @@
     <Compile Include="Models\StudentMember.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Views\Helpers\CalenderBackground.cs" />
     <Compile Include="Views\UserControls\EventsAdmin.xaml.cs">
       <DependentUpon>EventsAdmin.xaml</DependentUpon>
     </Compile>
@@ -317,17 +316,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Drabant.jpg" />
+    <Resource Include="Images\Gaffelrigger.jpg" />
+    <Resource Include="Images\J80.jpg" />
+    <Resource Include="Images\mini12.jpg" />
+    <Resource Include="Images\Spækhugger.jpg" />
     <Content Include="x64\SQLite.Interop.dll" />
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\cross.png" />
-    <Resource Include="Images\gray.png" />
     <Resource Include="Images\forside.png" />
     <Content Include="Images\SundetLogo.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\check.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
