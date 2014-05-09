@@ -44,6 +44,15 @@ namespace McSntt.Views.Windows
             DamageTextBox.Text = regularSailTrip.Logbook.DamageDescription;
             AnswerFromBoatChiefTextBox.Text = regularSailTrip.Logbook.AnswerFromBoatChief;
             WeatherConditionTextBox.Text = regularSailTrip.WeatherConditions;
+
+            if (regularSailTrip.Logbook.DamageInflicted)
+            {
+                YesRadioButton.IsChecked = true;
+            }
+            else
+            {
+                NoRadioButton.IsChecked = true;
+            }
         }
     }
 }

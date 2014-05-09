@@ -93,7 +93,7 @@ namespace McSntt.Views.Windows
             {
                 MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst");
             }
-            else if ((NoRadioButton.IsChecked == true || YesButBrokenRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
+            else if ((NoRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
             {
                 MessageBox.Show("Udfyld venligst skadesrapporten med en beskrivelse af skaden");
             }
@@ -105,19 +105,18 @@ namespace McSntt.Views.Windows
             {
                 MessageBox.Show("Vælg venligst en gyldig Kaptajn");
             }
-            else if (YesRadioButton.IsChecked == true || NoRadioButton.IsChecked == true
-                        || YesButBrokenRadioButton.IsChecked == true) 
+            else if (YesRadioButton.IsChecked == true || NoRadioButton.IsChecked == true) 
             {
                     if (YesRadioButton.IsChecked == true)
                     {
-                        currentLogbook.DamageInflicted = false;
+                        currentLogbook.DamageInflicted = true;
 
                         //Notify someone that the boat is damaged
                     }
                 
-                    if (NoRadioButton.IsChecked == true || YesButBrokenRadioButton.IsChecked == true)
+                    if (NoRadioButton.IsChecked == true)
                     {
-                        currentLogbook.DamageInflicted = true;
+                        currentLogbook.DamageInflicted = false;
                     }
 
                 RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
