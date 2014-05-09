@@ -27,6 +27,7 @@ namespace McSntt.Views.Windows
             DateTimePickerActualDeparture.Value = regularSailTrip.Logbook.ActualDepartureTime;
             DamageTextBox.Text = regularSailTrip.Logbook.DamageDescription;
             AnswerFromBoatChiefTextBox.Text = regularSailTrip.Logbook.AnswerFromBoatChief;
+            WeatherConditionTextBox.Text = regularSailTrip.WeatherConditions;
         }
     }
 }
