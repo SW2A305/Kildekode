@@ -518,6 +518,68 @@ namespace McSntt.Helpers
                     PasswordHash = EncryptionHelper.Sha256("teglgård"),
                     DateOfBirth = "1991-01-22"
                 },
+                #region Students that are used for adding to a team in the user tests - DO NOT ADD TO TEAM IN SEED DATA
+                   new StudentMember
+                {
+                    FirstName = "Isabella",
+                    LastName = "Christensen",
+                    Address = "Langegade 58",
+                    Postcode = "1640",
+                    Cityname = "København V",
+                    BoatDriver = false,
+                    Email = "IsabellaChristensen@armyspy.com",
+                    Gender = Gender.Female,
+                    PhoneNumber = "21961289",
+                    Username = "isabella",
+                    PasswordHash = EncryptionHelper.Sha256("christensen"),
+                    DateOfBirth = "1997-03-18"
+                },
+                   new StudentMember
+                {
+                    FirstName = "Malthe",
+                    LastName = "Frandsen",
+                    Address = "Skibbroen 7",
+                    Postcode = "5320",
+                    Cityname = "Agedrup",
+                    BoatDriver = false,
+                    Email = "MaltheFrandsen@armyspy.com",
+                    Gender = Gender.Male,
+                    PhoneNumber = "21938966",
+                    Username = "malthe",
+                    PasswordHash = EncryptionHelper.Sha256("frandsen"),
+                    DateOfBirth = "1992-08-22"
+                },
+                   new StudentMember
+                {
+                    FirstName = "Malene",
+                    LastName = "Jensen",
+                    Address = "Stokløkken 2",
+                    Postcode = "6683",
+                    Cityname = "Føvling",
+                    BoatDriver = false,
+                    Email = "MaleneJensen@dayrep.com",
+                    Gender = Gender.Female,
+                    PhoneNumber = "81405098",
+                    Username = "malene",
+                    PasswordHash = EncryptionHelper.Sha256("jensen"),
+                    DateOfBirth = "1995-11-27"
+                },
+                   new StudentMember
+                {
+                    FirstName = "Josefine",
+                    LastName = "Henriksen",
+                    Address = "Møllebakken 96",
+                    Postcode = "3310",
+                    Cityname = "Ølsted",
+                    BoatDriver = false,
+                    Email = "JosefineHenriksen@teleworm.us",
+                    Gender = Gender.Female,
+                    PhoneNumber = "20540781",
+                    Username = "josefine",
+                    PasswordHash = EncryptionHelper.Sha256("henriksen"),
+                    DateOfBirth = "1995-09-27"
+                },
+                #endregion
             };
             #endregion
 
