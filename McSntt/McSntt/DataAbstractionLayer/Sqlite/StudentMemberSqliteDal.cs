@@ -208,7 +208,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                         Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
                                         Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
                                         RopeWorks = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
-                                        AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("associated_team_id"))
+                                        AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"))
                                     });
                         }
                     }
@@ -271,7 +271,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
                                     Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
                                     RopeWorks = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
-                                    AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("associated_team_id"))
+                                    AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"))
                                 };
                         }
                     }
