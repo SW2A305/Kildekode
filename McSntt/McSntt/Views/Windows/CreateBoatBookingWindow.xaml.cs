@@ -16,6 +16,8 @@ namespace McSntt.Views.Windows
         // Constructor to use this window to edit a trip
         public List<Person> CrewList = new List<Person>();
 
+        public RegularTrip InputTrip { get; set; }
+
         public CreateBoatBookingWindow(RegularTrip rt) : this(-1)
         {
             // The id is combobox id + 1 (So boatId - 1)
@@ -26,6 +28,8 @@ namespace McSntt.Views.Windows
             // Select the Captain in the ComboBox
             CaptainComboBox.SelectedIndex = rt.Crew.ToList().IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
             PurposeTextBox.Text = rt.PurposeAndArea;
+
+            InputTrip = rt;
 
             CompleteBooking.Content = "Gem ændringer";
             CompleteBooking.Click -= SaveButton_Click;
@@ -102,30 +106,33 @@ namespace McSntt.Views.Windows
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            SailTrip thisTrip = CreateSailTrip();
+            var thisTrip = CreateSailTrip();
 
             if (thisTrip != null)
             {
-                //foo;
+                DalLocator.RegularTripDal.Create(thisTrip);
             }
-            //TODO: Database connection. Create NEW
+            this.Close();
         }
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
-            SailTrip thisTrip = CreateSailTrip();
+            var thisTrip = CreateSailTrip();
 
             if (thisTrip != null)
             {
-                //foo;
+                //TODO: Is this the corret way to update? The updated trip can be completely diffirent from the original
+                thisTrip.RegularTripId = InputTrip.RegularTripId;
+                DalLocator.PersonDal.GetAll();
+                DalLocator.SailClubMemberDal.GetAll();
+                DalLocator.StudentMemberDal.GetAll();
+                DalLocator.RegularTripDal.Update(thisTrip);
             }
-            //TODO: Database connection. Update
+            this.Close();
         }
-
-
-        private SailTrip CreateSailTrip()
+        
+        private RegularTrip CreateSailTrip()
         {
-            //TODO: Check if this is a valid trip. If not return saying error. 
             // Get the current selected boat
             var boat = (Boat) BoatComboBox.SelectionBoxItem;
 
@@ -189,7 +196,7 @@ namespace McSntt.Views.Windows
             string purpose = PurposeTextBox.Text.Trim();
 
             // All checks are passed, create the trip.
-            var complete = new RegularTrip
+            return new RegularTrip
             {
                 Boat = boat,
                 DepartureTime = startTime,
@@ -198,13 +205,10 @@ namespace McSntt.Views.Windows
                 Captain = captain,
                 PurposeAndArea = purpose
             };
-
-            return complete;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Add warning window
             MessageBoxResult result = MessageBox.Show("Er du sikker på at du vil annullere din booking?", "Bådbooking",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
