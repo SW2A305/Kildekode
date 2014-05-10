@@ -28,6 +28,7 @@ namespace McSntt.Views.UserControls
     public partial class EventsAdmin : UserControl
     {
         public IList<Event> EventsList = new List<Event>();
+        
 
         public EventsAdmin()
         {
@@ -39,6 +40,12 @@ namespace McSntt.Views.UserControls
                 EditBnt.Visibility = Visibility.Hidden;
                 DeleteBnt.Visibility = Visibility.Hidden;
             }
+            var eventDal = DalLocator.EventDal;
+
+            EventsList = eventDal.GetAll().ToList();
+            eventDal.LoadData(EventsList);
+            AgendaListbox.ItemsSource = EventsList;
+
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -58,7 +65,11 @@ namespace McSntt.Views.UserControls
                 AgendaListbox.ItemsSource = EventsList;
 
                 AgendaListbox.Items.Refresh();
+
+                DalLocator.EventDal.Create(newEvent);
             }
+
+            
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
@@ -85,6 +96,8 @@ namespace McSntt.Views.UserControls
                 Descriptionbox.Text = null;
 
                 Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
+
+                DalLocator.EventDal.Update(selectedEvent);
             }
             else MessageBox.Show("Vælg en begivenhed at redigere!");           
         }
@@ -96,6 +109,8 @@ namespace McSntt.Views.UserControls
             if (i >= 0)
             {
                 EventsList.RemoveAt(i);
+
+                DalLocator.EventDal.Delete(EventsList[i]);
             }
             else MessageBox.Show("Vælg en begivenhed som skal slettes!");
 
@@ -124,6 +139,7 @@ namespace McSntt.Views.UserControls
                     else
                     {
                         selectedEvent.Participants.Add(GlobalInformation.CurrentUser);
+                        DalLocator.EventDal.Update(selectedEvent);
                         MessageBox.Show("Du er nu tilmeldt!");
                     }
                 }

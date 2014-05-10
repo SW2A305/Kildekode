@@ -43,6 +43,7 @@ namespace McSntt.Views.UserControls
 
             var teamDal = DalLocator.TeamDal;
             var studentDal = DalLocator.StudentMemberDal;
+            
             var teams = teamDal.GetAll();
             var students = studentDal.GetAll();
 

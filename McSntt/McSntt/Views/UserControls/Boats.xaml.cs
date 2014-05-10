@@ -39,14 +39,19 @@ namespace McSntt.Views.UserControls
             image.UriSource = new Uri("pack://application:,,,/Images/SundetLogo.PNG");
             image.EndInit();
             BoatImage.Source = image;
-            if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
-                AnswerDamageReportButton.Visibility = Visibility.Visible;
-            else AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
-            EditBoatButton.IsEnabled = false;
             BookButton.IsEnabled = false;
             ChangeButton.IsEnabled = false;
             DeleteButton.IsEnabled = false;
+
+            if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
+                AnswerDamageReportButton.Visibility = Visibility.Visible;
+            else{ AnswerDamageReportButton.Visibility = Visibility.Hidden;
+            
+                AddBoatButton.Visibility = Visibility.Hidden;
+                EditBoatButton.Visibility = Visibility.Hidden;
+
+            }
         }
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
