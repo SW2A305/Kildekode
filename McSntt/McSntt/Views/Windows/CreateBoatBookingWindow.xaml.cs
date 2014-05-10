@@ -122,10 +122,9 @@ namespace McSntt.Views.Windows
             if (thisTrip != null)
             {
                 //TODO: Is this the corret way to update? The updated trip can be completely diffirent from the original
+                // Assign the old trip id to the new one
                 thisTrip.RegularTripId = InputTrip.RegularTripId;
-                DalLocator.PersonDal.GetAll();
-                DalLocator.SailClubMemberDal.GetAll();
-                DalLocator.StudentMemberDal.GetAll();
+                // Do we need to load the crew first? (it's a one-to-many relation)
                 DalLocator.RegularTripDal.Update(thisTrip);
             }
             this.Close();
