@@ -111,8 +111,8 @@ namespace McSntt.Views.Windows
             if (thisTrip != null)
             {
                 DalLocator.RegularTripDal.Create(thisTrip);
+                this.Close();
             }
-            this.Close();
         }
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
@@ -126,8 +126,8 @@ namespace McSntt.Views.Windows
                 thisTrip.RegularTripId = InputTrip.RegularTripId;
                 // Do we need to load the crew first? (it's a one-to-many relation)
                 DalLocator.RegularTripDal.Update(thisTrip);
+                this.Close();
             }
-            this.Close();
         }
         
         private RegularTrip CreateSailTrip()
@@ -199,7 +199,7 @@ namespace McSntt.Views.Windows
             {
                 Boat = boat,
                 DepartureTime = startTime,
-                ExpectedArrivalTime = endTime,
+                ArrivalTime = endTime,
                 Crew = crewSelected,
                 Captain = captain,
                 PurposeAndArea = purpose
