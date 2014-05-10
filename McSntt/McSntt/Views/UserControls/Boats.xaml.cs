@@ -36,7 +36,7 @@ namespace McSntt.Views.UserControls
 
             var image = new BitmapImage();
             image.BeginInit();
-            image.UriSource = new Uri("pack://application:,,,/Images/gray.PNG");
+            image.UriSource = new Uri("pack://application:,,,/Images/SundetLogo.PNG");
             image.EndInit();
             BoatImage.Source = image;
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
