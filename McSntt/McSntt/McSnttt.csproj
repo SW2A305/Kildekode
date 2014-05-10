@@ -321,6 +321,7 @@
     <Resource Include="Images\J80.jpg" />
     <Resource Include="Images\mini12.jpg" />
     <Resource Include="Images\Spækhugger.jpg" />
+    <Resource Include="Images\gray.png" />
     <Content Include="x64\SQLite.Interop.dll" />
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
