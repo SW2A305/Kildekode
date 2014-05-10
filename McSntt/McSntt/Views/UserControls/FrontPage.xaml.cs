@@ -45,6 +45,8 @@ namespace McSntt.Views.UserControls
 
             var sailTripList = db.GetAll().ToList();
 
+            db.LoadData(sailTripList);
+
             UpcommingTripsDataGrid.ItemsSource = null;
             UpcommingTripsDataGrid.ItemsSource =
                 sailTripList.Where(t => t.Crew.Select(p => p.PersonId).Contains(usrId))
