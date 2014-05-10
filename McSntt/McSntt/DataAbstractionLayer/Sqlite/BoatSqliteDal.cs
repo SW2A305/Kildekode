@@ -192,9 +192,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Boat> GetAll(Func<Boat, bool> predicate)
         {
-            IEnumerable<Boat> boats = this.GetAll().Where(predicate);
+            var boats = this.GetAll().ToArray();
 
-            return boats;
+            LoadData(boats);
+
+            return boats.Where(predicate);
         }
     }
 }

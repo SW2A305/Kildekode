@@ -208,7 +208,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                         Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
                                         Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
                                         RopeWorks = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
-                                        // TODO Fetch Team
+                                        AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("associated_team_id"))
                                     });
                         }
                     }
@@ -270,8 +270,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     Motor = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("motor")),
                                     Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
                                     Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
-                                    RopeWorks = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works"))
-                                    // TODO Fetch Team
+                                    RopeWorks = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
+                                    AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("associated_team_id"))
                                 };
                         }
                     }
@@ -301,9 +301,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
         {
-            IEnumerable<StudentMember> studentMembers  = this.GetAll().Where(predicate);
+            var studentMembers = this.GetAll().ToArray();
 
-            return studentMembers;
+            LoadData(studentMembers);
+
+            return studentMembers.Where(predicate);
         }
     }
 }

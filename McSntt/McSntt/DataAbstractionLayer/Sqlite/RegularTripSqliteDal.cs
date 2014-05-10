@@ -384,9 +384,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<RegularTrip> GetAll(Func<RegularTrip, bool> predicate)
         {
-            IEnumerable<RegularTrip> regularTrips = this.GetAll().Where(predicate);
+            var regularTrips = this.GetAll().ToArray();
 
-            return regularTrips;
+            LoadData(regularTrips);
+
+            return regularTrips.Where(predicate);
         }
     }
 }

@@ -159,7 +159,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         String.Format("SELECT * FROM {0} " +
                                       "WHERE team_id = @teamId " +
                                       "LIMIT 1",
-                                      DatabaseManager.TableTeams); // TODO Fill this out
+                                      DatabaseManager.TableTeams);
                     command.Parameters.Add(new SQLiteParameter("@teamId", itemId));
 
                     using (SQLiteDataReader reader = command.ExecuteReader())
@@ -212,9 +212,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Team> GetAll(Func<Team, bool> predicate)
         {
-            IEnumerable<Team> teams = this.GetAll().Where(predicate);
+            var teams = this.GetAll().ToArray();
 
-            return teams;
+            LoadData(teams);
+
+            return teams.Where(predicate);
         }
     }
 }

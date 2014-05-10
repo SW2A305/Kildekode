@@ -231,10 +231,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
         {
-            IEnumerable<SailClubMember> sailClubMembers = this.GetAll().Where(predicate);
+            var sailClubMembers = this.GetAll().ToArray();
 
-            return sailClubMembers
-                ;
+            LoadData(sailClubMembers);
+
+            return sailClubMembers.Where(predicate);
         }
     }
 }

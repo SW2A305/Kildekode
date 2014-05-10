@@ -380,9 +380,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Logbook> GetAll(Func<Logbook, bool> predicate)
         {
-            IEnumerable<Logbook> logbooks  = this.GetAll().Where(predicate);
+            var logbooks  = this.GetAll().ToArray();
 
-            return logbooks;
+            LoadData(logbooks);
+
+            return logbooks.Where(predicate);
         }
     }
 }

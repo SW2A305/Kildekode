@@ -351,9 +351,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Event> GetAll(Func<Event, bool> predicate)
         {
-            IEnumerable<Event> events = this.GetAll().Where(predicate);
+            var events = this.GetAll().ToArray();
 
-            return events;
+            LoadData(events);
+
+            return events.Where(predicate);
         }
     }
 }

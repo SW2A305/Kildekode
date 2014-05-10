@@ -376,9 +376,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Lecture> GetAll(Func<Lecture, bool> predicate)
         {
-            IEnumerable<Lecture> lectures = this.GetAll().Where(predicate);
+            var lectures = this.GetAll().ToArray();
 
-            return lectures;
+            LoadData(lectures);
+
+            return lectures.Where(predicate);
         }
     }
 }

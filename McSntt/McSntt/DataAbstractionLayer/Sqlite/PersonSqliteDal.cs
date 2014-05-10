@@ -225,10 +225,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Person> GetAll(Func<Person, bool> predicate)
         {
-            IEnumerable<Person> persons  = this.GetAll().Where(predicate);
+            var persons = this.GetAll().ToArray();
 
-            return persons
-            ;
+            LoadData(persons);
+
+            return persons.Where(predicate);
         }
     }
 }
