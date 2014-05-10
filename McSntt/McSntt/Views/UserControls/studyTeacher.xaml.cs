@@ -41,14 +41,24 @@ namespace McSntt.Views.UserControls
         {
             InitializeComponent();
 
-            teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
+            var teamDal = DalLocator.TeamDal;
+            var studentDal = DalLocator.StudentMemberDal;
+            var teams = teamDal.GetAll();
+            var students = studentDal.GetAll();
+
+            // Load extra data
+            var teamsArray = teams as Team[] ?? teams.ToArray();
+            teamDal.LoadData(teamsArray);
+            studentDal.LoadData(students);
+
+            teamDropdown.ItemsSource = teamsArray;
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
 
             lectureDropdown.DisplayMemberPath = "DateOfLecture";
             lectureDropdown.SelectedValuePath = "LectureId";
 
-            DataGridCollection = CollectionViewSource.GetDefaultView(DalLocator.StudentMemberDal.GetAll());
+            DataGridCollection = CollectionViewSource.GetDefaultView(students);
             DataGridCollection.Filter = new Predicate<object>(Filter);
             
             editTeamGrid.IsEnabled = false;
@@ -58,7 +68,7 @@ namespace McSntt.Views.UserControls
         }
 
         #region Methods
-        private void RefreshDatagrid(DataGrid grid, ICollection<StudentMember> list)
+        private void RefreshDatagrid(DataGrid grid, IEnumerable<StudentMember> list)
         {
             grid.ItemsSource = null;
             grid.ItemsSource = list;
@@ -84,8 +94,7 @@ namespace McSntt.Views.UserControls
 
         private void PromoteTeam(StudentMember member)
         {
-            var upgradedMember = new SailClubMember();
-            upgradedMember = member;
+            var upgradedMember = member;
             upgradedMember.Position = SailClubMember.Positions.Member;
             upgradedMember.BoatDriver = true;
             DalLocator.SailClubMemberDal.Create(upgradedMember);

@@ -188,7 +188,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       "WHERE sail_club_member_id = @sailClubMemberId " +
                                       "AND {0}.person_id = {1}.person_id " +
                                       "LIMIT 1",
-                                      DatabaseManager.TableSailClubMembers);
+                                      DatabaseManager.TableSailClubMembers,
+                                      DatabaseManager.TablePersons);
                     command.Parameters.Add(new SQLiteParameter("@sailClubMemberId", itemId));
 
                     using (SQLiteDataReader reader = command.ExecuteReader())
