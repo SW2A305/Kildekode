@@ -123,6 +123,12 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                           "WHERE regular_trip_id = @regularTripId ",
                                           DatabaseManager.TableRegularTrips);
 
+                        personCommand.CommandType = CommandType.Text;
+                        personCommand.CommandText =
+                            String.Format("INSERT OR IGNORE INTO {0} (regular_trip_id, person_id) " +
+                                          "VALUES (@regularTripId, @personId)",
+                                          DatabaseManager.TableRegularTripCrewBinder);
+
                         foreach (RegularTrip regularTrip in items)
                         {
                             using (var transaction = db.BeginTransaction())
