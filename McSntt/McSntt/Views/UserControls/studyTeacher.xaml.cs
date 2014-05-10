@@ -448,6 +448,16 @@ namespace McSntt.Views.UserControls
             var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
         }
+
+        private void DeleteLecture_Click(object sender, RoutedEventArgs e)
+        {
+            var lecture = ((Lecture)lectureDropdown.SelectedItem);
+            LectureDataClear();
+            DalLocator.LectureDal.Delete(lecture);
+            lectureDropdown.ItemsSource = null;
+            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+        }
+
         #endregion
         #endregion
 
@@ -522,5 +532,7 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
+
+        
     }
 }
