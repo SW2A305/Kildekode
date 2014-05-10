@@ -181,6 +181,7 @@ namespace McSntt.Helpers
                         {
                             new RegularTrip()
                             {
+                                
                                 PurposeAndArea = "Plyndre England, husk nattøj",
                                 WeatherConditions = "12 m/s fra vest, overskyet",
                                 DepartureTime = new DateTime(2014, 05, 07, 13, 0, 0),
@@ -211,8 +212,8 @@ namespace McSntt.Helpers
                             {
                                 PurposeAndArea = "Generobre skåne",
                                 WeatherConditions = "6 m/s fra vest, klar himmel",
-                                DepartureTime = new DateTime(2014, 05, 21, 21, 0, 0),
-                                ArrivalTime = new DateTime(2014, 05, 23, 08, 0, 0)
+                                DepartureTime = new DateTime(2014, 05, 08, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 09, 08, 0, 0)
                             }
                         };
             #endregion

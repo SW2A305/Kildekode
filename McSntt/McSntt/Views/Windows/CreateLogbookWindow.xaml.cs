@@ -79,7 +79,7 @@ namespace McSntt.Views.Windows
             {
                 MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst");
             }
-            else if ((NoRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
+            else if ((YesRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
             {
                 MessageBox.Show("Udfyld venligst skadesrapporten med en beskrivelse af skaden");
             }
