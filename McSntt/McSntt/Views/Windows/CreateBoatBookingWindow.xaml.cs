@@ -200,6 +200,7 @@ namespace McSntt.Views.Windows
             // All checks are passed, create the trip.
             return new RegularTrip
             {
+                CreatedBy = GlobalInformation.CurrentUser,
                 Boat = boat,
                 DepartureTime = startTime,
                 ArrivalTime = endTime,
