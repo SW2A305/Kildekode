@@ -25,8 +25,7 @@ namespace McSntt.Views.Windows
             DateTimeStart.Value = rt.DepartureTime;
             DateTimeEnd.Value = rt.ArrivalTime;
             CrewList = rt.Crew.ToList();
-            // Select the Captain in the ComboBox
-            CaptainComboBox.SelectedIndex = rt.Crew.ToList().IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
+            CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
             PurposeTextBox.Text = rt.PurposeAndArea;
 
             InputTrip = rt;
@@ -52,7 +51,7 @@ namespace McSntt.Views.Windows
             BoatComboBox.SelectedValuePath = "Id";
             BoatComboBox.SelectedIndex = index;
 
-            CaptainComboBox.DisplayMemberPath = "FirstName";
+            CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.SelectedValuePath = "MemberId";
             CaptainComboBox.ItemsSource = CrewList;
 
@@ -200,6 +199,7 @@ namespace McSntt.Views.Windows
             // All checks are passed, create the trip.
             return new RegularTrip
             {
+                CreatedBy = GlobalInformation.CurrentUser,
                 Boat = boat,
                 DepartureTime = startTime,
                 ArrivalTime = endTime,

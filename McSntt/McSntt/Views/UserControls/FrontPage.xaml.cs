@@ -54,7 +54,7 @@ namespace McSntt.Views.UserControls
 
             LogbookDataGrid.ItemsSource = null;
             LogbookDataGrid.ItemsSource =
-                sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
+                sailTripList.Where(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
         }
 
         private RegularTrip _regularSailTrip = new RegularTrip();
@@ -72,7 +72,7 @@ namespace McSntt.Views.UserControls
 
             var db = DalLocator.RegularTripDal;
             var usrId = GlobalInformation.CurrentUser.PersonId;
-            var sailTripList = db.GetAll(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null).ToList();
+            var sailTripList = db.GetAll(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null).ToList();
 
             LogbookDataGrid.ItemsSource = null;
             LogbookDataGrid.ItemsSource = sailTripList;
@@ -88,19 +88,30 @@ namespace McSntt.Views.UserControls
         {
             var changewindow = new CreateBoatBookingWindow((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
             changewindow.ShowDialog();
+
+            LoadData();
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //TODO: Database slet medlem og opdater grid
+            DalLocator.RegularTripDal.Delete((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            LoadData();
         }
 
         private void UpcommingTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (UpcommingTripsDataGrid.SelectedIndex != -1)
             {
-                DeleteButton.IsEnabled = true;
-                ChangeButton.IsEnabled = true;
+                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).CreatedBy.PersonId)
+                {
+                    DeleteButton.IsEnabled = true;
+                    ChangeButton.IsEnabled = true;
+                }
+                else
+                {
+                    DeleteButton.IsEnabled = false;
+                    ChangeButton.IsEnabled = false;
+                }
             }
         }
     }
