@@ -177,6 +177,9 @@
     <Compile Include="Views\Windows\CreateLogbookWindow.xaml.cs">
       <DependentUpon>CreateLogbookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\StudentsProgressWindow.xaml.cs">
+      <DependentUpon>StudentsProgressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\ViewSpecificLogbookWindow.xaml.cs">
       <DependentUpon>ViewSpecificLogbookWindow.xaml</DependentUpon>
     </Compile>
@@ -278,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\CreateLogbookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\StudentsProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

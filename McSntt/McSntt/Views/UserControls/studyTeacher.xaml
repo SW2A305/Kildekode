@@ -7,8 +7,8 @@
              d:DesignHeight="561" d:DesignWidth="985" x:Name="StudyTeacherUserControl"
              DataContext="{Binding ElementName=StudyTeacherUserControl}">
     <Grid>
-        <Grid x:Name="lectureGrid" HorizontalAlignment="Left" Height="330" Margin="10,164,0,0" VerticalAlignment="Top" Width="388">
-            <Button x:Name="updateLecture" Content="Gem lektionsinformation" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="205,280,0,0" Click="updateLecture_Click" />
+        <Grid x:Name="lectureGrid" HorizontalAlignment="Left" Height="330" Margin="10,160,0,0" VerticalAlignment="Top" Width="388">
+            <Button x:Name="updateLecture" Content="Gem lektionsinformation" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="205,298,0,0" Click="updateLecture_Click" />
             <CheckBox x:Name="RopeWorksCheckBox" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="3,47,0,0" VerticalAlignment="Top" />
             <CheckBox x:Name="NavigationCheckBox" Content="Navigation" HorizontalAlignment="Left" Margin="3,84,0,0" VerticalAlignment="Top" />
             <CheckBox x:Name="MotorCheckBox" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="3,122,0,0" VerticalAlignment="Top" />
@@ -86,7 +86,8 @@
         <Button x:Name="newLecture1" Content="Opret ny lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="151,113,0,0" Click="newLecture1_Click" />
         <Label Content="Lærer:" HorizontalAlignment="Left" Margin="151,8,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TeacherName" HorizontalAlignment="Left" Margin="151,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FFF1EEEE" IsReadOnly="True" Width="92" FontSize="14"/>
-        <Button x:Name="DeleteLecture" Content="Slet lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="257,113,0,0" Width="92" />
+        <Button x:Name="DeleteLecture" Content="Slet lektion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="257,113,0,0" Width="92" Click="DeleteLecture_Click" />
+        <Button x:Name="StudentsProgress" Content="Se elevers fremskridt" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,495,0,0" Width="150" Click="StudentsProgress_Click"/>
 
 
 

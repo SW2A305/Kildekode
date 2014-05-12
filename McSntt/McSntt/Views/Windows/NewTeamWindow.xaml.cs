@@ -31,11 +31,10 @@ namespace McSntt.Views.Windows
         {
             if (DalLocator.TeamDal.GetAll().All(x => x.Name != TeamName.Text) )
             {
-                if (!string.IsNullOrEmpty(TeamName.Text))
+                if (TeamName.Text != String.Empty)
                 {
-                    // TODO: The instansiating of the lists can be remove when the database works
                     var team = new Team { Name = TeamName.Text, Teacher = GlobalInformation.CurrentUser };
-                    DalLocator.TeamDal.Create();
+                    DalLocator.TeamDal.Create(team);
                     Close();
                 }
                 else
