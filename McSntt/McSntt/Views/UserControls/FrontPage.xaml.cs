@@ -34,6 +34,7 @@ namespace McSntt.Views.UserControls
             CreateLogBookButton.IsEnabled = false;
             ChangeButton.IsEnabled = false;
             DeleteButton.IsEnabled = false;
+            RemoveFromTrip.IsEnabled = false;
 
             LoadData();
         }
@@ -94,7 +95,30 @@ namespace McSntt.Views.UserControls
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            DalLocator.RegularTripDal.Delete((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            DalLocator.RegularTripDal.Delete((RegularTrip)UpcommingTripsDataGrid.SelectedItem);
+            LoadData();
+        }
+
+        private void RemoveFromTrip_OnClick(object sender, RoutedEventArgs e)
+        {
+            var person = GlobalInformation.CurrentUser;
+            var trip = ((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+
+            if (person.PersonId == trip.Captain.PersonId)
+            {
+                MessageBox.Show(
+                    "Du er kaptajn for denne tur, du kan ikke fjerne dig selv. \nGør en anden til kaptajn først.");
+            }
+            else
+            {
+                var dal = DalLocator.RegularTripDal;
+
+                dal.LoadData(trip);
+                var p2 = trip.Crew.FirstOrDefault(p => p.PersonId == person.PersonId);
+                trip.Crew.Remove(p2);
+                dal.Update(trip);
+            }
+
             LoadData();
         }
 
@@ -102,15 +126,18 @@ namespace McSntt.Views.UserControls
         {
             if (UpcommingTripsDataGrid.SelectedIndex != -1)
             {
-                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).CreatedBy.PersonId)
+                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).CreatedBy.PersonId
+                    || GlobalInformation.CurrentUser.PersonId == ((RegularTrip)UpcommingTripsDataGrid.SelectedItem).Captain.PersonId)
                 {
                     DeleteButton.IsEnabled = true;
                     ChangeButton.IsEnabled = true;
+                    RemoveFromTrip.IsEnabled = false;
                 }
                 else
                 {
                     DeleteButton.IsEnabled = false;
                     ChangeButton.IsEnabled = false;
+                    RemoveFromTrip.IsEnabled = true;
                 }
             }
         }
