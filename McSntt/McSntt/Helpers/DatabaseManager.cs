@@ -389,8 +389,6 @@ namespace McSntt.Helpers
                 db.Close();
             }
 
-            // TODO Remove this eventually...
-            if (!_useTestDb) { DbSeedData.CreateSeedData(); }
         }
 
         private static void UpdateDatabaseFromVersion1ToVersion2()
@@ -439,6 +437,9 @@ namespace McSntt.Helpers
 
                 db.Close();
             }
+
+            // TODO Remove this eventually...
+            if (!_useTestDb) { DbSeedData.CreateSeedData(); }
         }
 
         private static void CreateDatabase()

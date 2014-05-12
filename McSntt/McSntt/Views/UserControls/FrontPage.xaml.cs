@@ -54,7 +54,7 @@ namespace McSntt.Views.UserControls
 
             LogbookDataGrid.ItemsSource = null;
             LogbookDataGrid.ItemsSource =
-                sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
+                sailTripList.Where(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
         }
 
         private RegularTrip _regularSailTrip = new RegularTrip();
@@ -72,7 +72,7 @@ namespace McSntt.Views.UserControls
 
             var db = DalLocator.RegularTripDal;
             var usrId = GlobalInformation.CurrentUser.PersonId;
-            var sailTripList = db.GetAll(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null).ToList();
+            var sailTripList = db.GetAll(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null).ToList();
 
             LogbookDataGrid.ItemsSource = null;
             LogbookDataGrid.ItemsSource = sailTripList;
@@ -102,7 +102,7 @@ namespace McSntt.Views.UserControls
         {
             if (UpcommingTripsDataGrid.SelectedIndex != -1)
             {
-                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).Captain.PersonId)
+                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).CreatedBy.PersonId)
                 {
                     DeleteButton.IsEnabled = true;
                     ChangeButton.IsEnabled = true;
