@@ -83,6 +83,7 @@ namespace McSntt.Views.Windows
             DateTimeStart.Value = departure;
             DateTimeEnd.Value = arrival;
             PurposeTextBox.Text = "Undervisning af:" + currentTeam.Name;
+            
             SaveButton_Click(new object(), new RoutedEventArgs());
         }
 

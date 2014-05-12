@@ -111,6 +111,13 @@ namespace McSntt.Views.UserControls
             return teams;
         }
 
+        private IEnumerable GetStudents()
+        {
+            var students = DalLocator.StudentMemberDal.GetAll();
+            DalLocator.StudentMemberDal.LoadData(students);
+            return students;
+        } 
+
         #region UpdateLecture
         private void SaveLectureInfo()
         {
@@ -350,6 +357,8 @@ namespace McSntt.Views.UserControls
         
         private void promoteTeam_Click(object sender, RoutedEventArgs e)
         {
+            var promotelist = new List<StudentMember>();
+
             foreach (var member in (((Team)teamDropdown.SelectedItem).TeamMembers))
             {
                 if (member.Night == true && member.Navigation == true &&
@@ -357,7 +366,7 @@ namespace McSntt.Views.UserControls
                     member.Drabant == true && member.Gaffelrigger == true)
                 {
                     PromoteTeam(member);
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.Remove(member);
+                    promotelist.Add(member);
                 }
                 else
                 {
@@ -366,11 +375,24 @@ namespace McSntt.Views.UserControls
                                     member.Night + "\nDrabantsejling " + member.Drabant + "\nGaffelriggersejling " + member.Gaffelrigger);
                 }
             }
+            foreach (var studentMember in promotelist)
+            {
+                ((Team) teamDropdown.SelectedItem).TeamMembers.Remove(studentMember);
+                DalLocator.StudentMemberDal.Delete(studentMember);
+            }
+            DalLocator.TeamDal.Update((Team) teamDropdown.SelectedItem);
+            
 
             if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 0)
             {
-                DalLocator.TeamDal.Delete((Team) teamDropdown.SelectedItem);
+                DalLocator.TeamDal.Delete((Team)teamDropdown.SelectedItem);
             }
+
+            ClearFields();
+            teamDropdown.ItemsSource = null;
+            teamDropdown.ItemsSource = GetTeams();
+            DataGridCollection = CollectionViewSource.GetDefaultView(GetStudents());
+            DataGridCollection.Filter = new Predicate<object>(Filter);
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)

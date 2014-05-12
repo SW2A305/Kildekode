@@ -95,6 +95,8 @@ namespace McSntt.Views.Windows
                     memberWindow.Owner = this.Owner;
                     break;
                 case SailClubMember.Positions.Student:
+                    GlobalInformation.CurrentStudentMember = DalLocator.StudentMemberDal.GetAll(
+                        x => x.SailClubMemberId == p.SailClubMemberId).FirstOrDefault();
                     var studentWindow = new StudentMainWindow(this);
                     studentWindow.Show();
                     studentWindow.Owner = this.Owner;

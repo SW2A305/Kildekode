@@ -26,23 +26,27 @@ namespace McSntt.Views.UserControls
         {
             InitializeComponent();
             progressGrid.IsEnabled = false;
-            practicalCheck1.IsChecked = ((StudentMember) GlobalInformation.CurrentUser).Drabant;
-            practicalCheck2.IsChecked = ((StudentMember) GlobalInformation.CurrentUser).Gaffelrigger;
-            practicalCheck3.IsChecked = ((StudentMember)GlobalInformation.CurrentUser).Night;
-            theoryCheck1.IsChecked = ((StudentMember)GlobalInformation.CurrentUser).RopeWorks;
-            theoryCheck2.IsChecked = ((StudentMember)GlobalInformation.CurrentUser).Navigation;
-            theoryCheck3.IsChecked = ((StudentMember)GlobalInformation.CurrentUser).Motor;
+            practicalCheck1.IsChecked = GlobalInformation.CurrentStudentMember.Drabant;
+            practicalCheck2.IsChecked = GlobalInformation.CurrentStudentMember.Gaffelrigger;
+            practicalCheck3.IsChecked = GlobalInformation.CurrentStudentMember.Night;
+            theoryCheck1.IsChecked = GlobalInformation.CurrentStudentMember.RopeWorks;
+            theoryCheck2.IsChecked = GlobalInformation.CurrentStudentMember.Navigation;
+            theoryCheck3.IsChecked = GlobalInformation.CurrentStudentMember.Motor;
             practicalCheck1.IsEnabled = false;
             practicalCheck2.IsEnabled = false;
             practicalCheck3.IsEnabled = false;
             theoryCheck1.IsEnabled = false;
             theoryCheck2.IsEnabled = false;
             theoryCheck3.IsEnabled = false;
-            teamName.Text = ((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Name;
-            level.Text = ((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Level == Team.ClassLevel.First ? "1. års sejlerhold" : "2. års sejlerhold";
+
+            DalLocator.StudentMemberDal.LoadData(GlobalInformation.CurrentStudentMember);
+            DalLocator.TeamDal.LoadData(GlobalInformation.CurrentStudentMember.AssociatedTeam);
+
+            teamName.Text = GlobalInformation.CurrentStudentMember.AssociatedTeam.Name;
+            level.Text = GlobalInformation.CurrentStudentMember.AssociatedTeam.Level == Team.ClassLevel.First ? "1. års sejlerhold" : "2. års sejlerhold";
             nextSessionDate.Text = "" +
-                                   (((StudentMember) GlobalInformation.CurrentUser).AssociatedTeam.Lectures.OrderBy(
-                                       lect => lect.DateOfLecture)).FirstOrDefault(lect => lect.DateOfLecture > DateTime.Now);
+                                   (GlobalInformation.CurrentStudentMember.AssociatedTeam.Lectures.OrderBy(
+                                       lect => lect.DateOfLecture)).FirstOrDefault(lect => lect.DateOfLecture > DateTime.Now).DateOfLectureString;
 
         }
 

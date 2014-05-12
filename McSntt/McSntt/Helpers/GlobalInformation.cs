@@ -8,5 +8,6 @@ namespace McSntt.Helpers
         static string UserFullName { get; set; }
         static int UserId { get; set; }
         public static SailClubMember CurrentUser { get; set; }
+        public static StudentMember CurrentStudentMember { get; set; }
     }
 }
