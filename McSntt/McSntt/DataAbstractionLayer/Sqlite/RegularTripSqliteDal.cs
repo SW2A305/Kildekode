@@ -117,7 +117,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                             String.Format("UPDATE {0} " +
                                           "SET departure_time = @departureTime, arrival_time = @arrivalTime, " +
                                           "boat_id = @boatId, captain_id = @captainId, logbook_id = @logbookId, " +
-                                          "purpose_and_area = @purposeAndArea, created_by_id = @createdById" +
+                                          "purpose_and_area = @purposeAndArea, created_by_id = @createdById, " +
                                           "weather_conditions = @weatherConditions " +
                                           "WHERE regular_trip_id = @regularTripId ",
                                           DatabaseManager.TableRegularTrips);
@@ -130,6 +130,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         foreach (RegularTrip regularTrip in items)
                         {
+                            // Link to crew, removing existing ones first
+                            using (SQLiteCommand deleteCommand = db.CreateCommand())
+                            {
+                                deleteCommand.CommandType = CommandType.Text;
+                                deleteCommand.CommandText =
+                                    String.Format("DELETE FROM {0} " +
+                                                  "WHERE regular_trip_id = @regularTripId",
+                                                  DatabaseManager.TableRegularTripCrewBinder);
+                                deleteCommand.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
+                                deleteCommand.ExecuteNonQuery();
+                            }
+
                             using (var transaction = db.BeginTransaction())
                             {
                                 tripCommand.Parameters.Clear();
@@ -147,18 +159,6 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 tripCommand.Parameters.Add(new SQLiteParameter("@weatherConditions",
                                                                                regularTrip.WeatherConditions));
                                 tripRowsUpdated = tripCommand.ExecuteNonQuery();
-
-                                // Link to crew, removing existing ones first
-                                using (SQLiteCommand deleteCommand = db.CreateCommand())
-                                {
-                                    deleteCommand.CommandType = CommandType.Text;
-                                    deleteCommand.CommandText =
-                                        String.Format("DELETE FROM {0} " +
-                                                      "WHERE regular_trip_id = @regularTripId",
-                                                      DatabaseManager.TableRegularTripCrewBinder);
-                                    deleteCommand.Parameters.Add(new SQLiteParameter("@regularTripId", regularTrip.RegularTripId));
-                                    deleteCommand.ExecuteNonQuery();
-                                }
 
                                 crewRowsExpected = 0;
 
