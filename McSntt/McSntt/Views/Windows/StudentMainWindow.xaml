@@ -5,7 +5,7 @@
         Title="Sundet Administration " Height="720" Width="1024" UseLayoutRounding="False" x:Name="UI">
 
     <Grid>
-        <TabControl Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl  Name="TopMenuTabControl" Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Style="{StaticResource TabItemStyle}"  Name="FrontPageTabItem">
                 <TabItem.Header>
                     <TextBlock Text="Forside" FontSize="23" Width="140" TextAlignment="Center"/>
