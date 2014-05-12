@@ -21,11 +21,10 @@
                                         Header="Fødselsdato" />
                     <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Telefon Nr." />
                     <DataGridTextColumn Binding="{Binding Email}" Header="Email" />
-                    <DataGridTextColumn Binding="{Binding Gender}" Header="Køn" />
                     <DataGridTextColumn Binding="{Binding Cityname}" Header="By" />
                     <DataGridTextColumn Binding="{Binding Postcode}" Header="Post nr." />
                     <DataGridTextColumn Binding="{Binding Address}" Header="Addresse" />
-                    <DataGridTextColumn Binding="{Binding MemberId}" Header="Memberid" Width="*" />
+                    <DataGridTextColumn Binding="{Binding SailClubMemberId}" Header="Member id" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -117,7 +117,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                             String.Format("UPDATE {0} " +
                                           "SET  team_id = @teamId, date_of_lecture = @dateOfLecture, " +
                                           "rope_works = @ropeWorks, navigation = @navigation, motor = @motor, " +
-                                          "drabant = @motor, gaffelrigger = @gaffelrigger, night = @night" +
+                                          "drabant = @drabant, gaffelrigger = @gaffelrigger, night = @night " +
                                           "WHERE lecture_id = @lectureId",
                                           DatabaseManager.TableLectures);
 

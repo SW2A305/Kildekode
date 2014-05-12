@@ -21,9 +21,7 @@ namespace McSntt.Views.UserControls
 
             DataGridCollection = CollectionViewSource.GetDefaultView(sailClubMemberDal.GetAll());
             DataGridCollection.Filter = new Predicate<object>(Filter);
-
-           
-        }
+        }   
 
         #region Search
         // In order to seach these must exist.

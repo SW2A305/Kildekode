@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -42,7 +43,7 @@ namespace McSntt.Views.UserControls
 
             BookButton.IsEnabled = false;
             ChangeButton.IsEnabled = false;
-            DeleteButton.IsEnabled = false;
+            DeleteButton.IsEnabled = true;
 
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
                 AnswerDamageReportButton.Visibility = Visibility.Visible;
@@ -60,6 +61,13 @@ namespace McSntt.Views.UserControls
             logBookWindow.ShowDialog();
         }
 
+        private IEnumerable<RegularTrip> GetBookings()
+        {
+            return regularTripDal.GetAll(
+                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
+                        .OrderBy(x => x.DepartureTime);
+        }
+
 
         private void BoatComboBox_OnSelectionChanged(object sender, EventArgs e)
         {
@@ -72,12 +80,9 @@ namespace McSntt.Views.UserControls
                     regularTripDal.GetAll(
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.Logbook != null);
 
-                IEnumerable<RegularTrip> ListOfBookings =
-                    regularTripDal.GetAll(
-                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
-                        .OrderBy(x => x.DepartureTime);
+                var listOfBookings = GetBookings();
 
-                // Grey out the book button for support memebers and guests
+                // Grey out the book button for support members and guests
                 if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.SupportMember)
                     BookButton.IsEnabled = true;
 
@@ -114,7 +119,7 @@ namespace McSntt.Views.UserControls
                 LogbookDataGrid.ItemsSource = ListOfTripsWithLogbook;
 
                 BookedTripsDataGrid.ItemsSource = null;
-                BookedTripsDataGrid.ItemsSource = ListOfBookings;
+                BookedTripsDataGrid.ItemsSource = listOfBookings;
             }
             else
             {
@@ -164,6 +169,10 @@ namespace McSntt.Views.UserControls
         {
             var BookWindow = new CreateBoatBookingWindow(BoatComboBox.SelectedIndex);
             BookWindow.ShowDialog();
+
+            var listOfBookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listOfBookings;
         }
 
         private void AddBoatButton_Click(object sender, RoutedEventArgs e)
@@ -176,6 +185,10 @@ namespace McSntt.Views.UserControls
         {
             var boatWindow = new CreateAndEditBoats((Boat) BoatComboBox.SelectedItem);
             boatWindow.ShowDialog();
+
+            var listOfBookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listOfBookings;
 	}
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -185,7 +198,12 @@ namespace McSntt.Views.UserControls
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //TODO: Database slet medlem og opdater grid
+            DalLocator.RegularTripDal.Delete((RegularTrip) BookedTripsDataGrid.SelectedItem);
+
+            var listOfBookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listOfBookings;
+
         }
 
         private void BookedTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
