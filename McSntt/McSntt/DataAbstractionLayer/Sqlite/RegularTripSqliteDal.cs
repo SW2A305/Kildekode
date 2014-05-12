@@ -28,9 +28,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         tripCommand.CommandType = CommandType.Text;
                         tripCommand.CommandText =
                             String.Format("INSERT INTO {0} (departure_time, arrival_time, boat_id, captain_id, " +
-                                          "expected_arrival_time, purpose_and_area, weather_conditions, logbook_id) " +
+                                          "purpose_and_area, weather_conditions, logbook_id, created_by_id) " +
                                           "VALUES (@departureTime, @arrivalTime, @boatId, @captainId, " +
-                                          "@expectedArrivalTime, @purposeAndArea, @weatherConditions, @logbookId)",
+                                          "@purposeAndArea, @weatherConditions, @logbookId, @createdById)",
                                           DatabaseManager.TableRegularTrips);
 
                         personCommand.CommandType = CommandType.Text;
@@ -47,10 +47,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 tripCommand.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@createdById", regularTrip.CreatedById));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@departureTime", regularTrip.DepartureTime));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
-                                tripCommand.Parameters.Add(new SQLiteParameter("@expectedArrivalTime",
-                                                                           regularTrip.ExpectedArrivalTime));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@purposeAndArea", regularTrip.PurposeAndArea));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@weatherConditions",
                                                                            regularTrip.WeatherConditions));
@@ -118,8 +117,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                             String.Format("UPDATE {0} " +
                                           "SET departure_time = @departureTime, arrival_time = @arrivalTime, " +
                                           "boat_id = @boatId, captain_id = @captainId, logbook_id = @logbookId, " +
-                                          "expected_arrival_time = @expectedArrivalTime, " +
-                                          "purpose_and_area = @purposeAndArea, weather_conditions = @weatherConditions " +
+                                          "purpose_and_area = @purposeAndArea, created_by_id = @createdById" +
+                                          "weather_conditions = @weatherConditions " +
                                           "WHERE regular_trip_id = @regularTripId ",
                                           DatabaseManager.TableRegularTrips);
 
@@ -139,11 +138,10 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 tripCommand.Parameters.Add(new SQLiteParameter("@boatId", regularTrip.BoatId));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@captainId", regularTrip.CaptainId));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@logbookId", regularTrip.LogbookId));
+                                tripCommand.Parameters.Add(new SQLiteParameter("@createdById", regularTrip.CreatedById));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@departureTime",
                                                                                regularTrip.DepartureTime));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@arrivalTime", regularTrip.ArrivalTime));
-                                tripCommand.Parameters.Add(new SQLiteParameter("@expectedArrivalTime",
-                                                                               regularTrip.ExpectedArrivalTime));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@purposeAndArea",
                                                                                regularTrip.PurposeAndArea));
                                 tripCommand.Parameters.Add(new SQLiteParameter("@weatherConditions",
@@ -266,15 +264,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                                  RegularTripId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("regular_trip_id")),
                                                  ArrivalTime = reader.GetDateTime(reader.GetOrdinal("arrival_time")),
                                                  DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
-                                                 ExpectedArrivalTime =
-                                                     reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
                                                  PurposeAndArea =
                                                      DatabaseManager.ReadString(reader, reader.GetOrdinal("purpose_and_area")),
                                                  WeatherConditions =
                                                      DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions")),
                                                  BoatId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("boat_id")),
                                                  CaptainId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("captain_id")),
-                                                 LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id"))
+                                                 LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id")),
+                                                 CreatedById = DatabaseManager.ReadInt(reader, reader.GetOrdinal("created_by_id"))
                                              });
                         }
                     }
@@ -314,12 +311,12 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     RegularTripId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("regular_trip_id")),
                                     ArrivalTime = reader.GetDateTime(reader.GetOrdinal("arrival_time")),
                                     DepartureTime = reader.GetDateTime(reader.GetOrdinal("departure_time")),
-                                    ExpectedArrivalTime = reader.GetDateTime(reader.GetOrdinal("expected_arrival_time")),
                                     PurposeAndArea = DatabaseManager.ReadString(reader, reader.GetOrdinal("purpose_and_area")),
                                     WeatherConditions = DatabaseManager.ReadString(reader, reader.GetOrdinal("weather_conditions")),
                                     BoatId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("boat_id")),
                                     CaptainId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("captain_id")),
-                                    LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id"))
+                                    LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id")),
+                                    CreatedById = DatabaseManager.ReadInt(reader, reader.GetOrdinal("created_by_id"))
                                 };
                         }
                     }
@@ -337,6 +334,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             var personDal = DalLocator.PersonDal;
 
             if (item.CaptainId > 0) { item.Captain = personDal.GetOne(item.CaptainId); }
+
+            // Load CreatedBy
+            if (item.CreatedById > 0) { item.CreatedBy = personDal.GetOne(item.CreatedById); }
 
             // Load Boat
             var boatDal = DalLocator.BoatDal;

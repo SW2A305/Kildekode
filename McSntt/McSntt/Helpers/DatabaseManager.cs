@@ -115,6 +115,7 @@ namespace McSntt.Helpers
         private static void UpdateDatabase(long fromVersion, long toVersion)
         {
             if (fromVersion == 0 && toVersion == 1) { UpdateDatabaseFromVersion0ToVersion1(); }
+            if (fromVersion == 1 && toVersion == 2) { UpdateDatabaseFromVersion1ToVersion2(); }
         }
 
         private static void UpdateDatabaseFromVersion0ToVersion1()
@@ -390,6 +391,54 @@ namespace McSntt.Helpers
 
             // TODO Remove this eventually...
             if (!_useTestDb) { DbSeedData.CreateSeedData(); }
+        }
+
+        private static void UpdateDatabaseFromVersion1ToVersion2()
+        {
+            using (var db = DbConnection)
+            {
+                db.Open();
+
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        #region Alter Table: RegularTrips
+                        using (var command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("ALTER TABLE {0} " +
+                                              "ADD COLUMN created_by_id INTEGER",
+                                              DatabaseManager.TableRegularTrips);
+
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
+
+                        #region Update DB version
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText = String.Format("UPDATE {0} SET value = @value WHERE name = @name",
+                                                                TableDbSettings);
+                            command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
+                            command.Parameters.Add(new SQLiteParameter("@value", 2));
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+
+                db.Close();
+            }
         }
 
         private static void CreateDatabase()
