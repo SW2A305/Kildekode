@@ -29,7 +29,6 @@ namespace McSntt.Views.UserControls
     {
         public IList<Event> EventsList = new List<Event>();
         
-
         public EventsAdmin()
         {
             InitializeComponent();
@@ -44,8 +43,8 @@ namespace McSntt.Views.UserControls
 
             EventsList = eventDal.GetAll().ToList();
             eventDal.LoadData(EventsList);
+            EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
             AgendaListbox.ItemsSource = EventsList;
-
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -67,9 +66,7 @@ namespace McSntt.Views.UserControls
                 AgendaListbox.Items.Refresh();
 
                 DalLocator.EventDal.Create(newEvent);
-            }
-
-            
+            }            
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
@@ -108,9 +105,11 @@ namespace McSntt.Views.UserControls
 
             if (i >= 0)
             {
-                EventsList.RemoveAt(i);
-
                 DalLocator.EventDal.Delete(EventsList[i]);
+
+                EventsList = DalLocator.EventDal.GetAll().ToList();
+                DalLocator.EventDal.LoadData(EventsList);
+                AgendaListbox.ItemsSource = EventsList;
             }
             else MessageBox.Show("Vælg en begivenhed som skal slettes!");
 
@@ -132,7 +131,7 @@ namespace McSntt.Views.UserControls
                         selectedEvent.Participants = new List<Person>();
                     }
 
-                    if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                    if (selectedEvent.Participants.Any(x => x.PersonId == GlobalInformation.CurrentUser.PersonId))
                     {
                         MessageBox.Show("Du er allerede tilmeldt!");
                     }
@@ -159,7 +158,7 @@ namespace McSntt.Views.UserControls
 
                 if (selectedEvent.SignUpReq == false)
                 {
-                    MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+                    MessageBox.Show("Der er ikke krævet tilmelding på denne begivenhed!");
                 }
                 else
                 {
@@ -182,16 +181,20 @@ namespace McSntt.Views.UserControls
                 {
                     if (selectedEvent.Participants != null)
                     {
-                        if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                        if (selectedEvent.Participants.Any(x => x.PersonId == GlobalInformation.CurrentUser.PersonId))
                         {
-                            selectedEvent.Participants.Remove(GlobalInformation.CurrentUser);
+                            var currentUser =
+                                selectedEvent.Participants.FirstOrDefault(x => x.PersonId == GlobalInformation.CurrentUser.PersonId);
+
+                            selectedEvent.Participants.Remove(currentUser);
                             MessageBox.Show("Du er nu frameldt!");
+                            DalLocator.EventDal.Update(selectedEvent);
                         }
                         else MessageBox.Show("Du er ikke tilmeldt begivenheden!");
                     }
                     else MessageBox.Show("Der er ikke nogen tilmeldte til begivenheden!");
                 }
-                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begivenhed!");
             }
             else MessageBox.Show("Vælg en begivenhed at framelde dig fra!");
         }
