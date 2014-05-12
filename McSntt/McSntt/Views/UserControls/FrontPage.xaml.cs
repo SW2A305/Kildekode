@@ -88,19 +88,30 @@ namespace McSntt.Views.UserControls
         {
             var changewindow = new CreateBoatBookingWindow((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
             changewindow.ShowDialog();
+
+            LoadData();
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //TODO: Database slet medlem og opdater grid
+            DalLocator.RegularTripDal.Delete((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            LoadData();
         }
 
         private void UpcommingTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (UpcommingTripsDataGrid.SelectedIndex != -1)
             {
-                DeleteButton.IsEnabled = true;
-                ChangeButton.IsEnabled = true;
+                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).Captain.PersonId)
+                {
+                    DeleteButton.IsEnabled = true;
+                    ChangeButton.IsEnabled = true;
+                }
+                else
+                {
+                    DeleteButton.IsEnabled = false;
+                    ChangeButton.IsEnabled = false;
+                }
             }
         }
     }
