@@ -56,7 +56,7 @@ namespace McSntt.Views.UserControls
             teamDropdown.DisplayMemberPath = "Name";
             teamDropdown.SelectedValuePath = "TeamId";
 
-            lectureDropdown.DisplayMemberPath = "DateOfLecture";
+            lectureDropdown.DisplayMemberPath = "DateOfLectureString";
             lectureDropdown.SelectedValuePath = "LectureId";
 
             DataGridCollection = CollectionViewSource.GetDefaultView(students);
@@ -81,9 +81,11 @@ namespace McSntt.Views.UserControls
             CurrentMemberDataGrid.ItemsSource = null;
             MembersList.Clear();
             lectureDropdown.ItemsSource = null;
+            lectureDropdown.IsEnabled = false;
             promoteTeam.IsEnabled = false;
             newLecture1.IsEnabled = false;
             DeleteLecture.IsEnabled = false;
+            StudentsProgress.IsEnabled = false;
             StudentCheckBoxNameChange();
             TeacherName.Width = 92;
             TeacherName.Text = "";
@@ -282,6 +284,8 @@ namespace McSntt.Views.UserControls
                 lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
                 promoteTeam.IsEnabled = ((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
                 newLecture1.IsEnabled = true;
+                StudentsProgress.IsEnabled = true;
+                lectureDropdown.IsEnabled = true;
                 if (((Team)teamDropdown.SelectedItem).Teacher != null)
                 {
                     TeacherName.Width = Double.NaN;
