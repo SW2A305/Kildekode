@@ -33,7 +33,7 @@ namespace McSntt.Helpers
                                 NickName = "Isabella",
                                 Type = BoatType.J80,
                                 ImagePath = "J80.jpg",
-                                Operational = false
+                                Operational = true
                             },
 
                             new Boat()
@@ -61,7 +61,7 @@ namespace McSntt.Helpers
                              {
                                  Created = true,
                                  Description = "Vi spiser Pizza ved Molen",
-                                 EventDate = DateTime.Now.AddDays(2),
+                                 EventDate = new DateTime(2014,06,20,19,00,00),
                                  EventTitle = "PizzaParty",
                                  SignUpReq = true,
                              },
@@ -387,7 +387,7 @@ namespace McSntt.Helpers
                 new StudentMember
                 {
                     FirstName = "Michelle",
-                    LastName = "Kristiansen",
+                    LastName = "Kristensen",
                     Address = "Møllevænget 31",
                     Postcode = "3500",
                     Cityname = "Værløse",
@@ -397,7 +397,13 @@ namespace McSntt.Helpers
                     PhoneNumber = "50301773",
                     Username = "michelle",
                     PasswordHash = EncryptionHelper.Sha256("kristensen"),
-                    DateOfBirth = "1998-10-26"
+                    DateOfBirth = "1998-10-26",
+                    Drabant = true,
+                    Gaffelrigger = true,
+                    Motor = true,
+                    Night = true,
+                    RopeWorks = true,
+                    Navigation = true
                 },
                 new StudentMember
                 {
@@ -412,7 +418,13 @@ namespace McSntt.Helpers
                     PhoneNumber = "52828168",
                     Username = "nikolaj",
                     PasswordHash = EncryptionHelper.Sha256("berg"),
-                    DateOfBirth = "1996-08-10"
+                    DateOfBirth = "1996-08-10",
+                    Drabant = true,
+                    Gaffelrigger = true,
+                    Motor = true,
+                    Night = true,
+                    RopeWorks = true,
+                    Navigation = true
                 },
                 new StudentMember
                 {
@@ -427,7 +439,13 @@ namespace McSntt.Helpers
                     PhoneNumber = "52320020",
                     Username = "clara",
                     PasswordHash = EncryptionHelper.Sha256("kjeldsen"),
-                    DateOfBirth = "1998-01-31"
+                    DateOfBirth = "1998-01-31",
+                    Drabant = true,
+                    Gaffelrigger = true,
+                    Motor = true,
+                    Night = true,
+                    RopeWorks = true,
+                    Navigation = true
                 },
                 new StudentMember
                 {
@@ -442,7 +460,13 @@ namespace McSntt.Helpers
                     PhoneNumber = "61872005",
                     Username = "christoffer",
                     PasswordHash = EncryptionHelper.Sha256("bak"),
-                    DateOfBirth = "1996-06-29"
+                    DateOfBirth = "1996-06-29",
+                    Drabant = true,
+                    Gaffelrigger = true,
+                    Motor = true,
+                    Night = true,
+                    RopeWorks = true,
+                    Navigation = true
                 },
                 new StudentMember
                 {
@@ -457,7 +481,13 @@ namespace McSntt.Helpers
                     PhoneNumber = "52539214",
                     Username = "christoffer",
                     PasswordHash = EncryptionHelper.Sha256("bak"),
-                    DateOfBirth = "1996-06-29"
+                    DateOfBirth = "1996-06-29",
+                    Drabant = true,
+                    Gaffelrigger = true,
+                    Motor = true,
+                    Night = true,
+                    RopeWorks = true,
+                    Navigation = true
                 },
                 new StudentMember
                 {
