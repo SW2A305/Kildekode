@@ -110,7 +110,7 @@ namespace McSntt.Views.UserControls
             {
                 EventsList.RemoveAt(i);
 
-                DalLocator.EventDal.Delete(EventsList[i]);
+                DalLocator.EventDal.Delete(EventsList[i + 1]);
             }
             else MessageBox.Show("Vælg en begivenhed som skal slettes!");
 
