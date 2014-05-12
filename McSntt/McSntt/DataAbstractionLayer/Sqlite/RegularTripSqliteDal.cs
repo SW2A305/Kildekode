@@ -389,6 +389,17 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
         }
 
+        public bool CanMakeReservation(Boat boat, DateTime departureTime, DateTime arrivalTime)
+        {
+            var reservations =
+                this.GetAll(
+                            trip =>
+                            trip.BoatId == boat.BoatId && trip.DepartureTime <= arrivalTime
+                            && trip.ArrivalTime >= departureTime);
+
+            return !reservations.Any();
+        }
+
         public IEnumerable<RegularTrip> GetAll(Func<RegularTrip, bool> predicate)
         {
             var regularTrips = this.GetAll().ToArray();
