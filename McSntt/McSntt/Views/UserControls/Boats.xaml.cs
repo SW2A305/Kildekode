@@ -43,7 +43,7 @@ namespace McSntt.Views.UserControls
 
             BookButton.IsEnabled = false;
             ChangeButton.IsEnabled = false;
-            DeleteButton.IsEnabled = false;
+            DeleteButton.IsEnabled = true;
 
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
                 AnswerDamageReportButton.Visibility = Visibility.Visible;
@@ -185,6 +185,10 @@ namespace McSntt.Views.UserControls
         {
             var boatWindow = new CreateAndEditBoats((Boat) BoatComboBox.SelectedItem);
             boatWindow.ShowDialog();
+
+            var listOfBookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listOfBookings;
 	}
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -194,7 +198,12 @@ namespace McSntt.Views.UserControls
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //TODO: Database slet medlem og opdater grid
+            DalLocator.RegularTripDal.Delete((RegularTrip) BookedTripsDataGrid.SelectedItem);
+
+            var listOfBookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listOfBookings;
+
         }
 
         private void BookedTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
