@@ -56,6 +56,9 @@ namespace McSntt.Views.Windows
             CaptainComboBox.SelectedValuePath = "MemberId";
             CaptainComboBox.ItemsSource = CrewList;
 
+            CrewList.Add(GlobalInformation.CurrentUser);
+            CrewDataGrid.ItemsSource = CrewList;
+
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
         }
