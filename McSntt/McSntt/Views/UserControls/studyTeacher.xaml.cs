@@ -66,6 +66,7 @@ namespace McSntt.Views.UserControls
             lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
             promoteTeam.IsEnabled = false;
             newLecture1.IsEnabled = false;
+            DeleteLecture.IsEnabled = false;
         }
 
         #region Methods
@@ -82,7 +83,7 @@ namespace McSntt.Views.UserControls
             lectureDropdown.ItemsSource = null;
             promoteTeam.IsEnabled = false;
             newLecture1.IsEnabled = false;
-            LectureDataClear();
+            DeleteLecture.IsEnabled = false;
             StudentCheckBoxNameChange();
             TeacherName.Width = 92;
             TeacherName.Text = "";
@@ -99,6 +100,13 @@ namespace McSntt.Views.UserControls
             upgradedMember.Position = SailClubMember.Positions.Member;
             upgradedMember.BoatDriver = true;
             DalLocator.SailClubMemberDal.Create(upgradedMember);
+        }
+
+        private IEnumerable GetTeams()
+        {
+            var teams = DalLocator.TeamDal.GetAll();
+            DalLocator.TeamDal.LoadData(teams);
+            return teams;
         }
 
         #region UpdateLecture
@@ -168,7 +176,8 @@ namespace McSntt.Views.UserControls
         {
             int i = 0;
             if (teamDropdown.SelectedItem == null) return;
-
+            if (((Team)teamDropdown.SelectedItem).TeamMembers == null) return;
+            
             if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
             {
                 studentOne.IsEnabled = StudentChecBoxIsEnable();
@@ -305,16 +314,16 @@ namespace McSntt.Views.UserControls
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
             teamDropdown.SelectedIndex = -1;
-            // TODO: We need a count for the DbSet
-            int currentTeamDropdownCount = DalLocator.TeamDal.GetAll().Count();
+            int currentTeamDropdownCount = teamDropdown.Items.Count;
             var newTeamWindow = new NewTeamWindow();
             newTeamWindow.ShowDialog();
             teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
+            
+            teamDropdown.ItemsSource = GetTeams();
 
-            if (currentTeamDropdownCount != StudyMockData.TeamListGlobal.Count)
+            if (currentTeamDropdownCount != teamDropdown.Items.Count)
             {
-                teamDropdown.SelectedIndex = StudyMockData.TeamListGlobal.Count - 1;
+                teamDropdown.SelectedIndex = teamDropdown.Items.Count - 1;
             }
         }
 
@@ -326,7 +335,7 @@ namespace McSntt.Views.UserControls
                 
                 DalLocator.TeamDal.Delete(team);
                 teamDropdown.ItemsSource = null;
-                teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
+                teamDropdown.ItemsSource = GetTeams();
                 
                 ClearFields();
             }
@@ -350,7 +359,11 @@ namespace McSntt.Views.UserControls
                                     member.Night + "\nDrabantsejling " + member.Drabant + "\nGaffelriggersejling " + member.Gaffelrigger);
                 }
             }
-            // TODO: Team should probably be deleted if all members have been upgraded
+
+            if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 0)
+            {
+                DalLocator.TeamDal.Delete((Team) teamDropdown.SelectedItem);
+            }
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
@@ -378,6 +391,7 @@ namespace McSntt.Views.UserControls
 
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
+            if (teamDropdown.SelectedIndex == -1){return;}
             int currentTeamDropdownIndex = teamDropdown.SelectedIndex;
             var currentTeam = ((Team) teamDropdown.SelectedItem);
 
@@ -390,15 +404,18 @@ namespace McSntt.Views.UserControls
                 currentTeam.Level = Team.ClassLevel.Second;
             }
 
-            if (currentTeam.Name != teamName.Text)
+            if (teamName.Text != String.Empty)
             {
-                if (DalLocator.TeamDal.GetAll().All(x => x.Name != teamName.Text))
+                if (currentTeam.Name != teamName.Text)
                 {
-                    currentTeam.Name = teamName.Text;
-                }
-                else
-                {
-                    MessageBox.Show("Et hold med dette navn eksisterer allerede!");
+                    if (DalLocator.TeamDal.GetAll().All(x => x.Name != teamName.Text))
+                    {
+                        currentTeam.Name = teamName.Text;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Et hold med dette navn eksisterer allerede!");
+                    }
                 }
             }
 
@@ -412,7 +429,7 @@ namespace McSntt.Views.UserControls
             DalLocator.TeamDal.Update(currentTeam);
 
             teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = DalLocator.TeamDal.GetAll();
+            teamDropdown.ItemsSource = GetTeams();
             teamDropdown.SelectedIndex = currentTeamDropdownIndex;
         }
         #endregion
@@ -426,6 +443,7 @@ namespace McSntt.Views.UserControls
             if (lectureDropdown.SelectedIndex != -1)
             {
                 lectureGrid.IsEnabled = true;
+                DeleteLecture.IsEnabled = true;
             }
             if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
             {
@@ -466,6 +484,20 @@ namespace McSntt.Views.UserControls
             DalLocator.LectureDal.Delete(lecture);
             lectureDropdown.ItemsSource = null;
             lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+        }
+
+        private void StudentsProgress_Click(object sender, RoutedEventArgs e)
+        {
+            if ((Team)teamDropdown.SelectedItem != null)
+            {
+                var studentProgress = new StudentsProgressWindow(((Team)teamDropdown.SelectedItem));
+                studentProgress.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Der er ikke valgt et hold");
+            }
+
         }
 
         #endregion
@@ -513,7 +545,7 @@ namespace McSntt.Views.UserControls
         }
         public bool Filter(object obj)
         {
-            var data = obj as SailClubMember;
+            var data = obj as StudentMember;
 
             if (data != null && data.Position == SailClubMember.Positions.Student)
             {
@@ -533,7 +565,7 @@ namespace McSntt.Views.UserControls
 
                     if (data.SailClubMemberId.ToString().Contains(lower))
                         return true;
-
+                    
                     // If none succeeds return false
                     return false;
                 }
