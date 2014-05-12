@@ -50,6 +50,7 @@
         
         <Label Content="Fornavn:" HorizontalAlignment="Left" Margin="20,317,0,0" VerticalAlignment="Top" Width="78"/>
         <Label Content="Efternavn:" HorizontalAlignment="Left" Margin="20,354,0,0" VerticalAlignment="Top" Width="78"/>
+        <CheckBox x:Name="IsBoatDriver" Content="Har bådførerbevis" HorizontalAlignment="Left" Margin="82,386,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

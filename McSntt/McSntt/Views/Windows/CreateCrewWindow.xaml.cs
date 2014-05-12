@@ -159,12 +159,14 @@ namespace McSntt.Views.Windows
                     var p = new Person();
                     p.FirstName = FirstNameBox.Text;
                     p.LastName = LastNameBox.Text;
+                    p.BoatDriver = IsBoatDriver.IsChecked.GetValueOrDefault();
                     CrewList.Add(p);
 
                     RefreshDatagrid(CurrentCrewDataGrid, CrewList);
 
                     FirstNameBox.Clear();
                     LastNameBox.Clear();
+                    IsBoatDriver.IsChecked = false;
                 }
             }
             else
