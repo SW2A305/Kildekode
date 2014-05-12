@@ -38,7 +38,7 @@ namespace McSntt.Views.Windows
             CrewDataGrid.ItemsSource = null;
             CrewDataGrid.ItemsSource = CrewList;
             CaptainComboBox.ItemsSource = null;
-            CaptainComboBox.ItemsSource = CrewList;
+            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
         }
 
         public CreateBoatBookingWindow(int index)
@@ -53,7 +53,7 @@ namespace McSntt.Views.Windows
 
             CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.SelectedValuePath = "MemberId";
-            CaptainComboBox.ItemsSource = CrewList;
+            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
 
             CrewList.Add(GlobalInformation.CurrentUser);
             CrewDataGrid.ItemsSource = CrewList;
@@ -98,7 +98,7 @@ namespace McSntt.Views.Windows
             CrewDataGrid.ItemsSource = null;
             CrewDataGrid.ItemsSource = CrewList;
             CaptainComboBox.ItemsSource = null;
-            CaptainComboBox.ItemsSource = CrewList;
+            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
 
             // Assign a default captain to the first member
             if (CaptainComboBox.SelectedIndex == -1 && CrewList.Count > 0)
