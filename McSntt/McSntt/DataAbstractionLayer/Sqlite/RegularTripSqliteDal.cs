@@ -130,7 +130,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         foreach (RegularTrip regularTrip in items)
                         {
-                            // Link to crew, removing existing ones first
+                            // Remove existing crew entries
                             using (SQLiteCommand deleteCommand = db.CreateCommand())
                             {
                                 deleteCommand.CommandType = CommandType.Text;
@@ -160,6 +160,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                                                                regularTrip.WeatherConditions));
                                 tripRowsUpdated = tripCommand.ExecuteNonQuery();
 
+                                // Link to crew
                                 crewRowsExpected = 0;
 
                                 if (regularTrip.Crew != null)

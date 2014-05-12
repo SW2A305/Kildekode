@@ -135,6 +135,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         foreach (Logbook logbook in items)
                         {
+                            // Remove existing "actual crew" entries.
+                            using (SQLiteCommand deleteCommand = db.CreateCommand())
+                            {
+                                deleteCommand.CommandType = CommandType.Text;
+                                deleteCommand.CommandText =
+                                    String.Format("DELETE FROM {0} " +
+                                                  "WHERE logbook_id = @logbookId",
+                                                  DatabaseManager.TableLogbookActualCrewBinder);
+                                deleteCommand.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
+                                deleteCommand.ExecuteNonQuery();
+                            }
+
                             using (var transaction = db.BeginTransaction())
                             {
                                 command.Parameters.Clear();
@@ -151,18 +163,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                                                            logbook.AnswerFromBoatChief));
                                 logbookRowsUpdated = command.ExecuteNonQuery();
 
-                                // Link to actual crew, removing existing ones first
-                                using (SQLiteCommand deleteCommand = db.CreateCommand())
-                                {
-                                    deleteCommand.CommandType = CommandType.Text;
-                                    deleteCommand.CommandText =
-                                        String.Format("DELETE FROM {0} " +
-                                                      "WHERE logbook_id = @logbookId",
-                                                      DatabaseManager.TableLogbookActualCrewBinder);
-                                    deleteCommand.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
-                                    deleteCommand.ExecuteNonQuery();
-                                }
-
+                                // Link to actual crew
                                 crewRowsExpected = 0;
 
                                 if (logbook.ActualCrew != null)

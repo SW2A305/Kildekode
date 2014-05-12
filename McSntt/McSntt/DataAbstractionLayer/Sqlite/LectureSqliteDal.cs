@@ -129,6 +129,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         foreach (Lecture lecture in items)
                         {
+                            // Remove existing "present members" entries.
+                            using (SQLiteCommand deleteCommand = db.CreateCommand())
+                            {
+                                deleteCommand.CommandType = CommandType.Text;
+                                deleteCommand.CommandText =
+                                    String.Format("DELETE FROM {0} " +
+                                                  "WHERE lecture_id = @lectureId",
+                                                  DatabaseManager.TableLecturePresentMembersBinder);
+                                deleteCommand.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
+                                deleteCommand.ExecuteNonQuery();
+                            }
+
                             using (SQLiteTransaction transaction = db.BeginTransaction())
                             {
                                 lectureCommand.Parameters.Clear();
@@ -143,18 +155,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 lectureCommand.Parameters.Add(new SQLiteParameter("@night", lecture.Night));
                                 updatedRows += lectureCommand.ExecuteNonQuery();
 
-                                // Link to present members, removing existing ones first
-                                using (SQLiteCommand deleteCommand = db.CreateCommand())
-                                {
-                                    deleteCommand.CommandType = CommandType.Text;
-                                    deleteCommand.CommandText =
-                                        String.Format("DELETE FROM {0} " +
-                                                      "WHERE lecture_id = @lectureId",
-                                                      DatabaseManager.TableLecturePresentMembersBinder);
-                                    deleteCommand.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
-                                    deleteCommand.ExecuteNonQuery();
-                                }
-
+                                // Link to present members
                                 studentRowsExpected = 0;
 
                                 if (lecture.PresentMembers != null)
