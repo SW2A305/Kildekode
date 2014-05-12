@@ -124,6 +124,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         foreach (Event eventItem in items)
                         {
+                            // Remove existing participants entries.
+                            using (SQLiteCommand deleteCommand = db.CreateCommand())
+                            {
+                                deleteCommand.CommandType = CommandType.Text;
+                                deleteCommand.CommandText =
+                                    String.Format("DELETE FROM {0} " +
+                                                  "WHERE event_id = @eventId",
+                                                  DatabaseManager.TableEventParticipantsBinder);
+                                deleteCommand.Parameters.Add(new SQLiteParameter("@eventId", eventItem.EventId));
+                                deleteCommand.ExecuteNonQuery();
+                            }
+
                             using (SQLiteTransaction transaction = db.BeginTransaction())
                             {
                                 eventCommand.Parameters.Clear();
@@ -136,18 +148,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 eventCommand.Parameters.Add(new SQLiteParameter("@created", eventItem.Created));
                                 eventRowsUpdated = eventCommand.ExecuteNonQuery();
 
-                                // Link to participants, removing existing ones first
-                                using (SQLiteCommand deleteCommand = db.CreateCommand())
-                                {
-                                    deleteCommand.CommandType = CommandType.Text;
-                                    deleteCommand.CommandText =
-                                        String.Format("DELETE FROM {0} " +
-                                                      "WHERE event_id = @eventId",
-                                                      DatabaseManager.TableEventParticipantsBinder);
-                                    deleteCommand.Parameters.Add(new SQLiteParameter("@eventId", eventItem.EventId));
-                                    deleteCommand.ExecuteNonQuery();
-                                }
-
+                                // Link to participants
                                 participantsRowsExpected = 0;
 
                                 if (eventItem.Participants != null)
