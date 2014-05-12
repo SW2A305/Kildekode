@@ -159,7 +159,7 @@ namespace McSntt.Views.UserControls
 
                 if (selectedEvent.SignUpReq == false)
                 {
-                    MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+                    MessageBox.Show("Der er ikke krævet tilmelding på denne begivenhed!");
                 }
                 else
                 {
@@ -191,7 +191,7 @@ namespace McSntt.Views.UserControls
                     }
                     else MessageBox.Show("Der er ikke nogen tilmeldte til begivenheden!");
                 }
-                else MessageBox.Show("Der er ikke krævet tilmelding på denne begvenhed!");
+                else MessageBox.Show("Der er ikke krævet tilmelding på denne begivenhed!");
             }
             else MessageBox.Show("Vælg en begivenhed at framelde dig fra!");
         }
