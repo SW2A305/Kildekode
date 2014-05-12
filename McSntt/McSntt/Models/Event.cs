@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using McSntt.Views.Windows;
 
 namespace McSntt.Models
 {
@@ -15,8 +16,7 @@ namespace McSntt.Models
         public string SignUpMsg { get; set; }
         public bool Created { get; set; }
 
-        public ICollection<Person> Participants { get; set; }
-        
+        public ICollection<Person> Participants = new List<Person>();
         public override string ToString()
         {
             return Description;
