@@ -9,8 +9,6 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class EventsPopup : Window
     {
-
-
         public Event newEvent = new Event();
 
         public EventsPopup(Event newEvent)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace McSntt.Models
 {
@@ -37,6 +38,14 @@ namespace McSntt.Models
             }
         }
 
+        public string DateOfLectureString
+        {
+            get
+            {
+                return DateOfLecture.ToString("d", new CultureInfo("es-ES")) + " kl. " +
+                       DateOfLecture.ToString("t", new CultureInfo("da-DK"));
+            }
+        }
         public DateTime DateOfLecture { get; set; }
         #region UndervisningsOmråder
         public bool RopeWorksLecture { get; set; }
@@ -48,5 +57,6 @@ namespace McSntt.Models
         #endregion
 
         public ICollection<StudentMember> PresentMembers { get; set; }
+
     }
 }

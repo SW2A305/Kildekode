@@ -56,7 +56,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
                             <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
-                            <DataGridTextColumn Binding="{Binding MemberId}"        Header="MemberID" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding StudentMemberId}"        Header="ID" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -67,7 +67,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding FirstName}"       Header="Fornavn" />
                             <DataGridTextColumn Binding="{Binding LastName}"        Header="Efternavn" />
-                            <DataGridTextColumn Binding="{Binding MemberId}"        Header="Medlems ID" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding StudentMemberId}"        Header="ID" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

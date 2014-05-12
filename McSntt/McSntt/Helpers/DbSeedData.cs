@@ -64,6 +64,7 @@ namespace McSntt.Helpers
                                  EventDate = new DateTime(2014,06,20,19,00,00),
                                  EventTitle = "PizzaParty",
                                  SignUpReq = true,
+                                 SignUpMsg = "Tilmelding krævet!",
                              },
 
                              new Event()
@@ -73,6 +74,7 @@ namespace McSntt.Helpers
                                  EventDate = DateTime.Now.AddDays(2),
                                  EventTitle = "Fest i Klubhuset",
                                  SignUpReq = true,
+                                 SignUpMsg = "Tilmelding krævet!",
                              },
 
                              new Event()
@@ -82,6 +84,7 @@ namespace McSntt.Helpers
                                  EventDate = DateTime.Now.AddDays(10),
                                  EventTitle = "Generalforsamling i Klubhuset",
                                  SignUpReq = true,
+                                 SignUpMsg = "Tilmelding krævet!",
                              },
 
                              new Event()
