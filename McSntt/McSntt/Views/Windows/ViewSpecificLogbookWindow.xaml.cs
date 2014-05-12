@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using McSntt.Models;
 using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 
@@ -19,8 +20,9 @@ namespace McSntt.Views.Windows
             DateTimePickerPlannedDepature.Value = regularSailTrip.DepartureTime;
             DateTimePickerPlannedArrival.Value = regularSailTrip.ArrivalTime;
             CaptainComboBox.DisplayMemberPath = "FullName";
-            CaptainComboBox.ItemsSource = regularSailTrip.Crew; 
-            CaptainComboBox.SelectedValue = regularSailTrip.Captain;
+            CaptainComboBox.ItemsSource = regularSailTrip.Crew;
+            CaptainComboBox.SelectedValue =
+                regularSailTrip.Crew.FirstOrDefault(x => x.PersonId == regularSailTrip.Captain.PersonId);
             YesRadioButton.IsChecked = regularSailTrip.Logbook.DamageInflicted;
             NoRadioButton.IsChecked = !regularSailTrip.Logbook.DamageInflicted;
             DateTimePickerActualArrival.Value = regularSailTrip.Logbook.ActualArrivalTime;

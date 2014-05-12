@@ -25,27 +25,24 @@ namespace McSntt.Views.Windows
 
         private readonly DateTime _hasBeenFilledTime = new DateTime();
 
-        public CreateLogbookWindow(RegularTrip sailTrip, SailClubMember p)
+        public CreateLogbookWindow(RegularTrip regularSailTrip, SailClubMember p)
         {
             InitializeComponent();
             
             _currentSailClubMember = p;
 
-            RegularSailTrip = sailTrip;
-
-            CrewList = RegularSailTrip.Crew.ToList();
+            CrewList = regularSailTrip.Crew.ToList();
             CrewDataGrid.ItemsSource = CrewList;
-            PurposeTextBox.Text = RegularSailTrip.PurposeAndArea;
-            BoatTextBox.Text = RegularSailTrip.Boat.NickName;
-            DateTimePickerPlannedDepature.Value = RegularSailTrip.DepartureTime;
-            DateTimePickerPlannedArrival.Value = RegularSailTrip.ArrivalTime;
+            PurposeTextBox.Text = regularSailTrip.PurposeAndArea;
+            BoatTextBox.Text = regularSailTrip.Boat.NickName;
+            DateTimePickerPlannedDepature.Value = regularSailTrip.DepartureTime;
+            DateTimePickerPlannedArrival.Value = regularSailTrip.ArrivalTime;
             CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.ItemsSource = CrewList;
-            CaptainComboBox.SelectedValue = RegularSailTrip.Captain;
+            CaptainComboBox.SelectedValue = CrewList.FirstOrDefault(x => x.PersonId == regularSailTrip.Captain.PersonId);
             DateTimePickerActualArrival.Value = DateTime.Now;
             DateTimePickerActualDeparture.Value = DateTime.Now;
             _hasBeenFilledTime = DateTime.Now;
-
 
         }
         
