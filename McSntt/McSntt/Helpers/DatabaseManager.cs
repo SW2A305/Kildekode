@@ -29,7 +29,7 @@ namespace McSntt.Helpers
         #endregion
 
         #region Constants, fields and properties, oh my!
-        private const int DbVersion = 1;
+        private const int DbVersion = 2;
         private const string AppName = "McSnttt";
         private const string DbFileName = "McSnttt.db";
         private const string TestDbFileName = "McSnttt.Test.db";
