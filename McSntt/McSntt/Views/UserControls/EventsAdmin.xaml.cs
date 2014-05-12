@@ -44,7 +44,6 @@ namespace McSntt.Views.UserControls
             EventsList = eventDal.GetAll().ToList();
             eventDal.LoadData(EventsList);
             AgendaListbox.ItemsSource = EventsList;
-
         }
        
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -84,9 +83,9 @@ namespace McSntt.Views.UserControls
 
                 EventsList.Insert(i, selectedEvent);
 
-                //EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
+                EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
 
-                //AgendaListbox.ItemsSource = EventsList;
+                AgendaListbox.ItemsSource = EventsList;
 
                 AgendaListbox.Items.Refresh();
 
@@ -185,6 +184,7 @@ namespace McSntt.Views.UserControls
                         {
                             selectedEvent.Participants.Remove(GlobalInformation.CurrentUser);
                             MessageBox.Show("Du er nu frameldt!");
+                            DalLocator.EventDal.Update(selectedEvent);
                         }
                         else MessageBox.Show("Du er ikke tilmeldt begivenheden!");
                     }
@@ -202,8 +202,6 @@ namespace McSntt.Views.UserControls
                 Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
             }
             else Descriptionbox.Text = String.Empty;
-
-            Test.Text = AgendaListbox.SelectedIndex.ToString();
         }
     }
 }
