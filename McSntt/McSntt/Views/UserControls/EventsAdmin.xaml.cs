@@ -43,6 +43,7 @@ namespace McSntt.Views.UserControls
 
             EventsList = eventDal.GetAll().ToList();
             eventDal.LoadData(EventsList);
+            EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
             AgendaListbox.ItemsSource = EventsList;
         }
        
@@ -130,7 +131,7 @@ namespace McSntt.Views.UserControls
                         selectedEvent.Participants = new List<Person>();
                     }
 
-                    if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                    if (selectedEvent.Participants.Any(x => x.PersonId == GlobalInformation.CurrentUser.PersonId))
                     {
                         MessageBox.Show("Du er allerede tilmeldt!");
                     }
@@ -180,9 +181,12 @@ namespace McSntt.Views.UserControls
                 {
                     if (selectedEvent.Participants != null)
                     {
-                        if (selectedEvent.Participants.Contains(GlobalInformation.CurrentUser))
+                        if (selectedEvent.Participants.Any(x => x.PersonId == GlobalInformation.CurrentUser.PersonId))
                         {
-                            selectedEvent.Participants.Remove(GlobalInformation.CurrentUser);
+                            var currentUser =
+                                selectedEvent.Participants.FirstOrDefault(x => x.PersonId == GlobalInformation.CurrentUser.PersonId);
+
+                            selectedEvent.Participants.Remove(currentUser);
                             MessageBox.Show("Du er nu frameldt!");
                             DalLocator.EventDal.Update(selectedEvent);
                         }
