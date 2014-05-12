@@ -1,0 +1,22 @@
+﻿<Window x:Name="StudentProgessWindow" x:Class="McSntt.Views.Windows.StudentsProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{StaticResource WindowStyle}"
+        Title="Elevers fremskridt"
+        DataContext="{Binding ElementName=StudentProgessWindow}" SizeToContent="WidthAndHeight" Height="96" Width="698">
+    <Grid>
+        <DataGrid IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" x:Name="StudentMembersDatagrid" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}" ClipboardContentBinding="{x:Null}" Header="Fornavn"/>
+                <DataGridTextColumn Binding="{Binding LastName}" ClipboardContentBinding="{x:Null}" Header="Efternavn"/>
+                <DataGridCheckBoxColumn Binding="{Binding RopeWorks}" ClipboardContentBinding="{x:Null}" Header="Tovværksarbejde"/>
+                <DataGridCheckBoxColumn Binding="{Binding Navigation}" ClipboardContentBinding="{x:Null}" Header="Navigation"/>
+                <DataGridCheckBoxColumn Binding="{Binding Motor}" ClipboardContentBinding="{x:Null}" Header="Motor og brændlære"/>
+                <DataGridCheckBoxColumn Binding="{Binding Drabant}" ClipboardContentBinding="{x:Null}" Header="Drabant sejlads"/>
+                <DataGridCheckBoxColumn Binding="{Binding Gaffelrigger}" ClipboardContentBinding="{x:Null}" Header="Gaffelrigger sejlads"/>
+                <DataGridCheckBoxColumn Binding="{Binding Night}" ClipboardContentBinding="{x:Null}" Header="Natsejlads"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
