@@ -46,6 +46,7 @@ namespace McSntt.Views.Windows
             var Departure = DateTimePickerPlannedLectureTime.Value;
             var Arrival = DateTimePickerPlannedLectureTimeEnd.Value;
             var book = new CreateBoatBookingWindow(Departure, Arrival, _currentTeam);
+            MessageBox.Show("Lektionen er nu oprettet");
         }
     }
 }
