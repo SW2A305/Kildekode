@@ -443,9 +443,10 @@ namespace McSntt.Views.UserControls
             LectureDataClear();
             StudentCheckBoxNameChange();
             if (lectureDropdown.SelectedItem == null) { return; }
-                lectureGrid.IsEnabled = true;
-                DeleteLecture.IsEnabled = true;
-            }
+
+            lectureGrid.IsEnabled = true;
+            DeleteLecture.IsEnabled = true;
+            
 
             if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
             {
