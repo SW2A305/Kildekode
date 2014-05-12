@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace McSntt.Models
 {
     public class Event
     {
+        public Event() { this.Participants = new List<Person>(); }
         public long EventId { get; set; }
 
         public DateTime EventDate { get; set; }
@@ -16,10 +16,7 @@ namespace McSntt.Models
         public bool Created { get; set; }
 
         public ICollection<Person> Participants { get; set; }
-        
-        public override string ToString()
-        {
-            return Description;
-        }
+
+        public override string ToString() { return this.Description; }
     }
 }

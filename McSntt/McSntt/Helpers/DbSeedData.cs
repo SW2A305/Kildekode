@@ -203,7 +203,7 @@ namespace McSntt.Helpers
                             },
                             new RegularTrip()
                             {
-                                PurposeAndArea = "Torsdag den 12, meget freligt",
+                                PurposeAndArea = "Torsdag den 12, meget fredeligt",
                                 WeatherConditions = "4 m/s, høj sol.",
                                 DepartureTime = new DateTime(2014, 06, 12, 13, 0, 0),
                                 ArrivalTime = new DateTime(2014, 06, 14, 17, 0, 0)
@@ -691,12 +691,12 @@ namespace McSntt.Helpers
                                 sailClubMembers[1],
                                 sailClubMembers[2],
                                 sailClubMembers[3],
-                                sailClubMembers[4]
+                                sailClubMembers[7]
                             };
 
             trips[1].Crew = new List<Person>
                             {
-                                sailClubMembers[3],
+                                sailClubMembers[1],
                                 sailClubMembers[4],
                                 sailClubMembers[5],
                                 sailClubMembers[6],
@@ -730,6 +730,16 @@ namespace McSntt.Helpers
                                 sailClubMembers[5]
                             };
             #endregion Crew
+
+            #region Trips -> CreatedBy
+
+            trips[0].CreatedBy = sailClubMembers[7];
+            trips[1].CreatedBy = sailClubMembers[1];
+            trips[2].CreatedBy = sailClubMembers[3];
+            trips[3].CreatedBy = sailClubMembers[7];
+            trips[4].CreatedBy = sailClubMembers[7];
+
+            #endregion
 
             #region Events -> Participants
 
