@@ -357,7 +357,7 @@ namespace McSntt.Views.UserControls
         {
             if (MemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!MembersList.Contains(currentMember) && DalLocator.TeamDal.GetAll().All(x => !x.TeamMembers.Contains(currentMember)))
+            if (!MembersList.Contains(currentMember) && DalLocator.StudentMemberDal.GetOne(currentMember.StudentMemberId).AssociatedTeamId == 0)
             {
                 MembersList.Add(currentMember);
                 RefreshDatagrid(CurrentMemberDataGrid, MembersList);
