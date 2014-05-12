@@ -110,7 +110,7 @@ namespace McSntt.Views.UserControls
             ((Lecture)lectureDropdown.SelectedItem).Motor = (MotorCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Navigation = (NavigationCheckBox.IsChecked == true);
             ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);
+            ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);      
             ((Lecture)lectureDropdown.SelectedItem).Drabant = (DrabantCheckBox.IsChecked == true);
             if (studentOne.IsChecked == true)
             {
@@ -148,10 +148,12 @@ namespace McSntt.Views.UserControls
                     ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
+            DalLocator.LectureDal.Update((Lecture)lectureDropdown.SelectedItem);
         }
 
         private void AssignToughtLectureItemsToMember()
         {
+            if (((Lecture) lectureDropdown.SelectedItem).PresentMembers == null) { return; }
             foreach (var member in ((Lecture)lectureDropdown.SelectedItem).PresentMembers)
             {
                 if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
@@ -160,7 +162,7 @@ namespace McSntt.Views.UserControls
                 if (((Lecture)lectureDropdown.SelectedItem).Night == true) { member.Night = true; }
                 if (((Lecture)lectureDropdown.SelectedItem).Gaffelrigger == true) { member.Gaffelrigger = true; }
                 if (((Lecture)lectureDropdown.SelectedItem).Drabant == true) { member.Drabant = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
+                DalLocator.StudentMemberDal.Update(member);
             }
         }
 
@@ -259,6 +261,7 @@ namespace McSntt.Views.UserControls
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ClearFields();
+            lectureDropdown.ItemsSource = null;
             if (teamDropdown.SelectedItem != null)
             {
                 foreach (var member in ((Team)teamDropdown.SelectedItem).TeamMembers)
@@ -354,7 +357,7 @@ namespace McSntt.Views.UserControls
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
-        {
+        {           
             if (MemberDataGrid.SelectedItem == null) { return; }
             var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
             if (!MembersList.Contains(currentMember) && DalLocator.TeamDal.GetAll().All(x => !x.TeamMembers.Contains(currentMember)))
@@ -423,10 +426,7 @@ namespace McSntt.Views.UserControls
             LectureDataClear();
             StudentCheckBoxNameChange();
             if (lectureDropdown.SelectedItem == null) { return; }
-            if (lectureDropdown.SelectedIndex != -1)
-            {
                 lectureGrid.IsEnabled = true;
-            }
             if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
             {
                 NavigationCheckBox.IsEnabled = false;
@@ -457,6 +457,12 @@ namespace McSntt.Views.UserControls
         {
             var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
+            ((Team) teamDropdown.SelectedItem).Lectures =
+                DalLocator.LectureDal.GetAll()
+                    .Where(x => x.TeamId == ((Team) teamDropdown.SelectedItem).TeamId)
+                    .ToList();
+            lectureDropdown.ItemsSource = null;
+            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
         }
 
         private void DeleteLecture_Click(object sender, RoutedEventArgs e)
