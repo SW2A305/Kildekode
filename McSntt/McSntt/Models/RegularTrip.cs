@@ -7,11 +7,10 @@ namespace McSntt.Models
     {
         private Person _captain;
         private long _captainId;
+        private Person _createdBy;
+        private long _createdById;
 
         public long RegularTripId { get; set; }
-
-        // TODO: The following is depceciated, it's set it SailTrip SUPERCLASS!
-        public DateTime ExpectedArrivalTime { get; set; }
         public string PurposeAndArea { get; set; }
 
         public Person Captain
@@ -32,6 +31,32 @@ namespace McSntt.Models
                 return this._captainId;
             }
             set { this._captainId = value; }
+        }
+
+        public Person CreatedBy
+        {
+            get
+            {
+                return this._createdBy;
+            }
+            set
+            {
+                this._createdBy = value;
+                CreatedById = (value != null ? value.PersonId : 0);
+            }
+        }
+
+        public long CreatedById
+        {
+            get
+            {
+                if (_createdById == 0 && _createdBy != null) { _createdById = _createdBy.PersonId; }
+                return this._createdById;
+            }
+            set
+            {
+                this._createdById = value;
+            }
         }
 
         public ICollection<Person> Crew { get; set; }
