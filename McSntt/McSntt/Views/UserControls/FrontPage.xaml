@@ -25,13 +25,13 @@
                     <!-- To make border -->
                     <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Name="ChangeButton" Content="Ændre booking" Height="25" Width="125" Click="ChangeButton_OnClick" />
+                        <Button Name="ChangeButton" Content="Ændre booking" Height="25" Width="135" Click="ChangeButton_OnClick" />
                         <!-- To make border -->
                         <Rectangle Width="10" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
-                        <Button Name="DeleteButton" Content="Slet booking" Height="25" Width="125" Click="DeleteButton_OnClick" />
+                        <Button Name="DeleteButton" Content="Slet booking" Height="25" Width="135" Click="DeleteButton_OnClick" />
 
                         <Rectangle Width="10" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
-                        <Button Name="RemoveFromTrip" Content="Slet mig fra booking" Height="25" Width="125" Click="RemoveFromTrip_OnClick" />
+                        <Button Name="RemoveFromTrip" Content="Slet mig fra bookingen" Height="25" Width="135" Click="RemoveFromTrip_OnClick" />
 
                     </StackPanel>
                 </StackPanel>

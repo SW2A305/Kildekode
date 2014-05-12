@@ -34,6 +34,7 @@ namespace McSntt.Views.UserControls
             CreateLogBookButton.IsEnabled = false;
             ChangeButton.IsEnabled = false;
             DeleteButton.IsEnabled = false;
+            RemoveFromTrip.IsEnabled = false;
 
             LoadData();
         }
@@ -130,11 +131,13 @@ namespace McSntt.Views.UserControls
                 {
                     DeleteButton.IsEnabled = true;
                     ChangeButton.IsEnabled = true;
+                    RemoveFromTrip.IsEnabled = false;
                 }
                 else
                 {
                     DeleteButton.IsEnabled = false;
                     ChangeButton.IsEnabled = false;
+                    RemoveFromTrip.IsEnabled = true;
                 }
             }
         }
