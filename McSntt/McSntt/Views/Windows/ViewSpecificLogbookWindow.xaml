@@ -14,13 +14,11 @@
         <Label Content="Kaptajn:" Margin="10,142,0,387" />
         <TextBox Height="30" IsReadOnly="True" x:Name="BoatTextBox" Margin="133,89,0,492" HorizontalAlignment="Left" Width="96" />
         <Label Content="Besætning:" HorizontalAlignment="Left" Width="100"  Margin="10,182,0,336"/>
-        <ComboBox IsEnabled="False" Name="CaptainComboBox" HorizontalAlignment="Left" Width="100" Height="30" Margin="133,133,0,439"/>
+        <ComboBox IsEnabled="False" Name="CaptainComboBox" HorizontalAlignment="Left" Width="232" Height="30" Margin="133,142,0,447"/>
         <DataGrid CanUserAddRows="False" IsReadOnly="True" x:Name="CrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="133,188,0,0" VerticalAlignment="Top" Height="139" Width="232" MaxHeight="139">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
-                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
-                <DataGridTextColumn Binding="{Binding Position}" Header="Rank"/>
-                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -33,7 +31,7 @@
         <Label Content="Er båden skadet?:" HorizontalAlignment="Left" Width="125"  Margin="10,525,0,3"/>
         <RadioButton IsEnabled="False" x:Name="YesRadioButton" Content="Ja" HorizontalAlignment="Left" Margin="131,527,0,0" VerticalAlignment="Top"/>
         <RadioButton IsEnabled="False" x:Name="NoRadioButton" Content="Nej" HorizontalAlignment="Left" Margin="192,529,0,0" VerticalAlignment="Top"/>
-    
+
         <StackPanel Margin="438,188,62,282" Orientation="Horizontal" RenderTransformOrigin="0.5,-0.044">
             <StackPanel>
                 <Label Height="30" Content="Planlagt afgang:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
@@ -48,7 +46,7 @@
                 <userControls:DateTimePicker IsReadOnly="True" x:Name="DateTimePickerActualArrival" Height="30" Width="Auto"/>
             </StackPanel>
         </StackPanel>
-        
+
         <!-- <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedDepature" Width="Auto" Height="30" Margin="548,136,31,453"/>
         <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerPlannedArrival" Height="30" Width="Auto" Margin="548,183,31,406"/>
         <UserControls:DateTimePicker IsReadOnly="True" Name="DateTimePickerActualDeparture" Height="30" Width="Auto" Margin="548,232,31,357"/>

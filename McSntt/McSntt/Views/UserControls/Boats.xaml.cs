@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -60,6 +61,13 @@ namespace McSntt.Views.UserControls
             logBookWindow.ShowDialog();
         }
 
+        private IEnumerable<RegularTrip> GetBookings()
+        {
+            return regularTripDal.GetAll(
+                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
+                        .OrderBy(x => x.DepartureTime);
+        }
+
 
         private void BoatComboBox_OnSelectionChanged(object sender, EventArgs e)
         {
@@ -72,12 +80,9 @@ namespace McSntt.Views.UserControls
                     regularTripDal.GetAll(
                         x => x.Boat.BoatId == CurrentBoat.BoatId && x.Logbook != null);
 
-                IEnumerable<RegularTrip> ListOfBookings =
-                    regularTripDal.GetAll(
-                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
-                        .OrderBy(x => x.DepartureTime);
+                var listOfBookings = GetBookings();
 
-                // Grey out the book button for support memebers and guests
+                // Grey out the book button for support members and guests
                 if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.SupportMember)
                     BookButton.IsEnabled = true;
 
@@ -114,7 +119,7 @@ namespace McSntt.Views.UserControls
                 LogbookDataGrid.ItemsSource = ListOfTripsWithLogbook;
 
                 BookedTripsDataGrid.ItemsSource = null;
-                BookedTripsDataGrid.ItemsSource = ListOfBookings;
+                BookedTripsDataGrid.ItemsSource = listOfBookings;
             }
             else
             {
@@ -164,6 +169,10 @@ namespace McSntt.Views.UserControls
         {
             var BookWindow = new CreateBoatBookingWindow(BoatComboBox.SelectedIndex);
             BookWindow.ShowDialog();
+
+            var listOfBookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listOfBookings;
         }
 
         private void AddBoatButton_Click(object sender, RoutedEventArgs e)

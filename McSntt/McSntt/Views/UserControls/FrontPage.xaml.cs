@@ -72,11 +72,10 @@ namespace McSntt.Views.UserControls
 
             var db = DalLocator.RegularTripDal;
             var usrId = GlobalInformation.CurrentUser.PersonId;
-            var sailTripList = db.GetAll().ToList();
+            var sailTripList = db.GetAll(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null).ToList();
 
             LogbookDataGrid.ItemsSource = null;
-            LogbookDataGrid.ItemsSource =
-                sailTripList.Where(t => t.Captain.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
+            LogbookDataGrid.ItemsSource = sailTripList;
         }
 
         private void LogbookDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
