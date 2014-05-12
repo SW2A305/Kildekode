@@ -29,7 +29,6 @@ namespace McSntt.Views.UserControls
     {
         public IList<Event> EventsList = new List<Event>();
         
-
         public EventsAdmin()
         {
             InitializeComponent();
@@ -67,9 +66,7 @@ namespace McSntt.Views.UserControls
                 AgendaListbox.Items.Refresh();
 
                 DalLocator.EventDal.Create(newEvent);
-            }
-
-            
+            }            
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
@@ -87,9 +84,9 @@ namespace McSntt.Views.UserControls
 
                 EventsList.Insert(i, selectedEvent);
 
-                EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
+                //EventsList = EventsList.OrderBy(x => x.EventDate).ToList();
 
-                AgendaListbox.ItemsSource = EventsList;
+                //AgendaListbox.ItemsSource = EventsList;
 
                 AgendaListbox.Items.Refresh();
 
@@ -108,9 +105,11 @@ namespace McSntt.Views.UserControls
 
             if (i >= 0)
             {
-                EventsList.RemoveAt(i);
+                DalLocator.EventDal.Delete(EventsList[i]);
 
-                DalLocator.EventDal.Delete(EventsList[i + 1]);
+                EventsList = DalLocator.EventDal.GetAll().ToList();
+                DalLocator.EventDal.LoadData(EventsList);
+                AgendaListbox.ItemsSource = EventsList;
             }
             else MessageBox.Show("Vælg en begivenhed som skal slettes!");
 
@@ -203,6 +202,8 @@ namespace McSntt.Views.UserControls
                 Descriptionbox.Text = AgendaListbox.SelectedItem.ToString();
             }
             else Descriptionbox.Text = String.Empty;
+
+            Test.Text = AgendaListbox.SelectedIndex.ToString();
         }
     }
 }
