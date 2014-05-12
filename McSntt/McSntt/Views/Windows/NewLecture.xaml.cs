@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
+using Xceed.Wpf.DataGrid.Converters;
 
 namespace McSntt.Views.Windows
 {
@@ -38,6 +40,8 @@ namespace McSntt.Views.Windows
             {
                 DateOfLecture = DateTimePickerPlannedLectureTime.Value
             };
+            lecture.TeamId = _currentTeam.TeamId;
+            lecture.PresentMembers = new Collection<StudentMember>();
             DalLocator.LectureDal.Create(lecture);
             var Departure = DateTimePickerPlannedLectureTime.Value;
             var Arrival = DateTimePickerPlannedLectureTimeEnd.Value;
