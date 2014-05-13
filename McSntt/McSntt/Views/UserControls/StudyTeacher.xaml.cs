@@ -497,6 +497,7 @@ namespace McSntt.Views.UserControls
         private void updateLecture_Click(object sender, RoutedEventArgs e)
         {
             SaveLectureInfo();
+            MessageBox.Show("Oplysninger er gemt");
             AssignToughtLectureItemsToMember();
         }
         

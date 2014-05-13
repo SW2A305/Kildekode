@@ -51,12 +51,12 @@ namespace McSntt.Views.Windows
             BoatComboBox.SelectedValuePath = "Id";
             BoatComboBox.SelectedIndex = index;
 
+            CrewList.Add(GlobalInformation.CurrentUser);
+            CrewDataGrid.ItemsSource = CrewList;
+
             CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.SelectedValuePath = "MemberId";
             CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
-
-            CrewList.Add(GlobalInformation.CurrentUser);
-            CrewDataGrid.ItemsSource = CrewList;
 
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
