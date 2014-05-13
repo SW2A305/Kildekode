@@ -26,8 +26,16 @@ namespace McSntt.Views.Windows
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (CurrentWindow != TopMenuTabControl.SelectedIndex)
+            {
+                CurrentWindow = TopMenuTabControl.SelectedIndex;
 
+                BoatsGrid.Children.Clear();
+                BoatsGrid.Children.Add(new Boats());
+            }
         }
+
+        private int CurrentWindow { get; set; }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (_login.IsVisible != true)
