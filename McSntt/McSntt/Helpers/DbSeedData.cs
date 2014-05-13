@@ -770,7 +770,7 @@ namespace McSntt.Helpers
             trips[1].CreatedBy = sailClubMembers[1];
             trips[2].CreatedBy = sailClubMembers[3];
             trips[3].CreatedBy = sailClubMembers[7];
-            trips[4].CreatedBy = sailClubMembers[7];
+            trips[4].CreatedBy = sailClubMembers[9];
 
             #endregion
 
