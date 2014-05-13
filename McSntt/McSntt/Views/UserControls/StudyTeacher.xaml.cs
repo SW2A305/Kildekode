@@ -282,6 +282,7 @@ namespace McSntt.Views.UserControls
             lectureDropdown.ItemsSource = null;
             if (teamDropdown.SelectedItem != null)
             {
+                editTeam.IsChecked = true;
                 foreach (var member in ((Team)teamDropdown.SelectedItem).TeamMembers)
                 {
                     MembersList.Add(member);
