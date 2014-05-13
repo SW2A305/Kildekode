@@ -33,7 +33,7 @@ namespace McSntt.Views.Windows
             {
                 if (TeamName.Text != String.Empty)
                 {
-                    var team = new Team { Name = TeamName.Text, Teacher = GlobalInformation.CurrentUser };
+                    var team = new Team { Name = TeamName.Text, Teacher = GlobalInformation.CurrentUser, Level = Team.ClassLevel.First };
                     DalLocator.TeamDal.Create(team);
                     Close();
                 }

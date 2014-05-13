@@ -221,7 +221,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                             deleteCommand.CommandText =
                                 String.Format("DELETE FROM {0} " +
                                               "WHERE lecture_id = @lectureId",
-                                              DatabaseManager.TableEventParticipantsBinder);
+                                              DatabaseManager.TableLecturePresentMembersBinder);
                             deleteCommand.Parameters.Add(new SQLiteParameter("@lectureId", lecture.LectureId));
                             deleteCommand.ExecuteNonQuery();
                         }
