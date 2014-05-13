@@ -109,12 +109,18 @@ namespace McSntt.Views.Windows
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            var bookDal = DalLocator.RegularTripDal;
             var thisTrip = CreateSailTrip();
 
-            if (thisTrip != null)
+            if (thisTrip != null && bookDal.CanMakeReservation(thisTrip))
             {
-                DalLocator.RegularTripDal.Create(thisTrip);
+                bookDal.Create(thisTrip);
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Båden er desværre booket i dette tidsrum. Gå tilbage til Bådreservations tabben for at se hvornår båden er ledig.");
             }
         }
 
