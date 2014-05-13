@@ -31,6 +31,8 @@ namespace McSntt.Views.Windows
             
             _currentSailClubMember = p;
 
+            RegularSailTrip = regularSailTrip;
+
             CrewList = regularSailTrip.Crew.ToList();
             CrewDataGrid.ItemsSource = CrewList;
             PurposeTextBox.Text = regularSailTrip.PurposeAndArea;
@@ -40,8 +42,8 @@ namespace McSntt.Views.Windows
             CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.ItemsSource = CrewList;
             CaptainComboBox.SelectedValue = CrewList.FirstOrDefault(x => x.PersonId == regularSailTrip.Captain.PersonId);
-            DateTimePickerActualArrival.Value = DateTime.Now;
-            DateTimePickerActualDeparture.Value = DateTime.Now;
+            DateTimePickerActualArrival.Value = regularSailTrip.ArrivalTime;
+            DateTimePickerActualDeparture.Value = regularSailTrip.DepartureTime;
             _hasBeenFilledTime = DateTime.Now;
 
         }
@@ -112,7 +114,7 @@ namespace McSntt.Views.Windows
                 RegularSailTrip.Crew = CrewList;
                 RegularSailTrip.Logbook = currentLogbook;
 
-                logbookDal.Create(RegularSailTrip.Logbook);
+                logbookDal.Create(currentLogbook);               
 
                 regularTripDal.Update(RegularSailTrip);
                 
