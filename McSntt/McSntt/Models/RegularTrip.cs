@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using McSntt.Helpers;
 
 namespace McSntt.Models
@@ -73,9 +74,12 @@ namespace McSntt.Models
             var  list = new List<RegularTrip>();
 
 
-            // Add the first 100 trips to the list
-            for (int i = 0; i < 100; i++)
+            // Add the first 1000 trips to the list
+            for (int i = 0; i < 1000; i++)
             {
+                if(dal.GetOne(i) == null)
+                    break;
+
                 list.Add(dal.GetOne(i));
             }
             
