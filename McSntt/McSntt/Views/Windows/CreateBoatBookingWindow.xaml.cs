@@ -28,6 +28,10 @@ namespace McSntt.Views.Windows
             CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
             PurposeTextBox.Text = rt.PurposeAndArea;
 
+            // Not alloed to change the time of this trip
+            DateTimeStart.IsReadOnly = true;
+            DateTimeEnd.IsReadOnly = true;
+
             InputTrip = rt;
 
             CompleteBooking.Content = "Gem ændringer";
@@ -113,8 +117,15 @@ namespace McSntt.Views.Windows
 
             if (thisTrip != null)
             {
-                DalLocator.RegularTripDal.Create(thisTrip);
-                this.Close();
+                if (thisTrip.CanMakeReservation())
+                {
+                    DalLocator.RegularTripDal.Create(thisTrip);
+                    this.Close();  
+                    return;
+                } 
+
+                MessageBox.Show("Der findes allerede en tur inden for dit valgte interval");
+                return;    
             }
         }
 
@@ -198,7 +209,7 @@ namespace McSntt.Views.Windows
             string purpose = PurposeTextBox.Text.Trim();
 
             // All checks are passed, create the trip.
-            return new RegularTrip
+            var trip = new RegularTrip
             {
                 CreatedBy = GlobalInformation.CurrentUser,
                 Boat = boat,
@@ -208,6 +219,8 @@ namespace McSntt.Views.Windows
                 Captain = captain,
                 PurposeAndArea = purpose
             };
+
+            return trip;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

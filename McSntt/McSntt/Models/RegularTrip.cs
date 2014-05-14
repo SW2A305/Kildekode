@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Documents;
+using McSntt.Helpers;
 
 namespace McSntt.Models
 {
@@ -60,5 +63,23 @@ namespace McSntt.Models
         }
 
         public ICollection<Person> Crew { get; set; }
+
+        public bool CanMakeReservation()
+        {
+            // The following line will cause the database to be locked.
+            // var list = DalLocator.RegularTripDal.GetAll(t => t.BoatId == this.Boat.BoatId).ToList();
+
+            var dal = DalLocator.RegularTripDal;
+            var  list = new List<RegularTrip>();
+
+
+            // Add the first 100 trips to the list
+            for (int i = 0; i < 100; i++)
+            {
+                list.Add(dal.GetOne(i));
+            }
+            
+            return !list.Any(t => t != null && t.DepartureTime <= this.ArrivalTime && t.ArrivalTime >= this.DepartureTime);
+        }
     }
 }
