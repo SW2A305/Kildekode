@@ -68,22 +68,22 @@ namespace McSntt.Models
         public bool CanMakeReservation()
         {
             // The following line will cause the database to be locked.
-            // var list = DalLocator.RegularTripDal.GetAll(t => t.BoatId == this.Boat.BoatId).ToList();
-
+            var list = DalLocator.RegularTripDal.GetAll();
+            /*
             var dal = DalLocator.RegularTripDal;
             var  list = new List<RegularTrip>();
 
 
-            // Add the first 1000 trips to the list
+             Add the first 1000 trips to the list
             for (int i = 0; i < 1000; i++)
             {
                 if(dal.GetOne(i) == null)
                     break;
 
                 list.Add(dal.GetOne(i));
-            }
+            } */
             
-            return !list.Any(t => t != null && t.DepartureTime <= this.ArrivalTime && t.ArrivalTime >= this.DepartureTime);
+            return !list.Any(t => t != null && t.BoatId == this.BoatId && t.DepartureTime <= this.ArrivalTime && t.ArrivalTime >= this.DepartureTime);
         }
     }
 }
