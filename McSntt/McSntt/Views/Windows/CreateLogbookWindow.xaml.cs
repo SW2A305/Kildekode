@@ -45,7 +45,6 @@ namespace McSntt.Views.Windows
             DateTimePickerActualArrival.Value = regularSailTrip.ArrivalTime;
             DateTimePickerActualDeparture.Value = regularSailTrip.DepartureTime;
             _hasBeenFilledTime = DateTime.Now;
-
         }
         
         private void ChangeCrewButtonClick(object sender, RoutedEventArgs e)

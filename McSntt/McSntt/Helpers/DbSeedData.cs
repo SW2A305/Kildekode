@@ -378,7 +378,7 @@ namespace McSntt.Helpers
                     PhoneNumber = "79461382",
                     Username = "marcus",
                     PasswordHash = EncryptionHelper.Sha256("husmand"),
-                    Position = SailClubMember.Positions.Member,
+                    Position = SailClubMember.Positions.Admin,
                     DateOfBirth = "1974-06-17"
                 },
             };
