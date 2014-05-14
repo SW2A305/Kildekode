@@ -25,7 +25,6 @@ namespace McSntt.Views.Windows
             DateTimeStart.Value = rt.DepartureTime;
             DateTimeEnd.Value = rt.ArrivalTime;
             CrewList = rt.Crew.ToList();
-            CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
             PurposeTextBox.Text = rt.PurposeAndArea;
 
             // Not alloed to change the time of this trip
@@ -43,6 +42,8 @@ namespace McSntt.Views.Windows
             CrewDataGrid.ItemsSource = CrewList;
             CaptainComboBox.ItemsSource = null;
             CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
+            CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.CaptainId));
+
         }
 
         public CreateBoatBookingWindow(int index)
@@ -60,7 +61,7 @@ namespace McSntt.Views.Windows
 
             CaptainComboBox.DisplayMemberPath = "FullName";
             CaptainComboBox.SelectedValuePath = "MemberId";
-            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
+            CaptainComboBox.ItemsSource = CrewList;
 
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
