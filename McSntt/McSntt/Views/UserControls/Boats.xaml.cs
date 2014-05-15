@@ -192,8 +192,15 @@ namespace McSntt.Views.UserControls
 	}
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var changewindow = new CreateBoatBookingWindow((RegularTrip)BookedTripsDataGrid.SelectedItem);
+            var trip = DalLocator.RegularTripDal.GetOne(((RegularTrip) BookedTripsDataGrid.SelectedItem).RegularTripId);
+            DalLocator.RegularTripDal.LoadData(trip);
+
+            var changewindow = new CreateBoatBookingWindow(trip);
             changewindow.ShowDialog();
+
+            var listofbookings = GetBookings();
+            BookedTripsDataGrid.ItemsSource = null;
+            BookedTripsDataGrid.ItemsSource = listofbookings;
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
