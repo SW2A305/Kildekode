@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using McSntt.DataAbstractionLayer.Mock;
 
 namespace McSntt.Helpers
 {
@@ -50,7 +51,7 @@ namespace McSntt.Helpers
         public static bool PersistMockData()
         {
             // Remove file if it exists
-            if (File.Exists(DbFilePath)) { File.Delete(DbFileName); }
+            if (File.Exists(DbFilePath)) { File.Delete(DbFilePath); }
 
             using (var conn = new SQLiteConnection(GetConnectionString()))
             {
@@ -307,6 +308,50 @@ namespace McSntt.Helpers
                 #endregion
 
                 #region Persist data: Boats
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var boatDal = new BoatMockDal();
+                        var boats = boatDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "boat_id, type, nickname, image_path, operational" +
+                                              ") VALUES (" +
+                                              "@boatId, @type, @nickname, @imagePath, @operational" +
+                                              ")",
+                                              TableBoats);
+
+                            command.Parameters.Add("@boatId", DbType.Int64);
+                            command.Parameters.Add("@type", DbType.Int32);
+                            command.Parameters.Add("@nickname", DbType.String);
+                            command.Parameters.Add("@imagePath", DbType.String);
+                            command.Parameters.Add("@operational", DbType.Boolean);
+
+                            foreach (var boat in boats)
+                            {
+                                command.Parameters["@boatId"].Value = boat.BoatId;
+                                command.Parameters["@type"].Value = (int) boat.Type;
+                                command.Parameters["@nickname"].Value = boat.NickName;
+                                command.Parameters["@imagePath"].Value = boat.ImagePath;
+                                command.Parameters["@operational"].Value = boat.Operational;
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
                 #endregion
 
                 #region Persist data: Events
