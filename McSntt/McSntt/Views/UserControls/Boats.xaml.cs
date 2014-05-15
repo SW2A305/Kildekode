@@ -210,16 +210,11 @@ namespace McSntt.Views.UserControls
 
         private void BookedTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (BookedTripsDataGrid.SelectedIndex != -1 && GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
+            if (BookedTripsDataGrid.SelectedIndex != -1)
             {
-                DeleteButton.IsEnabled = true;
-                ChangeButton.IsEnabled = true;
-            }
-            else
-            {
-                // One should be able to change your own trips from the boat ui.
-                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).CreatedBy.PersonId || 
-                    GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).Captain.PersonId)
+                if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin ||
+                    (GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).CreatedBy.PersonId ||
+                     GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).Captain.PersonId))
                 {
                     DeleteButton.IsEnabled = true;
                     ChangeButton.IsEnabled = true;
@@ -229,6 +224,11 @@ namespace McSntt.Views.UserControls
                     DeleteButton.IsEnabled = false;
                     ChangeButton.IsEnabled = false;
                 }
+            }
+            else
+            {
+                DeleteButton.IsEnabled = false;
+                ChangeButton.IsEnabled = false;
             }
         }
 
