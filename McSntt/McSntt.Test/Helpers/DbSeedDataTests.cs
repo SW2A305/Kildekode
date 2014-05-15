@@ -110,7 +110,21 @@ namespace McSntt.Test.Helpers
             _teamDal.LoadData(teams);
 
             foreach (var team in teams) {
+                Assert.NotNull(team.TeamMembers);
                 Assert.GreaterOrEqual(team.TeamMembers.Count, minimumTeamMemberCount);
+            }
+        }
+
+        [Test]
+        public void CreateSeedData_Team_ShouldHaveLecturesSet()
+        {
+            var teams = _teamDal.GetAll();
+            
+            _teamDal.LoadData(teams);
+
+            foreach (var team in teams) {
+                Assert.NotNull(team.Lectures);
+                Assert.Greater(team.Lectures.Count, 0);
             }
         }
     }

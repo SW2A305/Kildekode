@@ -55,8 +55,10 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(Team item)
         {
             var studentDal = new StudentMemberMockDal();
+            var lectureDal = new LectureMockDal();
 
             item.TeamMembers = studentDal.GetAll(student => student.AssociatedTeamId == item.TeamId).ToList();
+            item.Lectures = lectureDal.GetAll(lecture => lecture.TeamId == item.TeamId).ToList();
         }
 
         public void LoadData(IEnumerable<Team> items)
