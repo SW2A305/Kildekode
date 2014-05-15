@@ -514,11 +514,14 @@ namespace McSntt.Views.UserControls
 
         private void DeleteLecture_Click(object sender, RoutedEventArgs e)
         {
+            var team = (Team) teamDropdown.SelectedItem;
             var lecture = ((Lecture)lectureDropdown.SelectedItem);
             LectureDataClear();
             DalLocator.LectureDal.Delete(lecture);
+            team.Lectures = null;
+            team.Lectures = DalLocator.LectureDal.GetAll(x => x.TeamId == team.TeamId).ToList();
             lectureDropdown.ItemsSource = null;
-            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+            lectureDropdown.ItemsSource = team.Lectures.OrderBy(lect => lect.DateOfLecture);
         }
 
         private void StudentsProgress_Click(object sender, RoutedEventArgs e)
