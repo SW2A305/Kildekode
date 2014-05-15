@@ -54,12 +54,16 @@ namespace McSntt.DataAbstractionLayer.Mock
 
         public void LoadData(Team item)
         {
-            /* Not applicable */
+            var studentDal = new StudentMemberMockDal();
+
+            item.TeamMembers = studentDal.GetAll(student => student.AssociatedTeamId == item.TeamId).ToList();
         }
 
         public void LoadData(IEnumerable<Team> items)
         {
-            /* Not applicable */
+            foreach (var team in items) {
+                LoadData(team);
+            }
         }
 
         private long GetHighestId()

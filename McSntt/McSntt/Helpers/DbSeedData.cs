@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using McSntt.DataAbstractionLayer.Mock;
 using McSntt.Models;
 
 namespace McSntt.Helpers
 {
     public class DbSeedData
     {
-        public static void CreateSeedData()
+        public static void CreateSeedData(bool useMockData = false)
         {
             #region Arrays
             #region DataArray :: Boats
@@ -824,14 +825,15 @@ namespace McSntt.Helpers
             #endregion
 
             #region Save data
-            var boatDal = DalLocator.BoatDal;
-            var eventDal = DalLocator.EventDal;
-            var lectureDal = DalLocator.LectureDal;
-            var logbookDal = DalLocator.LogbookDal;
-            var tripDal = DalLocator.RegularTripDal;
-            var scmDal = DalLocator.SailClubMemberDal;
-            var smDal = DalLocator.StudentMemberDal;
-            var teamDal = DalLocator.TeamDal;
+            var boatDal = (useMockData ? new BoatMockDal(true) : DalLocator.BoatDal);
+            var eventDal = (useMockData ? new EventMockDal(true) : DalLocator.EventDal);
+            var lectureDal = (useMockData ? new LectureMockDal(true) : DalLocator.LectureDal);
+            var logbookDal = (useMockData ? new LogbookMockDal(true) : DalLocator.LogbookDal);
+            var personDal = (useMockData ? new PersonMockDal(true) : DalLocator.PersonDal);
+            var tripDal = (useMockData ? new RegularTripMockDal(true) : DalLocator.RegularTripDal);
+            var scmDal = (useMockData ? new SailClubMemberMockDal(true) : DalLocator.SailClubMemberDal);
+            var smDal = (useMockData ? new StudentMemberMockDal(true) : DalLocator.StudentMemberDal);
+            var teamDal = (useMockData ? new TeamMockDal(true) : DalLocator.TeamDal);
 
             // Store the ones that doesn't require anything else first...
             boatDal.Create(boats);
