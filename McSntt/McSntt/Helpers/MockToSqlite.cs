@@ -453,15 +453,153 @@ namespace McSntt.Helpers
                 #endregion
 
                 #region Persist data: Lecture
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var lectureDal = new LectureMockDal();
+                        var lectures = lectureDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "lecture_id, date_of_lecture, rope_works, navigation, motor, " +
+                                              "drabant, gaffelrigger, night, team_id" +
+                                              ") VALUES (" +
+                                              "@lectureId, @dateOfLecture, @ropeWorks, @navigation, @motor, " +
+                                              "@drabant, @gaffelrigger, @night, @teamId" +
+                                              ")",
+                                              TableLectures);
+
+                            command.Parameters.Add("@lectureId", DbType.Int64);
+                            command.Parameters.Add("@dateOfLecture", DbType.DateTime);
+                            command.Parameters.Add("@ropeWorks", DbType.Boolean);
+                            command.Parameters.Add("@navigation", DbType.Boolean);
+                            command.Parameters.Add("@motor", DbType.Boolean);
+                            command.Parameters.Add("@drabant", DbType.Boolean);
+                            command.Parameters.Add("@gaffelrigger", DbType.Boolean);
+                            command.Parameters.Add("@night", DbType.Boolean);
+                            command.Parameters.Add("@teamId", DbType.Int64);
+
+                            foreach (var lecture in lectures)
+                            {
+                                command.Parameters["@lectureId"].Value = lecture.LectureId;
+                                command.Parameters["@dateOfLecture"].Value = lecture.DateOfLecture;
+                                command.Parameters["@ropeWorks"].Value = lecture.RopeWorksLecture;
+                                command.Parameters["@navigation"].Value = lecture.Navigation;
+                                command.Parameters["@motor"].Value = lecture.Motor;
+                                command.Parameters["@drabant"].Value = lecture.Drabant;
+                                command.Parameters["@gaffelrigger"].Value = lecture.Gaffelrigger;
+                                command.Parameters["@night"].Value = lecture.Night;
+                                command.Parameters["@teamId"].Value = lecture.TeamId;
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
                 #endregion
 
                 #region Persist sub-data: Lecture->PresentMembers
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var lectureDal = new LectureMockDal();
+                        var lectures = lectureDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "lecture_id, student_member_id" +
+                                              ") VALUES (" +
+                                              "@lectureId, @studentMemberId" +
+                                              ")",
+                                              TableLecturePresentMembersBinder);
+
+                            command.Parameters.Add("@lectureId", DbType.Int64);
+                            command.Parameters.Add("@studentMemberId", DbType.Int64);
+
+                            foreach (var lecture in lectures)
+                            {
+                                command.Parameters["@lectureId"].Value = lecture.LectureId;
+
+                                foreach (var student in lecture.PresentMembers)
+                                {
+                                    command.Parameters["@studentMemberId"].Value = student.StudentMemberId;
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
                 #endregion
 
                 #region Persist data: Logbook
                 #endregion
 
                 #region Persist sub-data: Logbook->ActualCrew
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var logbookDal = new LogbookMockDal();
+                        var logbooks = logbookDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "logbook_id, person_id" +
+                                              ") VALUES (" +
+                                              "@logbookId, @personId" +
+                                              ")",
+                                              TableLogbookActualCrewBinder);
+
+                            command.Parameters.Add("@logbookId", DbType.Int64);
+                            command.Parameters.Add("@personId", DbType.Int64);
+
+                            foreach (var logbook in logbooks)
+                            {
+                                command.Parameters["@logbookId"].Value = logbook.LogbookId;
+
+                                foreach (var person in logbook.ActualCrew)
+                                {
+                                    command.Parameters["@personId"].Value = person.PersonId;
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
                 #endregion
 
                 #region Persist data: Person
@@ -471,6 +609,48 @@ namespace McSntt.Helpers
                 #endregion
 
                 #region Persist sub-data: RegularTrip->Crew
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var tripDal = new RegularTripMockDal();
+                        var trips = tripDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "regular_trip_id, person_id" +
+                                              ") VALUES (" +
+                                              "@regularTripId, @personId" +
+                                              ")",
+                                              TableRegularTripCrewBinder);
+
+                            command.Parameters.Add("@regularTripId", DbType.Int64);
+                            command.Parameters.Add("@personId", DbType.Int64);
+
+                            foreach (var trip in trips)
+                            {
+                                command.Parameters["@regularTripId"].Value = trip.RegularTripId;
+
+                                foreach (var person in trip.Crew)
+                                {
+                                    command.Parameters["@personId"].Value = person.PersonId;
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
                 #endregion
 
                 #region Persist data: SailClubMember
