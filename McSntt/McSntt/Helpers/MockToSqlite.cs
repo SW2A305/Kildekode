@@ -225,6 +225,30 @@ namespace McSntt.Helpers
                         }
                         #endregion
 
+                        #region Create binding-table: LecturePresentMembersBinder
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format(
+                                              "CREATE TABLE {0} (" +
+                                              "lecture_id TEXT, student_member_id INTEGER" +
+                                              ")",
+                                              TableLecturePresentMembersBinder);
+                            command.ExecuteNonQuery();
+                        }
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("CREATE UNIQUE INDEX IF NOT EXISTS lecture_present_members " +
+                                              "ON {0} (lecture_id, student_member_id)",
+                                              TableLecturePresentMembersBinder);
+                            command.ExecuteNonQuery();
+                        }
+                        #endregion
+
                         #region Create binding-table: LogbookActualCrewBinder
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -273,30 +297,6 @@ namespace McSntt.Helpers
                         }
                         #endregion
 
-                        #region Create binding-table: LecturePresentMembersBinder
-                        using (SQLiteCommand command = conn.CreateCommand())
-                        {
-                            command.CommandType = CommandType.Text;
-                            command.CommandText =
-                                String.Format(
-                                              "CREATE TABLE {0} (" +
-                                              "lecture_id TEXT, student_member_id INTEGER" +
-                                              ")",
-                                              TableLecturePresentMembersBinder);
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (SQLiteCommand command = conn.CreateCommand())
-                        {
-                            command.CommandType = CommandType.Text;
-                            command.CommandText =
-                                String.Format("CREATE UNIQUE INDEX IF NOT EXISTS lecture_present_members " +
-                                              "ON {0} (lecture_id, student_member_id)",
-                                              TableLecturePresentMembersBinder);
-                            command.ExecuteNonQuery();
-                        }
-                        #endregion
-
                         transaction.Commit();
                     }
                     catch (Exception)
@@ -307,7 +307,7 @@ namespace McSntt.Helpers
                 }
                 #endregion
 
-                #region Persist data: Boats
+                #region Persist data: Boat
                 using (SQLiteTransaction transaction = conn.BeginTransaction())
                 {
                     try
@@ -354,19 +354,123 @@ namespace McSntt.Helpers
                 }
                 #endregion
 
-                #region Persist data: Events
+                #region Persist data: Event
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var eventDal = new EventMockDal();
+                        var events = eventDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "event_id, event_date, event_title, sign_up_req, description, " +
+                                              "sign_up_msg, created" +
+                                              ") VALUES (" +
+                                              "@eventId, @eventDate, @eventTitle, @signUpReq, @description, " +
+                                              "@signUpMsg, @created" +
+                                              ")",
+                                              TableEvents);
+
+                            command.Parameters.Add("@eventId", DbType.Int64);
+                            command.Parameters.Add("@eventDate", DbType.DateTime);
+                            command.Parameters.Add("@eventTitle", DbType.String);
+                            command.Parameters.Add("@signUpReq", DbType.Boolean);
+                            command.Parameters.Add("@description", DbType.String);
+                            command.Parameters.Add("@signUpMsg", DbType.String);
+                            command.Parameters.Add("@created", DbType.Boolean);
+
+                            foreach (var @event in events)
+                            {
+                                command.Parameters["@eventId"].Value = @event.EventId;
+                                command.Parameters["@eventDate"].Value = @event.EventDate;
+                                command.Parameters["@eventTitle"].Value = @event.EventTitle;
+                                command.Parameters["@signUpReq"].Value = @event.SignUpReq;
+                                command.Parameters["@description"].Value = @event.Description;
+                                command.Parameters["@signUpMsg"].Value = @event.SignUpMsg;
+                                command.Parameters["@created"].Value = @event.Created;
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+                #endregion
+
+                #region Persist sub-data: Event->Participants
+                using (SQLiteTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        var eventDal = new EventMockDal();
+                        var events = eventDal.GetAll();
+
+                        using (SQLiteCommand command = conn.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText =
+                                String.Format("INSERT INTO {0} (" +
+                                              "event_id, person_id" +
+                                              ") VALUES (" +
+                                              "@eventId, @personId" +
+                                              ")",
+                                              TableEventParticipantsBinder);
+
+                            command.Parameters.Add("@eventId", DbType.Int64);
+                            command.Parameters.Add("@personId", DbType.Int64);
+
+                            foreach (var @event in events)
+                            {
+                                command.Parameters["@eventId"].Value = @event.EventId;
+
+                                foreach (var person in @event.Participants)
+                                {
+                                    command.Parameters["@personId"].Value = person.PersonId;
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
                 #endregion
 
                 #region Persist data: Lecture
                 #endregion
 
+                #region Persist sub-data: Lecture->PresentMembers
+                #endregion
+
                 #region Persist data: Logbook
+                #endregion
+
+                #region Persist sub-data: Logbook->ActualCrew
                 #endregion
 
                 #region Persist data: Person
                 #endregion
 
                 #region Persist data: RegularTrip
+                #endregion
+
+                #region Persist sub-data: RegularTrip->Crew
                 #endregion
 
                 #region Persist data: SailClubMember
