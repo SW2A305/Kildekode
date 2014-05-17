@@ -25,6 +25,15 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
+        public bool CreateWithId(Boat boat)
+        {
+            if (boat.BoatId <= 0) { return false; }
+
+            _boats.Add(boat.BoatId, boat);
+
+            return true;
+        }
+
         public bool Update(params Boat[] items)
         {
             foreach (Boat boat in items) {

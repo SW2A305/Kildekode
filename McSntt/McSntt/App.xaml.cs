@@ -20,7 +20,7 @@ namespace McSntt
             //DatabaseManager.InitializeDatabase();
 
             // TODO: Comment out if reverting to SQLite
-            DbSeedData.CreateSeedData();
+            if (!MockToSqlite.RestoreMockData()) { DbSeedData.CreateSeedData(); }
         }
 
         private void App_OnExit(object sender, ExitEventArgs e) { MockToSqlite.PersistMockData(); }

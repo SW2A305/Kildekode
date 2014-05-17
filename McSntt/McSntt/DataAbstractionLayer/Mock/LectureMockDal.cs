@@ -25,6 +25,15 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
+        public bool CreateWithId(Lecture lecture)
+        {
+            if (lecture.LectureId <= 0) { return false; }
+
+            _lectures.Add(lecture.LectureId, lecture);
+
+            return true;
+        }
+
         public bool Update(params Lecture[] items)
         {
             foreach (Lecture lecture in items)

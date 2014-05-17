@@ -11,9 +11,7 @@ namespace McSntt.DataAbstractionLayer.Mock
 
         public SailClubMemberMockDal(bool useForTests = false)
         {
-            if (useForTests || _sailClubMembers == null) {
-                _sailClubMembers = new Dictionary<long, SailClubMember>();
-            }
+            if (useForTests || _sailClubMembers == null) { _sailClubMembers = new Dictionary<long, SailClubMember>(); }
         }
 
         public bool Create(params SailClubMember[] items)
@@ -22,10 +20,42 @@ namespace McSntt.DataAbstractionLayer.Mock
 
             foreach (SailClubMember sailClubMember in items)
             {
-                personDal.Create(sailClubMember);
+                if (sailClubMember.PersonId <= 0) { personDal.Create(sailClubMember); }
+                else
+                { personDal.Update(sailClubMember); }
+
                 sailClubMember.SailClubMemberId = this.GetHighestId() + 1;
                 _sailClubMembers.Add(sailClubMember.SailClubMemberId, sailClubMember);
             }
+
+            return true;
+        }
+
+        public bool CreateWithId(SailClubMember sailClubMember)
+        {
+            var personDal = new PersonMockDal();
+
+            if (sailClubMember.SailClubMemberId <= 0) { return false; }
+            if (sailClubMember.PersonId > 0)
+            {
+                var person = personDal.GetOne(sailClubMember.SailClubMemberId);
+
+                sailClubMember.Address = person.Address;
+                sailClubMember.BoatDriver = person.BoatDriver;
+                sailClubMember.Cityname = person.Cityname;
+                sailClubMember.DateOfBirth = person.DateOfBirth;
+                sailClubMember.Email = person.Email;
+                sailClubMember.FirstName = person.FirstName;
+                sailClubMember.Gender = person.Gender;
+                sailClubMember.LastName = person.LastName;
+                sailClubMember.PhoneNumber = person.PhoneNumber;
+                sailClubMember.PersonId = person.PersonId;
+                sailClubMember.Postcode = person.Postcode;
+
+                personDal.Update(sailClubMember);
+            }
+
+            _sailClubMembers.Add(sailClubMember.SailClubMemberId, sailClubMember);
 
             return true;
         }
@@ -54,7 +84,11 @@ namespace McSntt.DataAbstractionLayer.Mock
             foreach (SailClubMember sailClubMember in items)
             {
                 var student = sailClubMember as StudentMember;
-                if (student != null) { studentDal.Delete(student); continue; }
+                if (student != null)
+                {
+                    studentDal.Delete(student);
+                    continue;
+                }
 
                 if (sailClubMember.SailClubMemberId > 0 && _sailClubMembers.ContainsKey(sailClubMember.SailClubMemberId))
                 {
@@ -66,20 +100,10 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
-        public bool DeleteWithoutCheck(SailClubMember sailClubMember)
+        public IEnumerable<SailClubMember> GetAll()
         {
-            var personDal = new PersonMockDal();
-
-            if (sailClubMember.SailClubMemberId > 0 && _sailClubMembers.ContainsKey(sailClubMember.SailClubMemberId))
-            {
-                _sailClubMembers.Remove(sailClubMember.SailClubMemberId);
-                personDal.Delete(sailClubMember);
-            }
-
-            return true;
+            return _sailClubMembers.Values;
         }
-
-        public IEnumerable<SailClubMember> GetAll() { return _sailClubMembers.Values; }
 
         public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
         {
@@ -101,6 +125,19 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<SailClubMember> items)
         {
             /* Not applicable */
+        }
+
+        public bool DeleteWithoutCheck(SailClubMember sailClubMember)
+        {
+            var personDal = new PersonMockDal();
+
+            if (sailClubMember.SailClubMemberId > 0 && _sailClubMembers.ContainsKey(sailClubMember.SailClubMemberId))
+            {
+                _sailClubMembers.Remove(sailClubMember.SailClubMemberId);
+                personDal.Delete(sailClubMember);
+            }
+
+            return true;
         }
 
         private long GetHighestId()

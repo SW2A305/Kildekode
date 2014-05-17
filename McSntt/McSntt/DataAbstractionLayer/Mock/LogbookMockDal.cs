@@ -25,6 +25,15 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
+        public bool CreateWithId(Logbook logbook)
+        {
+            if (logbook.LogbookId <= 0) { return false; }
+
+            _logbooks.Add(logbook.LogbookId, logbook);
+
+            return true;
+        }
+
         public bool Update(params Logbook[] items)
         {
             foreach (Logbook logbook in items)

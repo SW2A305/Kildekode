@@ -25,6 +25,15 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
+        public bool CreateWithId(Event @event)
+        {
+            if (@event.EventId <= 0) { return false; }
+
+            _events.Add(@event.EventId, @event);
+
+            return true;
+        }
+
         public bool Update(params Event[] items)
         {
             foreach (Event @event in items) {

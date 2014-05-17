@@ -25,6 +25,15 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
+        public bool CreateWithId(RegularTrip regularTrip)
+        {
+            if (regularTrip.RegularTripId <= 0) { return false; }
+
+            _regularTrips.Add(regularTrip.RegularTripId, regularTrip);
+
+            return true;
+        }
+
         public bool Update(params RegularTrip[] items)
         {
             foreach (RegularTrip regularTrip in items)
