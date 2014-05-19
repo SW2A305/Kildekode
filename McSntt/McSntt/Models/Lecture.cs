@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace McSntt.Models
@@ -14,10 +13,7 @@ namespace McSntt.Models
 
         public Team Team
         {
-            get
-            {
-                return this._team;
-            }
+            get { return this._team; }
             set
             {
                 this._team = value;
@@ -29,24 +25,25 @@ namespace McSntt.Models
         {
             get
             {
-                if (_teamId == 0 && _team != null) { _teamId = _team.TeamId; }
+                if (this._teamId == 0 && this._team != null) { this._teamId = this._team.TeamId; }
                 return this._teamId;
             }
-            set
-            {
-                this._teamId = value;
-            }
+            set { this._teamId = value; }
         }
 
         public string DateOfLectureString
         {
             get
             {
-                return DateOfLecture.ToString("d", new CultureInfo("es-ES")) + " kl. " +
-                       DateOfLecture.ToString("t", new CultureInfo("da-DK"));
+                return this.DateOfLecture.ToString("d", new CultureInfo("es-ES")) + " kl. " +
+                       this.DateOfLecture.ToString("t", new CultureInfo("da-DK"));
             }
         }
+
         public DateTime DateOfLecture { get; set; }
+
+        public ICollection<StudentMember> PresentMembers { get; set; }
+
         #region UndervisningsOmråder
         public bool RopeWorksLecture { get; set; }
         public bool Navigation { get; set; }
@@ -55,8 +52,5 @@ namespace McSntt.Models
         public bool Gaffelrigger { get; set; }
         public bool Night { get; set; }
         #endregion
-
-        public ICollection<StudentMember> PresentMembers { get; set; }
-
     }
 }

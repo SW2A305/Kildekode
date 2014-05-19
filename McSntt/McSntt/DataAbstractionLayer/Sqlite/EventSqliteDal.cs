@@ -10,6 +10,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 {
     public class EventSqliteDal : IEventDal
     {
+        #region IEventDal Members
         public bool Create(params Event[] items)
         {
             int insertedRows = 0;
@@ -352,11 +353,12 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Event> GetAll(Func<Event, bool> predicate)
         {
-            var events = this.GetAll().ToArray();
+            Event[] events = this.GetAll().ToArray();
 
             LoadData(events);
 
             return events.Where(predicate);
         }
+        #endregion
     }
 }

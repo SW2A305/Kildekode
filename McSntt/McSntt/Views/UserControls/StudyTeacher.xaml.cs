@@ -3,35 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing.Text;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
 using McSntt.Views.Windows;
-using DataGrid = System.Windows.Controls.DataGrid;
-using MessageBox = System.Windows.MessageBox;
-using TextBox = System.Windows.Controls.TextBox;
-using UserControl = System.Windows.Controls.UserControl;
 
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for StudyTeacher.xaml
+    ///     Interaction logic for StudyTeacher.xaml
     /// </summary>
     public partial class StudyTeacher : UserControl, INotifyPropertyChanged
     {
@@ -39,34 +23,34 @@ namespace McSntt.Views.UserControls
 
         public StudyTeacher()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            var teamDal = DalLocator.TeamDal;
-            var studentDal = DalLocator.StudentMemberDal;
-            
-            var teams = teamDal.GetAll();
-            var students = studentDal.GetAll();
+            ITeamDal teamDal = DalLocator.TeamDal;
+            IStudentMemberDal studentDal = DalLocator.StudentMemberDal;
+
+            IEnumerable<Team> teams = teamDal.GetAll();
+            IEnumerable<StudentMember> students = studentDal.GetAll();
 
             // Load extra data
-            var teamsArray = teams as Team[] ?? teams.ToArray();
+            Team[] teamsArray = teams as Team[] ?? teams.ToArray();
             teamDal.LoadData(teamsArray);
             studentDal.LoadData(students);
 
-            teamDropdown.ItemsSource = teamsArray;
-            teamDropdown.DisplayMemberPath = "Name";
-            teamDropdown.SelectedValuePath = "TeamId";
+            this.teamDropdown.ItemsSource = teamsArray;
+            this.teamDropdown.DisplayMemberPath = "Name";
+            this.teamDropdown.SelectedValuePath = "TeamId";
 
-            lectureDropdown.DisplayMemberPath = "DateOfLectureString";
-            lectureDropdown.SelectedValuePath = "LectureId";
+            this.lectureDropdown.DisplayMemberPath = "DateOfLectureString";
+            this.lectureDropdown.SelectedValuePath = "LectureId";
 
-            DataGridCollection = CollectionViewSource.GetDefaultView(students);
-            DataGridCollection.Filter = new Predicate<object>(Filter);
-            
-            editTeamGrid.IsEnabled = false;
-            lectureGrid.IsEnabled = (lectureDropdown.SelectedIndex != -1);
-            promoteTeam.IsEnabled = false;
-            newLecture1.IsEnabled = false;
-            DeleteLecture.IsEnabled = false;
+            this.DataGridCollection = CollectionViewSource.GetDefaultView(students);
+            this.DataGridCollection.Filter = this.Filter;
+
+            this.editTeamGrid.IsEnabled = false;
+            this.lectureGrid.IsEnabled = (this.lectureDropdown.SelectedIndex != -1);
+            this.promoteTeam.IsEnabled = false;
+            this.newLecture1.IsEnabled = false;
+            this.DeleteLecture.IsEnabled = false;
         }
 
         #region Methods
@@ -78,27 +62,27 @@ namespace McSntt.Views.UserControls
 
         private void ClearFields()
         {
-            CurrentMemberDataGrid.ItemsSource = null;
-            MembersList.Clear();
-            lectureDropdown.ItemsSource = null;
-            lectureDropdown.IsEnabled = false;
-            promoteTeam.IsEnabled = false;
-            newLecture1.IsEnabled = false;
-            DeleteLecture.IsEnabled = false;
-            StudentsProgress.IsEnabled = false;
-            StudentCheckBoxNameChange();
-            TeacherName.Width = 92;
-            TeacherName.Text = "";
-            teamName.Text = string.Empty;
-            memberSearch.Text = string.Empty;
-            Level1RadioButton.IsChecked = false;
-            Level2RadioButton.IsChecked = false;
-            LectureDataClear();
+            this.CurrentMemberDataGrid.ItemsSource = null;
+            this.MembersList.Clear();
+            this.lectureDropdown.ItemsSource = null;
+            this.lectureDropdown.IsEnabled = false;
+            this.promoteTeam.IsEnabled = false;
+            this.newLecture1.IsEnabled = false;
+            this.DeleteLecture.IsEnabled = false;
+            this.StudentsProgress.IsEnabled = false;
+            this.StudentCheckBoxNameChange();
+            this.TeacherName.Width = 92;
+            this.TeacherName.Text = "";
+            this.teamName.Text = string.Empty;
+            this.memberSearch.Text = string.Empty;
+            this.Level1RadioButton.IsChecked = false;
+            this.Level2RadioButton.IsChecked = false;
+            this.LectureDataClear();
         }
 
         private void PromoteTeam(StudentMember member)
         {
-            var upgradedMember = member;
+            StudentMember upgradedMember = member;
             upgradedMember.Position = SailClubMember.Positions.Member;
             upgradedMember.BoatDriver = true;
             DalLocator.SailClubMemberDal.Create(upgradedMember);
@@ -106,79 +90,85 @@ namespace McSntt.Views.UserControls
 
         private IEnumerable GetTeams()
         {
-            var teams = DalLocator.TeamDal.GetAll();
+            IEnumerable<Team> teams = DalLocator.TeamDal.GetAll();
             DalLocator.TeamDal.LoadData(teams);
             return teams;
         }
 
         private IEnumerable GetStudents()
         {
-            var students = DalLocator.StudentMemberDal.GetAll();
+            IEnumerable<StudentMember> students = DalLocator.StudentMemberDal.GetAll();
             DalLocator.StudentMemberDal.LoadData(students);
             return students;
-        } 
+        }
 
         #region UpdateLecture
         private void SaveLectureInfo()
         {
-            if (lectureDropdown.SelectedItem == null) { return; }
-            var indexCount = 0;
-            ((Lecture)lectureDropdown.SelectedItem).RopeWorksLecture = (RopeWorksCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Motor = (MotorCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Navigation = (NavigationCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Night = (NightCheckBox.IsChecked == true);
-            ((Lecture)lectureDropdown.SelectedItem).Gaffelrigger = (GaffelriggerCheckBox.IsChecked == true);      
-            ((Lecture)lectureDropdown.SelectedItem).Drabant = (DrabantCheckBox.IsChecked == true);
-            if (studentOne.IsChecked == true)
+            if (this.lectureDropdown.SelectedItem == null) { return; }
+            int indexCount = 0;
+            ((Lecture) this.lectureDropdown.SelectedItem).RopeWorksLecture = (this.RopeWorksCheckBox.IsChecked == true);
+            ((Lecture) this.lectureDropdown.SelectedItem).Motor = (this.MotorCheckBox.IsChecked == true);
+            ((Lecture) this.lectureDropdown.SelectedItem).Navigation = (this.NavigationCheckBox.IsChecked == true);
+            ((Lecture) this.lectureDropdown.SelectedItem).Night = (this.NightCheckBox.IsChecked == true);
+            ((Lecture) this.lectureDropdown.SelectedItem).Gaffelrigger = (this.GaffelriggerCheckBox.IsChecked == true);
+            ((Lecture) this.lectureDropdown.SelectedItem).Drabant = (this.DrabantCheckBox.IsChecked == true);
+            if (this.studentOne.IsChecked == true)
             {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+                ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers.Add(
+                                                                                 ((Team) this.teamDropdown.SelectedItem)
+                                                                                     .TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
-            if (studentTwo.IsChecked == true)
+            if (this.studentTwo.IsChecked == true)
             {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+                ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers.Add(
+                                                                                 ((Team) this.teamDropdown.SelectedItem)
+                                                                                     .TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
-            if (studentThree.IsChecked == true)
+            if (this.studentThree.IsChecked == true)
             {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+                ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers.Add(
+                                                                                 ((Team) this.teamDropdown.SelectedItem)
+                                                                                     .TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
-            if (studentFour.IsChecked == true)
+            if (this.studentFour.IsChecked == true)
             {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+                ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers.Add(
+                                                                                 ((Team) this.teamDropdown.SelectedItem)
+                                                                                     .TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
-            if (studentFive.IsChecked == true)
+            if (this.studentFive.IsChecked == true)
             {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+                ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers.Add(
+                                                                                 ((Team) this.teamDropdown.SelectedItem)
+                                                                                     .TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
-            if (studentSix.IsChecked == true)
+            if (this.studentSix.IsChecked == true)
             {
-                ((Lecture)lectureDropdown.SelectedItem).PresentMembers.Add(
-                    ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(indexCount));
+                ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers.Add(
+                                                                                 ((Team) this.teamDropdown.SelectedItem)
+                                                                                     .TeamMembers.ElementAt(indexCount));
             }
             ++indexCount;
-            DalLocator.LectureDal.Update((Lecture)lectureDropdown.SelectedItem);
+            DalLocator.LectureDal.Update((Lecture) this.lectureDropdown.SelectedItem);
         }
 
         private void AssignToughtLectureItemsToMember()
         {
-            if (((Lecture) lectureDropdown.SelectedItem).PresentMembers == null) { return; }
-            foreach (var member in ((Lecture)lectureDropdown.SelectedItem).PresentMembers)
+            if (((Lecture) this.lectureDropdown.SelectedItem).PresentMembers == null) { return; }
+            foreach (StudentMember member in ((Lecture) this.lectureDropdown.SelectedItem).PresentMembers)
             {
-                if (((Lecture)lectureDropdown.SelectedItem).Navigation == true) { member.Navigation = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Motor == true) { member.Motor = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).RopeWorksLecture == true) { member.RopeWorks = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Night == true) { member.Night = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Gaffelrigger == true) { member.Gaffelrigger = true; }
-                if (((Lecture)lectureDropdown.SelectedItem).Drabant == true) { member.Drabant = true; }
+                if (((Lecture) this.lectureDropdown.SelectedItem).Navigation) { member.Navigation = true; }
+                if (((Lecture) this.lectureDropdown.SelectedItem).Motor) { member.Motor = true; }
+                if (((Lecture) this.lectureDropdown.SelectedItem).RopeWorksLecture) { member.RopeWorks = true; }
+                if (((Lecture) this.lectureDropdown.SelectedItem).Night) { member.Night = true; }
+                if (((Lecture) this.lectureDropdown.SelectedItem).Gaffelrigger) { member.Gaffelrigger = true; }
+                if (((Lecture) this.lectureDropdown.SelectedItem).Drabant) { member.Drabant = true; }
                 DalLocator.StudentMemberDal.Update(member);
             }
         }
@@ -186,261 +176,252 @@ namespace McSntt.Views.UserControls
         private void StudentCheckBoxNameChange()
         {
             int i = 0;
-            if (teamDropdown.SelectedItem == null) return;
-            if (((Team)teamDropdown.SelectedItem).TeamMembers == null) return;
-            
-            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            if (this.teamDropdown.SelectedItem == null) { return; }
+            if (((Team) this.teamDropdown.SelectedItem).TeamMembers == null) { return; }
+
+            if (i < ((Team) this.teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentOne.IsEnabled = StudentChecBoxIsEnable();
-                studentOne.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                this.studentOne.IsEnabled = this.StudentChecBoxIsEnable();
+                this.studentOne.Content = ((Team) this.teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
-            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            if (i < ((Team) this.teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentTwo.IsEnabled = StudentChecBoxIsEnable();
-                studentTwo.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                this.studentTwo.IsEnabled = this.StudentChecBoxIsEnable();
+                this.studentTwo.Content = ((Team) this.teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
-            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            if (i < ((Team) this.teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentThree.IsEnabled = StudentChecBoxIsEnable();
-                studentThree.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                this.studentThree.IsEnabled = this.StudentChecBoxIsEnable();
+                this.studentThree.Content = ((Team) this.teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
-            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            if (i < ((Team) this.teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentFour.IsEnabled = StudentChecBoxIsEnable();
-                studentFour.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                this.studentFour.IsEnabled = this.StudentChecBoxIsEnable();
+                this.studentFour.Content = ((Team) this.teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
-            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            if (i < ((Team) this.teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentFive.IsEnabled = StudentChecBoxIsEnable();
-                studentFive.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                this.studentFive.IsEnabled = this.StudentChecBoxIsEnable();
+                this.studentFive.Content = ((Team) this.teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
-            if (i < ((Team)teamDropdown.SelectedItem).TeamMembers.Count)
+            if (i < ((Team) this.teamDropdown.SelectedItem).TeamMembers.Count)
             {
-                studentSix.IsEnabled = StudentChecBoxIsEnable();
-                studentSix.Content = ((Team)teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
+                this.studentSix.IsEnabled = this.StudentChecBoxIsEnable();
+                this.studentSix.Content = ((Team) this.teamDropdown.SelectedItem).TeamMembers.ElementAt(i).FullName;
                 i++;
             }
         }
 
         private bool StudentChecBoxIsEnable()
         {
-            if (lectureDropdown.SelectedItem != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (this.lectureDropdown.SelectedItem != null) { return true; }
+            return false;
         }
 
         private void LectureDataClear()
         {
-            studentOne.Content = "";
-            studentOne.IsEnabled = false;
-            studentOne.IsChecked = false;
-            studentTwo.Content = "";
-            studentTwo.IsEnabled = false;
-            studentTwo.IsChecked = false;
-            studentThree.Content = "";
-            studentThree.IsEnabled = false;
-            studentThree.IsChecked = false;
-            studentFour.Content = "";
-            studentFour.IsEnabled = false;
-            studentFour.IsChecked = false;
-            studentFive.Content = "";
-            studentFive.IsEnabled = false;
-            studentFive.IsChecked = false;
-            studentSix.Content = "";
-            studentSix.IsEnabled = false;
-            studentSix.IsChecked = false;
-            DrabantCheckBox.IsChecked = false;
-            DrabantCheckBox.IsEnabled = false;
-            GaffelriggerCheckBox.IsChecked = false;
-            GaffelriggerCheckBox.IsEnabled = false;
-            NavigationCheckBox.IsChecked = false;
-            NavigationCheckBox.IsEnabled = false;
-            MotorCheckBox.IsChecked = false;
-            MotorCheckBox.IsEnabled = false;
-            RopeWorksCheckBox.IsChecked = false;
-            RopeWorksCheckBox.IsEnabled = false;
-            NightCheckBox.IsChecked = false;
-            NightCheckBox.IsEnabled = false;
+            this.studentOne.Content = "";
+            this.studentOne.IsEnabled = false;
+            this.studentOne.IsChecked = false;
+            this.studentTwo.Content = "";
+            this.studentTwo.IsEnabled = false;
+            this.studentTwo.IsChecked = false;
+            this.studentThree.Content = "";
+            this.studentThree.IsEnabled = false;
+            this.studentThree.IsChecked = false;
+            this.studentFour.Content = "";
+            this.studentFour.IsEnabled = false;
+            this.studentFour.IsChecked = false;
+            this.studentFive.Content = "";
+            this.studentFive.IsEnabled = false;
+            this.studentFive.IsChecked = false;
+            this.studentSix.Content = "";
+            this.studentSix.IsEnabled = false;
+            this.studentSix.IsChecked = false;
+            this.DrabantCheckBox.IsChecked = false;
+            this.DrabantCheckBox.IsEnabled = false;
+            this.GaffelriggerCheckBox.IsChecked = false;
+            this.GaffelriggerCheckBox.IsEnabled = false;
+            this.NavigationCheckBox.IsChecked = false;
+            this.NavigationCheckBox.IsEnabled = false;
+            this.MotorCheckBox.IsChecked = false;
+            this.MotorCheckBox.IsEnabled = false;
+            this.RopeWorksCheckBox.IsChecked = false;
+            this.RopeWorksCheckBox.IsEnabled = false;
+            this.NightCheckBox.IsChecked = false;
+            this.NightCheckBox.IsEnabled = false;
         }
         #endregion
+
         #endregion
 
         #region Events
         private void teamDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ClearFields();
-            lectureDropdown.ItemsSource = null;
-            if (teamDropdown.SelectedItem != null)
+            this.ClearFields();
+            this.lectureDropdown.ItemsSource = null;
+            if (this.teamDropdown.SelectedItem != null)
             {
-                editTeam.IsChecked = true;
-                foreach (var member in ((Team)teamDropdown.SelectedItem).TeamMembers)
-                {
-                    MembersList.Add(member);
+                this.editTeam.IsChecked = true;
+                foreach (StudentMember member in ((Team) this.teamDropdown.SelectedItem).TeamMembers) {
+                    this.MembersList.Add(member);
                 }
-                CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(MembersList);
-                teamName.Text = ((Team)teamDropdown.SelectedItem).Name;
-                lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
-                promoteTeam.IsEnabled = ((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
-                newLecture1.IsEnabled = true;
-                StudentsProgress.IsEnabled = true;
-                lectureDropdown.IsEnabled = true;
-                if (((Team)teamDropdown.SelectedItem).Teacher != null)
+                this.CurrentMemberDataGrid.ItemsSource = CollectionViewSource.GetDefaultView(this.MembersList);
+                this.teamName.Text = ((Team) this.teamDropdown.SelectedItem).Name;
+                this.lectureDropdown.ItemsSource =
+                    ((Team) this.teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+                this.promoteTeam.IsEnabled = ((Team) this.teamDropdown.SelectedItem).Level == Team.ClassLevel.Second;
+                this.newLecture1.IsEnabled = true;
+                this.StudentsProgress.IsEnabled = true;
+                this.lectureDropdown.IsEnabled = true;
+                if (((Team) this.teamDropdown.SelectedItem).Teacher != null)
                 {
-                    TeacherName.Width = Double.NaN;
-                    TeacherName.Text = ((Team)teamDropdown.SelectedItem).Teacher.FullName;
+                    this.TeacherName.Width = Double.NaN;
+                    this.TeacherName.Text = ((Team) this.teamDropdown.SelectedItem).Teacher.FullName;
                 }
-                switch (((Team)teamDropdown.SelectedItem).Level)
+                switch (((Team) this.teamDropdown.SelectedItem).Level)
                 {
                     case 0:
-                        Level1RadioButton.IsChecked = false;
-                        Level2RadioButton.IsChecked = false;
+                        this.Level1RadioButton.IsChecked = false;
+                        this.Level2RadioButton.IsChecked = false;
                         break;
                     case Team.ClassLevel.First:
-                        Level1RadioButton.IsChecked = true;
+                        this.Level1RadioButton.IsChecked = true;
                         break;
                     case Team.ClassLevel.Second:
-                        Level2RadioButton.IsChecked = true;
+                        this.Level2RadioButton.IsChecked = true;
                         break;
                 }
             }
         }
 
         #region Editing of team
-        private void editTeam_Checked(object sender, RoutedEventArgs e)
-        {
-            editTeamGrid.IsEnabled = true;
-        }
+        private void editTeam_Checked(object sender, RoutedEventArgs e) { this.editTeamGrid.IsEnabled = true; }
 
-        private void editTeam_Unchecked(object sender, RoutedEventArgs e)
-        {
-            editTeamGrid.IsEnabled = false;
-        }
+        private void editTeam_Unchecked(object sender, RoutedEventArgs e) { this.editTeamGrid.IsEnabled = false; }
 
         private void newTeam_Click(object sender, RoutedEventArgs e)
         {
-            teamDropdown.SelectedIndex = -1;
-            int currentTeamDropdownCount = teamDropdown.Items.Count;
+            this.teamDropdown.SelectedIndex = -1;
+            int currentTeamDropdownCount = this.teamDropdown.Items.Count;
             var newTeamWindow = new NewTeamWindow();
             newTeamWindow.ShowDialog();
-            teamDropdown.ItemsSource = null;
-            
-            teamDropdown.ItemsSource = GetTeams();
+            this.teamDropdown.ItemsSource = null;
 
-            if (currentTeamDropdownCount != teamDropdown.Items.Count)
-            {
-                teamDropdown.SelectedIndex = teamDropdown.Items.Count - 1;
+            this.teamDropdown.ItemsSource = this.GetTeams();
+
+            if (currentTeamDropdownCount != this.teamDropdown.Items.Count) {
+                this.teamDropdown.SelectedIndex = this.teamDropdown.Items.Count - 1;
             }
         }
 
         private void deleteTeam_Click(object sender, RoutedEventArgs e)
         {
-            if (teamDropdown.SelectedItem != null)
+            if (this.teamDropdown.SelectedItem != null)
             {
-                var team = (Team)teamDropdown.SelectedItem;
-                
+                var team = (Team) this.teamDropdown.SelectedItem;
+
                 DalLocator.TeamDal.Delete(team);
-                teamDropdown.ItemsSource = null;
-                teamDropdown.ItemsSource = GetTeams();
-                
-                ClearFields();
+                this.teamDropdown.ItemsSource = null;
+                this.teamDropdown.ItemsSource = this.GetTeams();
+
+                this.ClearFields();
             }
         }
-        
+
         private void promoteTeam_Click(object sender, RoutedEventArgs e)
         {
             var promotelist = new List<StudentMember>();
 
-            foreach (var member in (((Team)teamDropdown.SelectedItem).TeamMembers))
+            foreach (StudentMember member in (((Team) this.teamDropdown.SelectedItem).TeamMembers))
             {
-                if (member.Night == true && member.Navigation == true &&
-                    member.Motor == true && member.RopeWorks == true &&
-                    member.Drabant == true && member.Gaffelrigger == true)
+                if (member.Night && member.Navigation &&
+                    member.Motor && member.RopeWorks &&
+                    member.Drabant && member.Gaffelrigger)
                 {
-                    PromoteTeam(member);
+                    this.PromoteTeam(member);
                     promotelist.Add(member);
                 }
                 else
                 {
-                    MessageBox.Show("" + member.FullName + " er endnu ikke klar til at få sit duelighedsbevis\nTovværksarbejde " +
-                                    member.RopeWorks + "\nNavigation " + member.Navigation + "\nMotor- og brandlære " + member.Motor + "\nNatsejlads " +
-                                    member.Night + "\nDrabantsejling " + member.Drabant + "\nGaffelriggersejling " + member.Gaffelrigger);
+                    MessageBox.Show("" + member.FullName
+                                    + " er endnu ikke klar til at få sit duelighedsbevis\nTovværksarbejde " +
+                                    member.RopeWorks + "\nNavigation " + member.Navigation + "\nMotor- og brandlære "
+                                    + member.Motor + "\nNatsejlads " +
+                                    member.Night + "\nDrabantsejling " + member.Drabant + "\nGaffelriggersejling "
+                                    + member.Gaffelrigger);
                 }
             }
-            foreach (var studentMember in promotelist)
+            foreach (StudentMember studentMember in promotelist)
             {
-                ((Team) teamDropdown.SelectedItem).TeamMembers.Remove(studentMember);
+                ((Team) this.teamDropdown.SelectedItem).TeamMembers.Remove(studentMember);
                 DalLocator.StudentMemberDal.Delete(studentMember);
             }
-            DalLocator.TeamDal.Update((Team) teamDropdown.SelectedItem);
-            
+            DalLocator.TeamDal.Update((Team) this.teamDropdown.SelectedItem);
 
-            if (((Team)teamDropdown.SelectedItem).TeamMembers.Count == 0)
-            {
-                DalLocator.TeamDal.Delete((Team)teamDropdown.SelectedItem);
+
+            if (((Team) this.teamDropdown.SelectedItem).TeamMembers.Count == 0) {
+                DalLocator.TeamDal.Delete((Team) this.teamDropdown.SelectedItem);
             }
 
-            ClearFields();
-            teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = GetTeams();
-            DataGridCollection = CollectionViewSource.GetDefaultView(GetStudents());
-            DataGridCollection.Filter = new Predicate<object>(Filter);
+            this.ClearFields();
+            this.teamDropdown.ItemsSource = null;
+            this.teamDropdown.ItemsSource = this.GetTeams();
+            this.DataGridCollection = CollectionViewSource.GetDefaultView(this.GetStudents());
+            this.DataGridCollection.Filter = this.Filter;
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
-        {           
-            if (MemberDataGrid.SelectedItem == null) { return; }
-            var currentMember = (StudentMember) MemberDataGrid.SelectedItem;
-            if (!MembersList.Contains(currentMember) && DalLocator.StudentMemberDal.GetOne(currentMember.StudentMemberId).AssociatedTeamId == 0)
+        {
+            if (this.MemberDataGrid.SelectedItem == null) { return; }
+            IList selectedMembers = this.MemberDataGrid.SelectedItems;
+
+            foreach (StudentMember selectedMember in selectedMembers)
             {
-                MembersList.Add(currentMember);
-                RefreshDatagrid(CurrentMemberDataGrid, MembersList);
-            }
-            else
-            {
-                MessageBox.Show("Eleven er allerede på et hold!");
+                if (!this.MembersList.Contains(selectedMember)
+                    && DalLocator.StudentMemberDal.GetOne(selectedMember.StudentMemberId).AssociatedTeamId == 0)
+                {
+                    this.MembersList.Add(selectedMember);
+                    this.RefreshDatagrid(this.CurrentMemberDataGrid, this.MembersList);
+                }
+                else
+                {
+                    MessageBox.Show(String.Format("{0} er allerede på {1}!", selectedMember.FullName,
+                                                  this.MembersList.Contains(selectedMember) ? "holdet" : "et hold"));
+                }
             }
         }
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentMemberDataGrid.SelectedItem == null) { return; }
-            var currentMember = (StudentMember) CurrentMemberDataGrid.SelectedItem;
-            MembersList.Remove(currentMember);
-            RefreshDatagrid(CurrentMemberDataGrid, MembersList);
+            if (this.CurrentMemberDataGrid.SelectedItem == null) { return; }
+            var currentMember = (StudentMember) this.CurrentMemberDataGrid.SelectedItem;
+            this.MembersList.Remove(currentMember);
+            this.RefreshDatagrid(this.CurrentMemberDataGrid, this.MembersList);
         }
 
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
-            if (teamDropdown.SelectedIndex == -1){return;}
-            int currentTeamDropdownIndex = teamDropdown.SelectedIndex;
-            var currentTeam = ((Team) teamDropdown.SelectedItem);
+            if (this.teamDropdown.SelectedIndex == -1) { return; }
+            int currentTeamDropdownIndex = this.teamDropdown.SelectedIndex;
+            var currentTeam = ((Team) this.teamDropdown.SelectedItem);
 
-            if (Level1RadioButton.IsChecked == true)
-            {
+            if (this.Level1RadioButton.IsChecked == true) {
                 currentTeam.Level = Team.ClassLevel.First;
             }
-            else if (Level2RadioButton.IsChecked == true)
-            {
-                currentTeam.Level = Team.ClassLevel.Second;
-            }
+            else if (this.Level2RadioButton.IsChecked == true) { currentTeam.Level = Team.ClassLevel.Second; }
 
-            if (teamName.Text != String.Empty)
+            if (this.teamName.Text != String.Empty)
             {
-                if (currentTeam.Name != teamName.Text)
+                if (currentTeam.Name != this.teamName.Text)
                 {
-                    if (DalLocator.TeamDal.GetAll().All(x => x.Name != teamName.Text))
-                    {
-                        currentTeam.Name = teamName.Text;
+                    if (DalLocator.TeamDal.GetAll().All(x => x.Name != this.teamName.Text)) {
+                        currentTeam.Name = this.teamName.Text;
                     }
                     else
                     {
@@ -449,98 +430,98 @@ namespace McSntt.Views.UserControls
                 }
             }
 
-            ((Team)teamDropdown.SelectedItem).TeamMembers.Clear();
-            foreach (var member in MembersList)
+            ((Team) this.teamDropdown.SelectedItem).TeamMembers.Clear();
+            foreach (StudentMember member in this.MembersList)
             {
-                member.AssociatedTeam = ((Team)teamDropdown.SelectedItem);
+                member.AssociatedTeam = ((Team) this.teamDropdown.SelectedItem);
                 currentTeam.TeamMembers.Add(member);
             }
 
             DalLocator.TeamDal.Update(currentTeam);
 
-            teamDropdown.ItemsSource = null;
-            teamDropdown.ItemsSource = GetTeams();
-            teamDropdown.SelectedIndex = currentTeamDropdownIndex;
+            this.teamDropdown.ItemsSource = null;
+            this.teamDropdown.ItemsSource = this.GetTeams();
+            this.teamDropdown.SelectedIndex = currentTeamDropdownIndex;
         }
         #endregion
 
         #region Lecture
         private void lectureDropdown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LectureDataClear();
-            StudentCheckBoxNameChange();
-            if (lectureDropdown.SelectedItem == null) { return; }
+            this.LectureDataClear();
+            this.StudentCheckBoxNameChange();
+            if (this.lectureDropdown.SelectedItem == null) { return; }
 
-            lectureGrid.IsEnabled = true;
-            DeleteLecture.IsEnabled = true;
-            
+            this.lectureGrid.IsEnabled = true;
+            this.DeleteLecture.IsEnabled = true;
 
-            if (((Team)teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
+
+            if (((Team) this.teamDropdown.SelectedItem).Level == Team.ClassLevel.First)
             {
-                NavigationCheckBox.IsEnabled = false;
-                MotorCheckBox.IsEnabled = false;
-                GaffelriggerCheckBox.IsEnabled = false;
-                NightCheckBox.IsEnabled = true;
-                DrabantCheckBox.IsEnabled = true;
-                RopeWorksCheckBox.IsEnabled = true;
+                this.NavigationCheckBox.IsEnabled = false;
+                this.MotorCheckBox.IsEnabled = false;
+                this.GaffelriggerCheckBox.IsEnabled = false;
+                this.NightCheckBox.IsEnabled = true;
+                this.DrabantCheckBox.IsEnabled = true;
+                this.RopeWorksCheckBox.IsEnabled = true;
             }
             else
             {
-                NavigationCheckBox.IsEnabled = true;
-                MotorCheckBox.IsEnabled = true;
-                GaffelriggerCheckBox.IsEnabled = true;
-                NightCheckBox.IsEnabled = false;
-                DrabantCheckBox.IsEnabled = false;
-                RopeWorksCheckBox.IsEnabled = false;
+                this.NavigationCheckBox.IsEnabled = true;
+                this.MotorCheckBox.IsEnabled = true;
+                this.GaffelriggerCheckBox.IsEnabled = true;
+                this.NightCheckBox.IsEnabled = false;
+                this.DrabantCheckBox.IsEnabled = false;
+                this.RopeWorksCheckBox.IsEnabled = false;
             }
         }
 
         private void updateLecture_Click(object sender, RoutedEventArgs e)
         {
-            SaveLectureInfo();
+            this.SaveLectureInfo();
             MessageBox.Show("Oplysninger er gemt");
-            AssignToughtLectureItemsToMember();
+            this.AssignToughtLectureItemsToMember();
         }
-        
+
         private void newLecture1_Click(object sender, RoutedEventArgs e)
         {
-            var window = new NewLecture(teamDropdown.SelectedItem);
+            var window = new NewLecture(this.teamDropdown.SelectedItem);
             window.ShowDialog();
-            ((Team) teamDropdown.SelectedItem).Lectures =
+            ((Team) this.teamDropdown.SelectedItem).Lectures =
                 DalLocator.LectureDal.GetAll()
-                    .Where(x => x.TeamId == ((Team) teamDropdown.SelectedItem).TeamId)
-                    .ToList();
-            lectureDropdown.ItemsSource = null;
-            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+                          .Where(x => x.TeamId == ((Team) this.teamDropdown.SelectedItem).TeamId)
+                          .ToList();
+            this.lectureDropdown.ItemsSource = null;
+            this.lectureDropdown.ItemsSource =
+                ((Team) this.teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
         }
 
         private void DeleteLecture_Click(object sender, RoutedEventArgs e)
         {
-            var team = (Team) teamDropdown.SelectedItem;
-            var lecture = ((Lecture)lectureDropdown.SelectedItem);
-            LectureDataClear();
+            var team = (Team) this.teamDropdown.SelectedItem;
+            var lecture = ((Lecture) this.lectureDropdown.SelectedItem);
+            this.LectureDataClear();
             DalLocator.LectureDal.Delete(lecture);
             team.Lectures = null;
             team.Lectures = DalLocator.LectureDal.GetAll(x => x.TeamId == team.TeamId).ToList();
-            lectureDropdown.ItemsSource = null;
-            lectureDropdown.ItemsSource = team.Lectures.OrderBy(lect => lect.DateOfLecture);
+            this.lectureDropdown.ItemsSource = null;
+            this.lectureDropdown.ItemsSource = team.Lectures.OrderBy(lect => lect.DateOfLecture);
         }
 
         private void StudentsProgress_Click(object sender, RoutedEventArgs e)
         {
-            if ((Team)teamDropdown.SelectedItem != null)
+            if (this.teamDropdown.SelectedItem != null)
             {
-                var studentProgress = new StudentsProgressWindow(((Team)teamDropdown.SelectedItem));
+                var studentProgress = new StudentsProgressWindow(((Team) this.teamDropdown.SelectedItem));
                 studentProgress.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Der er ikke valgt et hold");
             }
-
         }
-
         #endregion
+
         #endregion
 
         #region Search
@@ -549,63 +530,55 @@ namespace McSntt.Views.UserControls
 
         public ICollectionView DataGridCollection
         {
-            get { return _dataGridCollection; }
-            set { _dataGridCollection = value; NotifyPropertyChanged("DataGridCollection"); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
+            get { return this._dataGridCollection; }
+            set
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
+                this._dataGridCollection = value;
+                this.NotifyPropertyChanged("DataGridCollection");
             }
         }
 
         public string FilterString
         {
-            get
-            {
-                return _filterString;
-            }
+            get { return this._filterString; }
             set
             {
-                _filterString = value;
-                NotifyPropertyChanged("FilterString");
-                FilterCollection();
+                this._filterString = value;
+                this.NotifyPropertyChanged("FilterString");
+                this.FilterCollection();
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string property)
+        {
+            if (this.PropertyChanged != null) { this.PropertyChanged(this, new PropertyChangedEventArgs(property)); }
         }
 
         private void FilterCollection()
         {
-            if (_dataGridCollection != null)
-            {
-                _dataGridCollection.Refresh();
-            }
+            if (this._dataGridCollection != null) { this._dataGridCollection.Refresh(); }
         }
+
         public bool Filter(object obj)
         {
             var data = obj as StudentMember;
 
             if (data != null && data.Position == SailClubMember.Positions.Student)
             {
-                if (!string.IsNullOrEmpty(_filterString))
+                if (!string.IsNullOrEmpty(this._filterString))
                 {
                     // Sanitise input to lower
-                    var lower = _filterString.ToLower();
+                    string lower = this._filterString.ToLower();
 
                     // Check if either of the data points for the members match the filterstring
-                    if (data.FirstName != null)
-                        if (data.FirstName.ToLower().Contains(lower))
-                            return true;
+                    if (data.FirstName != null) { if (data.FirstName.ToLower().Contains(lower)) { return true; } }
 
-                    if (data.LastName != null)
-                        if (data.LastName.ToLower().Contains(lower))
-                            return true;
+                    if (data.LastName != null) { if (data.LastName.ToLower().Contains(lower)) { return true; } }
 
-                    if (data.SailClubMemberId.ToString().Contains(lower))
-                        return true;
-                    
+                    if (data.SailClubMemberId.ToString().Contains(lower)) { return true; }
+
                     // If none succeeds return false
                     return false;
                 }
@@ -614,7 +587,5 @@ namespace McSntt.Views.UserControls
             return false;
         }
         #endregion
-
-        
     }
 }

@@ -12,10 +12,9 @@ namespace McSntt.Helpers
         public static string Sha256(string password)
         {
             var crypt = new SHA256Managed();
-            var hash = String.Empty;
+            string hash = String.Empty;
             byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(password), 0, Encoding.UTF8.GetByteCount(password));
             return crypto.Aggregate(hash, (current, bit) => current + bit.ToString("x2"));
         }
- 
     }
 }

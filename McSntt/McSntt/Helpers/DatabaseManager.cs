@@ -88,7 +88,6 @@ namespace McSntt.Helpers
 
             using (SQLiteConnection db = DbConnection)
             {
-
                 db.Open();
 
                 using (SQLiteCommand command = db.CreateCommand())
@@ -97,8 +96,7 @@ namespace McSntt.Helpers
                     command.CommandText = String.Format("SELECT value FROM {0} WHERE name = @name", TableDbSettings);
                     command.Parameters.Add(new SQLiteParameter("@name", DbSettingDbVersion));
 
-                    using (SQLiteDataReader reader = command.ExecuteReader())
-                    {
+                    using (SQLiteDataReader reader = command.ExecuteReader()) {
                         if (reader.Read()) { dbVersion = ReadData<long>(reader, reader.GetOrdinal("value")); }
                     }
                 }
@@ -106,10 +104,7 @@ namespace McSntt.Helpers
                 db.Close();
             }
 
-            if (dbVersion < DbVersion)
-            {
-                for (long i = dbVersion; i < DbVersion; i++) { UpdateDatabase(i, i + 1); }
-            }
+            if (dbVersion < DbVersion) { for (long i = dbVersion; i < DbVersion; i++) { UpdateDatabase(i, i + 1); } }
         }
 
         private static void UpdateDatabase(long fromVersion, long toVersion)
@@ -284,7 +279,8 @@ namespace McSntt.Helpers
                             command.ExecuteNonQuery();
                         }
 
-                        using (var command = db.CreateCommand()) {
+                        using (SQLiteCommand command = db.CreateCommand())
+                        {
                             command.CommandType = CommandType.Text;
                             command.CommandText =
                                 String.Format("CREATE UNIQUE INDEX IF NOT EXISTS event_participants " +
@@ -307,7 +303,7 @@ namespace McSntt.Helpers
                             command.ExecuteNonQuery();
                         }
 
-                        using (var command = db.CreateCommand())
+                        using (SQLiteCommand command = db.CreateCommand())
                         {
                             command.CommandType = CommandType.Text;
                             command.CommandText =
@@ -331,7 +327,7 @@ namespace McSntt.Helpers
                             command.ExecuteNonQuery();
                         }
 
-                        using (var command = db.CreateCommand())
+                        using (SQLiteCommand command = db.CreateCommand())
                         {
                             command.CommandType = CommandType.Text;
                             command.CommandText =
@@ -355,7 +351,7 @@ namespace McSntt.Helpers
                             command.ExecuteNonQuery();
                         }
 
-                        using (var command = db.CreateCommand())
+                        using (SQLiteCommand command = db.CreateCommand())
                         {
                             command.CommandType = CommandType.Text;
                             command.CommandText =
@@ -380,7 +376,8 @@ namespace McSntt.Helpers
 
                         transaction.Commit();
                     }
-                    catch (Exception) {
+                    catch (Exception)
+                    {
                         transaction.Rollback();
                         throw;
                     }
@@ -388,27 +385,26 @@ namespace McSntt.Helpers
 
                 db.Close();
             }
-
         }
 
         private static void UpdateDatabaseFromVersion1ToVersion2()
         {
-            using (var db = DbConnection)
+            using (SQLiteConnection db = DbConnection)
             {
                 db.Open();
 
-                using (var transaction = db.BeginTransaction())
+                using (SQLiteTransaction transaction = db.BeginTransaction())
                 {
                     try
                     {
                         #region Alter Table: RegularTrips
-                        using (var command = db.CreateCommand())
+                        using (SQLiteCommand command = db.CreateCommand())
                         {
                             command.CommandType = CommandType.Text;
                             command.CommandText =
                                 String.Format("ALTER TABLE {0} " +
                                               "ADD COLUMN created_by_id INTEGER",
-                                              DatabaseManager.TableRegularTrips);
+                                              TableRegularTrips);
 
                             command.ExecuteNonQuery();
                         }
@@ -505,7 +501,7 @@ namespace McSntt.Helpers
 
         public static T ReadData<T>(SQLiteDataReader reader, int columnIndex)
         {
-            var result = default(T);
+            T result = default(T);
 
             if (!reader.IsDBNull(columnIndex)) { result = reader.GetFieldValue<T>(columnIndex); }
 

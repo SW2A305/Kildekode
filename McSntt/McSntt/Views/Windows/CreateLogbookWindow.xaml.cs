@@ -5,121 +5,109 @@ using System.Windows;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
-using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
-using MessageBox = System.Windows.MessageBox;
 
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for CreateLogbookWindow.xaml
+    ///     Interaction logic for CreateLogbookWindow.xaml
     /// </summary>
     public partial class CreateLogbookWindow : Window
     {
+        private readonly RegularTrip RegularSailTrip = new RegularTrip();
+        private readonly SailClubMember _currentSailClubMember;
+
+        private readonly DateTime _hasBeenFilledTime;
+        private readonly Logbook currentLogbook = new Logbook();
+        private readonly ILogbookDal logbookDal = DalLocator.LogbookDal;
+        private readonly IRegularTripDal regularTripDal = DalLocator.RegularTripDal;
         public ICollection<Person> CrewList = new List<Person>();
-        private RegularTrip RegularSailTrip = new RegularTrip();
-        private Logbook currentLogbook = new Logbook();
-        private SailClubMember _currentSailClubMember;
-
-        private IRegularTripDal regularTripDal = DalLocator.RegularTripDal;
-        private ILogbookDal logbookDal = DalLocator.LogbookDal;
-
-        private readonly DateTime _hasBeenFilledTime = new DateTime();
 
         public CreateLogbookWindow(RegularTrip regularSailTrip, SailClubMember p)
         {
-            InitializeComponent();
-            
-            _currentSailClubMember = p;
+            this.InitializeComponent();
 
-            RegularSailTrip = regularSailTrip;
+            this._currentSailClubMember = p;
 
-            CrewList = regularSailTrip.Crew.ToList();
-            CrewDataGrid.ItemsSource = CrewList;
-            PurposeTextBox.Text = regularSailTrip.PurposeAndArea;
-            BoatTextBox.Text = regularSailTrip.Boat.NickName;
-            DateTimePickerPlannedDepature.Value = regularSailTrip.DepartureTime;
-            DateTimePickerPlannedArrival.Value = regularSailTrip.ArrivalTime;
-            CaptainComboBox.DisplayMemberPath = "FullName";
-            CaptainComboBox.ItemsSource = CrewList;
-            CaptainComboBox.SelectedValue = CrewList.FirstOrDefault(x => x.PersonId == regularSailTrip.Captain.PersonId);
-            DateTimePickerActualArrival.Value = regularSailTrip.ArrivalTime;
-            DateTimePickerActualDeparture.Value = regularSailTrip.DepartureTime;
-            _hasBeenFilledTime = DateTime.Now;
+            this.RegularSailTrip = regularSailTrip;
+
+            this.CrewList = regularSailTrip.Crew.ToList();
+            this.CrewDataGrid.ItemsSource = this.CrewList;
+            this.PurposeTextBox.Text = regularSailTrip.PurposeAndArea;
+            this.BoatTextBox.Text = regularSailTrip.Boat.NickName;
+            this.DateTimePickerPlannedDepature.Value = regularSailTrip.DepartureTime;
+            this.DateTimePickerPlannedArrival.Value = regularSailTrip.ArrivalTime;
+            this.CaptainComboBox.DisplayMemberPath = "FullName";
+            this.CaptainComboBox.ItemsSource = this.CrewList;
+            this.CaptainComboBox.SelectedValue =
+                this.CrewList.FirstOrDefault(x => x.PersonId == regularSailTrip.Captain.PersonId);
+            this.DateTimePickerActualArrival.Value = regularSailTrip.ArrivalTime;
+            this.DateTimePickerActualDeparture.Value = regularSailTrip.DepartureTime;
+            this._hasBeenFilledTime = DateTime.Now;
         }
-        
+
         private void ChangeCrewButtonClick(object sender, RoutedEventArgs e)
         {
-            var createCrewWindow = new CreateCrewWindow(CrewList);
+            var createCrewWindow = new CreateCrewWindow(this.CrewList);
             createCrewWindow.ShowDialog();
 
 
-            CrewList = createCrewWindow.CrewList;
+            this.CrewList = createCrewWindow.CrewList;
 
-            CrewDataGrid.ItemsSource = null;
-            CrewDataGrid.ItemsSource = CrewList;
+            this.CrewDataGrid.ItemsSource = null;
+            this.CrewDataGrid.ItemsSource = this.CrewList;
 
-            if (!CrewList.Contains((Person) CaptainComboBox.SelectedValue))
-            {
-                CaptainComboBox.SelectedValue = -1;
+            if (!this.CrewList.Contains((Person) this.CaptainComboBox.SelectedValue)) {
+                this.CaptainComboBox.SelectedValue = -1;
             }
-            CaptainComboBox.ItemsSource = null;
-            CaptainComboBox.ItemsSource = CrewList;
+            this.CaptainComboBox.ItemsSource = null;
+            this.CaptainComboBox.ItemsSource = this.CrewList;
         }
 
         private void FileLogbookButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (YesRadioButton.IsChecked == false && NoRadioButton.IsChecked == false)
-            {
+            if (this.YesRadioButton.IsChecked == false && this.NoRadioButton.IsChecked == false) {
                 MessageBox.Show("Udfyld venligst om båden blev skadet under sejladsen");
             }
-            else if ((DateTimePickerActualArrival.Value == _hasBeenFilledTime ||
-                     DateTimePickerActualDeparture.Value == _hasBeenFilledTime))
-            {
-                MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst");
-            }
-            else if ((YesRadioButton.IsChecked == true) && DamageTextBox.Text == String.Empty)
-            {
+            else if ((this.DateTimePickerActualArrival.Value == this._hasBeenFilledTime ||
+                      this.DateTimePickerActualDeparture.Value == this._hasBeenFilledTime)) {
+                          MessageBox.Show("Ændre venligst din faktiske afgang og/eller faktiske ankomst");
+                      }
+            else if ((this.YesRadioButton.IsChecked == true) && this.DamageTextBox.Text == String.Empty) {
                 MessageBox.Show("Udfyld venligst skadesrapporten med en beskrivelse af skaden");
             }
-            else if (WeatherConditionTextBox.Text == String.Empty)
-            {
+            else if (this.WeatherConditionTextBox.Text == String.Empty) {
                 MessageBox.Show("Udfyld venligst vejrforholdene");
             }
-            else if (!CrewList.Contains((Person)CaptainComboBox.SelectedValue))
-            {
+            else if (!this.CrewList.Contains((Person) this.CaptainComboBox.SelectedValue)) {
                 MessageBox.Show("Vælg venligst en gyldig Kaptajn");
             }
-            else if (YesRadioButton.IsChecked == true || NoRadioButton.IsChecked == true) 
+            else if (this.YesRadioButton.IsChecked == true || this.NoRadioButton.IsChecked == true)
             {
-                    if (YesRadioButton.IsChecked == true)
-                    {
-                        currentLogbook.DamageInflicted = true;
+                if (this.YesRadioButton.IsChecked == true)
+                {
+                    this.currentLogbook.DamageInflicted = true;
 
-                        //Notify someone that the boat is damaged
-                    }
-                
-                    if (NoRadioButton.IsChecked == true)
-                    {
-                        currentLogbook.DamageInflicted = false;
-                    }
+                    //Notify someone that the boat is damaged
+                }
 
-                RegularSailTrip.PurposeAndArea = PurposeTextBox.Text;
-                currentLogbook.DamageDescription = DamageTextBox.Text;
-                currentLogbook.ActualCrew = CrewList;
-                currentLogbook.ActualArrivalTime = DateTimePickerActualArrival.Value;
-                currentLogbook.ActualDepartureTime = DateTimePickerActualDeparture.Value;
-                currentLogbook.FiledBy = _currentSailClubMember;
-                RegularSailTrip.WeatherConditions = WeatherConditionTextBox.Text;
-                RegularSailTrip.Crew = CrewList;
-                RegularSailTrip.Logbook = currentLogbook;
+                if (this.NoRadioButton.IsChecked == true) { this.currentLogbook.DamageInflicted = false; }
 
-                logbookDal.Create(currentLogbook);               
+                this.RegularSailTrip.PurposeAndArea = this.PurposeTextBox.Text;
+                this.currentLogbook.DamageDescription = this.DamageTextBox.Text;
+                this.currentLogbook.ActualCrew = this.CrewList;
+                this.currentLogbook.ActualArrivalTime = this.DateTimePickerActualArrival.Value;
+                this.currentLogbook.ActualDepartureTime = this.DateTimePickerActualDeparture.Value;
+                this.currentLogbook.FiledBy = this._currentSailClubMember;
+                this.RegularSailTrip.WeatherConditions = this.WeatherConditionTextBox.Text;
+                this.RegularSailTrip.Crew = this.CrewList;
+                this.RegularSailTrip.Logbook = this.currentLogbook;
 
-                regularTripDal.Update(RegularSailTrip);
-                
-                this.Close();}
+                this.logbookDal.Create(this.currentLogbook);
 
+                this.regularTripDal.Update(this.RegularSailTrip);
+
+                this.Close();
             }
-     }
+        }
+    }
 }
-

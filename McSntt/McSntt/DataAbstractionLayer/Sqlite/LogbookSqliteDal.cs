@@ -10,6 +10,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 {
     public class LogbookSqliteDal : ILogbookDal
     {
+        #region ILogbookDal Members
         public bool Create(params Logbook[] items)
         {
             int insertedRows = 0;
@@ -23,7 +24,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                 using (SQLiteCommand logbookCommand = db.CreateCommand())
                 {
-                    using (var personCommand = db.CreateCommand())
+                    using (SQLiteCommand personCommand = db.CreateCommand())
                     {
                         logbookCommand.CommandType = CommandType.Text;
                         logbookCommand.CommandText =
@@ -42,7 +43,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         foreach (Logbook logbook in items)
                         {
-                            using (var transaction = db.BeginTransaction())
+                            using (SQLiteTransaction transaction = db.BeginTransaction())
                             {
                                 logbookCommand.Parameters.Clear();
                                 logbookCommand.Parameters.Add(new SQLiteParameter("@filedById", logbook.FiledById));
@@ -72,9 +73,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     {
                                         personCommand.Parameters.Clear();
                                         personCommand.Parameters.Add(new SQLiteParameter("@logbookId",
-                                                                                          logbook.LogbookId));
+                                                                                         logbook.LogbookId));
                                         personCommand.Parameters.Add(new SQLiteParameter("@personId",
-                                                                                          person.PersonId));
+                                                                                         person.PersonId));
                                         crewRowsInserted += personCommand.ExecuteNonQuery();
                                     }
                                 }
@@ -113,7 +114,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                 using (SQLiteCommand command = db.CreateCommand())
                 {
-                    using (var personCommand = db.CreateCommand())
+                    using (SQLiteCommand personCommand = db.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
@@ -147,7 +148,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 deleteCommand.ExecuteNonQuery();
                             }
 
-                            using (var transaction = db.BeginTransaction())
+                            using (SQLiteTransaction transaction = db.BeginTransaction())
                             {
                                 command.Parameters.Clear();
                                 command.Parameters.Add(new SQLiteParameter("@logbookId", logbook.LogbookId));
@@ -246,7 +247,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Logbook> GetAll()
         {
-            var logbooks  = new List<Logbook>();
+            var logbooks = new List<Logbook>();
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -271,9 +272,12 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                         ActualDepartureTime =
                                             reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
                                         AnswerFromBoatChief =
-                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
-                                        DamageDescription = DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
-                                        DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted")),
+                                            DatabaseManager.ReadString(reader,
+                                                                       reader.GetOrdinal("answer_from_boat_chief")),
+                                        DamageDescription =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
+                                        DamageInflicted =
+                                            DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted")),
                                         FiledById = DatabaseManager.ReadInt(reader, reader.GetOrdinal("filed_by_id"))
                                     });
                         }
@@ -284,7 +288,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
 
             return logbooks
-            ;
+                ;
         }
 
         public Logbook GetOne(long itemId)
@@ -315,9 +319,12 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     LogbookId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("logbook_id")),
                                     ActualArrivalTime = reader.GetDateTime(reader.GetOrdinal("actual_arrival_time")),
                                     ActualDepartureTime = reader.GetDateTime(reader.GetOrdinal("actual_departure_time")),
-                                    AnswerFromBoatChief = DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
-                                    DamageDescription = DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
-                                    DamageInflicted = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted")),
+                                    AnswerFromBoatChief =
+                                        DatabaseManager.ReadString(reader, reader.GetOrdinal("answer_from_boat_chief")),
+                                    DamageDescription =
+                                        DatabaseManager.ReadString(reader, reader.GetOrdinal("damage_description")),
+                                    DamageInflicted =
+                                        DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("damage_inflicted")),
                                     FiledById = DatabaseManager.ReadInt(reader, reader.GetOrdinal("filed_by_id"))
                                 };
                         }
@@ -333,18 +340,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public void LoadData(Logbook item)
         {
             // Load FiledBy
-            var memberDal = DalLocator.SailClubMemberDal;
-            
+            ISailClubMemberDal memberDal = DalLocator.SailClubMemberDal;
+
             if (item.FiledById > 0) { item.FiledBy = memberDal.GetOne(item.FiledById); }
 
             // Load ActualCrew
-            var personDal = DalLocator.PersonDal;
+            IPersonDal personDal = DalLocator.PersonDal;
 
-            using (var db = DatabaseManager.DbConnection)
+            using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
                 db.Open();
 
-                using (var command = db.CreateCommand())
+                using (SQLiteCommand command = db.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText =
@@ -353,16 +360,13 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     command.Parameters.Add(new SQLiteParameter("@logbookId", item.LogbookId));
 
                     item.ActualCrew = new List<Person>();
-                    using (var reader = command.ExecuteReader())
+                    using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             long personId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id"));
 
-                            if (personId > 0)
-                            {
-                                item.ActualCrew.Add(personDal.GetOne(personId));
-                            }
+                            if (personId > 0) { item.ActualCrew.Add(personDal.GetOne(personId)); }
                         }
                     }
                 }
@@ -371,21 +375,16 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
         }
 
-        public void LoadData(IEnumerable<Logbook> items)
-        {
-            foreach (var item in items)
-            {
-                LoadData(item);
-            }
-        }
+        public void LoadData(IEnumerable<Logbook> items) { foreach (Logbook item in items) { LoadData(item); } }
 
         public IEnumerable<Logbook> GetAll(Func<Logbook, bool> predicate)
         {
-            var logbooks = this.GetAll().ToArray();
+            Logbook[] logbooks = this.GetAll().ToArray();
 
             LoadData(logbooks);
 
             return logbooks.Where(predicate);
         }
+        #endregion
     }
 }

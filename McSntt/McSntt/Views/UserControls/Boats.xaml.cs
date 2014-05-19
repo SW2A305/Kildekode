@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -28,76 +27,79 @@ namespace McSntt.Views.UserControls
 
         public Boats()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            IEnumerable<Boat> boatList = boatDal.GetAll();
+            IEnumerable<Boat> boatList = this.boatDal.GetAll();
 
-            BoatComboBox.ItemsSource = boatList;
-            BoatComboBox.DisplayMemberPath = "NickName";
+            this.BoatComboBox.ItemsSource = boatList;
+            this.BoatComboBox.DisplayMemberPath = "NickName";
 
             var image = new BitmapImage();
             image.BeginInit();
             image.UriSource = new Uri("pack://application:,,,/Images/SundetLogo.PNG");
             image.EndInit();
-            BoatImage.Source = image;
+            this.BoatImage.Source = image;
 
-            BookButton.IsEnabled = false;
-            ChangeButton.IsEnabled = false;
-            DeleteButton.IsEnabled = false;
+            this.BookButton.IsEnabled = false;
+            this.ChangeButton.IsEnabled = false;
+            this.DeleteButton.IsEnabled = false;
 
 
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
             {
-                AnswerDamageReportButton.Visibility = Visibility.Visible;
-                EditBoatButton.IsEnabled = false;
+                this.AnswerDamageReportButton.Visibility = Visibility.Visible;
+                this.EditBoatButton.IsEnabled = false;
             }
             else
             {
-                AnswerDamageReportButton.Visibility = Visibility.Hidden;
+                this.AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
-                AddBoatButton.Visibility = Visibility.Hidden;
-                EditBoatButton.Visibility = Visibility.Hidden;
+                this.AddBoatButton.Visibility = Visibility.Hidden;
+                this.EditBoatButton.Visibility = Visibility.Hidden;
             }
         }
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var logBookWindow = new ViewSpecificLogbookWindow((RegularTrip)LogbookDataGrid.CurrentItem);
+            var logBookWindow = new ViewSpecificLogbookWindow((RegularTrip) this.LogbookDataGrid.CurrentItem);
             logBookWindow.ShowDialog();
         }
 
         private IEnumerable<RegularTrip> GetBookings()
         {
-            return regularTripDal.GetAll(
-                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.DepartureTime >= DateTime.Now)
-                        .OrderBy(x => x.DepartureTime);
+            return this.regularTripDal.GetAll(
+                                              x =>
+                                              x.Boat.BoatId == this.CurrentBoat.BoatId
+                                              && x.DepartureTime >= DateTime.Now)
+                       .OrderBy(x => x.DepartureTime);
         }
 
 
         private void BoatComboBox_OnSelectionChanged(object sender, EventArgs e)
         {
-            if (BoatComboBox.SelectedIndex != -1)
+            if (this.BoatComboBox.SelectedIndex != -1)
             {
-                EditBoatButton.IsEnabled = true;
-                CurrentBoat = (Boat)BoatComboBox.SelectionBoxItem;
+                this.EditBoatButton.IsEnabled = true;
+                this.CurrentBoat = (Boat) this.BoatComboBox.SelectionBoxItem;
 
                 IEnumerable<RegularTrip> ListOfTripsWithLogbook =
-                    regularTripDal.GetAll(
-                        x => x.Boat.BoatId == CurrentBoat.BoatId && x.Logbook != null);
+                    this.regularTripDal.GetAll(
+                                               x => x.Boat.BoatId == this.CurrentBoat.BoatId && x.Logbook != null);
 
-                var listOfBookings = GetBookings();
+                IEnumerable<RegularTrip> listOfBookings = this.GetBookings();
 
                 // Grey out the book button for support members and guests
-                if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.SupportMember)
-                    BookButton.IsEnabled = true;
+                if (GlobalInformation.CurrentUser.Position != SailClubMember.Positions.SupportMember) {
+                    this.BookButton.IsEnabled = true;
+                }
 
-                if (CurrentBoat.ImagePath != null)
+                if (this.CurrentBoat.ImagePath != null)
                 {
                     var image = new BitmapImage();
                     image.BeginInit();
-                    image.UriSource = new Uri("pack://application:,,,/Images/" + CurrentBoat.ImagePath);
+                    image.UriSource = new Uri("pack://application:,,,/Images/" + this.CurrentBoat.ImagePath);
                     image.EndInit();
-                    BoatImage.Source = image;
+                    this.BoatImage.Source = image;
                 }
                 else
                 {
@@ -105,79 +107,74 @@ namespace McSntt.Views.UserControls
                     image.BeginInit();
                     image.UriSource = new Uri("pack://application:,,,/Images/gray.PNG");
                     image.EndInit();
-                    BoatImage.Source = image;
+                    this.BoatImage.Source = image;
                 }
                 string operationel = "";
-                if (CurrentBoat.Operational)
-                {
+                if (this.CurrentBoat.Operational) {
                     operationel = "Operationel";
                 }
-                else if (!CurrentBoat.Operational)
-                {
-                    operationel = "Ikke operationel";
-                }
+                else if (!this.CurrentBoat.Operational) { operationel = "Ikke operationel"; }
 
-                BoatTypeTextBox.Text = Enum.GetName(typeof(BoatType), CurrentBoat.Type);
-                BoatStatusTextBox.Text = operationel;
+                this.BoatTypeTextBox.Text = Enum.GetName(typeof (BoatType), this.CurrentBoat.Type);
+                this.BoatStatusTextBox.Text = operationel;
 
-                LogbookDataGrid.ItemsSource = null;
-                LogbookDataGrid.ItemsSource = ListOfTripsWithLogbook;
+                this.LogbookDataGrid.ItemsSource = null;
+                this.LogbookDataGrid.ItemsSource = ListOfTripsWithLogbook;
 
-                BookedTripsDataGrid.ItemsSource = null;
-                BookedTripsDataGrid.ItemsSource = listOfBookings;
+                this.BookedTripsDataGrid.ItemsSource = null;
+                this.BookedTripsDataGrid.ItemsSource = listOfBookings;
             }
             else
             {
-                BookButton.IsEnabled = false;
-                EditBoatButton.IsEnabled = false;
+                this.BookButton.IsEnabled = false;
+                this.EditBoatButton.IsEnabled = false;
             }
-
         }
 
         private void ChooseLogbookButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentSailtrip = (RegularTrip)LogbookDataGrid.SelectedItem;
-            if (CurrentSailtrip == null)
+            this.CurrentSailtrip = (RegularTrip) this.LogbookDataGrid.SelectedItem;
+            if (this.CurrentSailtrip == null) {
                 MessageBox.Show("Vælg venligst en Logbog du gerne vil se");
+            }
             else
             {
-                var logbookwindow = new ViewSpecificLogbookWindow(CurrentSailtrip);
+                var logbookwindow = new ViewSpecificLogbookWindow(this.CurrentSailtrip);
                 logbookwindow.ShowDialog();
             }
         }
 
         private void AnswerDamageReportButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CurrentSailtrip = (RegularTrip)LogbookDataGrid.SelectedItem;
-            if (CurrentSailtrip == null)
-            {
+            this.CurrentSailtrip = (RegularTrip) this.LogbookDataGrid.SelectedItem;
+            if (this.CurrentSailtrip == null) {
                 MessageBox.Show("Vælg venligst en Logbog du gerne vil svare på");
             }
             else
             {
-                var DamageReportWindow = new DamageReportWindow(CurrentSailtrip);
+                var DamageReportWindow = new DamageReportWindow(this.CurrentSailtrip);
                 DamageReportWindow.ShowDialog();
 
-                if (DamageReportWindow.DamageReport != String.Empty && DamageReportWindow.IsAnswered)
-                {
-                    CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
+                if (DamageReportWindow.DamageReport != String.Empty && DamageReportWindow.IsAnswered) {
+                    this.CurrentSailtrip.Logbook.AnswerFromBoatChief = DamageReportWindow.DamageReport;
                 }
                 else
                 {
-                    MessageBox.Show("Du bedes trykke udfør for at gemme dit svar og samtidig må dit svar ikke være tomt.");
+                    MessageBox.Show(
+                                    "Du bedes trykke udfør for at gemme dit svar og samtidig må dit svar ikke være tomt.");
                 }
-                logbookDal.Update(CurrentSailtrip.Logbook);
+                this.logbookDal.Update(this.CurrentSailtrip.Logbook);
             }
         }
 
         private void BookButton_Click(object sender, RoutedEventArgs e)
         {
-            var BookWindow = new CreateBoatBookingWindow(BoatComboBox.SelectedIndex);
+            var BookWindow = new CreateBoatBookingWindow(this.BoatComboBox.SelectedIndex);
             BookWindow.ShowDialog();
 
-            var listOfBookings = GetBookings();
-            BookedTripsDataGrid.ItemsSource = null;
-            BookedTripsDataGrid.ItemsSource = listOfBookings;
+            IEnumerable<RegularTrip> listOfBookings = this.GetBookings();
+            this.BookedTripsDataGrid.ItemsSource = null;
+            this.BookedTripsDataGrid.ItemsSource = listOfBookings;
         }
 
         private void AddBoatButton_Click(object sender, RoutedEventArgs e)
@@ -188,59 +185,61 @@ namespace McSntt.Views.UserControls
 
         private void EditBoatButton_Click(object sender, RoutedEventArgs e)
         {
-            var boatWindow = new CreateAndEditBoats((Boat)BoatComboBox.SelectedItem);
+            var boatWindow = new CreateAndEditBoats((Boat) this.BoatComboBox.SelectedItem);
             boatWindow.ShowDialog();
 
-            var listOfBookings = GetBookings();
-            BookedTripsDataGrid.ItemsSource = null;
-            BookedTripsDataGrid.ItemsSource = listOfBookings;
+            IEnumerable<RegularTrip> listOfBookings = this.GetBookings();
+            this.BookedTripsDataGrid.ItemsSource = null;
+            this.BookedTripsDataGrid.ItemsSource = listOfBookings;
         }
+
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var trip = DalLocator.RegularTripDal.GetOne(((RegularTrip) BookedTripsDataGrid.SelectedItem).RegularTripId);
+            RegularTrip trip =
+                DalLocator.RegularTripDal.GetOne(((RegularTrip) this.BookedTripsDataGrid.SelectedItem).RegularTripId);
             DalLocator.RegularTripDal.LoadData(trip);
 
             var changewindow = new CreateBoatBookingWindow(trip);
             changewindow.ShowDialog();
 
-            var listofbookings = GetBookings();
-            BookedTripsDataGrid.ItemsSource = null;
-            BookedTripsDataGrid.ItemsSource = listofbookings;
+            IEnumerable<RegularTrip> listofbookings = this.GetBookings();
+            this.BookedTripsDataGrid.ItemsSource = null;
+            this.BookedTripsDataGrid.ItemsSource = listofbookings;
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            DalLocator.RegularTripDal.Delete((RegularTrip)BookedTripsDataGrid.SelectedItem);
+            DalLocator.RegularTripDal.Delete((RegularTrip) this.BookedTripsDataGrid.SelectedItem);
 
-            var listOfBookings = GetBookings();
-            BookedTripsDataGrid.ItemsSource = null;
-            BookedTripsDataGrid.ItemsSource = listOfBookings;
-
+            IEnumerable<RegularTrip> listOfBookings = this.GetBookings();
+            this.BookedTripsDataGrid.ItemsSource = null;
+            this.BookedTripsDataGrid.ItemsSource = listOfBookings;
         }
 
         private void BookedTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (BookedTripsDataGrid.SelectedIndex != -1)
+            if (this.BookedTripsDataGrid.SelectedIndex != -1)
             {
                 if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin ||
-                    (GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).CreatedBy.PersonId ||
-                     GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).Captain.PersonId))
+                    (GlobalInformation.CurrentUser.PersonId
+                     == ((RegularTrip) this.BookedTripsDataGrid.SelectedItem).CreatedBy.PersonId ||
+                     GlobalInformation.CurrentUser.PersonId
+                     == ((RegularTrip) this.BookedTripsDataGrid.SelectedItem).Captain.PersonId))
                 {
-                    DeleteButton.IsEnabled = true;
-                    ChangeButton.IsEnabled = true;
+                    this.DeleteButton.IsEnabled = true;
+                    this.ChangeButton.IsEnabled = true;
                 }
                 else
                 {
-                    DeleteButton.IsEnabled = false;
-                    ChangeButton.IsEnabled = false;
+                    this.DeleteButton.IsEnabled = false;
+                    this.ChangeButton.IsEnabled = false;
                 }
             }
             else
             {
-                DeleteButton.IsEnabled = false;
-                ChangeButton.IsEnabled = false;
+                this.DeleteButton.IsEnabled = false;
+                this.ChangeButton.IsEnabled = false;
             }
         }
-
     }
 }

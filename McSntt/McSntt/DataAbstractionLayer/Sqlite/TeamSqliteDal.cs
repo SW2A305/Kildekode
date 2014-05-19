@@ -10,6 +10,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 {
     public class TeamSqliteDal : ITeamDal
     {
+        #region ITeamDal Members
         public bool Create(params Team[] items)
         {
             int insertedRows = 0;
@@ -30,7 +31,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                     {
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@name", team.Name));
-                        command.Parameters.Add(new SQLiteParameter("@level", (int)team.Level));
+                        command.Parameters.Add(new SQLiteParameter("@level", (int) team.Level));
                         command.Parameters.Add(new SQLiteParameter("@teacherId", team.TeacherId));
                         insertedRows += command.ExecuteNonQuery();
 
@@ -66,7 +67,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@teamId", team.TeamId));
                         command.Parameters.Add(new SQLiteParameter("@name", team.Name));
-                        command.Parameters.Add(new SQLiteParameter("@level", (int)team.Level));
+                        command.Parameters.Add(new SQLiteParameter("@level", (int) team.Level));
                         command.Parameters.Add(new SQLiteParameter("@teacherId", team.TeacherId));
                         updatedRows += command.ExecuteNonQuery();
                     }
@@ -131,7 +132,9 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       {
                                           TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id")),
                                           Name = DatabaseManager.ReadString(reader, reader.GetOrdinal("name")),
-                                          Level = (Team.ClassLevel) DatabaseManager.ReadInt(reader, reader.GetOrdinal("level")),
+                                          Level =
+                                              (Team.ClassLevel)
+                                              DatabaseManager.ReadInt(reader, reader.GetOrdinal("level")),
                                           TeacherId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("teacher_id"))
                                       });
                         }
@@ -171,7 +174,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 {
                                     TeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id")),
                                     Name = DatabaseManager.ReadString(reader, reader.GetOrdinal("name")),
-                                    Level = (Team.ClassLevel)DatabaseManager.ReadInt(reader, reader.GetOrdinal("level")),
+                                    Level =
+                                        (Team.ClassLevel) DatabaseManager.ReadInt(reader, reader.GetOrdinal("level")),
                                     TeacherId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("teacher_id"))
                                 };
                         }
@@ -187,36 +191,31 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public void LoadData(Team item)
         {
             // Load Teacher
-            var memberDal = DalLocator.SailClubMemberDal;
+            ISailClubMemberDal memberDal = DalLocator.SailClubMemberDal;
 
             if (item.TeacherId > 0) { item.Teacher = memberDal.GetOne(item.TeacherId); }
 
             // Load TeamMembers
-            var studentDal = DalLocator.StudentMemberDal;
+            IStudentMemberDal studentDal = DalLocator.StudentMemberDal;
 
             item.TeamMembers = studentDal.GetAll(student => student.AssociatedTeamId == item.TeamId).ToList();
 
             // Load Lectures
-            var lectureDal = DalLocator.LectureDal;
+            ILectureDal lectureDal = DalLocator.LectureDal;
 
             item.Lectures = lectureDal.GetAll(lecture => lecture.TeamId == item.TeamId).ToList();
         }
 
-        public void LoadData(IEnumerable<Team> items)
-        {
-            foreach (var item in items)
-            {
-                LoadData(item);
-            }
-        }
+        public void LoadData(IEnumerable<Team> items) { foreach (Team item in items) { LoadData(item); } }
 
         public IEnumerable<Team> GetAll(Func<Team, bool> predicate)
         {
-            var teams = this.GetAll().ToArray();
+            Team[] teams = this.GetAll().ToArray();
 
             LoadData(teams);
 
             return teams.Where(predicate);
         }
+        #endregion
     }
 }

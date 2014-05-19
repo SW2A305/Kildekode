@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _persons == null) { _persons = new Dictionary<long, Person>(); }
         }
 
+        #region IPersonDal Members
         public bool Create(params Person[] items)
         {
             foreach (Person person in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 person.PersonId = this.GetHighestId() + 1;
                 _persons.Add(person.PersonId, person);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(Person person)
-        {
-            if (person.PersonId <= 0) { return false; }
-
-            _persons.Add(person.PersonId, person);
 
             return true;
         }
@@ -50,17 +42,14 @@ namespace McSntt.DataAbstractionLayer.Mock
             foreach (Person person in items)
             {
                 var member = person as StudentMember;
-                if (member != null) { memberDal.Delete(member); continue; }
+                if (member != null)
+                {
+                    memberDal.Delete(member);
+                    continue;
+                }
 
                 if (person.PersonId > 0) { _persons.Remove(person.PersonId); }
             }
-
-            return true;
-        }
-
-        public bool DeleteWithoutCheck(Person person)
-        {
-            if (person.PersonId > 0) { _persons.Remove(person.PersonId); }
 
             return true;
         }
@@ -84,6 +73,23 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<Person> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(Person person)
+        {
+            if (person.PersonId <= 0) { return false; }
+
+            _persons.Add(person.PersonId, person);
+
+            return true;
+        }
+
+        public bool DeleteWithoutCheck(Person person)
+        {
+            if (person.PersonId > 0) { _persons.Remove(person.PersonId); }
+
+            return true;
         }
 
         private long GetHighestId()

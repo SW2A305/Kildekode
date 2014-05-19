@@ -30,7 +30,7 @@ namespace McSntt.Models
         {
             get
             {
-                if (_filedById == 0 && _filedBy != null) { _filedById = _filedBy.SailClubMemberId; }
+                if (this._filedById == 0 && this._filedBy != null) { this._filedById = this._filedBy.SailClubMemberId; }
                 return this._filedById;
             }
             set { this._filedById = value; }
