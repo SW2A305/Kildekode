@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using McSntt.DataAbstractionLayer.Sqlite;
+﻿using System.Windows;
 using McSntt.Helpers;
-using McSntt.Models;
 
 namespace McSntt
 {

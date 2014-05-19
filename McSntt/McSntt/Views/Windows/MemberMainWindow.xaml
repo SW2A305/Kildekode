@@ -1,51 +1,49 @@
 ﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:UserControls="clr-namespace:McSntt.Views.UserControls" x:Class="McSntt.Views.Windows.MemberMainWindow"
-        Top="0" Left="0"
-        Title="Sundet Administration " Height="720" Width="1024" UseLayoutRounding="False" x:Name="UI">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UserControls="clr-namespace:McSntt.Views.UserControls" x:Class="McSntt.Views.Windows.MemberMainWindow"
+    Top="0" Left="0"
+    Title="Sundet Administration " Height="720" Width="1024" UseLayoutRounding="False" x:Name="UI">
 
     <Grid>
-        <TabControl Name="TopMenuTabControl" Style="{StaticResource TabCtrlStyle}"  HorizontalContentAlignment="Center" Margin="10" SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Style="{StaticResource TabItemStyle}"  Name="FrontPageTabItem">
+        <TabControl Name="TopMenuTabControl" Style="{StaticResource TabCtrlStyle}" HorizontalContentAlignment="Center"
+                    Margin="10" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Style="{StaticResource TabItemStyle}" Name="FrontPageTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Forside" FontSize="23" Width="140" TextAlignment="Center"/>
+                    <TextBlock Text="Forside" FontSize="23" Width="140" TextAlignment="Center" />
                 </TabItem.Header>
-                <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
+                <Grid Name="FrontPageGrid" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem" >
+            <TabItem Style="{StaticResource TabItemStyle}" x:Name="EventsTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Begivenheder" FontSize="23" Width="140" TextAlignment="Center"/>
+                    <TextBlock Text="Begivenheder" FontSize="23" Width="140" TextAlignment="Center" />
                 </TabItem.Header>
-                <Grid Name="EventsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
+                <Grid Name="EventsGrid" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="MemberTabItem" Height="110" VerticalAlignment="Top">
                 <TabItem.Header>
-                    <TextBlock Text="Medlemmer" FontSize="23" Width="140" TextAlignment="Center"/>
+                    <TextBlock Text="Medlemmer" FontSize="23" Width="140" TextAlignment="Center" />
                 </TabItem.Header>
-                <Grid Name="MembersGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
+                <Grid Name="MembersGrid" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Både" FontSize="23" Width="140" TextAlignment="Center"/>
+                    <TextBlock Text="Både" FontSize="23" Width="140" TextAlignment="Center" />
                 </TabItem.Header>
-                <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
-                </Grid>
+                <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </TabItem>
         </TabControl>
 
-        <StackPanel  Width="92" Height="110" VerticalAlignment="Top" HorizontalAlignment="Right">
+        <StackPanel Width="92" Height="110" VerticalAlignment="Top" HorizontalAlignment="Right">
             <!-- To make border -->
-            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
-            <Button Content="Log ud" Name="LogOutButton" Click="LogOutButton_OnClick" Height="20" Width="80" HorizontalAlignment="Left"></Button>
+            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0" />
+            <Button Content="Log ud" Name="LogOutButton" Click="LogOutButton_OnClick" Height="20" Width="80"
+                    HorizontalAlignment="Left" />
             <!-- To make border -->
-            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0"/>
+            <Rectangle Width="100" Height="5" StrokeThickness="5" Margin="5,0,0,0" />
             <Image HorizontalAlignment="Left" VerticalAlignment="Top" Height="72" Width="82">
                 <Image.Source>
-                    <BitmapImage UriSource="..\..\Images\SundetLogo.PNG"/>
+                    <BitmapImage UriSource="..\..\Images\SundetLogo.PNG" />
                 </Image.Source>
             </Image>
         </StackPanel>

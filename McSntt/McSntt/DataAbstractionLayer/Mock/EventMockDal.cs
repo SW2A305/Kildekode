@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _events == null) { _events = new Dictionary<long, Event>(); }
         }
 
+        #region IEventDal Members
         public bool Create(params Event[] items)
         {
             foreach (Event @event in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 @event.EventId = this.GetHighestId() + 1;
                 _events.Add(@event.EventId, @event);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(Event @event)
-        {
-            if (@event.EventId <= 0) { return false; }
-
-            _events.Add(@event.EventId, @event);
 
             return true;
         }
@@ -69,6 +61,16 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<Event> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(Event @event)
+        {
+            if (@event.EventId <= 0) { return false; }
+
+            _events.Add(@event.EventId, @event);
+
+            return true;
         }
 
         private long GetHighestId()

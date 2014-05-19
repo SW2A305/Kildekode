@@ -1,27 +1,52 @@
 ﻿<UserControl x:Class="McSntt.Views.UserControls.StudyStudent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="985">
     <Grid>
-        <Grid x:Name="progressGrid" HorizontalAlignment="Left" Height="540" Margin="26,86,0,0" VerticalAlignment="Top" Width="307">
-            <CheckBox x:Name="theoryCheck1" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-            <CheckBox x:Name="theoryCheck2" Content="Navigation" HorizontalAlignment="Left" Margin="26,153,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-            <CheckBox x:Name="theoryCheck3" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="26,191,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-            <CheckBox x:Name="practicalCheck1" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="26,323,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-            <CheckBox x:Name="practicalCheck3" Content="Natsejlads" HorizontalAlignment="Left" Margin="26,399,0,0" VerticalAlignment="Top" SnapsToDevicePixels="True" IsEnabled="False"/>
-            <CheckBox x:Name="practicalCheck2" Content="Gaffelrigger sejlads" HorizontalAlignment="Left" Margin="26,362,0,0" VerticalAlignment="Top" IsEnabled="False"/>
-            <Label Content="Fuldført undervisning" HorizontalAlignment="Left" VerticalAlignment="Top" Height="54" Width="307" FontSize="18"/>
-            <Label Content="Praktisk" HorizontalAlignment="Left" Margin="26,276,0,0" VerticalAlignment="Top" FontSize="16"/>
-            <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="26,59,0,0" VerticalAlignment="Top" Width="166" FontSize="16"/>
+        <Grid x:Name="progressGrid" HorizontalAlignment="Left" Height="540" Margin="26,86,0,0" VerticalAlignment="Top"
+              Width="307">
+            <CheckBox x:Name="theoryCheck1" Content="Tovværksarbejde" HorizontalAlignment="Left" Margin="26,113,0,0"
+                      VerticalAlignment="Top" IsEnabled="False" />
+            <CheckBox x:Name="theoryCheck2" Content="Navigation" HorizontalAlignment="Left" Margin="26,153,0,0"
+                      VerticalAlignment="Top" IsEnabled="False" />
+            <CheckBox x:Name="theoryCheck3" Content="Motor og brændlære" HorizontalAlignment="Left" Margin="26,191,0,0"
+                      VerticalAlignment="Top" IsEnabled="False" />
+            <CheckBox x:Name="practicalCheck1" Content="Drabant sejlads" HorizontalAlignment="Left" Margin="26,323,0,0"
+                      VerticalAlignment="Top" IsEnabled="False" />
+            <CheckBox x:Name="practicalCheck3" Content="Natsejlads" HorizontalAlignment="Left" Margin="26,399,0,0"
+                      VerticalAlignment="Top" SnapsToDevicePixels="True" IsEnabled="False" />
+            <CheckBox x:Name="practicalCheck2" Content="Gaffelrigger sejlads" HorizontalAlignment="Left"
+                      Margin="26,362,0,0" VerticalAlignment="Top" IsEnabled="False" />
+            <Label Content="Fuldført undervisning" HorizontalAlignment="Left" VerticalAlignment="Top" Height="54"
+                   Width="307" FontSize="18" />
+            <Label Content="Praktisk" HorizontalAlignment="Left" Margin="26,276,0,0" VerticalAlignment="Top"
+                   FontSize="16" />
+            <Label Content="Teori" HorizontalAlignment="Left" Height="44" Margin="26,59,0,0" VerticalAlignment="Top"
+                   Width="166" FontSize="16" />
         </Grid>
-        <TextBlock HorizontalAlignment="Left" Height="32" Margin="503,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266" FontSize="18"><Run Language="da-dk" Text="Næste undervisning:"/></TextBlock>
-        <TextBlock x:Name="nextSessionDate" HorizontalAlignment="Left" Margin="503,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" Width="152" Height="36"><Run Language="da-dk" Text="DATO"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="26,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="46" FontSize="16"><Run Language="da-dk" Text="Hold:"/></TextBlock>
-        <TextBlock x:Name="teamName" HorizontalAlignment="Left" Margin="72,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16"><Run Language="da-dk" Text="HOLDNAVN"/></TextBlock>
-        <TextBlock x:Name="level" HorizontalAlignment="Left" Margin="26,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="da-dk" Text="1. eller 2. år"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="32" Margin="503,92,0,0" TextWrapping="Wrap"
+                   VerticalAlignment="Top" Width="266" FontSize="18">
+            <Run Language="da-dk" Text="Næste undervisning:" />
+        </TextBlock>
+        <TextBlock x:Name="nextSessionDate" HorizontalAlignment="Left" Margin="503,130,0,0" TextWrapping="Wrap"
+                   VerticalAlignment="Top" FontSize="14" Width="152" Height="36">
+            <Run Language="da-dk" Text="DATO" />
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="26,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                   Height="32" Width="46" FontSize="16">
+            <Run Language="da-dk" Text="Hold:" />
+        </TextBlock>
+        <TextBlock x:Name="teamName" HorizontalAlignment="Left" Margin="72,23,0,0" TextWrapping="Wrap"
+                   VerticalAlignment="Top" FontSize="16">
+            <Run Language="da-dk" Text="HOLDNAVN" />
+        </TextBlock>
+        <TextBlock x:Name="level" HorizontalAlignment="Left" Margin="26,55,0,0" TextWrapping="Wrap"
+                   VerticalAlignment="Top" FontSize="14">
+            <Run Language="da-dk" Text="1. eller 2. år" />
+        </TextBlock>
 
     </Grid>
 </UserControl>

@@ -10,6 +10,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 {
     public class PersonSqliteDal : IPersonDal
     {
+        #region IPersonDal Members
         public bool Create(params Person[] items)
         {
             int insertedRows = 0;
@@ -38,7 +39,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@cityname", person.Cityname));
                         command.Parameters.Add(new SQLiteParameter("@dateOfBirth", person.DateOfBirth));
                         command.Parameters.Add(new SQLiteParameter("@boatDriver", person.BoatDriver));
-                        command.Parameters.Add(new SQLiteParameter("@gender", (int)person.Gender));
+                        command.Parameters.Add(new SQLiteParameter("@gender", (int) person.Gender));
                         command.Parameters.Add(new SQLiteParameter("@phoneNumber", person.PhoneNumber));
                         command.Parameters.Add(new SQLiteParameter("@email", person.Email));
                         insertedRows += command.ExecuteNonQuery();
@@ -84,7 +85,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Add(new SQLiteParameter("@cityname", person.Cityname));
                         command.Parameters.Add(new SQLiteParameter("@dateOfBirth", person.DateOfBirth));
                         command.Parameters.Add(new SQLiteParameter("@boatDriver", person.BoatDriver));
-                        command.Parameters.Add(new SQLiteParameter("@gender", (int)person.Gender));
+                        command.Parameters.Add(new SQLiteParameter("@gender", (int) person.Gender));
                         command.Parameters.Add(new SQLiteParameter("@phoneNumber", person.PhoneNumber));
                         command.Parameters.Add(new SQLiteParameter("@email", person.Email));
                         updatedRows += command.ExecuteNonQuery();
@@ -129,7 +130,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Person> GetAll()
         {
-            var persons  = new List<Person>();
+            var persons = new List<Person>();
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -155,11 +156,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                         Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
                                         Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
                                         Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
-                                        BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
-                                        DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                        BoatDriver =
+                                            DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                        DateOfBirth =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
                                         Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
                                         Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
-                                        PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number"))
+                                        PhoneNumber =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number"))
                                     });
                         }
                     }
@@ -169,7 +173,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
 
             return persons
-            ;
+                ;
         }
 
         public Person GetOne(long itemId)
@@ -219,17 +223,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return person;
         }
 
-        public void LoadData(Person item) {}
+        public void LoadData(Person item) { }
 
-        public void LoadData(IEnumerable<Person> items) {}
+        public void LoadData(IEnumerable<Person> items) { }
 
         public IEnumerable<Person> GetAll(Func<Person, bool> predicate)
         {
-            var persons = this.GetAll().ToArray();
+            Person[] persons = this.GetAll().ToArray();
 
             LoadData(persons);
 
             return persons.Where(predicate);
         }
+        #endregion
     }
 }

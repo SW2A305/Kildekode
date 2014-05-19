@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _regularTrips == null) { _regularTrips = new Dictionary<long, RegularTrip>(); }
         }
 
+        #region IRegularTripDal Members
         public bool Create(params RegularTrip[] items)
         {
             foreach (RegularTrip regularTrip in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 regularTrip.RegularTripId = this.GetHighestId() + 1;
                 _regularTrips.Add(regularTrip.RegularTripId, regularTrip);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(RegularTrip regularTrip)
-        {
-            if (regularTrip.RegularTripId <= 0) { return false; }
-
-            _regularTrips.Add(regularTrip.RegularTripId, regularTrip);
 
             return true;
         }
@@ -77,6 +69,16 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<RegularTrip> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(RegularTrip regularTrip)
+        {
+            if (regularTrip.RegularTripId <= 0) { return false; }
+
+            _regularTrips.Add(regularTrip.RegularTripId, regularTrip);
+
+            return true;
         }
 
         private long GetHighestId()

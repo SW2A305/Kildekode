@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace McSntt.Models
+﻿namespace McSntt.Models
 {
     /// <summary>
     ///     Represents a gender.
@@ -38,9 +34,6 @@ namespace McSntt.Models
             get { return this.FirstName + " " + this.LastName; }
         }
 
-        public override string ToString()
-        {
-            return this.FullName;
-        }
+        public override string ToString() { return this.FullName; }
     }
 }

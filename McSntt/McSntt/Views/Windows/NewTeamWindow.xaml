@@ -4,9 +4,12 @@
         Style="{StaticResource WindowStyle}"
         Title="NewTeamWindow" Height="193" Width="405">
     <Grid>
-        <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Margin="288,107,0,0" VerticalAlignment="Top" Width="75" Click="OkButton_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="44,41,0,0" TextWrapping="Wrap" Text="Holdnavn:" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="TeamName" HorizontalAlignment="Left" Height="30" Margin="140,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" FontSize="16" KeyDown="TeamName_KeyDown"/>
+        <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Margin="288,107,0,0" VerticalAlignment="Top"
+                Width="75" Click="OkButton_Click" />
+        <TextBlock HorizontalAlignment="Left" Margin="44,41,0,0" TextWrapping="Wrap" Text="Holdnavn:"
+                   VerticalAlignment="Top" FontSize="16" />
+        <TextBox x:Name="TeamName" HorizontalAlignment="Left" Height="30" Margin="140,41,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="171" FontSize="16" KeyDown="TeamName_KeyDown" />
 
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _boats == null) { _boats = new Dictionary<long, Boat>(); }
         }
 
+        #region IBoatDal Members
         public bool Create(params Boat[] items)
         {
             foreach (Boat boat in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 boat.BoatId = this.GetHighestId() + 1;
                 _boats.Add(boat.BoatId, boat);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(Boat boat)
-        {
-            if (boat.BoatId <= 0) { return false; }
-
-            _boats.Add(boat.BoatId, boat);
 
             return true;
         }
@@ -69,6 +61,16 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<Boat> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(Boat boat)
+        {
+            if (boat.BoatId <= 0) { return false; }
+
+            _boats.Add(boat.BoatId, boat);
+
+            return true;
         }
 
         private long GetHighestId()

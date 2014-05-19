@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _lectures == null) { _lectures = new Dictionary<long, Lecture>(); }
         }
 
+        #region ILectureDal Members
         public bool Create(params Lecture[] items)
         {
             foreach (Lecture lecture in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 lecture.LectureId = this.GetHighestId() + 1;
                 _lectures.Add(lecture.LectureId, lecture);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(Lecture lecture)
-        {
-            if (lecture.LectureId <= 0) { return false; }
-
-            _lectures.Add(lecture.LectureId, lecture);
 
             return true;
         }
@@ -72,6 +64,16 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<Lecture> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(Lecture lecture)
+        {
+            if (lecture.LectureId <= 0) { return false; }
+
+            _lectures.Add(lecture.LectureId, lecture);
+
+            return true;
         }
 
         private long GetHighestId()

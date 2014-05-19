@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using McSntt.DataAbstractionLayer;
 using McSntt.Helpers;
 using McSntt.Models;
@@ -20,124 +12,132 @@ using McSntt.Views.Windows;
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for FrontPage.xaml
+    ///     Interaction logic for FrontPage.xaml
     /// </summary>
     public partial class FrontPage : UserControl
     {
-        public FrontPage(){
-            InitializeComponent();
+        private RegularTrip _regularSailTrip = new RegularTrip();
+        private RegularTrip _regularSailTrip2 = new RegularTrip();
 
-            WelcomeBlock.Text = string.Format("Velkommen {0}!", GlobalInformation.CurrentUser.FullName);
-            InfoTextBlock.Text =
+        public FrontPage()
+        {
+            this.InitializeComponent();
+
+            this.WelcomeBlock.Text = string.Format("Velkommen {0}!", GlobalInformation.CurrentUser.FullName);
+            this.InfoTextBlock.Text =
                 "Herunder er dine kommende sejlture og til højre er dem, du mangler at udflyde logbog for.";
 
-            CreateLogBookButton.IsEnabled = false;
-            ChangeButton.IsEnabled = false;
-            DeleteButton.IsEnabled = false;
-            RemoveFromTrip.IsEnabled = false;
+            this.CreateLogBookButton.IsEnabled = false;
+            this.ChangeButton.IsEnabled = false;
+            this.DeleteButton.IsEnabled = false;
+            this.RemoveFromTrip.IsEnabled = false;
 
-            LoadData();
+            this.LoadData();
         }
 
         public void LoadData()
         {
-            var db = DalLocator.RegularTripDal;
-            var usrId = GlobalInformation.CurrentUser.PersonId;
+            IRegularTripDal db = DalLocator.RegularTripDal;
+            long usrId = GlobalInformation.CurrentUser.PersonId;
 
-            var sailTripList = db.GetAll().ToList();
+            List<RegularTrip> sailTripList = db.GetAll().ToList();
 
             db.LoadData(sailTripList);
 
-            UpcommingTripsDataGrid.ItemsSource = null;
-            UpcommingTripsDataGrid.ItemsSource =
+            this.UpcommingTripsDataGrid.ItemsSource = null;
+            this.UpcommingTripsDataGrid.ItemsSource =
                 sailTripList.Where(t => t.Crew.Select(p => p.PersonId).Contains(usrId))
-                    .Where(t => t.DepartureTime > DateTime.Now);
+                            .Where(t => t.DepartureTime > DateTime.Now);
 
-            LogbookDataGrid.ItemsSource = null;
-            LogbookDataGrid.ItemsSource =
-                sailTripList.Where(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
+            this.LogbookDataGrid.ItemsSource = null;
+            this.LogbookDataGrid.ItemsSource =
+                sailTripList.Where(
+                                   t =>
+                                   t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null);
         }
-
-        private RegularTrip _regularSailTrip = new RegularTrip();
-        private RegularTrip _regularSailTrip2 = new RegularTrip();
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            CreateLogBookButton_Click(new object(), new RoutedEventArgs());
+            this.CreateLogBookButton_Click(new object(), new RoutedEventArgs());
         }
 
         private void CreateLogBookButton_Click(object sender, RoutedEventArgs e)
         {
-            var logBookWindow = new CreateLogbookWindow((RegularTrip)LogbookDataGrid.SelectedItem, GlobalInformation.CurrentUser);
+            var logBookWindow = new CreateLogbookWindow((RegularTrip) this.LogbookDataGrid.SelectedItem,
+                                                        GlobalInformation.CurrentUser);
             logBookWindow.ShowDialog();
 
-            var db = DalLocator.RegularTripDal;
-            var usrId = GlobalInformation.CurrentUser.PersonId;
-            var sailTripList = db.GetAll(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null).ToList();
+            IRegularTripDal db = DalLocator.RegularTripDal;
+            long usrId = GlobalInformation.CurrentUser.PersonId;
+            List<RegularTrip> sailTripList =
+                db.GetAll(t => t.CreatedBy.PersonId == usrId && t.ArrivalTime < DateTime.Now && t.Logbook == null)
+                  .ToList();
 
-            LogbookDataGrid.ItemsSource = null;
-            LogbookDataGrid.ItemsSource = sailTripList;
+            this.LogbookDataGrid.ItemsSource = null;
+            this.LogbookDataGrid.ItemsSource = sailTripList;
         }
 
         private void LogbookDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Enable the button if a trip is selected.
-            CreateLogBookButton.IsEnabled = LogbookDataGrid.SelectedIndex != -1;
+            this.CreateLogBookButton.IsEnabled = this.LogbookDataGrid.SelectedIndex != -1;
         }
 
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var changewindow = new CreateBoatBookingWindow((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            var changewindow = new CreateBoatBookingWindow((RegularTrip) this.UpcommingTripsDataGrid.SelectedItem);
             changewindow.ShowDialog();
 
-            LoadData();
+            this.LoadData();
         }
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            DalLocator.RegularTripDal.Delete((RegularTrip)UpcommingTripsDataGrid.SelectedItem);
-            LoadData();
+            DalLocator.RegularTripDal.Delete((RegularTrip) this.UpcommingTripsDataGrid.SelectedItem);
+            this.LoadData();
         }
 
         private void RemoveFromTrip_OnClick(object sender, RoutedEventArgs e)
         {
-            var person = GlobalInformation.CurrentUser;
-            var trip = ((RegularTrip) UpcommingTripsDataGrid.SelectedItem);
+            SailClubMember person = GlobalInformation.CurrentUser;
+            var trip = ((RegularTrip) this.UpcommingTripsDataGrid.SelectedItem);
 
             if (person.PersonId == trip.Captain.PersonId)
             {
                 MessageBox.Show(
-                    "Du er kaptajn for denne tur, du kan ikke fjerne dig selv. \nGør en anden til kaptajn først.");
+                                "Du er kaptajn for denne tur, du kan ikke fjerne dig selv. \nGør en anden til kaptajn først.");
             }
             else
             {
-                var dal = DalLocator.RegularTripDal;
+                IRegularTripDal dal = DalLocator.RegularTripDal;
 
                 dal.LoadData(trip);
-                var p2 = trip.Crew.FirstOrDefault(p => p.PersonId == person.PersonId);
+                Person p2 = trip.Crew.FirstOrDefault(p => p.PersonId == person.PersonId);
                 trip.Crew.Remove(p2);
                 dal.Update(trip);
             }
 
-            LoadData();
+            this.LoadData();
         }
 
         private void UpcommingTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (UpcommingTripsDataGrid.SelectedIndex != -1)
+            if (this.UpcommingTripsDataGrid.SelectedIndex != -1)
             {
-                if (GlobalInformation.CurrentUser.PersonId == ((RegularTrip) UpcommingTripsDataGrid.SelectedItem).CreatedBy.PersonId
-                    || GlobalInformation.CurrentUser.PersonId == ((RegularTrip)UpcommingTripsDataGrid.SelectedItem).Captain.PersonId)
+                if (GlobalInformation.CurrentUser.PersonId
+                    == ((RegularTrip) this.UpcommingTripsDataGrid.SelectedItem).CreatedBy.PersonId
+                    || GlobalInformation.CurrentUser.PersonId
+                    == ((RegularTrip) this.UpcommingTripsDataGrid.SelectedItem).Captain.PersonId)
                 {
-                    DeleteButton.IsEnabled = true;
-                    ChangeButton.IsEnabled = true;
-                    RemoveFromTrip.IsEnabled = false;
+                    this.DeleteButton.IsEnabled = true;
+                    this.ChangeButton.IsEnabled = true;
+                    this.RemoveFromTrip.IsEnabled = false;
                 }
                 else
                 {
-                    DeleteButton.IsEnabled = false;
-                    ChangeButton.IsEnabled = false;
-                    RemoveFromTrip.IsEnabled = true;
+                    this.DeleteButton.IsEnabled = false;
+                    this.ChangeButton.IsEnabled = false;
+                    this.RemoveFromTrip.IsEnabled = true;
                 }
             }
         }

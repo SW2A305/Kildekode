@@ -6,51 +6,68 @@
         DataContext="{Binding ElementName=CreateCrewWindowName}">
 
     <Grid>
-        <DataGrid x:Name="MemberDataGrid" IsReadOnly="True" ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="17,141,0,0" VerticalAlignment="Top" Height="127" Width="232" CanUserAddRows="False">
+        <DataGrid x:Name="MemberDataGrid" IsReadOnly="True" ItemsSource="{Binding DataGridCollection}"
+                  AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="17,141,0,0" VerticalAlignment="Top"
+                  Height="127" Width="232" CanUserAddRows="False">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
-                    <EventSetter Event="MouseDoubleClick" Handler="resultDataGrid_MouseDoubleClick"/>
+                    <EventSetter Event="MouseDoubleClick" Handler="resultDataGrid_MouseDoubleClick" />
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
-                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
-                <DataGridTextColumn Binding="{Binding Position}" Header="Rank"/>
-                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn" />
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn" />
+                <DataGridTextColumn Binding="{Binding Position}" Header="Rank" />
+                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232" IsReadOnly="True">
+        <DataGrid CanUserAddRows="False" x:Name="CurrentCrewDataGrid" AutoGenerateColumns="False"
+                  HorizontalAlignment="Left" Margin="360,141,0,0" VerticalAlignment="Top" Height="251" Width="232"
+                  IsReadOnly="True">
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
-                    <EventSetter Event="MouseDoubleClick" Handler="removeDataGrid_MouseDoubleClick"/>
+                    <EventSetter Event="MouseDoubleClick" Handler="removeDataGrid_MouseDoubleClick" />
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn"/>
-                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn"/>
-                <DataGridTextColumn Binding="{Binding Position}" Header="Rank"/>
-                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*"/>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn" />
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn" />
+                <DataGridTextColumn Binding="{Binding Position}" Header="Rank" />
+                <DataGridTextColumn Binding="{Binding MemberId}" Header="ID" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        
-        <Button Content="Tilføj" HorizontalAlignment="Left" Margin="267,165,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_OnClick" x:Name="AddButton"/>
-        <Button Content="Fjern" HorizontalAlignment="Left" Margin="267,215,0,0" VerticalAlignment="Top" Width="75" x:Name="RemoveButton" Click="RemoveButton_OnClick"/>
 
-        <TextBox GotFocus="SearchBox_OnGotFocus" Name="SearchBox" HorizontalAlignment="Left" KeyDown="SearchBox_OnKeyDown" Height="23" Margin="17,104,0,0" TextWrapping="Wrap" Text="{Binding FilterString, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="232"/>
+        <Button Content="Tilføj" HorizontalAlignment="Left" Margin="267,165,0,0" VerticalAlignment="Top" Width="75"
+                Click="AddButton_OnClick" x:Name="AddButton" />
+        <Button Content="Fjern" HorizontalAlignment="Left" Margin="267,215,0,0" VerticalAlignment="Top" Width="75"
+                x:Name="RemoveButton" Click="RemoveButton_OnClick" />
 
-        <Label Content="Søg nedenfor og find din besætning" FontSize="23" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="387"/>
-        <Label Content="Liste over medlemmer" HorizontalAlignment="Left" Margin="17,62,0,0" VerticalAlignment="Top" Width="232"/>
-        <Label Content="Din valgte besætning" HorizontalAlignment="Left" Margin="360,101,0,0" VerticalAlignment="Top" Width="209"/>
-        <Button x:Name="SaveButton" Content="Udfør" HorizontalAlignment="Left" Margin="527,409,0,0" VerticalAlignment="Top" Width="75" Click="SaveButton_OnClick"/>
-        <Label Content="Udfyld fornavn og efternavn på din gæst" HorizontalAlignment="Left" Margin="17,274,0,0" VerticalAlignment="Top" Width="232"/>
-        <Button x:Name="AddGuestButton" Content="Tilføj Gæst" HorizontalAlignment="Left" Margin="267,341,0,0" VerticalAlignment="Top" Width="75" Click="AddGuestButton_Click"/>
-        
-        <TextBox x:Name="FirstNameBox" HorizontalAlignment="Left" Height="23" Margin="82,321,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="LastNameBox" HorizontalAlignment="Left" Height="23" Margin="82,358,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        
-        <Label Content="Fornavn:" HorizontalAlignment="Left" Margin="20,317,0,0" VerticalAlignment="Top" Width="78"/>
-        <Label Content="Efternavn:" HorizontalAlignment="Left" Margin="20,354,0,0" VerticalAlignment="Top" Width="78"/>
-        <CheckBox x:Name="IsBoatDriver" Content="Har bådførerbevis" HorizontalAlignment="Left" Margin="82,386,0,0" VerticalAlignment="Top"/>
+        <TextBox GotFocus="SearchBox_OnGotFocus" Name="SearchBox" HorizontalAlignment="Left"
+                 KeyDown="SearchBox_OnKeyDown" Height="23" Margin="17,104,0,0" TextWrapping="Wrap"
+                 Text="{Binding FilterString, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Top" Width="232" />
+
+        <Label Content="Søg nedenfor og find din besætning" FontSize="23" HorizontalAlignment="Left" Margin="10,10,0,0"
+               VerticalAlignment="Top" Width="387" />
+        <Label Content="Liste over medlemmer" HorizontalAlignment="Left" Margin="17,62,0,0" VerticalAlignment="Top"
+               Width="232" />
+        <Label Content="Din valgte besætning" HorizontalAlignment="Left" Margin="360,101,0,0" VerticalAlignment="Top"
+               Width="209" />
+        <Button x:Name="SaveButton" Content="Udfør" HorizontalAlignment="Left" Margin="527,409,0,0"
+                VerticalAlignment="Top" Width="75" Click="SaveButton_OnClick" />
+        <Label Content="Udfyld fornavn og efternavn på din gæst" HorizontalAlignment="Left" Margin="17,274,0,0"
+               VerticalAlignment="Top" Width="232" />
+        <Button x:Name="AddGuestButton" Content="Tilføj Gæst" HorizontalAlignment="Left" Margin="267,341,0,0"
+                VerticalAlignment="Top" Width="75" Click="AddGuestButton_Click" />
+
+        <TextBox x:Name="FirstNameBox" HorizontalAlignment="Left" Height="23" Margin="82,321,0,0" TextWrapping="Wrap"
+                 Text="" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="LastNameBox" HorizontalAlignment="Left" Height="23" Margin="82,358,0,0" TextWrapping="Wrap"
+                 Text="" VerticalAlignment="Top" Width="120" />
+
+        <Label Content="Fornavn:" HorizontalAlignment="Left" Margin="20,317,0,0" VerticalAlignment="Top" Width="78" />
+        <Label Content="Efternavn:" HorizontalAlignment="Left" Margin="20,354,0,0" VerticalAlignment="Top" Width="78" />
+        <CheckBox x:Name="IsBoatDriver" Content="Har bådførerbevis" HorizontalAlignment="Left" Margin="82,386,0,0"
+                  VerticalAlignment="Top" />
 
     </Grid>
 </Window>

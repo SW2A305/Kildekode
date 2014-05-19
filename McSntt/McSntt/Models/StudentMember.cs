@@ -5,10 +5,7 @@
         private Team _associatedTeam;
         private long _associatedTeamId;
 
-        public StudentMember()
-        {
-            base.Position = Positions.Student;
-        }
+        public StudentMember() { base.Position = Positions.Student; }
 
         public long StudentMemberId { get; set; }
 
