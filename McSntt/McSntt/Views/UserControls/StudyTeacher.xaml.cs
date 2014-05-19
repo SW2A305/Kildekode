@@ -453,7 +453,6 @@ namespace McSntt.Views.UserControls
             {
                 member.AssociatedTeam = ((Team)teamDropdown.SelectedItem);
                 currentTeam.TeamMembers.Add(member);
-                DalLocator.StudentMemberDal.Update(member);
             }
 
             DalLocator.TeamDal.Update(currentTeam);
