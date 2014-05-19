@@ -47,8 +47,10 @@ namespace McSntt.Views.UserControls
 
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
                 AnswerDamageReportButton.Visibility = Visibility.Visible;
-            else{ AnswerDamageReportButton.Visibility = Visibility.Hidden;
-            
+            else
+            {
+                AnswerDamageReportButton.Visibility = Visibility.Hidden;
+
                 AddBoatButton.Visibility = Visibility.Hidden;
                 EditBoatButton.Visibility = Visibility.Hidden;
 
@@ -57,7 +59,7 @@ namespace McSntt.Views.UserControls
 
         private void LogbookDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var logBookWindow = new ViewSpecificLogbookWindow((RegularTrip) LogbookDataGrid.CurrentItem);
+            var logBookWindow = new ViewSpecificLogbookWindow((RegularTrip)LogbookDataGrid.CurrentItem);
             logBookWindow.ShowDialog();
         }
 
@@ -74,7 +76,7 @@ namespace McSntt.Views.UserControls
             if (BoatComboBox.SelectedIndex != -1)
             {
                 EditBoatButton.IsEnabled = true;
-                CurrentBoat = (Boat) BoatComboBox.SelectionBoxItem;
+                CurrentBoat = (Boat)BoatComboBox.SelectionBoxItem;
 
                 IEnumerable<RegularTrip> ListOfTripsWithLogbook =
                     regularTripDal.GetAll(
@@ -112,7 +114,7 @@ namespace McSntt.Views.UserControls
                     operationel = "Ikke operationel";
                 }
 
-                BoatTypeTextBox.Text = Enum.GetName(typeof (BoatType), CurrentBoat.Type);
+                BoatTypeTextBox.Text = Enum.GetName(typeof(BoatType), CurrentBoat.Type);
                 BoatStatusTextBox.Text = operationel;
 
                 LogbookDataGrid.ItemsSource = null;
@@ -131,7 +133,7 @@ namespace McSntt.Views.UserControls
 
         private void ChooseLogbookButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentSailtrip = (RegularTrip) LogbookDataGrid.SelectedItem;
+            CurrentSailtrip = (RegularTrip)LogbookDataGrid.SelectedItem;
             if (CurrentSailtrip == null)
                 MessageBox.Show("Vælg venligst en Logbog du gerne vil se");
             else
@@ -143,7 +145,7 @@ namespace McSntt.Views.UserControls
 
         private void AnswerDamageReportButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CurrentSailtrip = (RegularTrip) LogbookDataGrid.SelectedItem;
+            CurrentSailtrip = (RegularTrip)LogbookDataGrid.SelectedItem;
             if (CurrentSailtrip == null)
             {
                 MessageBox.Show("Vælg venligst en Logbog du gerne vil svare på");
@@ -183,13 +185,13 @@ namespace McSntt.Views.UserControls
 
         private void EditBoatButton_Click(object sender, RoutedEventArgs e)
         {
-            var boatWindow = new CreateAndEditBoats((Boat) BoatComboBox.SelectedItem);
+            var boatWindow = new CreateAndEditBoats((Boat)BoatComboBox.SelectedItem);
             boatWindow.ShowDialog();
 
             var listOfBookings = GetBookings();
             BookedTripsDataGrid.ItemsSource = null;
             BookedTripsDataGrid.ItemsSource = listOfBookings;
-	}
+        }
         private void ChangeButton_OnClick(object sender, RoutedEventArgs e)
         {
             var trip = DalLocator.RegularTripDal.GetOne(((RegularTrip) BookedTripsDataGrid.SelectedItem).RegularTripId);
@@ -205,7 +207,7 @@ namespace McSntt.Views.UserControls
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            DalLocator.RegularTripDal.Delete((RegularTrip) BookedTripsDataGrid.SelectedItem);
+            DalLocator.RegularTripDal.Delete((RegularTrip)BookedTripsDataGrid.SelectedItem);
 
             var listOfBookings = GetBookings();
             BookedTripsDataGrid.ItemsSource = null;
@@ -215,12 +217,27 @@ namespace McSntt.Views.UserControls
 
         private void BookedTripsDataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (BookedTripsDataGrid.SelectedIndex != -1 && GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
+            if (BookedTripsDataGrid.SelectedIndex != -1)
             {
-                DeleteButton.IsEnabled = true;
-                ChangeButton.IsEnabled = true;
+                if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin ||
+                    (GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).CreatedBy.PersonId ||
+                     GlobalInformation.CurrentUser.PersonId == ((RegularTrip)BookedTripsDataGrid.SelectedItem).Captain.PersonId))
+                {
+                    DeleteButton.IsEnabled = true;
+                    ChangeButton.IsEnabled = true;
+                }
+                else
+                {
+                    DeleteButton.IsEnabled = false;
+                    ChangeButton.IsEnabled = false;
+                }
             }
-
+            else
+            {
+                DeleteButton.IsEnabled = false;
+                ChangeButton.IsEnabled = false;
+            }
         }
+
     }
 }

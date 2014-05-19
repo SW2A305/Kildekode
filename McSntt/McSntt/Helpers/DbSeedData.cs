@@ -379,7 +379,7 @@ namespace McSntt.Helpers
                     PhoneNumber = "79461382",
                     Username = "marcus",
                     PasswordHash = EncryptionHelper.Sha256("husmand"),
-                    Position = SailClubMember.Positions.Member,
+                    Position = SailClubMember.Positions.Admin,
                     DateOfBirth = "1974-06-17"
                 },
             };
@@ -771,7 +771,7 @@ namespace McSntt.Helpers
             trips[1].CreatedBy = sailClubMembers[1];
             trips[2].CreatedBy = sailClubMembers[3];
             trips[3].CreatedBy = sailClubMembers[7];
-            trips[4].CreatedBy = sailClubMembers[7];
+            trips[4].CreatedBy = sailClubMembers[9];
 
             #endregion
 
@@ -781,7 +781,7 @@ namespace McSntt.Helpers
                                      {
                                          sailClubMembers[3],
                                          sailClubMembers[4],
-                                         sailClubMembers[2],
+                                         sailClubMembers[5],
                                          sailClubMembers[1],
                                          sailClubMembers[0]
                                      };
@@ -790,7 +790,7 @@ namespace McSntt.Helpers
                                      {
                                          sailClubMembers[0],
                                          sailClubMembers[1],
-                                         sailClubMembers[2],
+                                         sailClubMembers[7],
                                          sailClubMembers[3],
                                          sailClubMembers[4],
                                          sailClubMembers[5],
@@ -818,8 +818,8 @@ namespace McSntt.Helpers
             #endregion
 
             #region Teams -> Teacher
-            teams[0].Teacher = sailClubMembers[3];
-            teams[1].Teacher = sailClubMembers[5];
+            teams[0].Teacher = sailClubMembers[0];
+            teams[1].Teacher = sailClubMembers[0];
             #endregion
 
             #endregion

@@ -25,8 +25,11 @@ namespace McSntt.Views.Windows
             DateTimeStart.Value = rt.DepartureTime;
             DateTimeEnd.Value = rt.ArrivalTime;
             CrewList = rt.Crew.ToList();
-            CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.Captain.PersonId));
             PurposeTextBox.Text = rt.PurposeAndArea;
+
+            // Not alloed to change the time of this trip
+            DateTimeStart.IsReadOnly = true;
+            DateTimeEnd.IsReadOnly = true;
 
             InputTrip = rt;
 
@@ -39,6 +42,8 @@ namespace McSntt.Views.Windows
             CrewDataGrid.ItemsSource = CrewList;
             CaptainComboBox.ItemsSource = null;
             CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
+            CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.CaptainId));
+
         }
 
         public CreateBoatBookingWindow(int index)
@@ -51,12 +56,12 @@ namespace McSntt.Views.Windows
             BoatComboBox.SelectedValuePath = "Id";
             BoatComboBox.SelectedIndex = index;
 
-            CaptainComboBox.DisplayMemberPath = "FullName";
-            CaptainComboBox.SelectedValuePath = "MemberId";
-            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
-
             CrewList.Add(GlobalInformation.CurrentUser);
             CrewDataGrid.ItemsSource = CrewList;
+
+            CaptainComboBox.DisplayMemberPath = "FullName";
+            CaptainComboBox.SelectedValuePath = "MemberId";
+            CaptainComboBox.ItemsSource = CrewList;
 
             DateTimeStart.Value = DateTime.Today;
             DateTimeEnd.Value = DateTime.Today;
@@ -113,8 +118,15 @@ namespace McSntt.Views.Windows
 
             if (thisTrip != null)
             {
-                DalLocator.RegularTripDal.Create(thisTrip);
-                this.Close();
+                if (thisTrip.CanMakeReservation())
+                {
+                    DalLocator.RegularTripDal.Create(thisTrip);
+                    this.Close();  
+                    return;
+                } 
+
+                MessageBox.Show("Der findes allerede en tur inden for dit valgte interval");
+                return;    
             }
         }
 
@@ -198,7 +210,7 @@ namespace McSntt.Views.Windows
             string purpose = PurposeTextBox.Text.Trim();
 
             // All checks are passed, create the trip.
-            return new RegularTrip
+            var trip = new RegularTrip
             {
                 CreatedBy = GlobalInformation.CurrentUser,
                 Boat = boat,
@@ -208,6 +220,8 @@ namespace McSntt.Views.Windows
                 Captain = captain,
                 PurposeAndArea = purpose
             };
+
+            return trip;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
