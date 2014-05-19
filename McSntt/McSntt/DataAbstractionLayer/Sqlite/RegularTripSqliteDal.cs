@@ -400,13 +400,6 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return !reservations.Any();
         }
 
-        public bool CanMakeReservation(RegularTrip trip)
-        {
-            if (trip.Boat == null) { return false; }
-
-            return CanMakeReservation(trip.Boat, trip.DepartureTime, trip.ArrivalTime);
-        }
-
         public IEnumerable<RegularTrip> GetAll(Func<RegularTrip, bool> predicate)
         {
             var regularTrips = this.GetAll().ToArray();
