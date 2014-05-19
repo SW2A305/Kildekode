@@ -43,17 +43,20 @@ namespace McSntt.Views.UserControls
 
             BookButton.IsEnabled = false;
             ChangeButton.IsEnabled = false;
-            DeleteButton.IsEnabled = true;
+            DeleteButton.IsEnabled = false;
+
 
             if (GlobalInformation.CurrentUser.Position == SailClubMember.Positions.Admin)
+            {
                 AnswerDamageReportButton.Visibility = Visibility.Visible;
+                EditBoatButton.IsEnabled = false;
+            }
             else
             {
                 AnswerDamageReportButton.Visibility = Visibility.Hidden;
 
                 AddBoatButton.Visibility = Visibility.Hidden;
                 EditBoatButton.Visibility = Visibility.Hidden;
-
             }
         }
 
