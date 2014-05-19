@@ -52,8 +52,17 @@ namespace McSntt.Helpers
 
         public static bool PersistMockData()
         {
+            var runCount = 0;
+
             // Remove file if it exists
             if (File.Exists(DbFilePath)) { File.Delete(DbFilePath); }
+
+            while (File.Exists(DbFilePath)) {
+                System.Threading.Thread.Sleep(100);
+                runCount++;
+
+                if (runCount > 20) { break; }
+            }
 
             using (var conn = new SQLiteConnection(GetConnectionString()))
             {
