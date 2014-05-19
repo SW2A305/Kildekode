@@ -116,14 +116,7 @@ namespace McSntt.Views.UserControls
             var students = DalLocator.StudentMemberDal.GetAll();
             DalLocator.StudentMemberDal.LoadData(students);
             return students;
-        }
-
-        private ICollection<Lecture> GetLectures()
-        {
-            var lectures = DalLocator.LectureDal.GetAll(x => x.TeamId == ((Team) teamDropdown.SelectedItem).TeamId).ToList();
-            DalLocator.LectureDal.LoadData(lectures);
-            return lectures;
-        }
+        } 
 
         #region UpdateLecture
         private void SaveLectureInfo()
@@ -353,13 +346,6 @@ namespace McSntt.Views.UserControls
             if (teamDropdown.SelectedItem != null)
             {
                 var team = (Team)teamDropdown.SelectedItem;
-
-                foreach (var member in MembersList)
-                {
-                    member.AssociatedTeam = null;
-                    member.AssociatedTeamId = 0;
-                    DalLocator.StudentMemberDal.Update(member);
-                }
                 
                 DalLocator.TeamDal.Delete(team);
                 teamDropdown.ItemsSource = null;
@@ -519,8 +505,10 @@ namespace McSntt.Views.UserControls
         {
             var window = new NewLecture(teamDropdown.SelectedItem);
             window.ShowDialog();
-            ((Team) teamDropdown.SelectedItem).Lectures = null;
-            ((Team) teamDropdown.SelectedItem).Lectures = GetLectures();
+            ((Team) teamDropdown.SelectedItem).Lectures =
+                DalLocator.LectureDal.GetAll()
+                    .Where(x => x.TeamId == ((Team) teamDropdown.SelectedItem).TeamId)
+                    .ToList();
             lectureDropdown.ItemsSource = null;
             lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
         }
@@ -530,8 +518,6 @@ namespace McSntt.Views.UserControls
             var lecture = ((Lecture)lectureDropdown.SelectedItem);
             LectureDataClear();
             DalLocator.LectureDal.Delete(lecture);
-            ((Team)teamDropdown.SelectedItem).Lectures = null;
-            ((Team)teamDropdown.SelectedItem).Lectures = GetLectures();
             lectureDropdown.ItemsSource = null;
             lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
         }
