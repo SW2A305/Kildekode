@@ -282,6 +282,7 @@ namespace McSntt.Views.UserControls
             lectureDropdown.ItemsSource = null;
             if (teamDropdown.SelectedItem != null)
             {
+                editTeam.IsChecked = true;
                 foreach (var member in ((Team)teamDropdown.SelectedItem).TeamMembers)
                 {
                     MembersList.Add(member);
@@ -497,6 +498,7 @@ namespace McSntt.Views.UserControls
         private void updateLecture_Click(object sender, RoutedEventArgs e)
         {
             SaveLectureInfo();
+            MessageBox.Show("Oplysninger er gemt");
             AssignToughtLectureItemsToMember();
         }
         
@@ -514,11 +516,14 @@ namespace McSntt.Views.UserControls
 
         private void DeleteLecture_Click(object sender, RoutedEventArgs e)
         {
+            var team = (Team) teamDropdown.SelectedItem;
             var lecture = ((Lecture)lectureDropdown.SelectedItem);
             LectureDataClear();
             DalLocator.LectureDal.Delete(lecture);
+            team.Lectures = null;
+            team.Lectures = DalLocator.LectureDal.GetAll(x => x.TeamId == team.TeamId).ToList();
             lectureDropdown.ItemsSource = null;
-            lectureDropdown.ItemsSource = ((Team)teamDropdown.SelectedItem).Lectures.OrderBy(lect => lect.DateOfLecture);
+            lectureDropdown.ItemsSource = team.Lectures.OrderBy(lect => lect.DateOfLecture);
         }
 
         private void StudentsProgress_Click(object sender, RoutedEventArgs e)

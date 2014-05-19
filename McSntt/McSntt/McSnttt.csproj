@@ -82,6 +82,15 @@
     <Compile Include="DataAbstractionLayer\IEventDal.cs" />
     <Compile Include="DataAbstractionLayer\ILectureDal.cs" />
     <Compile Include="DataAbstractionLayer\IStudentMemberDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\BoatMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\EventMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\LectureMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\LogbookMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\PersonMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\RegularTripMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\SailClubMemberMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\StudentMemberMockDal.cs" />
+    <Compile Include="DataAbstractionLayer\Mock\TeamMockDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\BoatSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\EventSqliteDal.cs" />
     <Compile Include="DataAbstractionLayer\Sqlite\LectureSqliteDal.cs" />
@@ -103,6 +112,7 @@
     <Compile Include="Helpers\EncryptionHelper.cs" />
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
+    <Compile Include="Helpers\MockToSqlite.cs" />
     <Compile Include="Helpers\StudyMockData.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="Views\UserControls\DateTimePicker.xaml.cs">

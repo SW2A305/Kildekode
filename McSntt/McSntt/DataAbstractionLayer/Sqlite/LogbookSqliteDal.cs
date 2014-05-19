@@ -381,7 +381,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<Logbook> GetAll(Func<Logbook, bool> predicate)
         {
-            var logbooks  = this.GetAll().ToArray();
+            var logbooks = this.GetAll().ToArray();
 
             LoadData(logbooks);
 

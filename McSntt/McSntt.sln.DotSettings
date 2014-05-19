@@ -5,7 +5,9 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=42903BB260599945A7B6433C1545D527/EntryName/@EntryValue">TestFixture</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=42903BB260599945A7B6433C1545D527/Position/@EntryValue">4</s:Int64>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=48FA1279EB41A443ABE78968FD47E497/EntryName/@EntryValue">SqliteDal</s:String>
-	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=48FA1279EB41A443ABE78968FD47E497/Position/@EntryValue">5</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=48FA1279EB41A443ABE78968FD47E497/Position/@EntryValue">6</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=DA6AAAAFC2816646A4BF5E9417947656/EntryName/@EntryValue">MockDal</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=DA6AAAAFC2816646A4BF5E9417947656/Position/@EntryValue">5</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=0D0FCF6A8BF2F944B01D0D68D8573CDF/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=0D0FCF6A8BF2F944B01D0D68D8573CDF/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=0D0FCF6A8BF2F944B01D0D68D8573CDF/Categories/=Tristan/@EntryIndexedValue">Tristan</s:String>
@@ -222,15 +224,13 @@ namespace $Namespace$&#xD;
                     command.CommandText =&#xD;
                         String.Format("INSERT INTO {0} () " +&#xD;
                                       "VALUES ()",&#xD;
-                                      DatabaseManager.$TableEntry$); $END$// TODO Fill this out&#xD;
+                                      DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
 &#xD;
                     foreach ($ItemType$ $ItemTypeInstance$ in items)&#xD;
                     {&#xD;
                         command.Parameters.Clear();&#xD;
                         // TODO Add parameters&#xD;
                         insertedRows += command.ExecuteNonQuery();&#xD;
-&#xD;
-						$ItemTypeInstance$.$IdMember$ = (int) db.LastInsertRowId;&#xD;
                     }&#xD;
                 }&#xD;
 &#xD;
@@ -254,13 +254,13 @@ namespace $Namespace$&#xD;
                     command.CommandText =&#xD;
                         String.Format("UPDATE {0} " +&#xD;
                                       "SET  " +&#xD;
-                                      "WHERE $id_column$ = @$idMemberParam$ ",&#xD;
+                                      "WHERE ",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
 &#xD;
                     foreach ($ItemType$ $ItemTypeInstance$ in items)&#xD;
                     {&#xD;
                         command.Parameters.Clear();&#xD;
-                        command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", $ItemTypeInstance$.$IdMember$));&#xD;
+                        // TODO Add parameters&#xD;
                         updatedRows += command.ExecuteNonQuery();&#xD;
                     }&#xD;
                 }&#xD;
@@ -284,13 +284,13 @@ namespace $Namespace$&#xD;
                     command.CommandType = CommandType.Text;&#xD;
                     command.CommandText =&#xD;
                         String.Format("DELETE FROM {0} " +&#xD;
-                                      "WHERE $id_column$ = @$idMemberParam$ ",&#xD;
+                                      "WHERE ",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
 &#xD;
                     foreach ($ItemType$ $ItemTypeInstance$ in items)&#xD;
                     {&#xD;
                         command.Parameters.Clear();&#xD;
-                        command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", $ItemTypeInstance$.$IdMember$));&#xD;
+                        // TODO Add parameters&#xD;
                         deletedRows += command.ExecuteNonQuery();&#xD;
                     }&#xD;
                 }&#xD;
@@ -346,10 +346,10 @@ namespace $Namespace$&#xD;
                     command.CommandType = CommandType.Text;&#xD;
                     command.CommandText =&#xD;
                         String.Format("SELECT * FROM {0} " +&#xD;
-                                      "WHERE $id_column$ = @$idMemberParam$ " +&#xD;
+                                      "WHERE  " +&#xD;
                                       "LIMIT 1",&#xD;
                                       DatabaseManager.$TableEntry$); // TODO Fill this out&#xD;
-                    command.Parameters.Add(new SQLiteParameter("@$idMemberParam$", itemId));&#xD;
+                    // TODO Add parameters&#xD;
 &#xD;
                     SQLiteDataReader reader = command.ExecuteReader();&#xD;
 &#xD;
@@ -644,6 +644,107 @@ public $ViewModelName$ $ViewModelName$&#xD;
 &#xD;
 	$db$.Close();&#xD;
 }</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Categories/=Tristan/@EntryIndexedValue">Tristan</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/CustomProperties/=FileName/@EntryIndexedValue">MockDal</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Description/@EntryValue">MockDal</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ClassName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ClassName/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ClassName/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ClassName/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=DataType/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=DataType/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=DictionaryName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=DictionaryName/Expression/@EntryValue">suggestVariableName()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=DictionaryName/Order/@EntryValue">3</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=IDal/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=IDal/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ItemName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ItemName/Expression/@EntryValue">suggestVariableName()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Field/=ItemName/Order/@EntryValue">4</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DA6AAAAFC2816646A4BF5E9417947656/Text/@EntryValue">using System;&#xD;
+using System.Collections.Generic;&#xD;
+using System.Linq;&#xD;
+using McSntt.Models;&#xD;
+&#xD;
+namespace McSntt.DataAbstractionLayer.Mock&#xD;
+{&#xD;
+    public class $ClassName$ : $IDal$&#xD;
+    {&#xD;
+        private readonly Dictionary&lt;long, $DataType$&gt; $DictionaryName$;&#xD;
+&#xD;
+        public $ClassName$(bool useForTests = false)&#xD;
+		{&#xD;
+			if (useForTests || $DictionaryName$ == null)&#xD;
+			{&#xD;
+				this.$DictionaryName$ = new Dictionary&lt;long, $DataType$&gt;();&#xD;
+			}&#xD;
+		}&#xD;
+&#xD;
+        public bool Create(params $DataType$[] items)&#xD;
+        {&#xD;
+            foreach ($DataType$ $ItemName$ in items)&#xD;
+            {&#xD;
+                $ItemName$.$DataType$Id = this.GetHighestId() + 1;&#xD;
+                this.$DictionaryName$.Add($ItemName$.$DataType$Id, $ItemName$);&#xD;
+            }&#xD;
+&#xD;
+            return true;&#xD;
+        }&#xD;
+&#xD;
+        public bool Update(params $DataType$[] items)&#xD;
+        {&#xD;
+            foreach ($DataType$ $ItemName$ in items) {&#xD;
+                if ($ItemName$.$DataType$Id &gt; 0 &amp;&amp; this.$DictionaryName$.ContainsKey($ItemName$.$DataType$Id)) { this.$DictionaryName$[$ItemName$.$DataType$Id] = $ItemName$; }&#xD;
+            }&#xD;
+&#xD;
+            return true;&#xD;
+        }&#xD;
+&#xD;
+        public bool Delete(params $DataType$[] items)&#xD;
+        {&#xD;
+            foreach ($DataType$ $ItemName$ in items) { if ($ItemName$.$DataType$Id &gt; 0) { this.$DictionaryName$.Remove($ItemName$.$DataType$Id); } }&#xD;
+&#xD;
+            return true;&#xD;
+        }&#xD;
+&#xD;
+        public IEnumerable&lt;$DataType$&gt; GetAll() { return this.$DictionaryName$.Values; }&#xD;
+&#xD;
+        public IEnumerable&lt;$DataType$&gt; GetAll(Func&lt;$DataType$, bool&gt; predicate) { return this.$DictionaryName$.Values.Where(predicate); }&#xD;
+&#xD;
+        public $DataType$ GetOne(long itemId)&#xD;
+        {&#xD;
+            if (this.$DictionaryName$.ContainsKey(itemId)) { return this.$DictionaryName$[itemId]; }&#xD;
+&#xD;
+            return null;&#xD;
+        }&#xD;
+&#xD;
+        public void LoadData($DataType$ item)&#xD;
+        {&#xD;
+            /* Not applicable */&#xD;
+        }&#xD;
+&#xD;
+        public void LoadData(IEnumerable&lt;$DataType$&gt; items)&#xD;
+        {&#xD;
+            /* Not applicable */&#xD;
+        }&#xD;
+&#xD;
+        private long GetHighestId()&#xD;
+        {&#xD;
+            if (this.$DictionaryName$.Count == 0) { return 0; }&#xD;
+&#xD;
+            return this.$DictionaryName$.Max($ItemName$ =&gt; $ItemName$.Key);&#xD;
+        }&#xD;
+    }&#xD;
+}&#xD;
+</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DF7F2CC7975C514CBBE56F9210E05E84/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DF7F2CC7975C514CBBE56F9210E05E84/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DF7F2CC7975C514CBBE56F9210E05E84/Categories/=Tristan/@EntryIndexedValue">Tristan</s:String>

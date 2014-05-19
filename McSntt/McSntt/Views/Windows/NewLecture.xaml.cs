@@ -45,8 +45,26 @@ namespace McSntt.Views.Windows
             DalLocator.LectureDal.Create(lecture);
             var Departure = DateTimePickerPlannedLectureTime.Value;
             var Arrival = DateTimePickerPlannedLectureTimeEnd.Value;
-            var book = new CreateBoatBookingWindow(Departure, Arrival, _currentTeam);
+
+            var boat = DalLocator.BoatDal.GetAll(
+                x => x.Type == (_currentTeam.Level == Team.ClassLevel.First ? BoatType.Gaffelrigger : BoatType.Drabant));
+
+            var trip = new RegularTrip()
+            {
+                ArrivalTime = Arrival,
+                Boat = boat.First(),
+                Captain = _currentTeam.Teacher,
+                Crew = _currentTeam.TeamMembers.Cast<Person>().ToList(),
+                CreatedBy = GlobalInformation.CurrentUser,
+                DepartureTime = Departure,
+                PurposeAndArea = "Undervisning med hold " + _currentTeam.Name,
+                WeatherConditions = ""
+            };
+            DalLocator.RegularTripDal.Create(trip);
+            
+            
             MessageBox.Show("Lektionen er nu oprettet");
+            this.Close();
         }
     }
 }

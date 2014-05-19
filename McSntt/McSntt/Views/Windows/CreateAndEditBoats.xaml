@@ -16,7 +16,7 @@
                 <CheckBox x:Name="CheckBox" VerticalAlignment="Center"/>
             </StackPanel>
                 <Label/>
-                <Button x:Name="SaveButton" Content="Gem i Database" Width="120" Click="Button_Click" Margin="53,0,49,0"/>
+                <Button x:Name="SaveButton" Content="Gem i Database" Width="120" Click="Button_Click"/>
             </StackPanel>
     </Grid>
 </Window>

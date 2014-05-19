@@ -56,6 +56,8 @@ namespace McSntt.Views.Windows
                 newBoat.ImagePath = "SundetLogo.png";
                 newBoat.Operational = CheckBox.IsChecked.GetValueOrDefault();
                 DalLocator.BoatDal.Create(newBoat);
+                this.Close();
+                MessageBox.Show("Båden er nu oprettet");
             }
         }
 

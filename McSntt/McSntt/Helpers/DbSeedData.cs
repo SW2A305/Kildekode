@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using McSntt.DataAbstractionLayer.Mock;
 using McSntt.Models;
 
 namespace McSntt.Helpers
 {
     public class DbSeedData
     {
-        public static void CreateSeedData()
+        public static void CreateSeedData(bool useMockData = false)
         {
             #region Arrays
             #region DataArray :: Boats
@@ -378,7 +379,7 @@ namespace McSntt.Helpers
                     PhoneNumber = "79461382",
                     Username = "marcus",
                     PasswordHash = EncryptionHelper.Sha256("husmand"),
-                    Position = SailClubMember.Positions.Member,
+                    Position = SailClubMember.Positions.Admin,
                     DateOfBirth = "1974-06-17"
                 },
             };
@@ -770,7 +771,7 @@ namespace McSntt.Helpers
             trips[1].CreatedBy = sailClubMembers[1];
             trips[2].CreatedBy = sailClubMembers[3];
             trips[3].CreatedBy = sailClubMembers[7];
-            trips[4].CreatedBy = sailClubMembers[7];
+            trips[4].CreatedBy = sailClubMembers[9];
 
             #endregion
 
@@ -780,7 +781,7 @@ namespace McSntt.Helpers
                                      {
                                          sailClubMembers[3],
                                          sailClubMembers[4],
-                                         sailClubMembers[2],
+                                         sailClubMembers[5],
                                          sailClubMembers[1],
                                          sailClubMembers[0]
                                      };
@@ -789,7 +790,7 @@ namespace McSntt.Helpers
                                      {
                                          sailClubMembers[0],
                                          sailClubMembers[1],
-                                         sailClubMembers[2],
+                                         sailClubMembers[7],
                                          sailClubMembers[3],
                                          sailClubMembers[4],
                                          sailClubMembers[5],
@@ -817,21 +818,22 @@ namespace McSntt.Helpers
             #endregion
 
             #region Teams -> Teacher
-            teams[0].Teacher = sailClubMembers[3];
-            teams[1].Teacher = sailClubMembers[5];
+            teams[0].Teacher = sailClubMembers[0];
+            teams[1].Teacher = sailClubMembers[0];
             #endregion
 
             #endregion
 
             #region Save data
-            var boatDal = DalLocator.BoatDal;
-            var eventDal = DalLocator.EventDal;
-            var lectureDal = DalLocator.LectureDal;
-            var logbookDal = DalLocator.LogbookDal;
-            var tripDal = DalLocator.RegularTripDal;
-            var scmDal = DalLocator.SailClubMemberDal;
-            var smDal = DalLocator.StudentMemberDal;
-            var teamDal = DalLocator.TeamDal;
+            var boatDal = (useMockData ? new BoatMockDal(true) : DalLocator.BoatDal);
+            var eventDal = (useMockData ? new EventMockDal(true) : DalLocator.EventDal);
+            var lectureDal = (useMockData ? new LectureMockDal(true) : DalLocator.LectureDal);
+            var logbookDal = (useMockData ? new LogbookMockDal(true) : DalLocator.LogbookDal);
+            var personDal = (useMockData ? new PersonMockDal(true) : DalLocator.PersonDal);
+            var tripDal = (useMockData ? new RegularTripMockDal(true) : DalLocator.RegularTripDal);
+            var scmDal = (useMockData ? new SailClubMemberMockDal(true) : DalLocator.SailClubMemberDal);
+            var smDal = (useMockData ? new StudentMemberMockDal(true) : DalLocator.StudentMemberDal);
+            var teamDal = (useMockData ? new TeamMockDal(true) : DalLocator.TeamDal);
 
             // Store the ones that doesn't require anything else first...
             boatDal.Create(boats);
