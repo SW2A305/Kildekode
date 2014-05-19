@@ -36,7 +36,7 @@
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" x:Name="BoatsTabItem">
                 <TabItem.Header>
-                    <TextBlock Text="Bådreservation" FontSize="23" Width="156" TextAlignment="Center"/>
+                    <TextBlock Text="Både" FontSize="23" Width="140" TextAlignment="Center"/>
                 </TabItem.Header>
                 <Grid Name="BoatsGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Grid>
