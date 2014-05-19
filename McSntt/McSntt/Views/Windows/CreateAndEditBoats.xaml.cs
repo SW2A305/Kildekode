@@ -77,6 +77,7 @@ namespace McSntt.Views.Windows
                 newBoat.Type = (BoatType)BoatTypeComboBox.SelectedItem;
                 newBoat.Operational = CheckBox.IsChecked.GetValueOrDefault();
                 DalLocator.BoatDal.Update(newBoat);
+                this.Close();
             }
         }
 

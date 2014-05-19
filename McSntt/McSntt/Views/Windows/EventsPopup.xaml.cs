@@ -27,6 +27,21 @@ namespace McSntt.Views.Windows
                 ChooseDate.Value = DateTime.Today;
             }
             newEvent.Created = false;
+            Label.Content = "Rediger begivenhed";
+        }
+
+        public EventsPopup()
+        {
+            InitializeComponent();
+
+            EventNameBox.Text = "";
+            EventDescriptionBox.Text = "";
+            ChooseDate.Value = DateTime.Now;
+            SubscriptionCheckbox.IsChecked = false;
+
+            newEvent.Created = false;
+            Label.Content = "Opret begivenhed";
+
         }
 
         private void Create_Event(object sender, RoutedEventArgs e)
@@ -66,6 +81,11 @@ namespace McSntt.Views.Windows
             {
                 newEvent.SignUpReq = true;
                 newEvent.SignUpMsg = "Tilmelding krævet!";
+            }
+            else
+            {
+                newEvent.SignUpReq = false;
+                newEvent.SignUpMsg = "";
             }
 
             if (!string.IsNullOrEmpty(EventNameBox.Text) && !string.IsNullOrEmpty(EventDescriptionBox.Text))

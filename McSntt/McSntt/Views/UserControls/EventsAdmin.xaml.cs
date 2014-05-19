@@ -51,7 +51,7 @@ namespace McSntt.Views.UserControls
         {          
             var newEvent = new Event();
 
-            Window createEventPopup = new EventsPopup(newEvent);
+            Window createEventPopup = new EventsPopup();
             createEventPopup.ShowDialog();
             AgendaListbox.ItemsSource = EventsList;
 
