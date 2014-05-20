@@ -21,6 +21,10 @@ namespace McSntt.DataAbstractionLayer.Mock
             {
                 team.TeamId = this.GetHighestId() + 1;
                 _teams.Add(team.TeamId, team);
+
+                if (team.TeamMembers != null) {
+                    foreach (StudentMember studentMember in team.TeamMembers) { studentMember.AssociatedTeam = team; }
+                }
             }
 
             return true;
@@ -28,8 +32,23 @@ namespace McSntt.DataAbstractionLayer.Mock
 
         public bool Update(params Team[] items)
         {
-            foreach (Team team in items) {
+            var studentDal = new StudentMemberMockDal();
+
+            foreach (Team team in items)
+            {
                 if (team.TeamId > 0 && _teams.ContainsKey(team.TeamId)) { _teams[team.TeamId] = team; }
+
+                Team tmpTeam = team;
+                var students = studentDal.GetAll(student => student.AssociatedTeam == tmpTeam);
+                foreach (var studentMember in students)
+                {
+                    studentMember.AssociatedTeam = null;
+                    studentMember.AssociatedTeamId = 0;
+                }
+
+                if (team.TeamMembers != null) {
+                    foreach (StudentMember studentMember in team.TeamMembers) { studentMember.AssociatedTeam = team; }
+                }
             }
 
             return true;
@@ -37,7 +56,15 @@ namespace McSntt.DataAbstractionLayer.Mock
 
         public bool Delete(params Team[] items)
         {
-            foreach (Team team in items) { if (team.TeamId > 0) { _teams.Remove(team.TeamId); } }
+            foreach (Team team in items)
+            {
+                if (team.TeamId > 0) { _teams.Remove(team.TeamId); }
+                foreach (var studentMember in team.TeamMembers)
+                {
+                    studentMember.AssociatedTeam = null;
+                    studentMember.AssociatedTeamId = 0;
+                }
+            }
 
             return true;
         }

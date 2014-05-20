@@ -387,7 +387,6 @@ namespace McSntt.Views.UserControls
                     && DalLocator.StudentMemberDal.GetOne(selectedMember.StudentMemberId).AssociatedTeamId == 0)
                 {
                     this.MembersList.Add(selectedMember);
-                    this.RefreshDatagrid(this.CurrentMemberDataGrid, this.MembersList);
                 }
                 else
                 {
@@ -395,13 +394,19 @@ namespace McSntt.Views.UserControls
                                                   this.MembersList.Contains(selectedMember) ? "holdet" : "et hold"));
                 }
             }
+
+            this.RefreshDatagrid(this.CurrentMemberDataGrid, this.MembersList);
         }
 
         private void RemoveStudent_Click(object sender, RoutedEventArgs e)
         {
             if (this.CurrentMemberDataGrid.SelectedItem == null) { return; }
-            var currentMember = (StudentMember) this.CurrentMemberDataGrid.SelectedItem;
-            this.MembersList.Remove(currentMember);
+            var selectedMembers = CurrentMemberDataGrid.SelectedItems;
+
+            foreach (StudentMember selectedMember in selectedMembers) {
+                this.MembersList.Remove(selectedMember);
+            }
+            
             this.RefreshDatagrid(this.CurrentMemberDataGrid, this.MembersList);
         }
 
@@ -442,6 +447,8 @@ namespace McSntt.Views.UserControls
             this.teamDropdown.ItemsSource = null;
             this.teamDropdown.ItemsSource = this.GetTeams();
             this.teamDropdown.SelectedIndex = currentTeamDropdownIndex;
+
+            MessageBox.Show("Ændringerne er gemt.");
         }
         #endregion
 
