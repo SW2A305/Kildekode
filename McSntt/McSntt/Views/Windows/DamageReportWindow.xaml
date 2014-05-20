@@ -1,6 +1,7 @@
 ﻿<Window x:Class="McSntt.Views.Windows.DamageReportWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterScreen"
         Title="DamageReportWindow" Height="300" Width="300"
         MaxHeight="300" MinHeight="300" MaxWidth="300" MinWidth="300" Style="{StaticResource WindowStyle}">
     <Grid>

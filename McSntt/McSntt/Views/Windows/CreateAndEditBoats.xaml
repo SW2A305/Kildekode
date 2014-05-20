@@ -1,6 +1,7 @@
 ﻿<Window x:Class="McSntt.Views.Windows.CreateAndEditBoats"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterScreen"
         Title="CreateAndEditBoats" Height="240" Width="250" Style="{StaticResource WindowStyle}">
     <Grid>
         <StackPanel Margin="10">

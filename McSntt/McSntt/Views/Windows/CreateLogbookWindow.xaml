@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="McSntt.Views.Windows.CreateLogbookWindow"
+    WindowStartupLocation="CenterScreen"
     Title="CreateLogbookWindow" Height="610" Width="784"
     Style="{StaticResource WindowStyle}"
     MaxHeight="610" MaxWidth="784" MinHeight="610" MinWidth="784">

@@ -4,6 +4,7 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:userControls="clr-namespace:McSntt.Views.UserControls"
     x:Class="McSntt.Views.Windows.NewLecture"
+    WindowStartupLocation="CenterScreen"
     Style="{StaticResource WindowStyle}"
     Title="NewLecture" Height="200" Width="405" MinHeight="200" MinWidth="405">
     <Grid>

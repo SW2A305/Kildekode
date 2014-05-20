@@ -140,5 +140,7 @@ namespace McSntt.Views.Windows
             GuestWindow.Owner = this.Owner;
             this.Hide();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) { UsernameBox.Focus(); }
     }
 }

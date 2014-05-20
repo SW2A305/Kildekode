@@ -23,6 +23,7 @@ namespace McSntt.Views.Windows
 
         public CreateAndEditBoats(Boat boat) : this()
         {
+            newBoat = boat;
             this.CheckBox.IsChecked = boat.Operational;
             this.BoatTypeComboBox.SelectedIndex = (int) boat.Type;
             this.NickNameTextBox.Text = boat.NickName;

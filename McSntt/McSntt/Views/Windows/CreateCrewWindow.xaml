@@ -1,6 +1,7 @@
 ﻿<Window x:Class="McSntt.Views.Windows.CreateCrewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterScreen"
         Title="CreateCrewWindow" Height="470" Width="620"
         Style="{StaticResource WindowStyle}" x:Name="CreateCrewWindowName"
         DataContext="{Binding ElementName=CreateCrewWindowName}">

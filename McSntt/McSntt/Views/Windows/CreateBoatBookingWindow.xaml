@@ -5,6 +5,7 @@
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:userControls="clr-namespace:McSntt.Views.UserControls"
     x:Class="McSntt.Views.Windows.CreateBoatBookingWindow"
+    WindowStartupLocation="CenterScreen"
     Title="CreateBoatBookingWindow"
     Height="600"
     Width="320"
