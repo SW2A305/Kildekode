@@ -5,14 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="McSntt.Views.UserControls.Members"
     mc:Ignorable="d"
-    d:DesignHeight="760" d:DesignWidth="996" x:Name="MembersUserControl"
+    Width="990" Height="650" x:Name="MembersUserControl"
     DataContext="{Binding ElementName=MembersUserControl}">
-    <Grid Margin="0,0,0,-552">
+    <Grid>
         <StackPanel Margin="10">
             <Label Height="37" FontSize="20" Content="Herunder kan der søges:" />
             <TextBox Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}" />
             <DataGrid ItemsSource="{Binding DataGridCollection}" AutoGenerateColumns="False" CanUserAddRows="False"
-                      Name="DataGrid" IsReadOnly="True">
+                      Name="DataGrid" IsReadOnly="True" Height="475">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding FirstName}" Header="Fornavn" />
                     <DataGridTextColumn Binding="{Binding LastName}" Header="Efternavn" />
