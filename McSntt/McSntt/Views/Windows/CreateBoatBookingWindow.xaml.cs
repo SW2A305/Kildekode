@@ -16,139 +16,135 @@ namespace McSntt.Views.Windows
         // Constructor to use this window to edit a trip
         public List<Person> CrewList = new List<Person>();
 
-        public RegularTrip InputTrip { get; set; }
-
         public CreateBoatBookingWindow(RegularTrip rt) : this(-1)
         {
             // The id is combobox id + 1 (So boatId - 1)
-            BoatComboBox.SelectedIndex = (int) (rt.Boat.BoatId - 1);
-            DateTimeStart.Value = rt.DepartureTime;
-            DateTimeEnd.Value = rt.ArrivalTime;
-            CrewList = rt.Crew.ToList();
-            PurposeTextBox.Text = rt.PurposeAndArea;
+            this.BoatComboBox.SelectedIndex = (int) (rt.Boat.BoatId - 1);
+            this.DateTimeStart.Value = rt.DepartureTime;
+            this.DateTimeEnd.Value = rt.ArrivalTime;
+            this.CrewList = rt.Crew.ToList();
+            this.PurposeTextBox.Text = rt.PurposeAndArea;
 
             // Not alloed to change the time of this trip
-            DateTimeStart.IsReadOnly = true;
-            DateTimeEnd.IsReadOnly = true;
+            this.DateTimeStart.IsReadOnly = true;
+            this.DateTimeEnd.IsReadOnly = true;
 
-            InputTrip = rt;
+            this.InputTrip = rt;
 
-            CompleteBooking.Content = "Gem ændringer";
-            CompleteBooking.Click -= SaveButton_Click;
-            CompleteBooking.Click += ChangeButton_Click;
-            CancelBooking.Content = "Annuler ændirnger";
+            this.CompleteBooking.Content = "Gem ændringer";
+            this.CompleteBooking.Click -= this.SaveButton_Click;
+            this.CompleteBooking.Click += this.ChangeButton_Click;
+            this.CancelBooking.Content = "Annuler ændirnger";
 
-            CrewDataGrid.ItemsSource = null;
-            CrewDataGrid.ItemsSource = CrewList;
-            CaptainComboBox.ItemsSource = null;
-            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
-            CaptainComboBox.SelectedIndex = CrewList.IndexOf(CrewList.First(p => p.PersonId == rt.CaptainId));
-
+            this.CrewDataGrid.ItemsSource = null;
+            this.CrewDataGrid.ItemsSource = this.CrewList;
+            this.CaptainComboBox.ItemsSource = null;
+            this.CaptainComboBox.ItemsSource = this.CrewList.Where(x => x.BoatDriver);
+            this.CaptainComboBox.SelectedIndex =
+                this.CrewList.IndexOf(this.CrewList.First(p => p.PersonId == rt.CaptainId));
         }
 
         public CreateBoatBookingWindow(int index)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            var dbm = DalLocator.BoatDal;
-            BoatComboBox.ItemsSource = dbm.GetAll();
-            BoatComboBox.DisplayMemberPath = "NickName";
-            BoatComboBox.SelectedValuePath = "Id";
-            BoatComboBox.SelectedIndex = index;
+            IBoatDal dbm = DalLocator.BoatDal;
+            this.BoatComboBox.ItemsSource = dbm.GetAll();
+            this.BoatComboBox.DisplayMemberPath = "NickName";
+            this.BoatComboBox.SelectedValuePath = "Id";
+            this.BoatComboBox.SelectedIndex = index;
 
-            CrewList.Add(GlobalInformation.CurrentUser);
-            CrewDataGrid.ItemsSource = CrewList;
+            this.CrewList.Add(GlobalInformation.CurrentUser);
+            this.CrewDataGrid.ItemsSource = this.CrewList;
 
-            CaptainComboBox.DisplayMemberPath = "FullName";
-            CaptainComboBox.SelectedValuePath = "MemberId";
-            CaptainComboBox.ItemsSource = CrewList;
+            this.CaptainComboBox.DisplayMemberPath = "FullName";
+            this.CaptainComboBox.SelectedValuePath = "MemberId";
+            this.CaptainComboBox.ItemsSource = this.CrewList;
 
-            DateTimeStart.Value = DateTime.Today;
-            DateTimeEnd.Value = DateTime.Today;
+            this.DateTimeStart.Value = DateTime.Today;
+            this.DateTimeEnd.Value = DateTime.Today;
         }
 
         public CreateBoatBookingWindow(DateTime departure, DateTime arrival, Team currentTeam) : this(-1)
         {
             List<Boat> boats = DalLocator.BoatDal.GetAll().ToList();
             var anya = new Boat
-            {
-                Type = (currentTeam.Level == Team.ClassLevel.Second) ? BoatType.Gaffelrigger : BoatType.Drabant
-            };
+                       {
+                           Type =
+                               (currentTeam.Level == Team.ClassLevel.Second) ? BoatType.Gaffelrigger : BoatType.Drabant
+                       };
 
             Boat currentBoat = boats.FirstOrDefault(
-                x => x.Type == anya.Type);
+                                                    x => x.Type == anya.Type);
 
-            BoatComboBox.SelectedIndex = boats.FindIndex(b => b == currentBoat);
-            CrewList.Add(GlobalInformation.CurrentUser);
-            CaptainComboBox.SelectedIndex = 0;
-            foreach (StudentMember member in currentTeam.TeamMembers)
-            {
-                CrewList.Add(member);
-            }
-            DateTimeStart.Value = departure;
-            DateTimeEnd.Value = arrival;
-            PurposeTextBox.Text = "Undervisning af:" + currentTeam.Name;
-            
-            SaveButton_Click(new object(), new RoutedEventArgs());
+            this.BoatComboBox.SelectedIndex = boats.FindIndex(b => b == currentBoat);
+            this.CrewList.Add(GlobalInformation.CurrentUser);
+            this.CaptainComboBox.SelectedIndex = 0;
+            foreach (StudentMember member in currentTeam.TeamMembers) { this.CrewList.Add(member); }
+            this.DateTimeStart.Value = departure;
+            this.DateTimeEnd.Value = arrival;
+            this.PurposeTextBox.Text = "Undervisning af:" + currentTeam.Name;
+
+            this.SaveButton_Click(new object(), new RoutedEventArgs());
         }
+
+        public RegularTrip InputTrip { get; set; }
 
         private void ChangeCrew_Click(object sender, RoutedEventArgs e)
         {
-            var createCrewWindow = new CreateCrewWindow(CrewList);
+            var createCrewWindow = new CreateCrewWindow(this.CrewList);
             createCrewWindow.ShowDialog();
 
-            CrewList = createCrewWindow.CrewList.ToList();
+            this.CrewList = createCrewWindow.CrewList.ToList();
 
             // After the crew is changed refresh the data grid and captain selector
-            CrewDataGrid.ItemsSource = null;
-            CrewDataGrid.ItemsSource = CrewList;
-            CaptainComboBox.ItemsSource = null;
-            CaptainComboBox.ItemsSource = CrewList.Where(x => x.BoatDriver);
+            this.CrewDataGrid.ItemsSource = null;
+            this.CrewDataGrid.ItemsSource = this.CrewList;
+            this.CaptainComboBox.ItemsSource = null;
+            this.CaptainComboBox.ItemsSource = this.CrewList.Where(x => x.BoatDriver);
 
             // Assign a default captain to the first member
-            if (CaptainComboBox.SelectedIndex == -1 && CrewList.Count > 0)
-            {
-                CaptainComboBox.SelectedIndex = 0;
+            if (this.CaptainComboBox.SelectedIndex == -1 && this.CrewList.Count > 0) {
+                this.CaptainComboBox.SelectedIndex = 0;
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var thisTrip = CreateSailTrip();
+            RegularTrip thisTrip = this.CreateSailTrip();
 
             if (thisTrip != null)
             {
                 if (thisTrip.CanMakeReservation())
                 {
                     DalLocator.RegularTripDal.Create(thisTrip);
-                    this.Close();  
+                    this.Close();
                     return;
-                } 
+                }
 
                 MessageBox.Show("Der findes allerede en tur inden for dit valgte interval");
-                return;    
             }
         }
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
-            var thisTrip = CreateSailTrip();
+            RegularTrip thisTrip = this.CreateSailTrip();
 
             if (thisTrip != null)
             {
                 //TODO: Is this the corret way to update? The updated trip can be completely diffirent from the original
                 // Assign the old trip id to the new one
-                thisTrip.RegularTripId = InputTrip.RegularTripId;
+                thisTrip.RegularTripId = this.InputTrip.RegularTripId;
                 // Do we need to load the crew first? (it's a one-to-many relation)
                 DalLocator.RegularTripDal.Update(thisTrip);
                 this.Close();
             }
         }
-        
+
         private RegularTrip CreateSailTrip()
         {
             // Get the current selected boat
-            var boat = (Boat) BoatComboBox.SelectionBoxItem;
+            var boat = (Boat) this.BoatComboBox.SelectionBoxItem;
 
             if (boat.Operational == false)
             {
@@ -157,7 +153,7 @@ namespace McSntt.Views.Windows
             }
 
             // Get the startTime as a datetime
-            DateTime startTime = DateTimeStart.Value;
+            DateTime startTime = this.DateTimeStart.Value;
 
             if (startTime < DateTime.Now)
             {
@@ -166,7 +162,7 @@ namespace McSntt.Views.Windows
             }
 
             // Get the endTime as a datetime
-            DateTime endTime = DateTimeEnd.Value;
+            DateTime endTime = this.DateTimeEnd.Value;
 
             if (endTime < startTime)
             {
@@ -181,7 +177,7 @@ namespace McSntt.Views.Windows
             }
 
             // Get the crew
-            List<Person> crewSelected = CrewList;
+            List<Person> crewSelected = this.CrewList;
 
             // Return error if no crew is selected
             if (crewSelected.Count == 0)
@@ -191,35 +187,35 @@ namespace McSntt.Views.Windows
             }
 
             // Return error if no captain is selected
-            if (CaptainComboBox.SelectedIndex == -1)
+            if (this.CaptainComboBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Kaptajn ej angivet");
                 return null;
             }
 
             // Get the captain
-            var captain = (Person) CaptainComboBox.SelectionBoxItem;
+            var captain = (Person) this.CaptainComboBox.SelectionBoxItem;
 
             // Return error if no purpose is given
-            if (PurposeTextBox.Text.Trim() == String.Empty)
+            if (this.PurposeTextBox.Text.Trim() == String.Empty)
             {
                 MessageBox.Show("Formål ej angivet");
                 return null;
             }
 
-            string purpose = PurposeTextBox.Text.Trim();
+            string purpose = this.PurposeTextBox.Text.Trim();
 
             // All checks are passed, create the trip.
             var trip = new RegularTrip
-            {
-                CreatedBy = GlobalInformation.CurrentUser,
-                Boat = boat,
-                DepartureTime = startTime,
-                ArrivalTime = endTime,
-                Crew = crewSelected,
-                Captain = captain,
-                PurposeAndArea = purpose
-            };
+                       {
+                           CreatedBy = GlobalInformation.CurrentUser,
+                           Boat = boat,
+                           DepartureTime = startTime,
+                           ArrivalTime = endTime,
+                           Crew = crewSelected,
+                           Captain = captain,
+                           PurposeAndArea = purpose
+                       };
 
             return trip;
         }
@@ -227,11 +223,8 @@ namespace McSntt.Views.Windows
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Er du sikker på at du vil annullere din booking?", "Bådbooking",
-                MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Yes)
-            {
-                Close();
-            }
+                                                      MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes) { this.Close(); }
         }
     }
 }

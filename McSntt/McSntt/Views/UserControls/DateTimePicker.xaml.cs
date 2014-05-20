@@ -1,67 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace McSntt.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for DateTimePicker.xaml
+    ///     Interaction logic for DateTimePicker.xaml
     /// </summary>
     public partial class DateTimePicker : UserControl
     {
-
-
         private bool _isReadOnly = false;
 
-        public DateTimePicker()
-        {
-
-            InitializeComponent();
-
-        }
+        public DateTimePicker() { this.InitializeComponent(); }
 
         public DateTime Value
         {
             get
             {
-                return (DatePicker.SelectedDate.GetValueOrDefault() + TimePicker.Value.GetValueOrDefault().TimeOfDay);
+                return (this.DatePicker.SelectedDate.GetValueOrDefault()
+                        + this.TimePicker.Value.GetValueOrDefault().TimeOfDay);
             }
             set
             {
-                DatePicker.SelectedDate = value;
-                TimePicker.Value = value;
+                this.DatePicker.SelectedDate = value;
+                this.TimePicker.Value = value;
             }
         }
 
         public bool IsReadOnly
         {
-            get { return _isReadOnly; }
+            get { return this._isReadOnly; }
             set
             {
-                if (value == true)
+                if (value)
                 {
-                    DatePicker.IsEnabled = false;
-                    TimePicker.IsEnabled = false;
+                    this.DatePicker.IsEnabled = false;
+                    this.TimePicker.IsEnabled = false;
                 }
                 else
                 {
-                    DatePicker.IsEnabled = true;
-                    TimePicker.IsEnabled = true;
+                    this.DatePicker.IsEnabled = true;
+                    this.TimePicker.IsEnabled = true;
                 }
             }
         }

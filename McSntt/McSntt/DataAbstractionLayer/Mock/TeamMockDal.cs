@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _teams == null) { _teams = new Dictionary<long, Team>(); }
         }
 
+        #region ITeamDal Members
         public bool Create(params Team[] items)
         {
             foreach (Team team in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 team.TeamId = this.GetHighestId() + 1;
                 _teams.Add(team.TeamId, team);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(Team team)
-        {
-            if (team.TeamId <= 0) { return false; }
-
-            _teams.Add(team.TeamId, team);
 
             return true;
         }
@@ -70,11 +62,16 @@ namespace McSntt.DataAbstractionLayer.Mock
             item.Lectures = lectureDal.GetAll(lecture => lecture.TeamId == item.TeamId).ToList();
         }
 
-        public void LoadData(IEnumerable<Team> items)
+        public void LoadData(IEnumerable<Team> items) { foreach (Team team in items) { LoadData(team); } }
+        #endregion
+
+        public bool CreateWithId(Team team)
         {
-            foreach (var team in items) {
-                LoadData(team);
-            }
+            if (team.TeamId <= 0) { return false; }
+
+            _teams.Add(team.TeamId, team);
+
+            return true;
         }
 
         private long GetHighestId()

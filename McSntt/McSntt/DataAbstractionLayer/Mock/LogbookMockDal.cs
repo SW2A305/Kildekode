@@ -14,6 +14,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _logbooks == null) { _logbooks = new Dictionary<long, Logbook>(); }
         }
 
+        #region ILogbookDal Members
         public bool Create(params Logbook[] items)
         {
             foreach (Logbook logbook in items)
@@ -21,15 +22,6 @@ namespace McSntt.DataAbstractionLayer.Mock
                 logbook.LogbookId = this.GetHighestId() + 1;
                 _logbooks.Add(logbook.LogbookId, logbook);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(Logbook logbook)
-        {
-            if (logbook.LogbookId <= 0) { return false; }
-
-            _logbooks.Add(logbook.LogbookId, logbook);
 
             return true;
         }
@@ -72,6 +64,16 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<Logbook> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(Logbook logbook)
+        {
+            if (logbook.LogbookId <= 0) { return false; }
+
+            _logbooks.Add(logbook.LogbookId, logbook);
+
+            return true;
         }
 
         private long GetHighestId()

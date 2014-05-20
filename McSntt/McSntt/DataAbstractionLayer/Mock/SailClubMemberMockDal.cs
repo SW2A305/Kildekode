@@ -14,48 +14,24 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _sailClubMembers == null) { _sailClubMembers = new Dictionary<long, SailClubMember>(); }
         }
 
+        #region ISailClubMemberDal Members
         public bool Create(params SailClubMember[] items)
         {
             var personDal = new PersonMockDal();
 
             foreach (SailClubMember sailClubMember in items)
             {
-                if (sailClubMember.PersonId <= 0) { personDal.Create(sailClubMember); }
+                if (sailClubMember.PersonId <= 0) {
+                    personDal.Create(sailClubMember);
+                }
                 else
-                { personDal.Update(sailClubMember); }
+                {
+                    personDal.Update(sailClubMember);
+                }
 
                 sailClubMember.SailClubMemberId = this.GetHighestId() + 1;
                 _sailClubMembers.Add(sailClubMember.SailClubMemberId, sailClubMember);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(SailClubMember sailClubMember)
-        {
-            var personDal = new PersonMockDal();
-
-            if (sailClubMember.SailClubMemberId <= 0) { return false; }
-            if (sailClubMember.PersonId > 0)
-            {
-                var person = personDal.GetOne(sailClubMember.SailClubMemberId);
-
-                sailClubMember.Address = person.Address;
-                sailClubMember.BoatDriver = person.BoatDriver;
-                sailClubMember.Cityname = person.Cityname;
-                sailClubMember.DateOfBirth = person.DateOfBirth;
-                sailClubMember.Email = person.Email;
-                sailClubMember.FirstName = person.FirstName;
-                sailClubMember.Gender = person.Gender;
-                sailClubMember.LastName = person.LastName;
-                sailClubMember.PhoneNumber = person.PhoneNumber;
-                sailClubMember.PersonId = person.PersonId;
-                sailClubMember.Postcode = person.Postcode;
-
-                personDal.Update(sailClubMember);
-            }
-
-            _sailClubMembers.Add(sailClubMember.SailClubMemberId, sailClubMember);
 
             return true;
         }
@@ -100,10 +76,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
-        public IEnumerable<SailClubMember> GetAll()
-        {
-            return _sailClubMembers.Values;
-        }
+        public IEnumerable<SailClubMember> GetAll() { return _sailClubMembers.Values; }
 
         public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
         {
@@ -125,6 +98,36 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<SailClubMember> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(SailClubMember sailClubMember)
+        {
+            var personDal = new PersonMockDal();
+
+            if (sailClubMember.SailClubMemberId <= 0) { return false; }
+            if (sailClubMember.PersonId > 0)
+            {
+                Person person = personDal.GetOne(sailClubMember.SailClubMemberId);
+
+                sailClubMember.Address = person.Address;
+                sailClubMember.BoatDriver = person.BoatDriver;
+                sailClubMember.Cityname = person.Cityname;
+                sailClubMember.DateOfBirth = person.DateOfBirth;
+                sailClubMember.Email = person.Email;
+                sailClubMember.FirstName = person.FirstName;
+                sailClubMember.Gender = person.Gender;
+                sailClubMember.LastName = person.LastName;
+                sailClubMember.PhoneNumber = person.PhoneNumber;
+                sailClubMember.PersonId = person.PersonId;
+                sailClubMember.Postcode = person.Postcode;
+
+                personDal.Update(sailClubMember);
+            }
+
+            _sailClubMembers.Add(sailClubMember.SailClubMemberId, sailClubMember);
+
+            return true;
         }
 
         public bool DeleteWithoutCheck(SailClubMember sailClubMember)

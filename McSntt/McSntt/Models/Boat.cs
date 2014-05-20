@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace McSntt.Models
+﻿namespace McSntt.Models
 {
     public class Boat
     {
@@ -12,10 +9,7 @@ namespace McSntt.Models
         public string ImagePath { get; set; }
         public bool Operational { get; set; }
 
-        public override string ToString()
-        {
-            return this.NickName;
-        }
+        public override string ToString() { return this.NickName; }
     }
 
     public enum BoatType

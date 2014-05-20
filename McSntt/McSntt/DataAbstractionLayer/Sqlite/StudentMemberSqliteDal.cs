@@ -10,10 +10,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 {
     public class StudentMemberSqliteDal : IStudentMemberDal
     {
+        #region IStudentMemberDal Members
         public bool Create(params StudentMember[] items)
         {
-            var sailClubMemberDal = DalLocator.SailClubMemberDal;
-            var teamDal = DalLocator.TeamDal;
+            ISailClubMemberDal sailClubMemberDal = DalLocator.SailClubMemberDal;
+            ITeamDal teamDal = DalLocator.TeamDal;
             int insertedRows = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
@@ -40,9 +41,13 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         if (studentMember.AssociatedTeam != null)
                         {
-                            if (studentMember.AssociatedTeam.TeamId > 0) { teamDal.Update(studentMember.AssociatedTeam); }
+                            if (studentMember.AssociatedTeam.TeamId > 0) {
+                                teamDal.Update(studentMember.AssociatedTeam);
+                            }
                             else
-                            { teamDal.Create(studentMember.AssociatedTeam); }
+                            {
+                                teamDal.Create(studentMember.AssociatedTeam);
+                            }
 
                             teamId = studentMember.AssociatedTeam.TeamId;
                         }
@@ -70,8 +75,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public bool Update(params StudentMember[] items)
         {
-            var sailClubMemberDal = DalLocator.SailClubMemberDal;
-            var teamDal = DalLocator.TeamDal;
+            ISailClubMemberDal sailClubMemberDal = DalLocator.SailClubMemberDal;
+            ITeamDal teamDal = DalLocator.TeamDal;
             int updatedRows = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
@@ -99,9 +104,13 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         if (studentMember.AssociatedTeam != null)
                         {
-                            if (studentMember.AssociatedTeam.TeamId > 0) { teamDal.Update(studentMember.AssociatedTeam); }
+                            if (studentMember.AssociatedTeam.TeamId > 0) {
+                                teamDal.Update(studentMember.AssociatedTeam);
+                            }
                             else
-                            { teamDal.Create(studentMember.AssociatedTeam); }
+                            {
+                                teamDal.Create(studentMember.AssociatedTeam);
+                            }
 
                             teamId = studentMember.AssociatedTeam.TeamId;
                         }
@@ -128,7 +137,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public bool Delete(params StudentMember[] items)
         {
-            var sailClubMemberDal = DalLocator.SailClubMemberDal;
+            ISailClubMemberDal sailClubMemberDal = DalLocator.SailClubMemberDal;
             int deletedRows = 0;
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
@@ -162,7 +171,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
         public IEnumerable<StudentMember> GetAll()
         {
-            var studentMembers  = new List<StudentMember>();
+            var studentMembers = new List<StudentMember>();
 
             using (SQLiteConnection db = DatabaseManager.DbConnection)
             {
@@ -175,7 +184,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         String.Format("SELECT * FROM {0}, {1}, {2} " +
                                       "WHERE {0}.sail_club_member_id = {1}.sail_club_member_id " +
                                       "AND {1}.person_id = {2}.person_id",
-                                      DatabaseManager.TableStudentMembers, DatabaseManager.TableSailClubMembers, 
+                                      DatabaseManager.TableStudentMembers, DatabaseManager.TableSailClubMembers,
                                       DatabaseManager.TablePersons);
 
                     using (SQLiteDataReader reader = command.ExecuteReader())
@@ -186,26 +195,36 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 Add(
                                     new StudentMember
                                     {
-                                        StudentMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("student_member_id")),
-                                        SailClubMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
+                                        StudentMemberId =
+                                            DatabaseManager.ReadInt(reader, reader.GetOrdinal("student_member_id")),
+                                        SailClubMemberId =
+                                            DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
                                         PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
                                         FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
                                         LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
                                         Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
                                         Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
                                         Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
-                                        BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
-                                        DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                        BoatDriver =
+                                            DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                        DateOfBirth =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
                                         Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
                                         Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
-                                        PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
+                                        PhoneNumber =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
                                         Username = DatabaseManager.ReadString(reader, reader.GetOrdinal("username")),
-                                        PasswordHash = DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
-                                        Position = (SailClubMember.Positions) DatabaseManager.ReadInt(reader, reader.GetOrdinal("position")),
+                                        PasswordHash =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
+                                        Position =
+                                            (SailClubMember.Positions)
+                                            DatabaseManager.ReadInt(reader, reader.GetOrdinal("position")),
                                         Drabant = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("drabant")),
-                                        Gaffelrigger = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("gaffelrigger")),
+                                        Gaffelrigger =
+                                            DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("gaffelrigger")),
                                         Motor = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("motor")),
-                                        Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
+                                        Navigation =
+                                            DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
                                         Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
                                         RopeWorks = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("rope_works")),
                                         AssociatedTeamId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("team_id"))
@@ -218,7 +237,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             }
 
             return studentMembers
-            ;
+                ;
         }
 
         public StudentMember GetOne(long itemId)
@@ -238,7 +257,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                       "AND {1}.person_id = {2}.person_id " +
                                       "AND student_member_id = @studentMemberId " +
                                       "LIMIT 1",
-                                      DatabaseManager.TableStudentMembers, DatabaseManager.TableSailClubMembers, 
+                                      DatabaseManager.TableStudentMembers, DatabaseManager.TableSailClubMembers,
                                       DatabaseManager.TablePersons);
                     command.Parameters.Add(new SQLiteParameter("@studentMemberId", itemId));
 
@@ -249,8 +268,10 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                             studentMember =
                                 new StudentMember
                                 {
-                                    StudentMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("student_member_id")),
-                                    SailClubMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
+                                    StudentMemberId =
+                                        DatabaseManager.ReadInt(reader, reader.GetOrdinal("student_member_id")),
+                                    SailClubMemberId =
+                                        DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
                                     PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
                                     FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
                                     LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
@@ -263,10 +284,14 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
                                     PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
                                     Username = DatabaseManager.ReadString(reader, reader.GetOrdinal("username")),
-                                    PasswordHash = DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
-                                    Position = (SailClubMember.Positions) DatabaseManager.ReadInt(reader, reader.GetOrdinal("position")),
+                                    PasswordHash =
+                                        DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
+                                    Position =
+                                        (SailClubMember.Positions)
+                                        DatabaseManager.ReadInt(reader, reader.GetOrdinal("position")),
                                     Drabant = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("drabant")),
-                                    Gaffelrigger = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("gaffelrigger")),
+                                    Gaffelrigger =
+                                        DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("gaffelrigger")),
                                     Motor = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("motor")),
                                     Navigation = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("navigation")),
                                     Night = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("night")),
@@ -286,26 +311,24 @@ namespace McSntt.DataAbstractionLayer.Sqlite
         public void LoadData(StudentMember item)
         {
             // Load Team
-            var teamDal = DalLocator.TeamDal;
+            ITeamDal teamDal = DalLocator.TeamDal;
 
             if (item.AssociatedTeamId > 0) { item.AssociatedTeam = teamDal.GetOne(item.AssociatedTeamId); }
         }
 
         public void LoadData(IEnumerable<StudentMember> items)
         {
-            foreach (var item in items)
-            {
-                LoadData(item);
-            }
+            foreach (StudentMember item in items) { LoadData(item); }
         }
 
         public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
         {
-            var studentMembers = this.GetAll().ToArray();
+            StudentMember[] studentMembers = this.GetAll().ToArray();
 
             LoadData(studentMembers);
 
             return studentMembers.Where(predicate);
         }
+        #endregion
     }
 }

@@ -2,5 +2,5 @@
 
 namespace McSntt.DataAbstractionLayer
 {
-    public interface ILogbookDal : IGenericDal<Logbook> { }
+    public interface ILogbookDal : IGenericDal<Logbook> {}
 }

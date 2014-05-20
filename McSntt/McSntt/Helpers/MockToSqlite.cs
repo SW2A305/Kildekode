@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Threading;
 using McSntt.DataAbstractionLayer.Mock;
 using McSntt.Models;
 
@@ -52,13 +53,14 @@ namespace McSntt.Helpers
 
         public static bool PersistMockData()
         {
-            var runCount = 0;
+            int runCount = 0;
 
             // Remove file if it exists
             if (File.Exists(DbFilePath)) { File.Delete(DbFilePath); }
 
-            while (File.Exists(DbFilePath)) {
-                System.Threading.Thread.Sleep(100);
+            while (File.Exists(DbFilePath))
+            {
+                Thread.Sleep(100);
                 runCount++;
 
                 if (runCount > 50) { break; }
@@ -323,7 +325,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var boatDal = new BoatMockDal();
-                        var boats = boatDal.GetAll();
+                        IEnumerable<Boat> boats = boatDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -342,7 +344,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@imagePath", DbType.String);
                             command.Parameters.Add("@operational", DbType.Boolean);
 
-                            foreach (var boat in boats)
+                            foreach (Boat boat in boats)
                             {
                                 command.Parameters["@boatId"].Value = boat.BoatId;
                                 command.Parameters["@type"].Value = (int) boat.Type;
@@ -370,7 +372,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var eventDal = new EventMockDal();
-                        var events = eventDal.GetAll();
+                        IEnumerable<Event> events = eventDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -393,7 +395,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@signUpMsg", DbType.String);
                             command.Parameters.Add("@created", DbType.Boolean);
 
-                            foreach (var @event in events)
+                            foreach (Event @event in events)
                             {
                                 command.Parameters["@eventId"].Value = @event.EventId;
                                 command.Parameters["@eventDate"].Value = @event.EventDate;
@@ -423,7 +425,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var eventDal = new EventMockDal();
-                        var events = eventDal.GetAll();
+                        IEnumerable<Event> events = eventDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -439,11 +441,11 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@eventId", DbType.Int64);
                             command.Parameters.Add("@personId", DbType.Int64);
 
-                            foreach (var @event in events)
+                            foreach (Event @event in events)
                             {
                                 command.Parameters["@eventId"].Value = @event.EventId;
 
-                                foreach (var person in @event.Participants)
+                                foreach (Person person in @event.Participants)
                                 {
                                     command.Parameters["@personId"].Value = person.PersonId;
 
@@ -468,7 +470,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var lectureDal = new LectureMockDal();
-                        var lectures = lectureDal.GetAll();
+                        IEnumerable<Lecture> lectures = lectureDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -493,7 +495,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@night", DbType.Boolean);
                             command.Parameters.Add("@teamId", DbType.Int64);
 
-                            foreach (var lecture in lectures)
+                            foreach (Lecture lecture in lectures)
                             {
                                 command.Parameters["@lectureId"].Value = lecture.LectureId;
                                 command.Parameters["@dateOfLecture"].Value = lecture.DateOfLecture;
@@ -525,7 +527,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var lectureDal = new LectureMockDal();
-                        var lectures = lectureDal.GetAll();
+                        IEnumerable<Lecture> lectures = lectureDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -541,11 +543,11 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@lectureId", DbType.Int64);
                             command.Parameters.Add("@studentMemberId", DbType.Int64);
 
-                            foreach (var lecture in lectures)
+                            foreach (Lecture lecture in lectures)
                             {
                                 command.Parameters["@lectureId"].Value = lecture.LectureId;
 
-                                foreach (var student in lecture.PresentMembers)
+                                foreach (StudentMember student in lecture.PresentMembers)
                                 {
                                     command.Parameters["@studentMemberId"].Value = student.StudentMemberId;
 
@@ -570,7 +572,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var logbookDal = new LogbookMockDal();
-                        var logbooks = logbookDal.GetAll();
+                        IEnumerable<Logbook> logbooks = logbookDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -595,7 +597,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@answerFromBoatChief", DbType.String);
                             command.Parameters.Add("@filedById", DbType.Int64);
 
-                            foreach (var logbook in logbooks)
+                            foreach (Logbook logbook in logbooks)
                             {
                                 command.Parameters["@logbookId"].Value = logbook.LogbookId;
                                 command.Parameters["@actualDepartureTime"].Value = logbook.ActualDepartureTime;
@@ -625,7 +627,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var logbookDal = new LogbookMockDal();
-                        var logbooks = logbookDal.GetAll();
+                        IEnumerable<Logbook> logbooks = logbookDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -641,11 +643,11 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@logbookId", DbType.Int64);
                             command.Parameters.Add("@personId", DbType.Int64);
 
-                            foreach (var logbook in logbooks)
+                            foreach (Logbook logbook in logbooks)
                             {
                                 command.Parameters["@logbookId"].Value = logbook.LogbookId;
 
-                                foreach (var person in logbook.ActualCrew)
+                                foreach (Person person in logbook.ActualCrew)
                                 {
                                     command.Parameters["@personId"].Value = person.PersonId;
 
@@ -670,7 +672,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var personDal = new PersonMockDal();
-                        var persons = personDal.GetAll();
+                        IEnumerable<Person> persons = personDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -697,7 +699,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@phoneNumber", DbType.String);
                             command.Parameters.Add("@email", DbType.String);
 
-                            foreach (var person in persons)
+                            foreach (Person person in persons)
                             {
                                 command.Parameters["@personId"].Value = person.PersonId;
                                 command.Parameters["@firstName"].Value = person.FirstName;
@@ -707,7 +709,7 @@ namespace McSntt.Helpers
                                 command.Parameters["@cityname"].Value = person.Cityname;
                                 command.Parameters["@dateOfBirth"].Value = person.DateOfBirth;
                                 command.Parameters["@boatDriver"].Value = person.BoatDriver;
-                                command.Parameters["@gender"].Value = (int)person.Gender;
+                                command.Parameters["@gender"].Value = (int) person.Gender;
                                 command.Parameters["@phoneNumber"].Value = person.PhoneNumber;
                                 command.Parameters["@email"].Value = person.Email;
 
@@ -731,7 +733,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var tripDal = new RegularTripMockDal();
-                        var trips = tripDal.GetAll();
+                        IEnumerable<RegularTrip> trips = tripDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -756,7 +758,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@logbookId", DbType.Int64);
                             command.Parameters.Add("@createdById", DbType.Int64);
 
-                            foreach (var trip in trips)
+                            foreach (RegularTrip trip in trips)
                             {
                                 command.Parameters["@regularTripId"].Value = trip.RegularTripId;
                                 command.Parameters["@departureTime"].Value = trip.DepartureTime;
@@ -788,7 +790,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var tripDal = new RegularTripMockDal();
-                        var trips = tripDal.GetAll();
+                        IEnumerable<RegularTrip> trips = tripDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -804,11 +806,11 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@regularTripId", DbType.Int64);
                             command.Parameters.Add("@personId", DbType.Int64);
 
-                            foreach (var trip in trips)
+                            foreach (RegularTrip trip in trips)
                             {
                                 command.Parameters["@regularTripId"].Value = trip.RegularTripId;
 
-                                foreach (var person in trip.Crew)
+                                foreach (Person person in trip.Crew)
                                 {
                                     command.Parameters["@personId"].Value = person.PersonId;
 
@@ -833,7 +835,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var memberDal = new SailClubMemberMockDal();
-                        var members = memberDal.GetAll();
+                        IEnumerable<SailClubMember> members = memberDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -852,7 +854,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@passwordHash", DbType.String);
                             command.Parameters.Add("@personId", DbType.String);
 
-                            foreach (var member in members)
+                            foreach (SailClubMember member in members)
                             {
                                 command.Parameters["@sailClubMemberId"].Value = member.SailClubMemberId;
                                 command.Parameters["@position"].Value = member.Position;
@@ -880,7 +882,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var studentDal = new StudentMemberMockDal();
-                        var students = studentDal.GetAll();
+                        IEnumerable<StudentMember> students = studentDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -905,7 +907,7 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@night", DbType.Boolean);
                             command.Parameters.Add("@teamId", DbType.Int64);
 
-                            foreach (var student in students)
+                            foreach (StudentMember student in students)
                             {
                                 command.Parameters["@studentMemberId"].Value = student.StudentMemberId;
                                 command.Parameters["@sailClubMemberId"].Value = student.SailClubMemberId;
@@ -937,7 +939,7 @@ namespace McSntt.Helpers
                     try
                     {
                         var teamDal = new TeamMockDal();
-                        var teams = teamDal.GetAll();
+                        IEnumerable<Team> teams = teamDal.GetAll();
 
                         using (SQLiteCommand command = conn.CreateCommand())
                         {
@@ -955,11 +957,11 @@ namespace McSntt.Helpers
                             command.Parameters.Add("@level", DbType.Int32);
                             command.Parameters.Add("@teacherId", DbType.Int64);
 
-                            foreach (var team in teams)
+                            foreach (Team team in teams)
                             {
                                 command.Parameters["@teamId"].Value = team.TeamId;
                                 command.Parameters["@name"].Value = team.Name;
-                                command.Parameters["@level"].Value = (int)team.Level;
+                                command.Parameters["@level"].Value = (int) team.Level;
                                 command.Parameters["@teacherId"].Value = team.TeacherId;
 
                                 command.ExecuteNonQuery();
@@ -995,16 +997,18 @@ namespace McSntt.Helpers
                 {
                     var boatDal = new BoatMockDal();
 
-                    using (var command = conn.CreateCommand()) {
+                    using (SQLiteCommand command = conn.CreateCommand())
+                    {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableBoats);
+                                          TableBoats);
 
-                        using (var reader = command.ExecuteReader()) {
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
                             while (reader.Read())
                             {
-                                var boat = new Boat()
+                                var boat = new Boat
                                            {
                                                BoatId = reader.TryReadLong("boat_id"),
                                                NickName = reader.TryReadString("nickname"),
@@ -1018,8 +1022,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1029,39 +1032,38 @@ namespace McSntt.Helpers
                 {
                     var personDal = new PersonMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TablePersons);
+                                          TablePersons);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var person = new Person()
-                                {
-                                    PersonId = reader.TryReadLong("person_id"),
-                                    FirstName = reader.TryReadString("first_name"),
-                                    LastName = reader.TryReadString("last_name"),
-                                    Address = reader.TryReadString("address"),
-                                    Postcode = reader.TryReadString("postcode"),
-                                    Cityname = reader.TryReadString("cityname"),
-                                    DateOfBirth = reader.TryReadString("date_of_birth"),
-                                    BoatDriver = reader.TryReadBoolean("boat_driver"),
-                                    Email = reader.TryReadString("email"),
-                                    Gender = (Gender) reader.TryReadInt("gender"),
-                                    PhoneNumber = reader.TryReadString("phone_number")
-                                };
+                                var person = new Person
+                                             {
+                                                 PersonId = reader.TryReadLong("person_id"),
+                                                 FirstName = reader.TryReadString("first_name"),
+                                                 LastName = reader.TryReadString("last_name"),
+                                                 Address = reader.TryReadString("address"),
+                                                 Postcode = reader.TryReadString("postcode"),
+                                                 Cityname = reader.TryReadString("cityname"),
+                                                 DateOfBirth = reader.TryReadString("date_of_birth"),
+                                                 BoatDriver = reader.TryReadBoolean("boat_driver"),
+                                                 Email = reader.TryReadString("email"),
+                                                 Gender = (Gender) reader.TryReadInt("gender"),
+                                                 PhoneNumber = reader.TryReadString("phone_number")
+                                             };
 
                                 personDal.CreateWithId(person);
                             }
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1071,33 +1073,33 @@ namespace McSntt.Helpers
                 {
                     var memberDal = new SailClubMemberMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableSailClubMembers);
+                                          TableSailClubMembers);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var sailClubMember = new SailClubMember()
-                                {
-                                    SailClubMemberId = reader.TryReadLong("sail_club_member_id"),
-                                    PersonId = reader.TryReadLong("person_id"),
-                                    Position = (SailClubMember.Positions) reader.TryReadInt("position"),
-                                    Username = reader.TryReadString("username"),
-                                    PasswordHash = reader.TryReadString("password_hash")
-                                };
+                                var sailClubMember = new SailClubMember
+                                                     {
+                                                         SailClubMemberId = reader.TryReadLong("sail_club_member_id"),
+                                                         PersonId = reader.TryReadLong("person_id"),
+                                                         Position =
+                                                             (SailClubMember.Positions) reader.TryReadInt("position"),
+                                                         Username = reader.TryReadString("username"),
+                                                         PasswordHash = reader.TryReadString("password_hash")
+                                                     };
 
                                 memberDal.CreateWithId(sailClubMember);
                             }
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1107,35 +1109,34 @@ namespace McSntt.Helpers
                 {
                     var eventDal = new EventMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableEvents);
+                                          TableEvents);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var @event = new Event()
-                                {
-                                    EventId = reader.TryReadLong("event_id"),
-                                    EventDate = reader.TryReadDateTime("event_date"),
-                                    EventTitle = reader.TryReadString("event_title"),
-                                    Created = reader.TryReadBoolean("created"),
-                                    Description = reader.TryReadString("description"),
-                                    SignUpMsg = reader.TryReadString("sign_up_msg"),
-                                    SignUpReq = reader.TryReadBoolean("sign_up_req")
-                                };
+                                var @event = new Event
+                                             {
+                                                 EventId = reader.TryReadLong("event_id"),
+                                                 EventDate = reader.TryReadDateTime("event_date"),
+                                                 EventTitle = reader.TryReadString("event_title"),
+                                                 Created = reader.TryReadBoolean("created"),
+                                                 Description = reader.TryReadString("description"),
+                                                 SignUpMsg = reader.TryReadString("sign_up_msg"),
+                                                 SignUpReq = reader.TryReadBoolean("sign_up_req")
+                                             };
 
                                 eventDal.CreateWithId(@event);
                             }
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1146,24 +1147,24 @@ namespace McSntt.Helpers
                     var teamDal = new TeamMockDal();
                     var memberDal = new SailClubMemberMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableTeams);
+                                          TableTeams);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var team = new Team()
-                                {
-                                    TeamId = reader.TryReadLong("team_id"),
-                                    Level = (Team.ClassLevel) reader.TryReadInt("level"),
-                                    Name = reader.TryReadString("name"),
-                                    TeacherId = reader.TryReadLong("teacher_id")
-                                };
+                                var team = new Team
+                                           {
+                                               TeamId = reader.TryReadLong("team_id"),
+                                               Level = (Team.ClassLevel) reader.TryReadInt("level"),
+                                               Name = reader.TryReadString("name"),
+                                               TeacherId = reader.TryReadLong("teacher_id")
+                                           };
 
                                 if (team.TeacherId > 0) { team.Teacher = memberDal.GetOne(team.TeacherId); }
 
@@ -1172,8 +1173,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1184,32 +1184,31 @@ namespace McSntt.Helpers
                     var studentDal = new StudentMemberMockDal();
                     var teamDal = new TeamMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableStudentMembers);
+                                          TableStudentMembers);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var studentMember = new StudentMember()
-                                {
-                                    StudentMemberId = reader.TryReadLong("student_member_id"),
-                                    SailClubMemberId = reader.TryReadLong("sail_club_member_id"),
-                                    AssociatedTeamId = reader.TryReadLong("team_id"),
-                                    Drabant = reader.TryReadBoolean("drabant"),
-                                    Gaffelrigger = reader.TryReadBoolean("gaffelrigger"),
-                                    RopeWorks = reader.TryReadBoolean("rope_works"),
-                                    Motor = reader.TryReadBoolean("motor"),
-                                    Night = reader.TryReadBoolean("night"),
-                                    Navigation = reader.TryReadBoolean("navigation")
-                                };
+                                var studentMember = new StudentMember
+                                                    {
+                                                        StudentMemberId = reader.TryReadLong("student_member_id"),
+                                                        SailClubMemberId = reader.TryReadLong("sail_club_member_id"),
+                                                        AssociatedTeamId = reader.TryReadLong("team_id"),
+                                                        Drabant = reader.TryReadBoolean("drabant"),
+                                                        Gaffelrigger = reader.TryReadBoolean("gaffelrigger"),
+                                                        RopeWorks = reader.TryReadBoolean("rope_works"),
+                                                        Motor = reader.TryReadBoolean("motor"),
+                                                        Night = reader.TryReadBoolean("night"),
+                                                        Navigation = reader.TryReadBoolean("navigation")
+                                                    };
 
-                                if (studentMember.AssociatedTeamId > 0) 
-                                {
+                                if (studentMember.AssociatedTeamId > 0) {
                                     studentMember.AssociatedTeam = teamDal.GetOne(studentMember.AssociatedTeamId);
                                 }
 
@@ -1218,8 +1217,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1230,29 +1228,29 @@ namespace McSntt.Helpers
                     var lectureDal = new LectureMockDal();
                     var teamDal = new TeamMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableLectures);
+                                          TableLectures);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var lecture = new Lecture()
-                                {
-                                    LectureId = reader.TryReadLong("lecture_id"),
-                                    DateOfLecture = reader.TryReadDateTime("date_of_lecture"),
-                                    TeamId = reader.TryReadLong("team_id"),
-                                    Drabant = reader.TryReadBoolean("drabant"),
-                                    Gaffelrigger = reader.TryReadBoolean("gaffelrigger"),
-                                    Motor = reader.TryReadBoolean("motor"),
-                                    Navigation = reader.TryReadBoolean("navigation"),
-                                    Night = reader.TryReadBoolean("night"),
-                                    RopeWorksLecture = reader.TryReadBoolean("rope_works")
-                                };
+                                var lecture = new Lecture
+                                              {
+                                                  LectureId = reader.TryReadLong("lecture_id"),
+                                                  DateOfLecture = reader.TryReadDateTime("date_of_lecture"),
+                                                  TeamId = reader.TryReadLong("team_id"),
+                                                  Drabant = reader.TryReadBoolean("drabant"),
+                                                  Gaffelrigger = reader.TryReadBoolean("gaffelrigger"),
+                                                  Motor = reader.TryReadBoolean("motor"),
+                                                  Navigation = reader.TryReadBoolean("navigation"),
+                                                  Night = reader.TryReadBoolean("night"),
+                                                  RopeWorksLecture = reader.TryReadBoolean("rope_works")
+                                              };
 
                                 if (lecture.TeamId > 0) { lecture.Team = teamDal.GetOne(lecture.TeamId); }
 
@@ -1261,8 +1259,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1273,27 +1270,27 @@ namespace McSntt.Helpers
                     var logbookDal = new LogbookMockDal();
                     var memberDal = new SailClubMemberMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableLogbooks);
+                                          TableLogbooks);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var logbook = new Logbook()
-                                {
-                                    LogbookId = reader.TryReadLong("logbook_id"),
-                                    FiledById = reader.TryReadLong("filed_by_id"),
-                                    ActualArrivalTime = reader.TryReadDateTime("actual_arrival_time"),
-                                    ActualDepartureTime = reader.TryReadDateTime("actual_departure_time"),
-                                    AnswerFromBoatChief = reader.TryReadString("answer_from_boat_chief"),
-                                    DamageDescription = reader.TryReadString("damage_description"),
-                                    DamageInflicted = reader.TryReadBoolean("damage_inflicted")
-                                };
+                                var logbook = new Logbook
+                                              {
+                                                  LogbookId = reader.TryReadLong("logbook_id"),
+                                                  FiledById = reader.TryReadLong("filed_by_id"),
+                                                  ActualArrivalTime = reader.TryReadDateTime("actual_arrival_time"),
+                                                  ActualDepartureTime = reader.TryReadDateTime("actual_departure_time"),
+                                                  AnswerFromBoatChief = reader.TryReadString("answer_from_boat_chief"),
+                                                  DamageDescription = reader.TryReadString("damage_description"),
+                                                  DamageInflicted = reader.TryReadBoolean("damage_inflicted")
+                                              };
 
                                 if (logbook.FiledById > 0) { logbook.FiledBy = memberDal.GetOne(logbook.FiledById); }
 
@@ -1302,8 +1299,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1316,29 +1312,29 @@ namespace McSntt.Helpers
                     var personDal = new PersonMockDal();
                     var logbookDal = new LogbookMockDal();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0}",
-                            TableRegularTrips);
+                                          TableRegularTrips);
 
-                        using (var reader = command.ExecuteReader())
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var trip = new RegularTrip()
-                                {
-                                    RegularTripId = reader.TryReadLong("regular_trip_id"),
-                                    BoatId = reader.TryReadLong("boat_id"),
-                                    CaptainId = reader.TryReadLong("captain_id"),
-                                    LogbookId = reader.TryReadLong("logbook_id"),
-                                    CreatedById = reader.TryReadLong("created_by_id"),
-                                    DepartureTime = reader.TryReadDateTime("departure_time"),
-                                    ArrivalTime = reader.TryReadDateTime("arrival_time"),
-                                    PurposeAndArea = reader.TryReadString("purpose_and_area"),
-                                    WeatherConditions = reader.TryReadString("weather_conditions")
-                                };
+                                var trip = new RegularTrip
+                                           {
+                                               RegularTripId = reader.TryReadLong("regular_trip_id"),
+                                               BoatId = reader.TryReadLong("boat_id"),
+                                               CaptainId = reader.TryReadLong("captain_id"),
+                                               LogbookId = reader.TryReadLong("logbook_id"),
+                                               CreatedById = reader.TryReadLong("created_by_id"),
+                                               DepartureTime = reader.TryReadDateTime("departure_time"),
+                                               ArrivalTime = reader.TryReadDateTime("arrival_time"),
+                                               PurposeAndArea = reader.TryReadString("purpose_and_area"),
+                                               WeatherConditions = reader.TryReadString("weather_conditions")
+                                           };
 
                                 if (trip.BoatId > 0) { trip.Boat = boatDal.GetOne(trip.BoatId); }
                                 if (trip.CaptainId > 0) { trip.Captain = personDal.GetOne(trip.CaptainId); }
@@ -1350,8 +1346,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1361,27 +1356,27 @@ namespace McSntt.Helpers
                 {
                     var eventDal = new EventMockDal();
                     var personDal = new PersonMockDal();
-                    var events = eventDal.GetAll();
+                    IEnumerable<Event> events = eventDal.GetAll();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0} " +
                                           "WHERE event_id = @eventId",
-                            TableEventParticipantsBinder);
+                                          TableEventParticipantsBinder);
                         command.Parameters.Add("@eventId", DbType.Int64);
 
-                        foreach (var @event in events)
+                        foreach (Event @event in events)
                         {
                             @event.Participants = new List<Person>();
                             command.Parameters["@eventId"].Value = @event.EventId;
 
-                            using (var reader = command.ExecuteReader())
+                            using (SQLiteDataReader reader = command.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
-                                    var personId = reader.TryReadLong("person_id");
+                                    long personId = reader.TryReadLong("person_id");
 
                                     if (personId > 0) { @event.Participants.Add(personDal.GetOne(personId)); }
                                 }
@@ -1389,8 +1384,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1400,27 +1394,27 @@ namespace McSntt.Helpers
                 {
                     var lectureDal = new LectureMockDal();
                     var studentDal = new StudentMemberMockDal();
-                    var lectures = lectureDal.GetAll();
+                    IEnumerable<Lecture> lectures = lectureDal.GetAll();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0} " +
                                           "WHERE lecture_id = @lectureId",
-                            TableLecturePresentMembersBinder);
+                                          TableLecturePresentMembersBinder);
                         command.Parameters.Add("@lectureId", DbType.Int64);
 
-                        foreach (var lecture in lectures)
+                        foreach (Lecture lecture in lectures)
                         {
                             lecture.PresentMembers = new List<StudentMember>();
                             command.Parameters["@lectureId"].Value = lecture.LectureId;
 
-                            using (var reader = command.ExecuteReader())
+                            using (SQLiteDataReader reader = command.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
-                                    var studentId = reader.TryReadLong("student_member_id");
+                                    long studentId = reader.TryReadLong("student_member_id");
 
                                     if (studentId > 0) { lecture.PresentMembers.Add(studentDal.GetOne(studentId)); }
                                 }
@@ -1428,8 +1422,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1439,27 +1432,27 @@ namespace McSntt.Helpers
                 {
                     var logbookDal = new LogbookMockDal();
                     var personDal = new PersonMockDal();
-                    var logbooks = logbookDal.GetAll();
+                    IEnumerable<Logbook> logbooks = logbookDal.GetAll();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0} " +
                                           "WHERE logbook_id = @logbookId",
-                            TableLogbookActualCrewBinder);
+                                          TableLogbookActualCrewBinder);
                         command.Parameters.Add("@logbookId", DbType.Int64);
 
-                        foreach (var logbook in logbooks)
+                        foreach (Logbook logbook in logbooks)
                         {
                             logbook.ActualCrew = new List<Person>();
                             command.Parameters["@logbookId"].Value = logbook.LogbookId;
 
-                            using (var reader = command.ExecuteReader())
+                            using (SQLiteDataReader reader = command.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
-                                    var personId = reader.TryReadLong("person_id");
+                                    long personId = reader.TryReadLong("person_id");
 
                                     if (personId > 0) { logbook.ActualCrew.Add(personDal.GetOne(personId)); }
                                 }
@@ -1467,8 +1460,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion
@@ -1478,27 +1470,27 @@ namespace McSntt.Helpers
                 {
                     var tripDal = new RegularTripMockDal();
                     var personDal = new PersonMockDal();
-                    var trips = tripDal.GetAll();
+                    IEnumerable<RegularTrip> trips = tripDal.GetAll();
 
-                    using (var command = conn.CreateCommand())
+                    using (SQLiteCommand command = conn.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText =
                             String.Format("SELECT * FROM {0} " +
                                           "WHERE regular_trip_id = @regularTripId",
-                            TableRegularTripCrewBinder);
+                                          TableRegularTripCrewBinder);
                         command.Parameters.Add("@regularTripId", DbType.Int64);
 
-                        foreach (var trip in trips)
+                        foreach (RegularTrip trip in trips)
                         {
                             trip.Crew = new List<Person>();
                             command.Parameters["@regularTripId"].Value = trip.RegularTripId;
 
-                            using (var reader = command.ExecuteReader())
+                            using (SQLiteDataReader reader = command.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
-                                    var personId = reader.TryReadLong("person_id");
+                                    long personId = reader.TryReadLong("person_id");
 
                                     if (personId > 0) { trip.Crew.Add(personDal.GetOne(personId)); }
                                 }
@@ -1506,8 +1498,7 @@ namespace McSntt.Helpers
                         }
                     }
                 }
-                catch (Exception)
-                {
+                catch (Exception) {
                     return false;
                 }
                 #endregion

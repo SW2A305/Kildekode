@@ -1,44 +1,38 @@
 ﻿using System.Linq;
 using System.Windows;
 using McSntt.Models;
-using DateTimePicker = McSntt.Views.UserControls.DateTimePicker;
 
 namespace McSntt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for ViewSpecificLogbookWindow.xaml
+    ///     Interaction logic for ViewSpecificLogbookWindow.xaml
     /// </summary>
     public partial class ViewSpecificLogbookWindow : Window
     {
         public ViewSpecificLogbookWindow(RegularTrip regularSailTrip)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            CrewDataGrid.ItemsSource = regularSailTrip.Crew; 
-            PurposeTextBox.Text = regularSailTrip.PurposeAndArea;
-            BoatTextBox.Text = regularSailTrip.Boat.NickName;
-            DateTimePickerPlannedDepature.Value = regularSailTrip.DepartureTime;
-            DateTimePickerPlannedArrival.Value = regularSailTrip.ArrivalTime;
-            CaptainComboBox.DisplayMemberPath = "FullName";
-            CaptainComboBox.ItemsSource = regularSailTrip.Crew;
-            CaptainComboBox.SelectedValue =
+            this.CrewDataGrid.ItemsSource = regularSailTrip.Crew;
+            this.PurposeTextBox.Text = regularSailTrip.PurposeAndArea;
+            this.BoatTextBox.Text = regularSailTrip.Boat.NickName;
+            this.DateTimePickerPlannedDepature.Value = regularSailTrip.DepartureTime;
+            this.DateTimePickerPlannedArrival.Value = regularSailTrip.ArrivalTime;
+            this.CaptainComboBox.DisplayMemberPath = "FullName";
+            this.CaptainComboBox.ItemsSource = regularSailTrip.Crew;
+            this.CaptainComboBox.SelectedValue =
                 regularSailTrip.Crew.FirstOrDefault(x => x.PersonId == regularSailTrip.Captain.PersonId);
-            YesRadioButton.IsChecked = regularSailTrip.Logbook.DamageInflicted;
-            NoRadioButton.IsChecked = !regularSailTrip.Logbook.DamageInflicted;
-            DateTimePickerActualArrival.Value = regularSailTrip.Logbook.ActualArrivalTime;
-            DateTimePickerActualDeparture.Value = regularSailTrip.Logbook.ActualDepartureTime;
-            DamageTextBox.Text = regularSailTrip.Logbook.DamageDescription;
-            AnswerFromBoatChiefTextBox.Text = regularSailTrip.Logbook.AnswerFromBoatChief;
-            WeatherConditionTextBox.Text = regularSailTrip.WeatherConditions;
+            this.YesRadioButton.IsChecked = regularSailTrip.Logbook.DamageInflicted;
+            this.NoRadioButton.IsChecked = !regularSailTrip.Logbook.DamageInflicted;
+            this.DateTimePickerActualArrival.Value = regularSailTrip.Logbook.ActualArrivalTime;
+            this.DateTimePickerActualDeparture.Value = regularSailTrip.Logbook.ActualDepartureTime;
+            this.DamageTextBox.Text = regularSailTrip.Logbook.DamageDescription;
+            this.AnswerFromBoatChiefTextBox.Text = regularSailTrip.Logbook.AnswerFromBoatChief;
+            this.WeatherConditionTextBox.Text = regularSailTrip.WeatherConditions;
 
-            if (regularSailTrip.Logbook.DamageInflicted)
-            {
-                YesRadioButton.IsChecked = true;
-            }
+            if (regularSailTrip.Logbook.DamageInflicted) { this.YesRadioButton.IsChecked = true; }
             else
-            {
-                NoRadioButton.IsChecked = true;
-            }
+            { this.NoRadioButton.IsChecked = true; }
         }
     }
 }

@@ -3,20 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="CreateAndEditBoats" Height="240" Width="250" Style="{StaticResource WindowStyle}">
     <Grid>
-            <StackPanel Margin="10">
-                <Label Content="Navn på Båd:" />
-                <TextBox Text="Skriv navn på båden" Height="20" x:Name="NickNameTextBox" GotFocus="NickNameTextBox_OnGotFocus" />
-                <Label/>
-                <Label Content="Type af båd:" />
-                <ComboBox x:Name="BoatTypeComboBox"/>
-                <Label/>
-                <StackPanel Orientation="Horizontal">
-                <Label Content="Marker båden operational?"/>
-                <Label/>
-                <CheckBox x:Name="CheckBox" VerticalAlignment="Center"/>
+        <StackPanel Margin="10">
+            <Label Content="Navn på Båd:" />
+            <TextBox Text="Skriv navn på båden" Height="24" x:Name="NickNameTextBox"
+                     GotFocus="NickNameTextBox_OnGotFocus" />
+            <Label />
+            <Label Content="Type af båd:" />
+            <ComboBox x:Name="BoatTypeComboBox" />
+            <Label />
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Marker båden operational?" />
+                <Label />
+                <CheckBox x:Name="CheckBox" VerticalAlignment="Center" />
             </StackPanel>
-                <Label/>
-                <Button x:Name="SaveButton" Content="Gem i Database" Width="120" Click="Button_Click"/>
-            </StackPanel>
+            <Label />
+            <Button x:Name="SaveButton" Content="Gem i Database" Width="120" Click="Button_Click" />
+        </StackPanel>
     </Grid>
 </Window>

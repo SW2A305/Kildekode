@@ -14,51 +14,24 @@ namespace McSntt.DataAbstractionLayer.Mock
             if (useForTests || _studentMembers == null) { _studentMembers = new Dictionary<long, StudentMember>(); }
         }
 
+        #region IStudentMemberDal Members
         public bool Create(params StudentMember[] items)
         {
             var memberDal = new SailClubMemberMockDal();
 
             foreach (StudentMember studentMember in items)
             {
-                if (studentMember.SailClubMemberId <= 0) { memberDal.Create(studentMember); }
+                if (studentMember.SailClubMemberId <= 0) {
+                    memberDal.Create(studentMember);
+                }
                 else
-                { memberDal.Update(studentMember); }
+                {
+                    memberDal.Update(studentMember);
+                }
 
                 studentMember.StudentMemberId = this.GetHighestId() + 1;
                 _studentMembers.Add(studentMember.StudentMemberId, studentMember);
             }
-
-            return true;
-        }
-
-        public bool CreateWithId(StudentMember studentMember)
-        {
-            var memberDal = new SailClubMemberMockDal();
-
-            if (studentMember.StudentMemberId <= 0) { return false; }
-            if (studentMember.SailClubMemberId > 0)
-            {
-                var member = memberDal.GetOne(studentMember.SailClubMemberId);
-
-                studentMember.Address = member.Address;
-                studentMember.BoatDriver = member.BoatDriver;
-                studentMember.Cityname = member.Cityname;
-                studentMember.DateOfBirth = member.DateOfBirth;
-                studentMember.Email = member.Email;
-                studentMember.FirstName = member.FirstName;
-                studentMember.Gender = member.Gender;
-                studentMember.LastName = member.LastName;
-                studentMember.PasswordHash = member.PasswordHash;
-                studentMember.PhoneNumber = member.PhoneNumber;
-                studentMember.PersonId = member.PersonId;
-                studentMember.Position = member.Position;
-                studentMember.Postcode = member.Postcode;
-                studentMember.Username = member.Username;
-
-                memberDal.Update(studentMember);
-            }
-
-            _studentMembers.Add(studentMember.StudentMemberId, studentMember);
 
             return true;
         }
@@ -95,10 +68,7 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
-        public IEnumerable<StudentMember> GetAll()
-        {
-            return _studentMembers.Values;
-        }
+        public IEnumerable<StudentMember> GetAll() { return _studentMembers.Values; }
 
         public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
         {
@@ -120,6 +90,39 @@ namespace McSntt.DataAbstractionLayer.Mock
         public void LoadData(IEnumerable<StudentMember> items)
         {
             /* Not applicable */
+        }
+        #endregion
+
+        public bool CreateWithId(StudentMember studentMember)
+        {
+            var memberDal = new SailClubMemberMockDal();
+
+            if (studentMember.StudentMemberId <= 0) { return false; }
+            if (studentMember.SailClubMemberId > 0)
+            {
+                SailClubMember member = memberDal.GetOne(studentMember.SailClubMemberId);
+
+                studentMember.Address = member.Address;
+                studentMember.BoatDriver = member.BoatDriver;
+                studentMember.Cityname = member.Cityname;
+                studentMember.DateOfBirth = member.DateOfBirth;
+                studentMember.Email = member.Email;
+                studentMember.FirstName = member.FirstName;
+                studentMember.Gender = member.Gender;
+                studentMember.LastName = member.LastName;
+                studentMember.PasswordHash = member.PasswordHash;
+                studentMember.PhoneNumber = member.PhoneNumber;
+                studentMember.PersonId = member.PersonId;
+                studentMember.Position = member.Position;
+                studentMember.Postcode = member.Postcode;
+                studentMember.Username = member.Username;
+
+                memberDal.Update(studentMember);
+            }
+
+            _studentMembers.Add(studentMember.StudentMemberId, studentMember);
+
+            return true;
         }
 
         private long GetHighestId()

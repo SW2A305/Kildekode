@@ -43,8 +43,7 @@ namespace McSntt.Helpers
                     {
                         String tagName = reader.Name;
 
-                        if (tagName == "tblMembers")
-                        {
+                        if (tagName == "tblMembers") {
                             member = new SailClubMember();
                         }
                         else if (member != null && reader.Read())
@@ -98,7 +97,7 @@ namespace McSntt.Helpers
 
         public void ImportMembersFromXml(String xmlFilePath)
         {
-            ImportMembersFromXml(new FileStream(xmlFilePath, FileMode.Open, FileAccess.Read));
+            this.ImportMembersFromXml(new FileStream(xmlFilePath, FileMode.Open, FileAccess.Read));
         }
     }
 }

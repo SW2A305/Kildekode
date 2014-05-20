@@ -4,14 +4,13 @@ namespace McSntt.Models
 {
     public class Team
     {
-        private SailClubMember _teacher;
-        private long _teacherId;
-
+        #region ClassLevel enum
         public enum ClassLevel
         {
             First = 1,
             Second = 2
         }
+        #endregion
 
         #region Properties
         public long TeamId { get; set; }
@@ -24,7 +23,7 @@ namespace McSntt.Models
             set
             {
                 this._teacher = value;
-                TeacherId = (value != null ? value.SailClubMemberId : 0);
+                this.TeacherId = (value != null ? value.SailClubMemberId : 0);
             }
         }
 
@@ -32,7 +31,7 @@ namespace McSntt.Models
         {
             get
             {
-                if (_teacherId == 0 && _teacher != null) { _teacherId = _teacher.SailClubMemberId; }
+                if (this._teacherId == 0 && this._teacher != null) { this._teacherId = this._teacher.SailClubMemberId; }
                 return this._teacherId;
             }
             set { this._teacherId = value; }
@@ -41,5 +40,8 @@ namespace McSntt.Models
         public ICollection<StudentMember> TeamMembers { get; set; }
         public ICollection<Lecture> Lectures { get; set; }
         #endregion
+
+        private SailClubMember _teacher;
+        private long _teacherId;
     }
 }

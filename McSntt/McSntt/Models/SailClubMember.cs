@@ -33,10 +33,7 @@ namespace McSntt.Models
         /// <summary>
         ///     Default constructor.
         /// </summary>
-        public SailClubMember()
-        {
-            this.Position = Positions.Member;
-        }
+        public SailClubMember() { this.Position = Positions.Member; }
 
         /// <summary>
         ///     Convenience method for setting the MemberId property through a string value. If there's an error parsing the

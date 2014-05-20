@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Documents;
-using System.Windows.Forms.VisualStyles;
 using McSntt.Helpers;
 
 namespace McSntt.Models
@@ -31,7 +28,7 @@ namespace McSntt.Models
         {
             get
             {
-                if (_captainId == 0 && _captain != null) { _captainId = _captain.PersonId; }
+                if (this._captainId == 0 && this._captain != null) { this._captainId = this._captain.PersonId; }
                 return this._captainId;
             }
             set { this._captainId = value; }
@@ -39,14 +36,11 @@ namespace McSntt.Models
 
         public Person CreatedBy
         {
-            get
-            {
-                return this._createdBy;
-            }
+            get { return this._createdBy; }
             set
             {
                 this._createdBy = value;
-                CreatedById = (value != null ? value.PersonId : 0);
+                this.CreatedById = (value != null ? value.PersonId : 0);
             }
         }
 
@@ -54,13 +48,10 @@ namespace McSntt.Models
         {
             get
             {
-                if (_createdById == 0 && _createdBy != null) { _createdById = _createdBy.PersonId; }
+                if (this._createdById == 0 && this._createdBy != null) { this._createdById = this._createdBy.PersonId; }
                 return this._createdById;
             }
-            set
-            {
-                this._createdById = value;
-            }
+            set { this._createdById = value; }
         }
 
         public ICollection<Person> Crew { get; set; }
@@ -68,7 +59,7 @@ namespace McSntt.Models
         public bool CanMakeReservation()
         {
             // The following line will cause the database to be locked.
-            var list = DalLocator.RegularTripDal.GetAll();
+            IEnumerable<RegularTrip> list = DalLocator.RegularTripDal.GetAll();
             /*
             var dal = DalLocator.RegularTripDal;
             var  list = new List<RegularTrip>();
@@ -82,8 +73,12 @@ namespace McSntt.Models
 
                 list.Add(dal.GetOne(i));
             } */
-            
-            return !list.Any(t => t != null && t.BoatId == this.BoatId && t.DepartureTime <= this.ArrivalTime && t.ArrivalTime >= this.DepartureTime);
+
+            return
+                !list.Any(
+                          t =>
+                          t != null && t.BoatId == this.BoatId && t.DepartureTime <= this.ArrivalTime
+                          && t.ArrivalTime >= this.DepartureTime);
         }
     }
 }

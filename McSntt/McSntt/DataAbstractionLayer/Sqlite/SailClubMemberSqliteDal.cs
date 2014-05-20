@@ -10,6 +10,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 {
     public class SailClubMemberSqliteDal : ISailClubMemberDal
     {
+        #region ISailClubMemberDal Members
         public bool Create(params SailClubMember[] items)
         {
             IPersonDal personDal = DalLocator.PersonDal;
@@ -34,7 +35,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
 
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@personId", sailClubMember.PersonId));
-                        command.Parameters.Add(new SQLiteParameter("@position", (int)sailClubMember.Position));
+                        command.Parameters.Add(new SQLiteParameter("@position", (int) sailClubMember.Position));
                         command.Parameters.Add(new SQLiteParameter("@username", sailClubMember.Username));
                         command.Parameters.Add(new SQLiteParameter("@passwordHash", sailClubMember.PasswordHash));
                         insertedRows += command.ExecuteNonQuery();
@@ -76,7 +77,7 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                         command.Parameters.Clear();
                         command.Parameters.Add(new SQLiteParameter("@sailClubMemberId", sailClubMember.SailClubMemberId));
                         command.Parameters.Add(new SQLiteParameter("@personId", sailClubMember.PersonId));
-                        command.Parameters.Add(new SQLiteParameter("@position", (int)sailClubMember.Position));
+                        command.Parameters.Add(new SQLiteParameter("@position", (int) sailClubMember.Position));
                         command.Parameters.Add(new SQLiteParameter("@username", sailClubMember.Username));
                         command.Parameters.Add(new SQLiteParameter("@passwordHash", sailClubMember.PasswordHash));
                         updatedRows += command.ExecuteNonQuery();
@@ -146,21 +147,28 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                 Add(
                                     new SailClubMember
                                     {
-                                        SailClubMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
+                                        SailClubMemberId =
+                                            DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
                                         PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
                                         FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
                                         LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
                                         Address = DatabaseManager.ReadString(reader, reader.GetOrdinal("address")),
                                         Postcode = DatabaseManager.ReadString(reader, reader.GetOrdinal("postcode")),
                                         Cityname = DatabaseManager.ReadString(reader, reader.GetOrdinal("cityname")),
-                                        BoatDriver = DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
-                                        DateOfBirth = DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
+                                        BoatDriver =
+                                            DatabaseManager.ReadBoolean(reader, reader.GetOrdinal("boat_driver")),
+                                        DateOfBirth =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("date_of_birth")),
                                         Gender = (Gender) DatabaseManager.ReadInt(reader, reader.GetOrdinal("gender")),
                                         Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
-                                        PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
+                                        PhoneNumber =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
                                         Username = DatabaseManager.ReadString(reader, reader.GetOrdinal("username")),
-                                        PasswordHash = DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
-                                        Position = (SailClubMember.Positions) DatabaseManager.ReadInt(reader, reader.GetOrdinal("position"))
+                                        PasswordHash =
+                                            DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
+                                        Position =
+                                            (SailClubMember.Positions)
+                                            DatabaseManager.ReadInt(reader, reader.GetOrdinal("position"))
                                     });
                         }
                     }
@@ -199,7 +207,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                             sailClubMember =
                                 new SailClubMember
                                 {
-                                    SailClubMemberId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
+                                    SailClubMemberId =
+                                        DatabaseManager.ReadInt(reader, reader.GetOrdinal("sail_club_member_id")),
                                     PersonId = DatabaseManager.ReadInt(reader, reader.GetOrdinal("person_id")),
                                     FirstName = DatabaseManager.ReadString(reader, reader.GetOrdinal("first_name")),
                                     LastName = DatabaseManager.ReadString(reader, reader.GetOrdinal("last_name")),
@@ -212,8 +221,11 @@ namespace McSntt.DataAbstractionLayer.Sqlite
                                     Email = DatabaseManager.ReadString(reader, reader.GetOrdinal("email")),
                                     PhoneNumber = DatabaseManager.ReadString(reader, reader.GetOrdinal("phone_number")),
                                     Username = DatabaseManager.ReadString(reader, reader.GetOrdinal("username")),
-                                    PasswordHash = DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
-                                    Position = (SailClubMember.Positions) DatabaseManager.ReadInt(reader, reader.GetOrdinal("position"))
+                                    PasswordHash =
+                                        DatabaseManager.ReadString(reader, reader.GetOrdinal("password_hash")),
+                                    Position =
+                                        (SailClubMember.Positions)
+                                        DatabaseManager.ReadInt(reader, reader.GetOrdinal("position"))
                                 };
                         }
                     }
@@ -225,17 +237,18 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             return sailClubMember;
         }
 
-        public void LoadData(SailClubMember item) {}
+        public void LoadData(SailClubMember item) { }
 
-        public void LoadData(IEnumerable<SailClubMember> items) {}
+        public void LoadData(IEnumerable<SailClubMember> items) { }
 
         public IEnumerable<SailClubMember> GetAll(Func<SailClubMember, bool> predicate)
         {
-            var sailClubMembers = this.GetAll().ToArray();
+            SailClubMember[] sailClubMembers = this.GetAll().ToArray();
 
             LoadData(sailClubMembers);
 
             return sailClubMembers.Where(predicate);
         }
+        #endregion
     }
 }
