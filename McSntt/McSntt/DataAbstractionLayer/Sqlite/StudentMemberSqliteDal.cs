@@ -321,6 +321,8 @@ namespace McSntt.DataAbstractionLayer.Sqlite
             foreach (StudentMember item in items) { LoadData(item); }
         }
 
+        public bool PromoteToMember(StudentMember studentMember) { throw new NotImplementedException(); }
+
         public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
         {
             StudentMember[] studentMembers = this.GetAll().ToArray();

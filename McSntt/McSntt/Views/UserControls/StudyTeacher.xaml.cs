@@ -82,10 +82,13 @@ namespace McSntt.Views.UserControls
 
         private void PromoteMember(StudentMember member)
         {
+            /*
             SailClubMember upgradedMember = member.AsSailClubMember();
             upgradedMember.Position = SailClubMember.Positions.Member;
             upgradedMember.BoatDriver = true;
             DalLocator.SailClubMemberDal.Create(upgradedMember);
+             */
+            DalLocator.StudentMemberDal.PromoteToMember(member);
         }
 
         private IEnumerable GetTeams()
@@ -344,7 +347,6 @@ namespace McSntt.Views.UserControls
                     member.Motor && member.RopeWorks &&
                     member.Drabant && member.Gaffelrigger)
                 {
-                    this.PromoteMember(member);
                     promotelist.Add(member);
                 }
                 else
@@ -360,7 +362,7 @@ namespace McSntt.Views.UserControls
             foreach (StudentMember studentMember in promotelist)
             {
                 ((Team) this.teamDropdown.SelectedItem).TeamMembers.Remove(studentMember);
-                DalLocator.StudentMemberDal.Delete(studentMember);
+                this.PromoteMember(studentMember);
             }
             DalLocator.TeamDal.Update((Team) this.teamDropdown.SelectedItem);
 

@@ -2,5 +2,8 @@
 
 namespace McSntt.DataAbstractionLayer
 {
-    public interface IStudentMemberDal : IGenericDal<StudentMember> {}
+    public interface IStudentMemberDal : IGenericDal<StudentMember>
+    {
+        bool PromoteToMember(StudentMember studentMember);
+    }
 }

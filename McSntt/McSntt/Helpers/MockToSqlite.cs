@@ -549,9 +549,12 @@ namespace McSntt.Helpers
 
                                 foreach (StudentMember student in lecture.PresentMembers)
                                 {
-                                    command.Parameters["@studentMemberId"].Value = student.StudentMemberId;
+                                    if (student != null)
+                                    {
+                                        command.Parameters["@studentMemberId"].Value = student.StudentMemberId;
 
-                                    command.ExecuteNonQuery();
+                                        command.ExecuteNonQuery();
+                                    }
                                 }
                             }
                         }

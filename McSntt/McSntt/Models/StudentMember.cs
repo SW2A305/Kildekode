@@ -34,6 +34,9 @@
         public SailClubMember AsSailClubMember()
         {
             var member = new SailClubMember();
+
+            member.PersonId = PersonId;
+            member.SailClubMemberId = SailClubMemberId;
             member.FirstName = FirstName;
             member.Address = Address;
             member.BoatDriver = true;

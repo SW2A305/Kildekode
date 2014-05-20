@@ -68,11 +68,18 @@ namespace McSntt.DataAbstractionLayer.Mock
             return true;
         }
 
-        public IEnumerable<StudentMember> GetAll() { return _studentMembers.Values; }
+        public IEnumerable<StudentMember> GetAll()
+        {
+            return _studentMembers.Values
+                                  .Where(student => student.Position == SailClubMember.Positions.Student);
+        }
 
         public IEnumerable<StudentMember> GetAll(Func<StudentMember, bool> predicate)
         {
-            return _studentMembers.Values.Where(predicate);
+            return
+                _studentMembers.Values
+                               .Where(student => student.Position == SailClubMember.Positions.Student)
+                               .Where(predicate);
         }
 
         public StudentMember GetOne(long itemId)
@@ -91,7 +98,26 @@ namespace McSntt.DataAbstractionLayer.Mock
         {
             /* Not applicable */
         }
+
+        public bool PromoteToMember(StudentMember studentMember)
+        {
+            studentMember.Position = SailClubMember.Positions.Member;
+            studentMember.BoatDriver = true;
+
+            this.Update(studentMember);
+
+            return true;
+        }
         #endregion
+
+        public bool DeleteWithoutCheck(StudentMember studentMember)
+        {
+            if (studentMember.StudentMemberId > 0 && _studentMembers.ContainsKey(studentMember.StudentMemberId)) {
+                _studentMembers.Remove(studentMember.StudentMemberId);
+            }
+
+            return true;
+        }
 
         public bool CreateWithId(StudentMember studentMember)
         {
