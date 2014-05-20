@@ -367,15 +367,21 @@ namespace McSntt.Views.UserControls
             DalLocator.TeamDal.Update((Team) this.teamDropdown.SelectedItem);
 
 
-            if (((Team) this.teamDropdown.SelectedItem).TeamMembers.Count == 0) {
+            if (((Team) this.teamDropdown.SelectedItem).TeamMembers.Count == 0)
+            {
                 DalLocator.TeamDal.Delete((Team) this.teamDropdown.SelectedItem);
+                MessageBox.Show("Alle Medlemmer på holdet er nu forfremmet, og holdet er slettet.");
             }
+            else
+            { MessageBox.Show("Alle elever som har mulighed for forfremmelse, er nu forfremmet."); }
 
             this.ClearFields();
             this.teamDropdown.ItemsSource = null;
             this.teamDropdown.ItemsSource = this.GetTeams();
             this.DataGridCollection = CollectionViewSource.GetDefaultView(this.GetStudents());
             this.DataGridCollection.Filter = this.Filter;
+
+
         }
 
         private void AddStudent_Click(object sender, RoutedEventArgs e)
@@ -483,6 +489,14 @@ namespace McSntt.Views.UserControls
                 this.DrabantCheckBox.IsEnabled = false;
                 this.RopeWorksCheckBox.IsEnabled = false;
             }
+
+            this.NavigationCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Navigation;
+            this.GaffelriggerCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Gaffelrigger;
+            this.MotorCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Motor;
+            this.NightCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Night;
+            this.DrabantCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Drabant;
+            this.RopeWorksCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).RopeWorksLecture;
+
         }
 
         private void updateLecture_Click(object sender, RoutedEventArgs e)

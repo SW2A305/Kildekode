@@ -226,15 +226,6 @@ namespace McSntt.Helpers
                             command.ExecuteNonQuery();
                         }
 
-                        using (SQLiteCommand command = conn.CreateCommand())
-                        {
-                            command.CommandType = CommandType.Text;
-                            command.CommandText =
-                                String.Format("CREATE UNIQUE INDEX IF NOT EXISTS event_participants " +
-                                              "ON {0} (event_id, person_id)",
-                                              TableEventParticipantsBinder);
-                            command.ExecuteNonQuery();
-                        }
                         #endregion
 
                         #region Create binding-table: LecturePresentMembersBinder
@@ -246,16 +237,6 @@ namespace McSntt.Helpers
                                               "CREATE TABLE {0} (" +
                                               "lecture_id TEXT, student_member_id INTEGER" +
                                               ")",
-                                              TableLecturePresentMembersBinder);
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (SQLiteCommand command = conn.CreateCommand())
-                        {
-                            command.CommandType = CommandType.Text;
-                            command.CommandText =
-                                String.Format("CREATE UNIQUE INDEX IF NOT EXISTS lecture_present_members " +
-                                              "ON {0} (lecture_id, student_member_id)",
                                               TableLecturePresentMembersBinder);
                             command.ExecuteNonQuery();
                         }
@@ -274,15 +255,6 @@ namespace McSntt.Helpers
                             command.ExecuteNonQuery();
                         }
 
-                        using (SQLiteCommand command = conn.CreateCommand())
-                        {
-                            command.CommandType = CommandType.Text;
-                            command.CommandText =
-                                String.Format("CREATE UNIQUE INDEX IF NOT EXISTS logbook_actual_crew " +
-                                              "ON {0} (logbook_id, person_id)",
-                                              TableLogbookActualCrewBinder);
-                            command.ExecuteNonQuery();
-                        }
                         #endregion
 
                         #region Create binding-table: RegularTripCrewBinder
@@ -294,16 +266,6 @@ namespace McSntt.Helpers
                                               "CREATE TABLE {0} (" +
                                               "regular_trip_id TEXT, person_id INTEGER" +
                                               ")",
-                                              TableRegularTripCrewBinder);
-                            command.ExecuteNonQuery();
-                        }
-
-                        using (SQLiteCommand command = conn.CreateCommand())
-                        {
-                            command.CommandType = CommandType.Text;
-                            command.CommandText =
-                                String.Format("CREATE UNIQUE INDEX IF NOT EXISTS regular_trip_crew " +
-                                              "ON {0} (regular_trip_id, person_id)",
                                               TableRegularTripCrewBinder);
                             command.ExecuteNonQuery();
                         }
