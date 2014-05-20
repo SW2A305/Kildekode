@@ -113,7 +113,6 @@
     <Compile Include="Helpers\GlobalInformation.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
     <Compile Include="Helpers\MockToSqlite.cs" />
-    <Compile Include="Helpers\StudyMockData.cs" />
     <Compile Include="Helpers\XmlMemberParser.cs" />
     <Compile Include="Views\UserControls\DateTimePicker.xaml.cs">
       <DependentUpon>DateTimePicker.xaml</DependentUpon>
