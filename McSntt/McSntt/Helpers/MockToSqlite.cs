@@ -61,7 +61,7 @@ namespace McSntt.Helpers
                 System.Threading.Thread.Sleep(100);
                 runCount++;
 
-                if (runCount > 20) { break; }
+                if (runCount > 50) { break; }
             }
 
             using (var conn = new SQLiteConnection(GetConnectionString()))
