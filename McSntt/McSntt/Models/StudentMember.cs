@@ -31,6 +31,25 @@
             set { this._associatedTeamId = value; }
         }
 
+        public SailClubMember AsSailClubMember()
+        {
+            var member = new SailClubMember();
+            member.FirstName = FirstName;
+            member.Address = Address;
+            member.BoatDriver = true;
+            member.Cityname = Cityname;
+            member.DateOfBirth = DateOfBirth;
+            member.Gender = Gender;
+            member.LastName = LastName;
+            member.Email = Email;
+            member.PasswordHash = PasswordHash;
+            member.PhoneNumber = PhoneNumber;
+            member.Position = Positions.Member;
+            member.Postcode = Postcode;
+
+            return member;
+        }
+
         #region Undervisnings kriterier
         public bool RopeWorks { get; set; }
         public bool Navigation { get; set; }
