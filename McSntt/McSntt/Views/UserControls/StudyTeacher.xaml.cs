@@ -489,14 +489,6 @@ namespace McSntt.Views.UserControls
                 this.DrabantCheckBox.IsEnabled = false;
                 this.RopeWorksCheckBox.IsEnabled = false;
             }
-
-            this.NavigationCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Navigation;
-            this.GaffelriggerCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Gaffelrigger;
-            this.MotorCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Motor;
-            this.NightCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Night;
-            this.DrabantCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).Drabant;
-            this.RopeWorksCheckBox.IsChecked = ((Lecture) lectureDropdown.SelectedValue).RopeWorksLecture;
-
         }
 
         private void updateLecture_Click(object sender, RoutedEventArgs e)
