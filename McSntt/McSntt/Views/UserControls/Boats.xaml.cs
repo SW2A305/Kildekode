@@ -181,6 +181,11 @@ namespace McSntt.Views.UserControls
         {
             var boatWindow = new CreateAndEditBoats();
             boatWindow.ShowDialog();
+            BoatComboBox.ItemsSource = null;
+            BoatComboBox.ItemsSource = this.boatDal.GetAll();
+            BoatComboBox.SelectedIndex = 0;
+            BoatComboBox_OnSelectionChanged( new object(), new EventArgs());
+
         }
 
         private void EditBoatButton_Click(object sender, RoutedEventArgs e)
@@ -189,6 +194,9 @@ namespace McSntt.Views.UserControls
             boatWindow.ShowDialog();
 
             IEnumerable<RegularTrip> listOfBookings = this.GetBookings();
+
+            BoatComboBox.ItemsSource = null;
+            BoatComboBox.ItemsSource = this.boatDal.GetAll();
             this.BookedTripsDataGrid.ItemsSource = null;
             this.BookedTripsDataGrid.ItemsSource = listOfBookings;
         }

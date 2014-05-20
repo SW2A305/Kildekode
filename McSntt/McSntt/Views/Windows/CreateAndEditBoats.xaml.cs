@@ -62,7 +62,7 @@ namespace McSntt.Views.Windows
             {
                 this.newBoat.NickName = this.NickNameTextBox.Text;
                 this.newBoat.Type = (BoatType) this.BoatTypeComboBox.SelectedItem;
-                this.newBoat.Operational = this.CheckBox.IsChecked.GetValueOrDefault();
+                this.newBoat.Operational = CheckBox.IsChecked == true;
                 DalLocator.BoatDal.Update(this.newBoat);
                 this.Close();
             }

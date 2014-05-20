@@ -80,9 +80,9 @@ namespace McSntt.Views.UserControls
             this.LectureDataClear();
         }
 
-        private void PromoteTeam(StudentMember member)
+        private void PromoteMember(StudentMember member)
         {
-            StudentMember upgradedMember = member;
+            SailClubMember upgradedMember = member.AsSailClubMember();
             upgradedMember.Position = SailClubMember.Positions.Member;
             upgradedMember.BoatDriver = true;
             DalLocator.SailClubMemberDal.Create(upgradedMember);
@@ -344,7 +344,7 @@ namespace McSntt.Views.UserControls
                     member.Motor && member.RopeWorks &&
                     member.Drabant && member.Gaffelrigger)
                 {
-                    this.PromoteTeam(member);
+                    this.PromoteMember(member);
                     promotelist.Add(member);
                 }
                 else
