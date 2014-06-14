@@ -166,8 +166,33 @@ namespace McSntt.Helpers
                                    ActualArrivalTime = new DateTime(2014, 05, 09, 21, 0, 0),
                                    ActualDepartureTime = new DateTime(2014, 05, 07, 9, 0, 0),
                                    DamageInflicted = false,
+                               },
+                               new Logbook
+                               {
+                                   ActualDepartureTime = new DateTime(2014, 06, 13, 21, 0, 0),
+                                   ActualArrivalTime = new DateTime(2014, 06, 14,08, 0, 0),
+                                   DamageInflicted = false,
+                               },
+                               new Logbook
+                               {
+                                   ActualDepartureTime = new DateTime(2014, 06, 12, 13, 15, 0),
+                                   ActualArrivalTime = new DateTime(2014, 06, 14, 17, 0, 0),
+                                   DamageInflicted = false,
+                               },
+                               new Logbook
+                               {
+                                   ActualDepartureTime = new DateTime(2014, 05, 08, 21, 0, 0),
+                                   ActualArrivalTime = new DateTime(2014, 05, 09, 08, 0, 0),
+                                   DamageInflicted = false,
+                               },
+                               new Logbook
+                               {
+                                   ActualDepartureTime = new DateTime(2014, 06, 16, 21, 0, 0),
+                                   ActualArrivalTime = new DateTime(2014, 06, 17, 08, 0, 0),
+                                   DamageInflicted = false,
                                }
                            };
+
             #endregion
 
             #region DataArray :: Persons
@@ -210,6 +235,68 @@ namespace McSntt.Helpers
                                 WeatherConditions = "6 m/s fra vest, klar himmel",
                                 DepartureTime = new DateTime(2014, 05, 08, 21, 0, 0),
                                 ArrivalTime = new DateTime(2014, 05, 09, 08, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Sejler til Bornholm",
+                                DepartureTime = new DateTime(2014, 06, 21, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 06, 22, 08, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Fisketur",
+                                DepartureTime = new DateTime(2014, 07, 01, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 07, 02, 08, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Til Skåne",
+                                WeatherConditions = "2 m/s fra øst, overskyet",
+                                DepartureTime = new DateTime(2014, 05, 25, 08, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 26, 08, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Sejler til Sverige",
+                                DepartureTime = new DateTime(2014, 07, 06, 08, 0, 0),
+                                ArrivalTime = new DateTime(2014, 07, 06, 21, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Norge Tur med natsejllads",
+                                DepartureTime = new DateTime(2014, 07, 08, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 07, 10, 08, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Englandstur",
+                                DepartureTime = new DateTime(2014, 05, 08, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 09, 08, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Tager familien med ud og sejle, de vil gerne prøve det, så bare en lille tur i nogle timer.",
+                                DepartureTime = new DateTime(2014, 06, 23, 16, 0, 0),
+                                ArrivalTime = new DateTime(2014, 05, 24, 20, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Sejler til mamlø og hjem igen.",
+                                DepartureTime = new DateTime(2014, 07, 08, 10, 0, 0),
+                                ArrivalTime = new DateTime(2014, 07, 08, 18, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Skal ud og nyde den forhåbentligt skønne sol ude på vandet.",
+                                DepartureTime = new DateTime(2014, 07, 21, 11, 0, 0),
+                                ArrivalTime = new DateTime(2014, 07, 21, 17, 0, 0)
+                            },
+                            new RegularTrip
+                            {
+                                PurposeAndArea = "Natsejllads med gruppe A3",
+                                WeatherConditions = "1 m/s, fra øst.",
+                                DepartureTime = new DateTime(2014, 06, 16, 21, 0, 0),
+                                ArrivalTime = new DateTime(2014, 06, 17, 08, 0, 0)
                             }
                         };
             #endregion
@@ -667,7 +754,11 @@ namespace McSntt.Helpers
 
             #region Logbooks -> FiledBy
             logbooks[0].FiledBy = sailClubMembers[0];
-            logbooks[1].FiledBy = sailClubMembers[3];
+            logbooks[1].FiledBy = sailClubMembers[3]; 
+            logbooks[2].FiledBy = sailClubMembers[0];
+            logbooks[3].FiledBy = sailClubMembers[3];
+            logbooks[4].FiledBy = sailClubMembers[0];
+            logbooks[5].FiledBy = sailClubMembers[3];
             #endregion
 
             #region Logbooks -> ActualCrew
@@ -686,6 +777,37 @@ namespace McSntt.Helpers
                                          sailClubMembers[3],
                                          sailClubMembers[4]
                                      };
+            logbooks[2].ActualCrew = new List<Person>
+                                     {
+                                        sailClubMembers[1],
+                                        sailClubMembers[3],
+                                        sailClubMembers[5],
+                                        sailClubMembers[6],
+                                        sailClubMembers[7]
+                                     };
+            logbooks[3].ActualCrew = new List<Person>
+                                     {
+                                        sailClubMembers[5],
+                                        sailClubMembers[4],
+                                        sailClubMembers[2],
+                                        sailClubMembers[1],
+                                        sailClubMembers[7]
+                                     };
+            logbooks[4].ActualCrew = new List<Person>
+                                     {
+                                        sailClubMembers[7],
+                                        sailClubMembers[3],
+                                        sailClubMembers[0],
+                                        sailClubMembers[2],
+                                        sailClubMembers[5]
+                                     };
+            logbooks[5].ActualCrew = new List<Person>
+                                     {
+                                        sailClubMembers[7],
+                                        sailClubMembers[3],
+                                        sailClubMembers[0],
+                                        sailClubMembers[2],
+                                     };
             #endregion
 
             #region Trips -> Captain
@@ -694,11 +816,25 @@ namespace McSntt.Helpers
             trips[2].Captain = sailClubMembers[1];
             trips[3].Captain = sailClubMembers[5];
             trips[4].Captain = sailClubMembers[7];
+            trips[5].Captain = sailClubMembers[0];
+            trips[6].Captain = sailClubMembers[3];
+            trips[7].Captain = sailClubMembers[1];
+            trips[8].Captain = sailClubMembers[5];
+            trips[9].Captain = sailClubMembers[7];
+            trips[10].Captain = sailClubMembers[0];
+            trips[11].Captain = sailClubMembers[3];
+            trips[12].Captain = sailClubMembers[1];
+            trips[13].Captain = sailClubMembers[5];
+            trips[14].Captain = sailClubMembers[7];
             #endregion
 
             #region Trips -> Logbook
             trips[0].Logbook = logbooks[1];
             trips[1].Logbook = logbooks[0];
+            trips[2].Logbook = logbooks[2];
+            trips[3].Logbook = logbooks[3];
+            trips[4].Logbook = logbooks[4];
+            trips[5].Logbook = logbooks[5];
             #endregion
 
             #region Trips -> Boat
@@ -707,6 +843,16 @@ namespace McSntt.Helpers
             trips[2].Boat = boats[2];
             trips[3].Boat = boats[1];
             trips[4].Boat = boats[1];
+            trips[5].Boat = boats[0];
+            trips[6].Boat = boats[1];
+            trips[7].Boat = boats[2];
+            trips[8].Boat = boats[1];
+            trips[9].Boat = boats[1];
+            trips[10].Boat = boats[0];
+            trips[11].Boat = boats[1];
+            trips[12].Boat = boats[2];
+            trips[13].Boat = boats[1];
+            trips[14].Boat = boats[1];
             #endregion Boats
 
             #region Trips -> Crew
@@ -757,6 +903,94 @@ namespace McSntt.Helpers
                                 sailClubMembers[2],
                                 sailClubMembers[5]
                             };
+            trips[5].Crew = new List<Person>
+                            {
+                                sailClubMembers[0],
+                                sailClubMembers[1],
+                                sailClubMembers[2],
+                                sailClubMembers[3],
+                                sailClubMembers[7]
+                            };
+
+            trips[6].Crew = new List<Person>
+                            {
+                                sailClubMembers[1],
+                                sailClubMembers[4],
+                                sailClubMembers[5],
+                                sailClubMembers[6],
+                                sailClubMembers[7]
+                            };
+
+            trips[7].Crew = new List<Person>
+                            {
+                                sailClubMembers[1],
+                                sailClubMembers[3],
+                                sailClubMembers[5],
+                                sailClubMembers[6],
+                                sailClubMembers[7]
+                            };
+
+            trips[8].Crew = new List<Person>
+                            {
+                                sailClubMembers[5],
+                                sailClubMembers[4],
+                                sailClubMembers[2],
+                                sailClubMembers[1],
+                                sailClubMembers[7]
+                            };
+
+            trips[9].Crew = new List<Person>
+                            {
+                                sailClubMembers[7],
+                                sailClubMembers[3],
+                                sailClubMembers[0],
+                                sailClubMembers[2],
+                                sailClubMembers[5]
+                            };
+            trips[10].Crew = new List<Person>
+                            {
+                                sailClubMembers[0],
+                                sailClubMembers[1],
+                                sailClubMembers[2],
+                                sailClubMembers[3],
+                                sailClubMembers[7]
+                            };
+
+            trips[11].Crew = new List<Person>
+                            {
+                                sailClubMembers[1],
+                                sailClubMembers[4],
+                                sailClubMembers[5],
+                                sailClubMembers[6],
+                                sailClubMembers[7]
+                            };
+
+            trips[12].Crew = new List<Person>
+                            {
+                                sailClubMembers[1],
+                                sailClubMembers[3],
+                                sailClubMembers[5],
+                                sailClubMembers[6],
+                                sailClubMembers[7]
+                            };
+
+            trips[13].Crew = new List<Person>
+                            {
+                                sailClubMembers[5],
+                                sailClubMembers[4],
+                                sailClubMembers[2],
+                                sailClubMembers[1],
+                                sailClubMembers[7]
+                            };
+
+            trips[14].Crew = new List<Person>
+                            {
+                                sailClubMembers[7],
+                                sailClubMembers[3],
+                                sailClubMembers[0],
+                                sailClubMembers[2],
+                                sailClubMembers[5]
+                            };
             #endregion Crew
 
             #region Trips -> CreatedBy
@@ -765,6 +999,16 @@ namespace McSntt.Helpers
             trips[2].CreatedBy = sailClubMembers[3];
             trips[3].CreatedBy = sailClubMembers[7];
             trips[4].CreatedBy = sailClubMembers[9];
+            trips[5].CreatedBy = sailClubMembers[7];
+            trips[6].CreatedBy = sailClubMembers[1];
+            trips[7].CreatedBy = sailClubMembers[3];
+            trips[8].CreatedBy = sailClubMembers[7];
+            trips[9].CreatedBy = sailClubMembers[9];
+            trips[10].CreatedBy = sailClubMembers[7];
+            trips[11].CreatedBy = sailClubMembers[1];
+            trips[12].CreatedBy = sailClubMembers[3];
+            trips[13].CreatedBy = sailClubMembers[7];
+            trips[14].CreatedBy = sailClubMembers[9];
             #endregion
 
             #region Events -> Participants
