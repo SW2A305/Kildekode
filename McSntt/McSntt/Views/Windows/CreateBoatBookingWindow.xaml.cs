@@ -40,8 +40,8 @@ namespace McSntt.Views.Windows
             this.CrewDataGrid.ItemsSource = this.CrewList;
             this.CaptainComboBox.ItemsSource = null;
             this.CaptainComboBox.ItemsSource = this.CrewList.Where(x => x.BoatDriver);
-            this.CaptainComboBox.SelectedItem = this.CrewList.Where(x => rt.Captain.PersonId == x.PersonId).Select(x => x);
-            //   this.CrewList.IndexOf(this.CrewList.First(p => p.PersonId == rt.CaptainId));
+            this.CaptainComboBox.SelectedIndex =
+                this.CrewList.IndexOf(this.CrewList.First(p => p.PersonId == rt.CaptainId))+ 1;
         }
 
         public CreateBoatBookingWindow(int index)
