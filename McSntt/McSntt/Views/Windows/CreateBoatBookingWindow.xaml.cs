@@ -41,7 +41,10 @@ namespace McSntt.Views.Windows
             this.CaptainComboBox.ItemsSource = null;
             this.CaptainComboBox.ItemsSource = this.CrewList.Where(x => x.BoatDriver);
             this.CaptainComboBox.SelectedIndex =
-                this.CrewList.IndexOf(this.CrewList.First(p => p.PersonId == rt.CaptainId))+ 1;
+                this.CrewList.IndexOf(this.CrewList.First(p => p.PersonId == rt.CaptainId));
+            // The following lines will select the first eligible member if the above line didn't select any.
+            if (this.CaptainComboBox.SelectedIndex == -1 && this.CrewList.Count(p => p.PersonId == rt.CaptainId) > 0) 
+                this.CaptainComboBox.SelectedIndex = 0;
         }
 
         public CreateBoatBookingWindow(int index)
