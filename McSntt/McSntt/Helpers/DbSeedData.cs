@@ -872,7 +872,7 @@ namespace McSntt.Helpers
                             {
                                 sailClubMembers[1],
                                 sailClubMembers[4],
-                                sailClubMembers[5],
+                                sailClubMembers[3],
                                 sailClubMembers[6],
                                 sailClubMembers[7]
                             };
@@ -917,7 +917,7 @@ namespace McSntt.Helpers
                                 sailClubMembers[1],
                                 sailClubMembers[4],
                                 sailClubMembers[5],
-                                sailClubMembers[6],
+                                sailClubMembers[3],
                                 sailClubMembers[7]
                             };
 
@@ -933,7 +933,7 @@ namespace McSntt.Helpers
             trips[8].Crew = new List<Person>
                             {
                                 sailClubMembers[5],
-                                sailClubMembers[4],
+                                sailClubMembers[0],
                                 sailClubMembers[2],
                                 sailClubMembers[1],
                                 sailClubMembers[7]
@@ -951,7 +951,7 @@ namespace McSntt.Helpers
                             {
                                 sailClubMembers[0],
                                 sailClubMembers[1],
-                                sailClubMembers[2],
+                                sailClubMembers[5],
                                 sailClubMembers[3],
                                 sailClubMembers[7]
                             };
@@ -960,7 +960,7 @@ namespace McSntt.Helpers
                             {
                                 sailClubMembers[1],
                                 sailClubMembers[4],
-                                sailClubMembers[5],
+                                sailClubMembers[3],
                                 sailClubMembers[6],
                                 sailClubMembers[7]
                             };

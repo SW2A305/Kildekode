@@ -52,6 +52,8 @@ namespace McSntt.Views.Windows
                            PurposeAndArea = "Undervisning med hold " + this._currentTeam.Name,
                            WeatherConditions = ""
                        };
+
+            trip.Crew.Add(this._currentTeam.Teacher);
             DalLocator.RegularTripDal.Create(trip);
 
 
