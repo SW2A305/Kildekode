@@ -26,6 +26,9 @@ namespace McSntt.Views.Windows
             if (newEvent.EventDate == default(DateTime)) { this.ChooseDate.Value = DateTime.Today; }
             newEvent.Created = false;
             this.Label.Content = "Rediger begivenhed";
+
+            Button.Click -= this.Create_Event;
+            Button.Click += this.Update_Event;
         }
 
         public EventsPopup()
@@ -79,6 +82,48 @@ namespace McSntt.Views.Windows
             {
                 this.newEvent.Created = true;
                 DalLocator.EventDal.Create(newEvent);
+                this.Close();
+            }
+        }
+
+        private void Update_Event(object sender, RoutedEventArgs e)
+        {
+            #region If not filled check
+            if (!string.IsNullOrEmpty(this.EventNameBox.Text)) { this.newEvent.EventTitle = this.EventNameBox.Text; }
+
+            if (!string.IsNullOrEmpty(this.EventDescriptionBox.Text)) {
+                this.newEvent.Description = this.EventDescriptionBox.Text;
+            }
+            #endregion
+
+            // Get the EventDate as Value or Default Value
+            this.newEvent.EventDate = this.ChooseDate.Value;
+
+            #region Warning messages
+            if (string.IsNullOrEmpty(this.EventNameBox.Text)) {
+                MessageBox.Show("Du mangler at angive en titel!");
+            }
+
+            else if (string.IsNullOrEmpty(this.EventDescriptionBox.Text)) {
+                MessageBox.Show("Du mangler at angive en beskrivelse!");
+            }
+            #endregion
+
+            if (this.SubscriptionCheckbox.IsChecked == true)
+            {
+                this.newEvent.SignUpReq = true;
+                this.newEvent.SignUpMsg = "Tilmelding krævet!";
+            }
+            else
+            {
+                this.newEvent.SignUpReq = false;
+                this.newEvent.SignUpMsg = "";
+            }
+
+            if (!string.IsNullOrEmpty(this.EventNameBox.Text) && !string.IsNullOrEmpty(this.EventDescriptionBox.Text))
+            {
+                this.newEvent.Created = true;
+                DalLocator.EventDal.Update(newEvent);
                 this.Close();
             }
         }

@@ -77,7 +77,7 @@ namespace McSntt.Views.UserControls
 
                 this.Descriptionbox.Text = this.AgendaListbox.SelectedItem.ToString();
 
-                DalLocator.EventDal.Update(selectedEvent);
+               // DalLocator.EventDal.Update(selectedEvent);
             }
             else
             {
