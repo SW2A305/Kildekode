@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using McSntt.Helpers;
 using McSntt.Models;
 
 namespace McSntt.Views.Windows
@@ -77,6 +78,7 @@ namespace McSntt.Views.Windows
             if (!string.IsNullOrEmpty(this.EventNameBox.Text) && !string.IsNullOrEmpty(this.EventDescriptionBox.Text))
             {
                 this.newEvent.Created = true;
+                DalLocator.EventDal.Create(newEvent);
                 this.Close();
             }
         }

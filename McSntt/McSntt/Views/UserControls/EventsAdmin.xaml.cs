@@ -37,24 +37,19 @@ namespace McSntt.Views.UserControls
 
         private void Create_Event(object sender, RoutedEventArgs e)
         {
-            var newEvent = new Event();
-
             Window createEventPopup = new EventsPopup();
             createEventPopup.ShowDialog();
             this.AgendaListbox.ItemsSource = this.EventsList;
 
-            if (newEvent.Created)
-            {
-                this.EventsList.Add(newEvent);
+            this.EventsList = DalLocator.EventDal.GetAll().ToList();
+            DalLocator.EventDal.LoadData(this.EventsList);
 
                 this.EventsList = this.EventsList.OrderBy(x => x.EventDate).ToList();
 
                 this.AgendaListbox.ItemsSource = this.EventsList;
 
                 this.AgendaListbox.Items.Refresh();
-
-                DalLocator.EventDal.Create(newEvent);
-            }
+            
         }
 
         private void Edit_Event(object sender, RoutedEventArgs e)
