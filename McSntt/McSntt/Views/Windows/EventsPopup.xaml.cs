@@ -10,6 +10,7 @@ namespace McSntt.Views.Windows
     /// </summary>
     public partial class EventsPopup : Window
     {
+        private readonly bool IsUpdate;
         public Event newEvent = new Event();
 
         public EventsPopup(Event newEvent)
@@ -27,8 +28,8 @@ namespace McSntt.Views.Windows
             newEvent.Created = false;
             this.Label.Content = "Rediger begivenhed";
 
-            Button.Click -= this.Create_Event;
-            Button.Click += this.Update_Event;
+            Button.Content = "Rediger";
+            this.IsUpdate = true;
         }
 
         public EventsPopup()
@@ -81,49 +82,13 @@ namespace McSntt.Views.Windows
             if (!string.IsNullOrEmpty(this.EventNameBox.Text) && !string.IsNullOrEmpty(this.EventDescriptionBox.Text))
             {
                 this.newEvent.Created = true;
-                DalLocator.EventDal.Create(newEvent);
-                this.Close();
-            }
-        }
-
-        private void Update_Event(object sender, RoutedEventArgs e)
-        {
-            #region If not filled check
-            if (!string.IsNullOrEmpty(this.EventNameBox.Text)) { this.newEvent.EventTitle = this.EventNameBox.Text; }
-
-            if (!string.IsNullOrEmpty(this.EventDescriptionBox.Text)) {
-                this.newEvent.Description = this.EventDescriptionBox.Text;
-            }
-            #endregion
-
-            // Get the EventDate as Value or Default Value
-            this.newEvent.EventDate = this.ChooseDate.Value;
-
-            #region Warning messages
-            if (string.IsNullOrEmpty(this.EventNameBox.Text)) {
-                MessageBox.Show("Du mangler at angive en titel!");
-            }
-
-            else if (string.IsNullOrEmpty(this.EventDescriptionBox.Text)) {
-                MessageBox.Show("Du mangler at angive en beskrivelse!");
-            }
-            #endregion
-
-            if (this.SubscriptionCheckbox.IsChecked == true)
-            {
-                this.newEvent.SignUpReq = true;
-                this.newEvent.SignUpMsg = "Tilmelding krævet!";
-            }
-            else
-            {
-                this.newEvent.SignUpReq = false;
-                this.newEvent.SignUpMsg = "";
-            }
-
-            if (!string.IsNullOrEmpty(this.EventNameBox.Text) && !string.IsNullOrEmpty(this.EventDescriptionBox.Text))
-            {
-                this.newEvent.Created = true;
-                DalLocator.EventDal.Update(newEvent);
+                if (this.IsUpdate) {
+                    DalLocator.EventDal.Update(this.newEvent);
+                }
+                else
+                {
+                    DalLocator.EventDal.Create(this.newEvent);
+                }
                 this.Close();
             }
         }
